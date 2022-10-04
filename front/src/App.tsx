@@ -1,6 +1,6 @@
-import Router from "@router/index";
+import Router from '@router/index';
 
-import { GlobalStyled } from "./style/GlobalStyled";
+import { GlobalStyled } from './style/GlobalStyled';
 
 function App() {
   return (

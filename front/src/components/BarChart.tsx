@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Bar } from "react-chartjs-2";
+import styled from 'styled-components';
+import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,7 +7,7 @@ import {
   PointElement,
   BarElement,
   Title,
-} from "chart.js";
+} from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, Title, PointElement, BarElement);
 
