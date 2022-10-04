@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Router/Home";
-import About from "./Router/About";
-import Nav from "./components/Nav";
-import Map from "./Router/Map";
+import Home from "./Home";
+import About from "./About";
+import Nav from "../components/Nav";
+import Map from "./Map";
 
 export default function Router() {
     return (

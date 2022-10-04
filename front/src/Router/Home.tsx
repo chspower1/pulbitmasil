@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { AAtom } from "../atom";
+import { AAtom } from "../atom/atom";
 import LineChart from "../components/LineChart";
 import BarChart from "../components/BarChart";
 export default function Home() {
