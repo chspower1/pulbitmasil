@@ -1,5 +1,6 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { reset } from "styled-reset";
+import "./fonts/fonts.css";
 export const GlobalStyled = createGlobalStyle`
     ${reset}
     
@@ -12,7 +13,6 @@ export const GlobalStyled = createGlobalStyle`
     }
     body {
         font-family: "Sebang";
-
     }
     a{
         text-decoration: none;

@@ -1,4 +1,5 @@
 import Router from "@router/index";
+
 import { GlobalStyled } from "./style/GlobalStyled";
 
 function App() {
