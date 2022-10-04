@@ -1,5 +1,5 @@
-import "./fonts/fonts.css";
-import Router from "./router/index";
+
+import Router from "./router";
 import { GlobalStyled } from "./style/GlobalStyled";
 
 function App() {
