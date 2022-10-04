@@ -1,21 +1,19 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { useRecoilValue } from "recoil";
 import { reset } from "styled-reset";
-
+import "./fonts/fonts.css";
 import Router from "./Router";
-import Nav from "./components/Nav";
 const GlobalStyled = createGlobalStyle`
     ${reset}
     
     h1{
-        /* font-family: "SebangBold"; */
+        font-family: "SebangBold";
     }
     * {
-        /* font-family: "Sebang"; */
+        font-family: "Sebang";
         box-sizing: border-box;
     }
     body {
-        /* font-family: "Sebang"; */
+        font-family: "Sebang";
 
     }
     a{
@@ -28,14 +26,12 @@ const GlobalStyled = createGlobalStyle`
         outline: none;
         transition:color 0.4s ease;
         transition:background-color 0.4s ease;
-  
     }
 `;
 function App() {
     return (
         <>
             <GlobalStyled />
-            <Nav />
             <Router />
         </>
     );
