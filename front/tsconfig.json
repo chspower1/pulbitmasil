@@ -2,13 +2,6 @@
   "compilerOptions": {
     "target": "ES6",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": "./src",
-    "paths": {
-      "@components/*": ["./components/*"],
-      "@atom/*": ["./atom/*"],
-      "@styles/*": ["./styles/*"],
-      "@router/*": ["./router/*"]
-    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,5 +16,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src", "craco.config.js"],
+  "extends": "./tsconfig.paths.json"
 }
