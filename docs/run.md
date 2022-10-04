@@ -14,6 +14,7 @@
 
 데이터
 서울시 두드림길:
-https://data.seoul.go.kr/dataList/OA-13100/S/1/datasetView.do
+v1 : https://data.seoul.go.kr/dataList/OA-13100/S/1/datasetView.do
+v2 : https://data.seoul.go.kr/dataList/OA-2501/S/1/datasetView.do
 쓰레기통:
 https://data.seoul.go.kr/dataList/OA-15069/F/1/datasetView.do

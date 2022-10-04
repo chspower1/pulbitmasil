@@ -1,5 +1,5 @@
-function App() {
-  return <div>initial</div>;
+import React from 'react';
+export default function App() {
+  return <>initial</>
 }
 
-export default App;

@@ -1,0 +1,37 @@
+{
+    "schema": {
+        "fields": [
+            { "name": "\uc790\uce58\uad6c\uba85", "type": "string" },
+            { "name": "index", "type": "integer" }
+        ],
+        "primaryKey": ["\uc790\uce58\uad6c\uba85"],
+        "pandas_version": "1.4.0"
+    },
+    "data": [
+        { "\uc790\uce58\uad6c\uba85": "\uac15\ub0a8\uad6c", "index": 4131896 },
+        { "\uc790\uce58\uad6c\uba85": "\uac15\ub3d9\uad6c", "index": 371070 },
+        { "\uc790\uce58\uad6c\uba85": "\uac15\ubd81\uad6c", "index": 341107 },
+        { "\uc790\uce58\uad6c\uba85": "\uac15\uc11c", "index": 801017 },
+        { "\uc790\uce58\uad6c\uba85": "\uad00\uc545\uad6c", "index": 876400 },
+        { "\uc790\uce58\uad6c\uba85": "\uad11\uc9c4\uad6c", "index": 112833 },
+        { "\uc790\uce58\uad6c\uba85": "\uad6c\ub85c\uad6c", "index": 899506 },
+        { "\uc790\uce58\uad6c\uba85": "\uae08\ucc9c\uad6c", "index": 146205 },
+        { "\uc790\uce58\uad6c\uba85": "\ub178\uc6d0\uad6c", "index": 157794 },
+        { "\uc790\uce58\uad6c\uba85": "\ub3c4\ubd09\uad6c", "index": 1465940 },
+        { "\uc790\uce58\uad6c\uba85": "\ub3d9\ub300\ubb38\uad6c", "index": 79880 },
+        { "\uc790\uce58\uad6c\uba85": "\ub3d9\uc791\uad6c", "index": 293756 },
+        { "\uc790\uce58\uad6c\uba85": "\ub9c8\ud3ec\uad6c", "index": 578858 },
+        { "\uc790\uce58\uad6c\uba85": "\uc11c\ub300\ubb38\uad6c", "index": 625675 },
+        { "\uc790\uce58\uad6c\uba85": "\uc11c\ucd08\uad6c", "index": 905125 },
+        { "\uc790\uce58\uad6c\uba85": "\uc131\ub3d9\uad6c", "index": 131688 },
+        { "\uc790\uce58\uad6c\uba85": "\uc131\ubd81\uad6c", "index": 150507 },
+        { "\uc790\uce58\uad6c\uba85": "\uc1a1\ud30c\uad6c", "index": 588309 },
+        { "\uc790\uce58\uad6c\uba85": "\uc591\ucc9c\uad6c", "index": 275017 },
+        { "\uc790\uce58\uad6c\uba85": "\uc601\ub4f1\ud3ec\uad6c", "index": 757904 },
+        { "\uc790\uce58\uad6c\uba85": "\uc6a9\uc0b0\uad6c", "index": 140149 },
+        { "\uc790\uce58\uad6c\uba85": "\uc740\ud3c9\uad6c", "index": 441768 },
+        { "\uc790\uce58\uad6c\uba85": "\uc885\ub85c\uad6c", "index": 20301 },
+        { "\uc790\uce58\uad6c\uba85": "\uc911\uad6c", "index": 54390 },
+        { "\uc790\uce58\uad6c\uba85": "\uc911\ub791\uad6c", "index": 100905 }
+    ]
+}
