@@ -1,40 +1,42 @@
-import styled from 'styled-components';
-import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  BarElement,
-  Title,
-} from 'chart.js';
+import React, { useState } from "react";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
+import json from "../test_data/trash_count.json";
 
-ChartJS.register(CategoryScale, LinearScale, Title, PointElement, BarElement);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-interface data {
-  labels: string[];
-  datasets: {
-    label: string;
-    backgroundColor: string[];
-    borderColor: string;
-    data: number[];
-  }[];
+export default function BarChart() {
+  const [trash, setTrash] = useState(json.data);
+  console.log(trash);
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top" as const,
+      },
+      title: {
+        display: true,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  };
+  const labels = ["강서구", "강남구", "March", "April", "May", "June", "July"];
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "일반쓰레기",
+        data: trash.map(i => i.category === "일반쓰레기" && i.count).filter(i => i),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      {
+        label: "재활용",
+        data: trash.map(i => i.category === "재활용쓰레기" && i.count).filter(i => i),
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
+  console.log(trash.map(i => i.category === "일반쓰레기" && i.count));
+  return <Bar options={options} data={data} />;
 }
-
-const BarChart = ({ chartdata }: { chartdata: data }) => {
-  console.log(chartdata);
-  return (
-    <Container>
-      <Bar data={chartdata} />
-      {/* <Bar data={} options={}/> */}
-    </Container>
-  );
-};
-
-export default BarChart;
-
-const Container = styled.div`
-  margin-top: 20px;
-  width: 70vw;
-  max-width: 500px;
-`;
