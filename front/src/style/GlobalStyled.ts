@@ -18,7 +18,6 @@ export const GlobalStyled = createGlobalStyle`
         text-decoration: none;
     }
     input{
-        
     }
     button {
         transition:color 0.4s ease;
