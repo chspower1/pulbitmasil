@@ -31,5 +31,6 @@ export const GlobalStyled = createGlobalStyle`
         padding: 0.25em 1em;
         border: 2px solid #008037;
         border-radius: 5px;
+        cursor:pointer;
     }
 `;
