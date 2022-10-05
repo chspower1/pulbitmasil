@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { isLoginAtom } from "@atom/atom";
-
 interface Login {
   email: string;
   password: string;
@@ -20,7 +19,9 @@ export default function LoginModal() {
     <Wrap>
       <LoginForm>
         <h1>Login</h1>
+        <label htmlFor="id">ID</label>
         <input
+          id="id"
           type="text"
           {...register("email", {
             required: "이메일을 입력해주세요!",
@@ -44,7 +45,7 @@ export default function LoginModal() {
         <button>로그인</button>
         <button onClick={() => setIsLogin(prev => !prev)}>X</button>
       </LoginForm>
-      <Overlay />
+      <Overlay onClick={() => setIsLogin(prev => !prev)} />
     </Wrap>
   );
 }
@@ -69,3 +70,4 @@ const Overlay = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
 `;
+const LoginBtn = styled.button``;

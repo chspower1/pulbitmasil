@@ -92,8 +92,8 @@ export default function Nav() {
   const { register, handleSubmit, reset } = useForm<SearchForm>();
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  const navMenus = ["home", "about", "map"];
-  const navKorMenus = ["홈", "소개", "지도"];
+  const navMenus = ["home", "about", "map", "chart"];
+  const navKorMenus = ["홈", "소개", "지도", "통계"];
   const userMenus = ["login", "register"];
   console.log(curState);
 
