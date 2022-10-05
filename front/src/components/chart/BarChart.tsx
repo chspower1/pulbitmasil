@@ -46,7 +46,7 @@ interface Data {
 
 export default function BarChart() {
   const [trash, setTrash] = useState<TrashCount>(json);
-  console.log(trash);
+  // console.log(trash);
   const options = {
     plugins: {
       title: {
@@ -74,7 +74,7 @@ export default function BarChart() {
     },
   };
   const labels = Object.keys(trash);
-  console.log(labels);
+  // console.log(labels);
   const data: Data = {
     labels,
     datasets: [
