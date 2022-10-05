@@ -13,6 +13,7 @@ export default function Router() {
       <Nav />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/map" element={<Map />} />
       </Routes>

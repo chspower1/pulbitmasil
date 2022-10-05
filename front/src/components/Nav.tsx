@@ -3,6 +3,9 @@ import { Link, useLocation, useNavigate, useRoutes } from "react-router-dom";
 import styled from "styled-components";
 import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
 import { useForm } from "react-hook-form";
+import LoginModal from "./modal/LoginModal";
+import { useRecoilState } from "recoil";
+import { isLoginAtom } from "@atom/atom";
 
 const Wrap = styled(motion.nav)`
   z-index: 1000;
@@ -83,6 +86,7 @@ interface SearchForm {
 export default function Nav() {
   const { pathname } = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const navigate = useNavigate();
   const [curState, setCurState] = useState(pathname === "/" ? "home" : pathname.slice(1));
   const { register, handleSubmit, reset } = useForm<SearchForm>();
@@ -90,7 +94,7 @@ export default function Nav() {
   const navAnimation = useAnimation();
   const navMenus = ["home", "about", "map"];
   const navKorMenus = ["홈", "소개", "지도"];
-
+  const userMenus = ["login", "register"];
   console.log(curState);
 
   const onvalid = (data: SearchForm) => {
@@ -183,6 +187,13 @@ export default function Nav() {
         </Items>
       </Col>
       <Col>
+        <Items>
+          <Item onClick={() => setIsLogin(prev => !prev)}>로그인</Item>
+
+          <Item>회원가입</Item>
+        </Items>
+      </Col>
+      <Col>
         <SearchBox onSubmit={handleSubmit(onvalid)}>
           <Magnifify
             onClick={toggleSearch}
@@ -220,6 +231,7 @@ export default function Nav() {
                     </svg>
                 </div> */}
       </Col>
+      {isLogin && <LoginModal></LoginModal>}
     </Wrap>
   );
 }

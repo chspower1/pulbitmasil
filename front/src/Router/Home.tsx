@@ -4,7 +4,9 @@ import { AAtom } from "@atom/atom";
 import LineChart from "@components/LineChart";
 import BarChart from "@components/BarChart";
 import { getInfo } from "@api/api";
+import { useNavigate } from "react-router-dom";
 export default function Home() {
+  
   useEffect(() => {
     const URL = {
       name: "trash",
