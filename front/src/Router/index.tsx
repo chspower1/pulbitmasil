@@ -10,6 +10,7 @@ import Register from "./Register";
 import styled from "styled-components";
 import Footer from "@components/Footer";
 import Chart from "./Chart";
+import ScrollBtn from "@components/ScrollBtn";
 
 const ContentContainer = styled.section`
   padding-top: 60px;
@@ -29,6 +30,7 @@ export default function Router() {
           <Route path="/chart" element={<Chart />} />
         </Routes>
       </ContentContainer>
+      <ScrollBtn />
       <Footer />
     </BrowserRouter>
   );
