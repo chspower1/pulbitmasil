@@ -16,19 +16,19 @@ export default function Register() {
     watch,
   } = useForm<User>();
 
-  const onSubmit: SubmitHandler<User> = data => console.log(data);
-  const onErrors: SubmitHandler<any> = errors => console.error(errors);
+  const onSubmit = handleSubmit(data => console.log(data));
 
   return (
     <Wrapper>
       <FormContainer>
         <Title>회원가입</Title>
         <p>가입을 통해 더 많은 서비스를 만나보세요!</p>
-        <Form onSubmit={handleSubmit(onSubmit, onErrors)}>
+        <Form onSubmit={onSubmit}>
           <InputContainer>
             <p>이름</p>
             <Input
               id="name"
+              type="text"
               {...register("name", {
                 required: { value: true, message: "이름을 입력해주세요." },
               })}
@@ -39,6 +39,7 @@ export default function Register() {
           <InputContainer>
             <p>이메일</p>
             <Input
+              type="text"
               id="id"
               {...register("id", {
                 required: "아이디를 입력해주세요.",
@@ -55,6 +56,7 @@ export default function Register() {
           <InputContainer>
             <p>비밀번호</p>
             <Input
+              type="text"
               id="password"
               // type="password"
               {...register("password", {
@@ -68,13 +70,16 @@ export default function Register() {
           <InputContainer>
             <p>비밀번호 확인</p>
             <Input
-              type="confirmPassword"
+              type="text"
+              id="confirmPassword"
               {...register("confirmPassword", {
-                required: { value: true, message: "비밀번호를 입력해주세요." },
-                validate: (checkPassword: string) => watch("password") != checkPassword && "비밀번호를 확인해주세요.",
+                required: { value: true, message: "비밀번호가 일치하지 않습니다." },
+                validate: value => value === watch("password"),
               })}
             />
-            <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+            {errors.confirmPassword && errors.confirmPassword.type === "validate" && (
+              <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
+            )}
           </InputContainer>
           <Button type="submit">가입하기</Button>
           <Button>로그인</Button>
