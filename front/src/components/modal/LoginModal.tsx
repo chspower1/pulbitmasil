@@ -20,7 +20,7 @@ export default function LoginModal() {
       <LoginForm>
         <h1>Login</h1>
         <label htmlFor="id">ID</label>
-        <input
+        <EmailInput
           id="id"
           type="text"
           {...register("email", {
@@ -63,6 +63,7 @@ const LoginForm = styled.form`
   background-color: white;
   z-index: 1000;
 `;
+const EmailInput = styled.input``;
 const Overlay = styled.div`
   z-index: 100;
   position: fixed;

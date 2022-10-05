@@ -17,6 +17,9 @@ export const GlobalStyled = createGlobalStyle`
     a{
         text-decoration: none;
     }
+    input{
+        
+    }
     button {
         border-radius: 10px;
         border: none;
