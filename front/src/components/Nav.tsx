@@ -14,19 +14,22 @@ const Wrap = styled(motion.nav)`
   justify-content: space-between;
   height: 60px;
   width: 100%;
-  margin-bottom: 60px;
+  padding: 0px 20px;
 `;
 const Col = styled.div`
   display: flex;
   align-items: center;
 `;
-const Items = styled.ul`
-  display: flex;
-  align-items: center;
-`;
+const LogoBox = styled(Col)``;
+const MenuBox = styled(Col)``;
+const UserBox = styled(Col)``;
 const Logo = styled(motion.svg)`
   width: 300px;
   margin-top: 5px;
+`;
+const Items = styled.ul`
+  display: flex;
+  align-items: center;
 `;
 const Item = styled.li`
   position: relative;
@@ -118,7 +121,7 @@ export default function Nav() {
   }, [pathname]);
   return (
     <Wrap variants={navVariants} initial="top" animate={navAnimation}>
-      <Col>
+      <LogoBox>
         <Link to="/">
           <Logo
             onClick={() => setCurState("home")}
@@ -175,6 +178,8 @@ export default function Nav() {
             </g>
           </Logo>
         </Link>
+      </LogoBox>
+      <MenuBox>
         <Items>
           {navMenus.map((menu, index) => (
             <Link key={index} to={menu === "home" ? "/" : menu}>
@@ -185,15 +190,15 @@ export default function Nav() {
             </Link>
           ))}
         </Items>
-      </Col>
-      <Col>
+      </MenuBox>
+      <UserBox>
         <Items>
           <Item onClick={() => setIsLogin(prev => !prev)}>로그인</Item>
 
           <Item>회원가입</Item>
         </Items>
-      </Col>
-      <Col>
+      </UserBox>
+      {/*<Col>
         <SearchBox onSubmit={handleSubmit(onvalid)}>
           <Magnifify
             onClick={toggleSearch}
@@ -229,8 +234,8 @@ export default function Nav() {
                     <svg width={20} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                         <path d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
                     </svg>
-                </div> */}
-      </Col>
+                </div> 
+      </Col>*/}
       {isLogin && <LoginModal></LoginModal>}
     </Wrap>
   );
