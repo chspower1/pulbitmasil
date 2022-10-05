@@ -18,7 +18,12 @@ export const GlobalStyled = createGlobalStyle`
         text-decoration: none;
     }
     input{
-        
+        color: black;
+        border: 2px solid #008037;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 5px;
+        margin: 0.3em;
+        padding: 0.5em 1.5em;
     }
     button {
         transition:color 0.4s ease;
@@ -28,7 +33,7 @@ export const GlobalStyled = createGlobalStyle`
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         border-radius: 10px;
         margin: 0.3em;
-        padding: 0.25em 1em;
+        padding: 0.5em 1.5em;
         border: 2px solid #008037;
         border-radius: 5px;
     }
