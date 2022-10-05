@@ -2,10 +2,21 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@atom/*": ["src/atom/*"],
-      "@styles/*": ["src/styles/*"],
-      "@router/*": ["src/router/*"]
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@atom/*": [
+        "src/atom/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@router/*": [
+        "src/router/*"
+      ],
+      "@api/*": [
+        "src/api/*"
+      ]
     }
   }
 }
