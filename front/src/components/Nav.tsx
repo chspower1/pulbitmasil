@@ -195,7 +195,7 @@ export default function Nav() {
         <Items>
           <Item onClick={() => setIsLogin(prev => !prev)}>로그인</Item>
 
-          <Item>회원가입</Item>
+          {isLogin || <Item onClick={() => navigate("/register")}>회원가입</Item>}
         </Items>
       </UserBox>
       {/*<Col>
