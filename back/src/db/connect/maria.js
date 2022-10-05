@@ -1,11 +1,12 @@
-const maria =  require("mysql");
+require("dotenv").config();
+const maria = require("mysql");
 
 const connect = maria.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "elice05team09",
-    database: "plogging"
+  host: "192.168.219.106",
+  port: 3306,
+  user: process.env.MariaDB_user,
+  password: process.env.MariaDB_password,
+  database: process.env.MariaDB_database,
 });
 
 module.exports = connect;
