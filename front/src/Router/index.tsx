@@ -10,6 +10,7 @@ import Register from "./Register";
 import styled from "styled-components";
 import Footer from "@components/Footer";
 import Chart from "./Chart";
+import Plogging from "./Plogging";
 
 const ContentContainer = styled.section`
   padding-top: 60px;
@@ -27,6 +28,7 @@ export default function Router() {
           <Route path="/map" element={<Map />} />
           <Route path="/register" element={<Register />} />
           <Route path="/chart" element={<Chart />} />
+          <Route path="/plogging" element={<Plogging />} />
         </Routes>
       </ContentContainer>
       <Footer />

@@ -33,7 +33,7 @@ const Items = styled.ul`
 `;
 const Item = styled.li`
   position: relative;
-  padding: 10px;
+  padding: 20px;
   display: flex;
   justify-content: center;
   color: #618872;
@@ -43,7 +43,7 @@ const CurCircle = styled(motion.div)`
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  bottom: -3px;
+  bottom: 5px;
   background-color: rgba(0, 128, 55, 1);
 `;
 const SearchBox = styled.form`
@@ -75,10 +75,10 @@ const LogoVariants = {
 };
 const navVariants = {
   top: {
-    backgroundColor: "rgba(0, 128, 55,0)",
+    backgroundColor: "rgba(255, 255, 255,1)",
   },
   scroll: {
-    backgroundColor: "rgba(0, 128, 55,0.1)",
+    backgroundColor: "rgba(255, 255, 255,1)",
   },
 };
 
@@ -95,8 +95,8 @@ export default function Nav() {
   const { register, handleSubmit, reset } = useForm<SearchForm>();
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  const navMenus = ["home", "about", "map", "chart"];
-  const navKorMenus = ["홈", "소개", "지도", "통계"];
+  const navMenus = ["about", "map", "chart", "walking", "plogging"];
+  const navKorMenus = ["소개", "지도", "통계", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
   console.log(curState);
 
@@ -182,7 +182,7 @@ export default function Nav() {
       <MenuBox>
         <Items>
           {navMenus.map((menu, index) => (
-            <Link key={index} to={menu === "home" ? "/" : menu}>
+            <Link key={index} to={menu}>
               <Item onClick={() => setCurState(menu)}>
                 {navKorMenus[index]}
                 {curState === menu && <CurCircle layoutId="point" />}

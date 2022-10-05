@@ -16,6 +16,9 @@
       ],
       "@api/*": [
         "src/api/*"
+      ],
+      "@images/*": [
+        "src/images/*"
       ]
     }
   }
