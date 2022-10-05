@@ -11,6 +11,7 @@ import styled from "styled-components";
 import Footer from "@components/Footer";
 import Chart from "./Chart";
 import Plogging from "./Plogging";
+import ScrollBtn from "@components/ScrollBtn";
 
 const ContentContainer = styled.section`
   padding-top: 60px;
@@ -31,6 +32,7 @@ export default function Router() {
           <Route path="/plogging" element={<Plogging />} />
         </Routes>
       </ContentContainer>
+      <ScrollBtn />
       <Footer />
     </BrowserRouter>
   );
