@@ -8,7 +8,7 @@ var indexRouter = require("./src/routers/index");
 var usersRouter = require("./src/routers/users");
 var trashRouter = require("./src/routers/trash");
 
-var app = express();
+const app = express();
 
 const maria = require("./src/db/connect/maria");
 maria.connect();
