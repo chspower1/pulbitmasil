@@ -16,6 +16,7 @@ export default function Home() {
   return (
     <HomeWrap>
       <Img src="https://cdn.pixabay.com/photo/2022/04/07/14/31/bottle-7117637_960_720.jpg" alt="#" />
+      <div></div>
     </HomeWrap>
   );
 }

@@ -95,8 +95,8 @@ export default function Nav() {
   const { register, handleSubmit, reset } = useForm<SearchForm>();
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  const navMenus = ["home", "about", "map", "chart"];
-  const navKorMenus = ["홈", "소개", "지도", "통계"];
+  const navMenus = ["about", "map", "chart", "walking", "plogging"];
+  const navKorMenus = ["소개", "지도", "통계", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
   console.log(curState);
 
@@ -182,7 +182,7 @@ export default function Nav() {
       <MenuBox>
         <Items>
           {navMenus.map((menu, index) => (
-            <Link key={index} to={menu === "home" ? "/" : menu}>
+            <Link key={index} to={menu}>
               <Item onClick={() => setCurState(menu)}>
                 {navKorMenus[index]}
                 {curState === menu && <CurCircle layoutId="point" />}
