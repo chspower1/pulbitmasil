@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
@@ -15,7 +15,6 @@ interface LoginInfo {
 }
 
 export default function LoginModal() {
-  const [isViewPassword, setIsViewPassword] = useState(false);
   const {
     register,
     formState: { errors },
@@ -23,11 +22,17 @@ export default function LoginModal() {
     handleSubmit,
   } = useForm<LoginInfo>();
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-  const [user, setUser] = useRecoilState(userAtom);
+
+  const [isViewPassword, setIsViewPassword] = useState(false);
   const match = useMatch("/register");
   const onClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
+
+  //회원가입 페이지 이동시 모달창 꺼짐
+  useEffect(() => {
+    if (match) setIsLogin(prev => !prev);
+  }, [match]);
   const onvalid = (data: LoginInfo) => {
     console.log(data);
     requestLogin(data);
