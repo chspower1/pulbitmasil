@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
-const maria = require("../db/connect/maria");
-
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
+
+const maria = require("../db/connect/maria");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -56,7 +55,7 @@ router.get("/select", function (req, res) {
 });
 
 // 회원가입
-router.get("/register", async function (req, res, next) {
+router.post("/register", async function (req, res, next) {
   try {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
