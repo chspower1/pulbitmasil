@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "http://localhost:5001";
 
 interface getProps {
   name: string;
@@ -18,7 +18,7 @@ export async function getInfo({ name, option }: getProps) {
 }
 
 interface User {
-  id: string;
+  email: string;
   password: string;
   name?: string;
 }
@@ -35,7 +35,6 @@ interface User {
 export async function requestLogin(loginInfo: User) {
   const bodyData = JSON.stringify(loginInfo);
 
-  // endpoint 백엔드와 상의필요
   return axios
     .post(`${BASE_URL}/user/login`, bodyData, {
       headers: {
@@ -46,6 +45,7 @@ export async function requestLogin(loginInfo: User) {
     .then(res => {
       const token = res.data.token;
       sessionStorage.setItem("userToken", token);
+      console.log("token", token);
       // setAuthorizationToken(token);
     });
 }
