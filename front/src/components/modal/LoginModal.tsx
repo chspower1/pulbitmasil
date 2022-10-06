@@ -20,7 +20,7 @@ export default function LoginModal() {
     formState: { errors },
     setError,
     handleSubmit,
-  } = useForm<LoginInfo>();
+  } = useForm<LoginInfo>({ mode: "onChange" });
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
 
   const [isViewPassword, setIsViewPassword] = useState(false);
@@ -57,6 +57,7 @@ export default function LoginModal() {
               },
             })}
           />
+          <ErrorMessage>{errors.email?.message}</ErrorMessage>
         </EmailBox>
         <PasswordBox>
           <PasswordInput
@@ -78,6 +79,7 @@ export default function LoginModal() {
               onClick={onClickViewPassword}
             />
           </ViewPassword>
+          <ErrorMessage>{errors.password?.message}</ErrorMessage>
         </PasswordBox>
         <LoginBtn>로그인</LoginBtn>
         <UserBox>
@@ -128,10 +130,9 @@ const EmailBox = styled.div`
   display: flex;
   width: 440px;
   flex-direction: column;
-`;
-const PasswordBox = styled(EmailBox)`
   position: relative;
 `;
+const PasswordBox = styled(EmailBox)``;
 const UserBox = styled(EmailBox)`
   height: 65px;
   flex-direction: row;
@@ -159,6 +160,16 @@ const Input = styled.input`
 `;
 const EmailInput = styled(Input)``;
 const PasswordInput = styled(Input)``;
+
+const ErrorMessage = styled.div`
+  position: absolute;
+  font-size: 12px;
+  color: ${props => props.theme.dangerColor};
+  height: 14px;
+  bottom: 10px;
+  right: 0;
+`;
+
 const ViewPassword = styled.div`
   position: absolute;
   height: 60px;
