@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Container, Box } from "../style/Container";
 import { reset } from "styled-reset";
-import DistrictCheckbox from "@components/DistrictCheckbox";
 import { DoughnutChart } from "@components/chart/LineChart";
 import RoadBarChart from "@components/chart/RoadBarChart";
 import TrashBarChart from "@components/chart/TrashBarChart";
@@ -21,7 +20,6 @@ export default function Chart() {
         </BtnBox>
         <ChartBox>
           {isSelect ? <RoadBarChart /> : <TrashBarChart />}
-          <DistrictCheckbox />
         </ChartBox>
       </ChartContainer>
     </div>

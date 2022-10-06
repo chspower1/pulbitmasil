@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import json from "../../test_data/new_trash_count.json";
+import styled from "styled-components";
+import { Container } from "../../style/Container";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 interface TrashCount {
@@ -44,17 +46,30 @@ interface Data {
   ];
 }
 
-export default function TrashBarChart() {
+export default function BarChart() {
   const [trash, setTrash] = useState<TrashCount>(json);
-  // console.log(trash);
+  const [labels, setLabels] = useState(Object.keys(trash));
+
+  const changeHandler = (checked: boolean, id: string) => {
+    // console.log(checked, id);
+    if (checked === true) {
+      setLabels([...labels, id].sort());
+      labels.push(id);
+    } else {
+      const newLabels = labels.filter(label => label !== id).sort();
+      setLabels(newLabels);
+    }
+  };
+  console.log(trash);
+
   const options = {
     plugins: {
       title: {
         display: true,
-        text: '서울시 자치구별 쓰레기통 현황',
+        text: "서울시 자치구별 쓰레기통 현황",
       },
       legend: {
-        position: 'top' as const,
+        position: "top" as const,
       },
     },
     responsive: false,
@@ -62,19 +77,15 @@ export default function TrashBarChart() {
       x: {
         stacked: true,
         grid: {
-          display: false
-        }
+          display: false,
+        },
       },
       y: {
         stacked: true,
-        // grid: {
-        //   display: false
-        // }
       },
     },
   };
-  const labels = Object.keys(trash);
-  // console.log(labels);
+
   const data: Data = {
     labels,
     datasets: [
@@ -101,9 +112,41 @@ export default function TrashBarChart() {
       {
         label: "일반+담배꽁초",
         data: labels.map(i => trash[i].일반담배꽁초),
-        backgroundColor: "rgba(72, 190, 229, 0.5)",
+        backgroundColor: "rgba(171, 72, 229, 0.5)",
       },
     ],
   };
-  return <Bar options={options} data={data} width={800} height={500}/>;
+  return (
+    <>
+    {/* <Wrapper> */}
+      <Bar options={options} data={data} width={800} height={500} />
+      <ChartContainer>
+        {Object.keys(trash).map(label => (
+          <label>
+            <input
+              id={label}
+              type="checkbox"
+              name="color"
+              checked={labels.includes(label) || false}
+              onChange={e => {
+                changeHandler(e.currentTarget.checked, label);
+              }}
+            />{" "}
+            {label}
+          </label>
+        ))}
+      </ChartContainer>
+    {/* </Wrapper> */}
+    </>
+  );
 }
+
+// const Wrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
+
+const ChartContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+`;
