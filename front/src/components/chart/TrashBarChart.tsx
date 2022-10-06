@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import json from "../../test_data/new_trash_count.json";
+import styled from "styled-components";
+import { Container } from "../../style/Container";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 interface TrashCount {
@@ -58,7 +60,6 @@ export default function BarChart() {
       setLabels(newLabels);
     }
   };
-  console.log(trash);
 
   const options = {
     plugins: {
@@ -110,27 +111,34 @@ export default function BarChart() {
       {
         label: "일반+담배꽁초",
         data: labels.map(i => trash[i].일반담배꽁초),
-        backgroundColor: "rgba(72, 190, 229, 0.5)",
+        backgroundColor: "rgba(171, 72, 229, 0.5)",
       },
     ],
   };
   return (
     <>
       <Bar options={options} data={data} width={800} height={500} />
-      {Object.keys(trash).map(label => (
-        <label>
-          <input
-            id={label}
-            type="checkbox"
-            name="color"
-            checked={labels.includes(label) || false}
-            onChange={e => {
-              changeHandler(e.currentTarget.checked, label);
-            }}
-          />{" "}
-          {label}
-        </label>
-      ))}
+      <ChartContainer>
+        {Object.keys(trash).map(label => (
+          <label>
+            <input
+              id={label}
+              type="checkbox"
+              name="color"
+              checked={labels.includes(label) || false}
+              onChange={e => {
+                changeHandler(e.currentTarget.checked, label);
+              }}
+            />{" "}
+            {label}
+          </label>
+        ))}
+      </ChartContainer>
     </>
   );
 }
+
+const ChartContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+`;

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDoubleUp } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faAngleDoubleUp } from "@fortawesome/free-solid-svg-icons";
 
 export default function ScrollBtn() {
   const [isScroll, setIsScroll] = useState(true);
@@ -45,7 +45,7 @@ export default function ScrollBtn() {
     <BtnContainer>
       {isScroll && (
         <Btn whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={scrollToTop}>
-          <FontAwesomeIcon icon={faAngleDoubleUp} />
+          {/* <FontAwesomeIcon icon={faAngleDoubleUp} /> */}
         </Btn>
       )}
     </BtnContainer>
