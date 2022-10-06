@@ -6,7 +6,7 @@ const connect = maria.createConnection({
   port: process.env.MariaDB_port,
   user: process.env.MariaDB_user,
   password: process.env.MariaDB_password,
-  database: process.env.MariaDB_,
+  database: process.env.MariaDB_database,
 });
 
 module.exports = connect;
