@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { isLoginAtom, userAtom } from "@atom/atom";
 import { Link, useMatch } from "react-router-dom";
 import { requestLogin } from "@api/api";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 interface LoginInfo {
   email: string;
   password: string;
@@ -12,6 +15,7 @@ interface LoginInfo {
 }
 
 export default function LoginModal() {
+  const [isViewPassword, setIsViewPassword] = useState(false);
   const {
     register,
     formState: { errors },
@@ -21,6 +25,9 @@ export default function LoginModal() {
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const [user, setUser] = useRecoilState(userAtom);
   const match = useMatch("/register");
+  const onClickViewPassword = () => {
+    setIsViewPassword(cur => !cur);
+  };
   const onvalid = (data: LoginInfo) => {
     console.log(data);
     requestLogin(data);
@@ -49,7 +56,7 @@ export default function LoginModal() {
         <PasswordBox>
           <PasswordInput
             id="password"
-            type="password"
+            type={isViewPassword ? "text" : "password"}
             placeholder="비밀번호를 입력해주세요."
             {...register("password", {
               minLength: {
@@ -58,6 +65,14 @@ export default function LoginModal() {
               },
             })}
           />
+          <ViewPassword>
+            <FontAwesomeIcon
+              icon={isViewPassword ? faEye : faEyeSlash}
+              color="#2A9C6B"
+              style={{ cursor: "pointer" }}
+              onClick={onClickViewPassword}
+            />
+          </ViewPassword>
         </PasswordBox>
         <LoginBtn>로그인</LoginBtn>
         <UserBox>
@@ -109,7 +124,9 @@ const EmailBox = styled.div`
   width: 440px;
   flex-direction: column;
 `;
-const PasswordBox = styled(EmailBox)``;
+const PasswordBox = styled(EmailBox)`
+  position: relative;
+`;
 const UserBox = styled(EmailBox)`
   height: 65px;
   flex-direction: row;
@@ -137,6 +154,13 @@ const Input = styled.input`
 `;
 const EmailInput = styled(Input)``;
 const PasswordInput = styled(Input)``;
+const ViewPassword = styled.div`
+  position: absolute;
+  height: 60px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+`;
 const Overlay = styled.div`
   z-index: 100;
   position: fixed;
