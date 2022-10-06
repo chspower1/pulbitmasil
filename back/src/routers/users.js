@@ -13,10 +13,11 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "User" });
 });
 
+// 편의 기능
 router.get("/create", async function (req, res) {
   maria.query(
     `CREATE TABLE USER (
-    id VARCHAR(50) primary key NOT NULL,
+    id INT primary key AUTO_INCREMENT,
     name VARCHAR(10) NOT NULL,
     email VARCHAR(30) UNIQUE NOT NULL,
     hashedPassword VARCHAR(100) NOT NULL)`,
@@ -59,11 +60,10 @@ router.post("/register", async function (req, res, next) {
   try {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user_id = uuidv4();
 
     maria.query(
-      `INSERT INTO USER(id, name, email, hashedPassword) VALUES(?,?,?,?)`,
-      [user_id, name, email, hashedPassword],
+      `INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,?)`,
+      [name, email, hashedPassword],
       function (err, rows, fields) {
         if (!err) {
           res.status(200).json({ success: true, message: "user register success" });
@@ -101,14 +101,37 @@ router.post("/login", async function (req, res, next) {
   });
 });
 
+// 토큰이랑 id는 넘겨줄지 말지 모르겠음
+
 router.put("/modify", login_required, async function (req, res, next) {
   try {
     const { name } = req.body;
     const user_id = req.currentUserId;
-    console.log(user_id);
+
     maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, user_id], async function (err, rows, fields) {
       if (!err) {
-        res.status(200).json({ success: true, message: "success" });
+        res
+          .status(200)
+          .json({ success: true, success: true, email: email, name: rows[0].name, id: rows[0].id, token: token });
+      } else {
+        console.log("err : " + err);
+        res.send(err);
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/delete", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.currentUserId;
+
+    maria.query(` USER SET name = ? WHERE id = ?`, [name, user_id], async function (err, rows, fields) {
+      if (!err) {
+        res
+          .status(200)
+          .json({ success: true, success: true, email: email, name: rows[0].name, id: rows[0].id, token: token });
       } else {
         console.log("err : " + err);
         res.send(err);
