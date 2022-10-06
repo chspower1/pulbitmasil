@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 
 function login_required(req, res, next) {
   const userToken = req.headers["authorization"] ?? "null";
-
+  console.log(req.headers);
   if (userToken === "null") {
     console.log("Authorization 토큰: 없음");
     return res.status(400).send("로그인한 유저만 사용할 수 있는 서비스");
@@ -19,4 +19,4 @@ function login_required(req, res, next) {
   }
 }
 
-module.exports = { login_required };
+module.exports = login_required;

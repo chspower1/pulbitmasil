@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 
+const login_required = require("../middlewares/login_required");
+
 const maria = require("../db/connect/maria");
 
 /* GET home page. */
@@ -93,6 +95,24 @@ router.post("/login", async function (req, res, next) {
         const token = jwt.sign({ id: rows[0].id }, secretKey);
 
         res.status(200).json({ success: true, message: "user login success", token: token });
+      } else {
+        console.log("err : " + err);
+        res.send(err);
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/modify", login_required, async function (req, res, next) {
+  try {
+    const { name } = req.body;
+    const user_id = req.currentUserId;
+    console.log(user_id);
+    maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, user_id], async function (err, rows, fields) {
+      if (!err) {
+        res.status(200).json({ success: true, message: "success" });
       } else {
         console.log("err : " + err);
         res.send(err);
