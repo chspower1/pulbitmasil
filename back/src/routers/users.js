@@ -16,10 +16,10 @@ router.get("/", function (req, res, next) {
 router.get("/create", async function (req, res) {
   maria.query(
     `CREATE TABLE USER (
-    id VARCHAR(50) primary key,
-    name VARCHAR(10),
-    email VARCHAR(30) UNIQUE,
-    hashedPassword VARCHAR(100))`,
+    id VARCHAR(50) primary key NOT NULL,
+    name VARCHAR(10) NOT NULL,
+    email VARCHAR(30) UNIQUE NOT NULL,
+    hashedPassword VARCHAR(100) NOT NULL)`,
     function (err, rows, fields) {
       if (!err) {
         res.send(rows);
@@ -80,29 +80,25 @@ router.post("/register", async function (req, res, next) {
 
 // 로그인
 router.post("/login", async function (req, res, next) {
-  try {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    maria.query(`SELECT * FROM USER WHERE email = ?`, [email], async function (err, rows, fields) {
-      if (!err) {
-        const correctPasswordHash = rows[0].hashedPassword;
-        const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
-        if (!isPasswordCorrect) {
-          return res.status(400).json({ success: false, message: "password error" });
-        }
-
-        const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-        const token = jwt.sign({ id: rows[0].id }, secretKey);
-
-        res.status(200).json({ success: true, message: "user login success", token: token });
-      } else {
-        console.log("err : " + err);
-        res.send(err);
+  maria.query(`SELECT * FROM USER WHERE email = ?`, [email], async function (err, rows, fields) {
+    if (!err & rows.length) {
+      const correctPasswordHash = rows[0].hashedPassword;
+      const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
+      if (!isPasswordCorrect) {
+        return res.status(400).json({ success: false });
       }
-    });
-  } catch (error) {
-    next(error);
-  }
+
+      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const token = jwt.sign({ id: rows[0].id }, secretKey);
+
+      res.status(200).json({ success: true, email: email, id: rows[0].id, token: token });
+    } else {
+      console.log("err : " + err);
+      res.send(err);
+    }
+  });
 });
 
 router.put("/modify", login_required, async function (req, res, next) {
