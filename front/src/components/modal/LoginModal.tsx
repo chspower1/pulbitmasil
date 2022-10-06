@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { curUserAtom, isLoginAtom, userAtom } from "@atom/atom";
-import { Link, useMatch } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { curUserAtom, isLoginModalAtom, isLoginSelector, userAtom } from "@atom/atom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 import { requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
@@ -54,9 +54,10 @@ export default function LoginModal() {
     setError,
     handleSubmit,
   } = useForm<LoginInfo>({ mode: "onChange" });
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-
+  const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
   const [isViewPassword, setIsViewPassword] = useState(false);
+  const navigator = useNavigate();
   const match = useMatch("/register");
   const onClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
@@ -64,14 +65,20 @@ export default function LoginModal() {
   const [curUser, setCurUser] = useRecoilState(curUserAtom);
   //회원가입 페이지 이동시 모달창 꺼짐
   useEffect(() => {
-    if (match) setIsLogin(prev => !prev);
+    if (match) setIsLoginModal(prev => !prev);
   }, [match]);
   const onvalid = async (data: LoginInfo) => {
     const { email, name, token } = await requestLogin(data);
     setCurUser({ email, name, token });
     console.log(curUser);
-    //로그인 시
   };
+  //로그인 시 모달비활성화,홈으로 이동
+  useEffect(() => {
+    if (isLogin) {
+      setIsLoginModal(false);
+      navigator("/");
+    }
+  }, [isLogin]);
   return (
     <Wrap>
       <AnimatePresence>
@@ -135,7 +142,7 @@ export default function LoginModal() {
             <NaverLogin>네이버 로그인</NaverLogin>
             <KakaoLogin>카카오 로그인</KakaoLogin>
           </SocialLoginBox>
-          <CloseBtn onClick={() => setIsLogin(prev => !prev)}>
+          <CloseBtn onClick={() => setIsLoginModal(prev => !prev)}>
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M19 3L11 11L3 19M3 3L19 19"
@@ -148,7 +155,7 @@ export default function LoginModal() {
           </CloseBtn>
         </LoginForm>
         <Overlay
-          onClick={() => setIsLogin(prev => !prev)}
+          onClick={() => setIsLoginModal(prev => !prev)}
           variants={OverlayVariant}
           initial="initial"
           animate="animate"

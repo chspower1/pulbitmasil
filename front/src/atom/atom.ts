@@ -3,13 +3,17 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-export const isLoginState = selector({
+export const isLoginSelector = selector({
   key: "isLogin",
   get: ({ get }) => {
     const curUser = get(curUserAtom);
     const checkLogin = sessionStorage.getItem("userToken") && curUser?.token ? true : false;
     return checkLogin;
   },
+});
+export const isLoginModalAtom = atom({
+  key: "isLoginModal",
+  default: false,
 });
 interface CurUser {
   email: string;
