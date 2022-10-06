@@ -71,6 +71,7 @@ const CurCircle = styled(motion.div)`
 const UserName = styled.div`
   font-size: 18px;
   color: white;
+  margin-top: 5px;
 `;
 // Variants
 const LogoVariants = {
