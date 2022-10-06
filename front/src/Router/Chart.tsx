@@ -1,9 +1,11 @@
-import BarChart from "@components/chart/BarChart";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Container, Box } from "../style/Container";
 import { reset } from "styled-reset";
 import DistrictCheckbox from "@components/DistrictCheckbox";
+import { DoughnutChart } from "@components/chart/LineChart";
+import RoadBarChart from "@components/chart/RoadBarChart";
+import TrashBarChart from "@components/chart/TrashBarChart";
 
 export default function Chart() {
   const [isSelect, setIsSelect] = useState(false);
@@ -18,7 +20,7 @@ export default function Chart() {
           <Btn onClick={onClickTrue}>서울 자치구별 두드림길 현황</Btn>
         </BtnBox>
         <ChartBox>
-          {isSelect ? "두드림길 현황" : <BarChart />}
+          {isSelect ? <RoadBarChart /> : <TrashBarChart />}
           <DistrictCheckbox />
         </ChartBox>
       </ChartContainer>

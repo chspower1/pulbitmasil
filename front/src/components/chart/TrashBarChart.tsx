@@ -44,7 +44,7 @@ interface Data {
   ];
 }
 
-export default function BarChart() {
+export default function TrashBarChart() {
   const [trash, setTrash] = useState<TrashCount>(json);
   // console.log(trash);
   const options = {
