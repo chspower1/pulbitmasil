@@ -21,6 +21,14 @@ export const GlobalStyled = createGlobalStyle`
         outline: solid 2px ${props => props.theme.mainColor};
     
     }
+    input[type=password]{
+        font-family:"Arial Black";
+        letter-spacing :1px;
+        font-size:20px;
+        ::placeholder{
+            font-family: "Sebang";
+        }
+    }
     button { 
         background-color: ${props => props.theme.mainColor};
         color:white;

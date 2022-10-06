@@ -1,9 +1,9 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { isLoginAtom, userAtom } from "@atom/atom";
-import { Link } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { requestLogin } from "@api/api";
 interface LoginInfo {
   email: string;
@@ -20,16 +20,16 @@ export default function LoginModal() {
   } = useForm<LoginInfo>();
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const [user, setUser] = useRecoilState(userAtom);
-
-  const onvalid = handleSubmit(data => {
+  const match = useMatch("/register");
+  const onvalid = (data: LoginInfo) => {
     console.log(data);
     requestLogin(data);
 
     //로그인 시
-  });
+  };
   return (
     <Wrap>
-      <LoginForm onSubmit={onvalid}>
+      <LoginForm onSubmit={handleSubmit(onvalid)}>
         <Title>로그인</Title>
         <EmailBox>
           <EmailInput
@@ -61,12 +61,13 @@ export default function LoginModal() {
         </PasswordBox>
         <LoginBtn>로그인</LoginBtn>
         <UserBox>
-          <Link to="/register">
-            <Register>회원가입</Register>
-          </Link>
-          <Link to="/register">
-            <FindPassword>아이디,비밀번호 찾기</FindPassword>
-          </Link>
+          <Register>
+            <Link to="/register">회원가입 </Link>
+          </Register>
+
+          <FindPassword>
+            <Link to="/register">아이디,비밀번호 찾기</Link>
+          </FindPassword>
         </UserBox>
         <SocialLoginBox>
           <NaverLogin>네이버 로그인</NaverLogin>
@@ -128,6 +129,7 @@ const Input = styled.input`
   height: 60px;
   font-size: 18px;
   margin-bottom: 34px;
+  padding-left: 10px;
   color: ${props => props.theme.textColor};
   ::placeholder {
     color: ${props => props.theme.weekColor};
