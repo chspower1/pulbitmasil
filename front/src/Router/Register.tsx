@@ -5,7 +5,7 @@ import { registerUser } from "@api/api";
 export default function Register() {
   interface User {
     name: string;
-    id: string;
+    email: string;
     password: string;
     confirmPassword?: string;
   }
@@ -46,7 +46,7 @@ export default function Register() {
             <Input
               type="text"
               id="id"
-              {...register("id", {
+              {...register("email", {
                 required: "아이디를 입력해주세요.",
                 pattern: {
                   value:
@@ -55,7 +55,7 @@ export default function Register() {
                 },
               })}
             />
-            <ErrorMessage>{errors.id?.message}</ErrorMessage>
+            <ErrorMessage>{errors.email?.message}</ErrorMessage>
           </InputContainer>
 
           <InputContainer>

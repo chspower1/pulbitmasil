@@ -1,11 +1,13 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { isLoginAtom } from "@atom/atom";
-interface Login {
+import { isLoginAtom, userAtom } from "@atom/atom";
+import { requestLogin } from "@api/api";
+interface LoginInfo {
   email: string;
   password: string;
+  name?: string;
 }
 
 export default function LoginModal() {
@@ -14,12 +16,19 @@ export default function LoginModal() {
     formState: { errors },
     setError,
     handleSubmit,
-  } = useForm();
+  } = useForm<LoginInfo>();
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-  const onvalid = () => {};
+  const [user, setUser] = useRecoilState(userAtom);
+
+  const onvalid = handleSubmit(data => {
+    console.log(data);
+    requestLogin(data);
+
+    //로그인 시
+  });
   return (
     <Wrap>
-      <LoginForm onSubmit={handleSubmit(onvalid)}>
+      <LoginForm onSubmit={onvalid}>
         <Title>Login</Title>
         <EmailBox>
           <Label htmlFor="email">이메일</Label>
