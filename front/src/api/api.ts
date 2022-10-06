@@ -14,3 +14,4 @@ export async function getInfo({ name, option }: getProps) {
     console.log(err);
   }
 }
+
