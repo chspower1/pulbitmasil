@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { isLoginAtom } from "@atom/atom";
+import { Link } from "react-router-dom";
 interface Login {
   email: string;
   password: string;
@@ -51,8 +52,12 @@ export default function LoginModal() {
         </PasswordBox>
         <LoginBtn>로그인</LoginBtn>
         <UserBox>
-          <Register>회원가입</Register>
-          <FindPassword>아이디,비밀번호 찾기</FindPassword>
+          <Link to="/register">
+            <Register>회원가입</Register>
+          </Link>
+          <Link to="/register">
+            <FindPassword>아이디,비밀번호 찾기</FindPassword>
+          </Link>
         </UserBox>
         <SocialLoginBox>
           <NaverLogin>네이버 로그인</NaverLogin>
@@ -158,4 +163,7 @@ const NaverLogin = styled(LoginBtn)`
 const KakaoLogin = styled(NaverLogin)`
   color: #402325;
   background-color: #ffe500;
+  &:hover {
+    background-color: #ebd832;
+  }
 `;

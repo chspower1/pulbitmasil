@@ -13,6 +13,7 @@ export const GlobalStyled = createGlobalStyle`
     }
     a{
         text-decoration: none; 
+        color:${props => props.theme.textColor};
     }
     input{
         color:${props => props.theme.textColor};
