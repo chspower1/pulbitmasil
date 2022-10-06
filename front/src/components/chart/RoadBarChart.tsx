@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import json from "../../test_data/new_dodream_count.json";
+import styled from "styled-components";
+import { Container } from "../../style/Container";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -122,20 +124,27 @@ export default function RoadBarChart() {
     return (
     <>
       <Bar options={options} data={data} width={800} height={500} />
-      {Object.keys(roads).map(label => (
-        <label>
-          <input
-            id={label}
-            type="checkbox"
-            name="color"
-            checked={labels.includes(label) || false}
-            onChange={e => {
-              changeHandler(e.currentTarget.checked, label);
-            }}
-          />{" "}
-          {label}
-        </label>
-      ))}
+      <ChartContainer>
+        {Object.keys(roads).map(label => (
+          <label>
+            <input
+              id={label}
+              type="checkbox"
+              name="color"
+              checked={labels.includes(label) || false}
+              onChange={e => {
+                changeHandler(e.currentTarget.checked, label);
+              }}
+            />{" "}
+            {label}
+          </label>
+        ))}
+      </ChartContainer>
     </>
   );
 }
+
+const ChartContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
+`;

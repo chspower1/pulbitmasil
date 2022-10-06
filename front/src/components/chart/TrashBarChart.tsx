@@ -60,7 +60,6 @@ export default function BarChart() {
       setLabels(newLabels);
     }
   };
-  console.log(trash);
 
   const options = {
     plugins: {
@@ -118,7 +117,6 @@ export default function BarChart() {
   };
   return (
     <>
-    {/* <Wrapper> */}
       <Bar options={options} data={data} width={800} height={500} />
       <ChartContainer>
         {Object.keys(trash).map(label => (
@@ -136,15 +134,9 @@ export default function BarChart() {
           </label>
         ))}
       </ChartContainer>
-    {/* </Wrapper> */}
     </>
   );
 }
-
-// const Wrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
 
 const ChartContainer = styled(Container)`
   display: flex;

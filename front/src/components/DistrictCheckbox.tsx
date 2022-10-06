@@ -50,17 +50,6 @@ export default function DistrictCheckbox() {
           })}
         </Form>
       </DistrictCheckBox>
-      <CheckContainer>
-          {checkedList.map((item) => {
-          return (
-            <span key={item}>
-              <ItemBox>
-                {item}
-              </ItemBox>
-            </span>
-          )
-          })}
-      </CheckContainer>
     </CheckBox>
   )
 }
