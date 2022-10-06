@@ -8,11 +8,44 @@ import { requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faXing } from "@fortawesome/free-brands-svg-icons";
+import { motion, AnimatePresence } from "framer-motion";
 interface LoginInfo {
   email: string;
   password: string;
   name?: string;
 }
+
+const ModalVariant = {
+  initial: {
+    y: 30,
+    opacity: 0,
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+    },
+  },
+  exit: {
+    opacity: 0,
+  },
+};
+const OverlayVariant = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+    },
+  },
+  exit: {
+    opacity: 0,
+  },
+};
 
 export default function LoginModal() {
   const {
@@ -36,68 +69,92 @@ export default function LoginModal() {
   const onvalid = (data: LoginInfo) => {
     console.log(data);
     requestLogin(data);
-
+    
     //로그인 시
   };
   return (
     <Wrap>
-      <LoginForm onSubmit={handleSubmit(onvalid)}>
-        <Title>로그인</Title>
-        <EmailBox>
-          <EmailInput
-            id="email"
-            type="text"
-            placeholder="이메일을 입력해주세요."
-            {...register("email", {
-              required: "이메일을 입력해주세요!",
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "이메일 형식에 맞지 않습니다!",
-              },
-            })}
-          />
-          <ErrorMessage>{errors.email?.message}</ErrorMessage>
-        </EmailBox>
-        <PasswordBox>
-          <PasswordInput
-            id="password"
-            type={isViewPassword ? "text" : "password"}
-            placeholder="비밀번호를 입력해주세요."
-            {...register("password", {
-              minLength: {
-                value: 7,
-                message: "7글자 이상 입력해주세요!",
-              },
-            })}
-          />
-          <ViewPassword>
-            <FontAwesomeIcon
-              icon={isViewPassword ? faEye : faEyeSlash}
-              color="#2A9C6B"
-              style={{ cursor: "pointer" }}
-              onClick={onClickViewPassword}
+      <AnimatePresence>
+        <LoginForm
+          onSubmit={handleSubmit(onvalid)}
+          variants={ModalVariant}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          <Title>로그인</Title>
+          <EmailBox>
+            <EmailInput
+              id="email"
+              type="text"
+              placeholder="이메일을 입력해주세요."
+              {...register("email", {
+                required: "이메일을 입력해주세요!",
+                pattern: {
+                  value:
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: "이메일 형식에 맞지 않습니다!",
+                },
+              })}
             />
-          </ViewPassword>
-          <ErrorMessage>{errors.password?.message}</ErrorMessage>
-        </PasswordBox>
-        <LoginBtn>로그인</LoginBtn>
-        <UserBox>
-          <Register>
-            <Link to="/register">회원가입 </Link>
-          </Register>
+            <ErrorMessage>{errors.email?.message}</ErrorMessage>
+          </EmailBox>
+          <PasswordBox>
+            <PasswordInput
+              id="password"
+              type={isViewPassword ? "text" : "password"}
+              placeholder="비밀번호를 입력해주세요."
+              {...register("password", {
+                minLength: {
+                  value: 7,
+                  message: "7글자 이상 입력해주세요!",
+                },
+              })}
+            />
+            <ViewPassword>
+              <FontAwesomeIcon
+                icon={isViewPassword ? faEye : faEyeSlash}
+                color="#2A9C6B"
+                style={{ cursor: "pointer" }}
+                onClick={onClickViewPassword}
+              />
+            </ViewPassword>
+            <ErrorMessage>{errors.password?.message}</ErrorMessage>
+          </PasswordBox>
+          <LoginBtn>로그인</LoginBtn>
+          <UserBox>
+            <Register>
+              <Link to="/register">회원가입 </Link>
+            </Register>
 
-          <FindPassword>
-            <Link to="/register">아이디,비밀번호 찾기</Link>
-          </FindPassword>
-        </UserBox>
-        <SocialLoginBox>
-          <NaverLogin>네이버 로그인</NaverLogin>
-          <KakaoLogin>카카오 로그인</KakaoLogin>
-        </SocialLoginBox>
-        <CloseBtn onClick={() => setIsLogin(prev => !prev)}>X</CloseBtn>
-      </LoginForm>
-      <Overlay onClick={() => setIsLogin(prev => !prev)} />
+            <FindPassword>
+              <Link to="/register">아이디,비밀번호 찾기</Link>
+            </FindPassword>
+          </UserBox>
+          <SocialLoginBox>
+            <NaverLogin>네이버 로그인</NaverLogin>
+            <KakaoLogin>카카오 로그인</KakaoLogin>
+          </SocialLoginBox>
+          <CloseBtn onClick={() => setIsLogin(prev => !prev)}>
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19 3L11 11L3 19M3 3L19 19"
+                stroke="white"
+                stroke-width="5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </CloseBtn>
+        </LoginForm>
+        <Overlay
+          onClick={() => setIsLogin(prev => !prev)}
+          variants={OverlayVariant}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        />
+      </AnimatePresence>
     </Wrap>
   );
 }
@@ -109,7 +166,7 @@ const Wrap = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const LoginForm = styled.form`
+const LoginForm = styled(motion.form)`
   position: relative;
   z-index: 1000;
   width: 600px;
@@ -117,7 +174,7 @@ const LoginForm = styled.form`
   background-color: white;
   display: flex;
   flex-direction: column;
-
+  border-radius: 10px;
   align-items: center;
 `;
 const Title = styled.h1`
@@ -177,7 +234,7 @@ const ViewPassword = styled.div`
   display: flex;
   align-items: center;
 `;
-const Overlay = styled.div`
+const Overlay = styled(motion.div)`
   z-index: 100;
   position: fixed;
   left: 0px;
@@ -193,8 +250,8 @@ const CloseBtn = styled.button`
   width: 44px;
   height: 44px;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   border-radius: 10px;
 `;
 const LoginBtn = styled.button`

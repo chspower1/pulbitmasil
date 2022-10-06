@@ -46,6 +46,7 @@ export async function requestLogin(loginInfo: User) {
       const token = res.data.token;
       sessionStorage.setItem("userToken", token);
       console.log("token", token);
+      console.log("===================", res);
       // setAuthorizationToken(token);
     });
 }
