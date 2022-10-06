@@ -1,9 +1,8 @@
 import { DefaultTheme } from "styled-components";
 export const lightTheme: DefaultTheme = {
-  bgColor: "#CDF0EA",
-  btnColor: "#74b9ff",
-  btnTextColor: "white",
-  cardColor: "#F6C6EA",
-  cardTextColor: "#576F72",
-  accentColor: "#F9F9F9",
+  mainColor: "#2A9C6B",
+  textColor: "#636E72",
+  weekColor: "#C7E1D6",
+  accentColor: "#008037",
+  borderColor: "#A7A7A7",
 };

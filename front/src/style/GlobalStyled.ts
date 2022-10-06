@@ -7,35 +7,33 @@ export const GlobalStyled = createGlobalStyle`
     h1{
         font-family: "SebangBold";
     }
-    * {
-        font-family: "Sebang";
-        box-sizing: border-box;
-    }
+    
     body {
         font-family: "Sebang";
     }
     a{
-        text-decoration: none;
+        text-decoration: none; 
     }
     input{
-        color: black;
-        border: 2px solid #008037;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 5px;
-        margin: 0.3em;
-        padding: 0.5em 1.5em;
+        color:${props => props.theme.textColor};
+        border:solid 1px ${props => props.theme.weekColor};
+        outline: solid 2px ${props => props.theme.mainColor};
+    
     }
-    button {
-        transition:color 0.4s ease;
-        transition:background-color 0.4s ease;
-        background: #008037;
-        color: white;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 10px;
-        margin: 0.3em;
-        padding: 0.5em 1.5em;
-        border: 2px solid #008037;
-        border-radius: 5px;
+    button { 
+        background-color: ${props => props.theme.mainColor};
+        color:white;
+        padding-top:20px;
+        padding-bottom:20px;
+        border:none;
         cursor:pointer;
+        transition:all 0.4s ease; 
+        &:hover{
+            background-color: ${props => props.theme.accentColor};
+        }
+    }
+    * {
+        font-family: "Sebang";
+        box-sizing: border-box;
     }
 `;
