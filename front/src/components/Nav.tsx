@@ -46,11 +46,8 @@ const Logo = styled(motion.svg)`
 const Items = styled.ul`
   display: flex;
   align-items: center;
-  li {
+  a:not(:last-of-type) {
     border-right: solid 1px gray;
-    /* :last-child {
-      border-right: 0px;
-    } */
   }
 `;
 const Item = styled.li`
