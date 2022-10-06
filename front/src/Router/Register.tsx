@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { registerUser } from "@api/api";
 
 export default function Register() {
   interface User {
     name: string;
     id: string;
     password: string;
-    confirmPassword: string;
+    confirmPassword?: string;
   }
 
   const {
@@ -16,14 +17,18 @@ export default function Register() {
     watch,
   } = useForm<User>();
 
-  const onSubmit = handleSubmit(data => console.log(data));
+  const onSubmitRegister = handleSubmit(data => {
+    delete data.confirmPassword;
+    console.log(data);
+    registerUser(data);
+  });
 
   return (
     <Wrapper>
       <FormContainer>
         <Title>회원가입</Title>
         <p>가입을 통해 더 많은 서비스를 만나보세요!</p>
-        <Form onSubmit={onSubmit}>
+        <Form onSubmit={onSubmitRegister}>
           <InputContainer>
             <p>이름</p>
             <Input

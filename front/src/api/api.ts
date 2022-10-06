@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const BASE_URL = "http://localhost:5000";
 
 interface getProps {
@@ -15,3 +17,48 @@ export async function getInfo({ name, option }: getProps) {
   }
 }
 
+interface User {
+  id: string;
+  password: string;
+  name?: string;
+}
+
+//토큰을 가지고있음을 헤더에 알려주는코드
+// function setAuthorizationToken(token: any) {
+//   if (token) {
+//     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+//   } else {
+//     delete axios.defaults.headers.common["Authorization"];
+//   }
+// }
+
+export async function requestLogin(loginInfo: User) {
+  const bodyData = JSON.stringify(loginInfo);
+
+  // endpoint 백엔드와 상의필요
+  return axios
+    .post(`${BASE_URL}/user/login`, bodyData, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    })
+    .then(res => {
+      const token = res.data.token;
+      sessionStorage.setItem("userToken", token);
+      // setAuthorizationToken(token);
+    });
+}
+
+export async function registerUser(newUser: User) {
+  const bodyData = JSON.stringify(newUser);
+  console.log(`%cGET 요청 ${BASE_URL + "register/user"}`, "color: #a25cd1;");
+
+  // endpoint 백엔드와 상의필요
+  return axios.post(`${BASE_URL}/user/register`, bodyData, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
