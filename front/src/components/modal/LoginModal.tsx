@@ -169,6 +169,7 @@ const ViewPassword = styled.div`
 const Overlay = styled.div`
   z-index: 100;
   position: fixed;
+  left: 0px;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
