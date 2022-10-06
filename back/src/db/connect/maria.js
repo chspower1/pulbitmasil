@@ -1,4 +1,5 @@
-const maria =  require("mysql");
+const maria = require("mysql");
+require("dotenv").config();
 
 const connect = maria.createConnection({
   host: process.env.MariaDB_host,

@@ -52,13 +52,12 @@ export async function requestLogin(loginInfo: User) {
 
 export async function registerUser(newUser: User) {
   const bodyData = JSON.stringify(newUser);
-  console.log(`%cGET 요청 ${BASE_URL + "register/user"}`, "color: #a25cd1;");
+  console.log(`%cGET 요청 ${BASE_URL + "/user/register"}`, "color: #a25cd1;");
 
   // endpoint 백엔드와 상의필요
   return axios.post(`${BASE_URL}/user/register`, bodyData, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
