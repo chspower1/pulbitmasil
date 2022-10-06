@@ -1,17 +1,22 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-export const isLoginAtom = atom({
+export const isLoginState = selector({
   key: "isLogin",
-  default: false,
+  get: ({ get }) => {
+    const curUser = get(curUserAtom);
+    const checkLogin = sessionStorage.getItem("userToken") && curUser?.token ? true : false;
+    return checkLogin;
+  },
 });
 interface CurUser {
   email: string;
   name: string;
+  token: string;
 }
-export const curUser = atom<CurUser | null>({
+export const curUserAtom = atom<CurUser | null>({
   key: "curUser",
   default: null,
 });

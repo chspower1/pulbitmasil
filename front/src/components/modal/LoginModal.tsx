@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
-import { isLoginAtom, userAtom } from "@atom/atom";
+import { curUserAtom, isLoginAtom, userAtom } from "@atom/atom";
 import { Link, useMatch } from "react-router-dom";
 import { requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -61,15 +61,15 @@ export default function LoginModal() {
   const onClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
-
+  const [curUser, setCurUser] = useRecoilState(curUserAtom);
   //회원가입 페이지 이동시 모달창 꺼짐
   useEffect(() => {
     if (match) setIsLogin(prev => !prev);
   }, [match]);
-  const onvalid = (data: LoginInfo) => {
-    console.log(data);
-    requestLogin(data);
-    
+  const onvalid = async (data: LoginInfo) => {
+    const { email, name, token } = await requestLogin(data);
+    setCurUser({ email, name, token });
+    console.log(curUser);
     //로그인 시
   };
   return (

@@ -35,20 +35,18 @@ interface User {
 export async function requestLogin(loginInfo: User) {
   const bodyData = JSON.stringify(loginInfo);
 
-  return axios
-    .post(`${BASE_URL}/user/login`, bodyData, {
+  try {
+    const { data } = await axios.post(`${BASE_URL}/user/login`, bodyData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       },
-    })
-    .then(res => {
-      const token = res.data.token;
-      sessionStorage.setItem("userToken", token);
-      console.log("token", token);
-      console.log("===================", res);
-      // setAuthorizationToken(token);
     });
+    sessionStorage.setItem("userToken", data.token);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function registerUser(newUser: User) {
