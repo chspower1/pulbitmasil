@@ -46,15 +46,28 @@ interface Data {
 
 export default function BarChart() {
   const [trash, setTrash] = useState<TrashCount>(json);
+  const [labels, setLabels] = useState(Object.keys(trash));
+
+  const changeHandler = (checked: boolean, id: string) => {
+    // console.log(checked, id);
+    if (checked === true) {
+      setLabels([...labels, id].sort());
+      labels.push(id);
+    } else {
+      const newLabels = labels.filter(label => label !== id).sort();
+      setLabels(newLabels);
+    }
+  };
   console.log(trash);
+
   const options = {
     plugins: {
       title: {
         display: true,
-        text: '서울시 자치구별 쓰레기통 현황',
+        text: "서울시 자치구별 쓰레기통 현황",
       },
       legend: {
-        position: 'top' as const,
+        position: "top" as const,
       },
     },
     responsive: false,
@@ -62,19 +75,15 @@ export default function BarChart() {
       x: {
         stacked: true,
         grid: {
-          display: false
-        }
+          display: false,
+        },
       },
       y: {
         stacked: true,
-        // grid: {
-        //   display: false
-        // }
       },
     },
   };
-  const labels = Object.keys(trash);
-  console.log(labels);
+
   const data: Data = {
     labels,
     datasets: [
@@ -105,5 +114,23 @@ export default function BarChart() {
       },
     ],
   };
-  return <Bar options={options} data={data} width={800} height={500}/>;
+  return (
+    <>
+      <Bar options={options} data={data} width={800} height={500} />
+      {Object.keys(trash).map(label => (
+        <label>
+          <input
+            id={label}
+            type="checkbox"
+            name="color"
+            checked={labels.includes(label) || false}
+            onChange={e => {
+              changeHandler(e.currentTarget.checked, label);
+            }}
+          />{" "}
+          {label}
+        </label>
+      ))}
+    </>
+  );
 }
