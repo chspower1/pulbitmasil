@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { curUserAtom, isLoginModalAtom, isLoginSelector, userAtom } from "@atom/atom";
+import { curUserAtom, isLoginModalAtom, isLoginSelector } from "@atom/atom";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 
 import { requestLogin } from "@api/api";

@@ -24,10 +24,3 @@ export const curUserAtom = atom<CurUser | null>({
   key: "curUser",
   default: null,
 });
-export const userAtom = atom({
-  key: "user",
-  default: {
-    email: "",
-    name: "",
-  },
-});
