@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import { getInfo } from "@api/api";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-// import homeImg from "@images/home.jpg";
+import homeImg from "../style/images/home.jpg";
 
 export default function Home() {
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function Home() {
   }, []);
   return (
     <HomeWrap>
-      <Img src="https://cdn.pixabay.com/photo/2022/04/07/14/31/bottle-7117637_960_720.jpg" alt="#" />
+      <Img src={homeImg} alt="#" />
       <div></div>
     </HomeWrap>
   );
