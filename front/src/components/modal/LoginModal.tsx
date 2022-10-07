@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { curUserAtom, isLoginModalAtom, isLoginSelector } from "@atom/atom";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 
-import { requestLogin } from "@api/api";
+import { kakaoLogin, requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -60,6 +60,7 @@ export default function LoginModal() {
   const [isViewPassword, setIsViewPassword] = useState(false);
   const navigator = useNavigate();
   const match = useMatch("/register");
+  const kakaoLoginMatch = useMatch(`/auth/kakao/callback?code=`);
   const onClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
@@ -75,6 +76,11 @@ export default function LoginModal() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const onClickKakao = () => {
     window.location.href = KAKAO_AUTH_URL;
+    const href = window.location.href;
+    let params = new URL(window.location.href).searchParams;
+    let code = params.get("code");
+    console.log(code);
+    kakaoLogin(code!);
   };
 
   const onvalid = async (data: LoginInfo) => {
@@ -82,7 +88,9 @@ export default function LoginModal() {
     setCurUser({ email, name, token });
     console.log(curUser);
   };
-
+  useEffect(() => {
+    console.log(kakaoLoginMatch);
+  }, []);
   //로그인 시 모달비활성화,홈으로 이동
   useEffect(() => {
     if (isLogin) {

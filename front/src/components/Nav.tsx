@@ -108,7 +108,7 @@ export default function Nav() {
   const navMenus = ["about", "map", "chart", "walking", "plogging"];
   const navKorMenus = ["소개", "지도", "통계", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
-  console.log(curState);
+  // console.log(curState);
 
   const onvalid = (data: SearchForm) => {
     navigate(`/search?keyword=${data.keyword}`);

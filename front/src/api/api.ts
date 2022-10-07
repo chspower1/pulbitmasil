@@ -60,3 +60,8 @@ export async function registerUser(newUser: User) {
     },
   });
 }
+
+export async function kakaoLogin(code: string) {
+  console.log(`%cGET 요청 ${BASE_URL}/auth/kakao?code=${code}`, "color: #a25cd1;");
+  return axios.get(`${BASE_URL}/auth/kakao?code=${code}`);
+}
