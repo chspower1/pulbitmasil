@@ -15,7 +15,7 @@ interface User {
   email: string;
 }
 
-const NaverLogin = () => {
+export default function NaverLoginFunction() {
   const [data, setData] = useState<User>({name:'', email:''});
   useEffect(CDM, []);
 
@@ -27,7 +27,7 @@ const NaverLogin = () => {
   function Naver() {
     const naverLogin = new naver.LoginWithNaverId({
       clientId: 'PI99uUj8actDtIRQqkH0',
-      callbackUrl: 'http://localhost:3000',
+      callbackUrl: 'http://localhost:3000/user/naver/callback',
       callbackHandle: true,
       isPopup: false,
       loginButton: {
@@ -48,10 +48,23 @@ const NaverLogin = () => {
         Authorization: location,
       };
 
-      fetch('')
+      // fetch('', {
+      //   method: 'get',
+      //   headers: header,
+      // })
+      //   .then((res) => res.json())
+      //   .then((res) => {
+      //     localStorage.setItem('wtw-token', res.token);
+      //     setData(res.user);
+      //   });
     }
-
   }
+
+  return (
+    <>
+      <div id="naverIdLogin" ></div>
+    </>
+  )
 }
 
 

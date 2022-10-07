@@ -11,6 +11,8 @@ import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faXing } from "@fortawesome/free-brands-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
+import NaverLoginFunction from "./NaverLogin";
+
 interface LoginInfo {
   email: string;
   password: string;
@@ -69,7 +71,7 @@ export default function LoginModal() {
     if (match) setIsLoginModal(prev => !prev);
   }, [match]);
 
-  const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API_KEY;
+  const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API;
   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -153,7 +155,7 @@ export default function LoginModal() {
             </FindPassword>
           </UserBox>
           <SocialLoginBox>
-            <NaverLogin>네이버 로그인</NaverLogin>
+            <NaverLoginFunction />
             <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
           </SocialLoginBox>
           <CloseBtn onClick={() => setIsLoginModal(prev => !prev)}>
