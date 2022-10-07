@@ -57,13 +57,7 @@ export default function Nav() {
   const navMenus = ["about", "map", "chart", "walking", "plogging"];
   const navKorMenus = ["소개", "지도", "통계", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
-  console.log(curState);
 
-  const onvalid = (data: SearchForm) => {
-    navigate(`/search?keyword=${data.keyword}`);
-    console.log(data);
-  };
-  const toggleSearch = () => setSearchOpen(cur => !cur);
   useEffect(() => {
     scrollY.onChange(() => {
       // console.log(scrollY.get());
@@ -74,10 +68,6 @@ export default function Nav() {
       }
     });
   }, []);
-  useEffect(() => {
-    console.log(pathname);
-    // setCurState();
-  }, [pathname]);
   return (
     <Wrap variants={navVariants} initial="top" animate={navAnimation}>
       <LogoBox>
@@ -107,14 +97,16 @@ export default function Nav() {
       </LogoBox>
       <MenuBox>
         <Items>
-          {navMenus.map((menu, index) => (
-            <Link key={index} to={menu}>
-              <Item onClick={() => setCurState(menu)}>
-                {navKorMenus[index]}
-                {curState === menu && <CurCircle layoutId="point" />}
-              </Item>
-            </Link>
-          ))}
+          <AnimatePresence>
+            {navMenus.map((menu, index) => (
+              <Link key={index} to={menu}>
+                <Item onClick={() => setCurState(menu)}>
+                  {navKorMenus[index]}
+                  {curState === menu && <CurCircle layoutId="point" />}
+                </Item>
+              </Link>
+            ))}
+          </AnimatePresence>
         </Items>
       </MenuBox>
       <UserBox onClick={() => setIsloginModal(cur => !cur)}>
@@ -134,7 +126,7 @@ export default function Nav() {
         </svg>
         <UserName>{isLogin ? "사용자" : "손님"}</UserName>
       </UserBox>
-      {isLoginModal && <LoginModal></LoginModal>}
+      <LoginModal></LoginModal>
     </Wrap>
   );
 }
