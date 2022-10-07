@@ -3,7 +3,10 @@ const router = express.Router();
 const axios = require("axios");
 require("dotenv").config();
 
+const jwt = require("jsonwebtoken");
+
 const KAKAO_OAUTH_TOKEN_API_URL = "https://kauth.kakao.com/oauth/token";
+const KAKAO_DECODE_TOKEN_API_URL = "https://kapi.kakao.com/v1/user/access_token_info";
 const grant_type = "authorization_code";
 const client_id = process.env.KAKAO_ID;
 const redirect_uri = process.env.KakaoCallbackURL;
@@ -21,11 +24,25 @@ router.get("/kakao", function (req, res, next) {
         },
       )
       .then(result => {
-        console.log("----------------------------------------", result);
-        // 토큰을 활용한 로직을 적어주면된다.
+        axios
+          .get(`${KAKAO_DECODE_TOKEN_API_URL}`, {
+            headers: {
+              Authorization: `Bearer ${result.data.access_token}`,
+            },
+          })
+          .then(res => {
+            const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+            const token = jwt.sign({ id: res.data.id, access_token: result.data.access_token }, secretKey);
+
+            res.status(200).json({ success: true, token: token });
+          })
+          .catch(e => {
+            console.log("에러1");
+            res.send(e);
+          });
       })
       .catch(e => {
-        console.log("에러");
+        console.log("에러2");
         res.send(e);
       });
   } catch (e) {

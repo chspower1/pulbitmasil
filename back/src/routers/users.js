@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const { v4: uuidv4 } = require("uuid");
+
 const jwt = require("jsonwebtoken");
 
 const login_required = require("../middlewares/login_required");
