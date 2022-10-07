@@ -8,7 +8,7 @@ const grant_type = "authorization_code";
 const client_id = process.env.KAKAO_ID;
 const redirect_uri = process.env.KakaoCallbackURL;
 
-router.get("/kakao/code", function (req, res, next) {
+router.get("/kakao", function (req, res, next) {
   let code = req.query.code;
   try {
     axios
@@ -21,11 +21,11 @@ router.get("/kakao/code", function (req, res, next) {
         },
       )
       .then(result => {
-        console.log(result.data);
+        console.log("----------------------------------------", result);
         // 토큰을 활용한 로직을 적어주면된다.
       })
       .catch(e => {
-        console.log(e);
+        console.log("에러");
         res.send(e);
       });
   } catch (e) {
