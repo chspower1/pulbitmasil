@@ -23,4 +23,5 @@ interface CurUser {
 export const curUserAtom = atom<CurUser | null>({
   key: "curUser",
   default: null,
+  effects_UNSTABLE: [persistAtom],
 });
