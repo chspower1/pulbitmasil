@@ -3,7 +3,9 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { isLoginAtom, userAtom } from "@atom/atom";
+
 import { Link, useMatch } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
@@ -13,8 +15,8 @@ interface LoginInfo {
   password: string;
   name?: string;
 }
-
 export default function LoginModal() {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -34,70 +36,81 @@ export default function LoginModal() {
     if (match) setIsLogin(prev => !prev);
   }, [match]);
   const onvalid = (data: LoginInfo) => {
-    console.log(data);
-    requestLogin(data);
+    const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API_KEY;
+    const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
 
-    //로그인 시
-  };
-  return (
-    <Wrap>
-      <LoginForm onSubmit={handleSubmit(onvalid)}>
-        <Title>로그인</Title>
-        <EmailBox>
-          <EmailInput
-            id="email"
-            type="text"
-            placeholder="이메일을 입력해주세요."
-            {...register("email", {
-              required: "이메일을 입력해주세요!",
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "이메일 형식에 맞지 않습니다!",
-              },
-            })}
-          />
-        </EmailBox>
-        <PasswordBox>
-          <PasswordInput
-            id="password"
-            type={isViewPassword ? "text" : "password"}
-            placeholder="비밀번호를 입력해주세요."
-            {...register("password", {
-              minLength: {
-                value: 7,
-                message: "7글자 이상 입력해주세요!",
-              },
-            })}
-          />
-          <ViewPassword>
-            <FontAwesomeIcon
-              icon={isViewPassword ? faEye : faEyeSlash}
-              color="#2A9C6B"
-              style={{ cursor: "pointer" }}
-              onClick={onClickViewPassword}
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+    const onvalid = handleSubmit(data => {
+      console.log(data);
+      requestLogin(data);
+      //로그인 시
+    });
+
+    const onClickKakao = () => {
+      // navigate(KAKAO_AUTH_URL);
+      window.location.href = KAKAO_AUTH_URL;
+    };
+    return (
+      <Wrap>
+        <LoginForm onSubmit={onvalid}>
+          <Title>로그인</Title>
+          <EmailBox>
+            <EmailInput
+              id="email"
+              type="text"
+              placeholder="이메일을 입력해주세요."
+              {...register("email", {
+                required: "이메일을 입력해주세요!",
+                pattern: {
+                  value:
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: "이메일 형식에 맞지 않습니다!",
+                },
+              })}
             />
-          </ViewPassword>
-        </PasswordBox>
-        <LoginBtn>로그인</LoginBtn>
-        <UserBox>
-          <Register>
-            <Link to="/register">회원가입 </Link>
-          </Register>
+          </EmailBox>
+          <PasswordBox>
+            <PasswordInput
+              id="password"
+              type={isViewPassword ? "text" : "password"}
+              placeholder="비밀번호를 입력해주세요."
+              {...register("password", {
+                minLength: {
+                  value: 7,
+                  message: "7글자 이상 입력해주세요!",
+                },
+              })}
+            />
+            <ViewPassword>
+              <FontAwesomeIcon
+                icon={isViewPassword ? faEye : faEyeSlash}
+                color="#2A9C6B"
+                style={{ cursor: "pointer" }}
+                onClick={onClickViewPassword}
+              />
+            </ViewPassword>
+          </PasswordBox>
+          <LoginBtn>로그인</LoginBtn>
+          <UserBox>
+            <Register>
+              <Link to="/register">회원가입 </Link>
+            </Register>
 
-          <FindPassword>
-            <Link to="/register">아이디,비밀번호 찾기</Link>
-          </FindPassword>
-        </UserBox>
-        <SocialLoginBox>
-          <NaverLogin>네이버 로그인</NaverLogin>
-          <KakaoLogin>카카오 로그인</KakaoLogin>
-        </SocialLoginBox>
-        <CloseBtn onClick={() => setIsLogin(prev => !prev)}>X</CloseBtn>
-      </LoginForm>
-      <Overlay onClick={() => setIsLogin(prev => !prev)} />
-    </Wrap>
-  );
+            <FindPassword>
+              <Link to="/register">아이디,비밀번호 찾기</Link>
+            </FindPassword>
+          </UserBox>
+          <SocialLoginBox>
+            <NaverLogin></NaverLogin>
+            <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
+          </SocialLoginBox>
+          <CloseBtn onClick={() => setIsLogin(prev => !prev)}>X</CloseBtn>
+        </LoginForm>
+        <Overlay onClick={() => setIsLogin(prev => !prev)} />
+      </Wrap>
+    );
+  };
 }
 const Wrap = styled.div`
   position: fixed;
