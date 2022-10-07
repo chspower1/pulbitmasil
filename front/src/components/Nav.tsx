@@ -59,9 +59,8 @@ export default function Nav() {
   const navMenus = ["home", "about", "walking", "plogging"];
   const navKorMenus = ["홈", "소개", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
-  const onClickLogout = async() => {
+  const onClickLogout = async () => {
     setUser(null);
-    
   };
   useEffect(() => {
     scrollY.onChange(() => {
@@ -101,7 +100,7 @@ export default function Nav() {
         </Link>
       </LogoBox>
       <MenuBox>
-        <Logout onClick={onClickLogout}>로그아웃</Logout>
+        {/* <Logout onClick={onClickLogout}>로그아웃</Logout> */}
         <Items>
           <AnimatePresence>
             {navMenus.map((menu, index) => (

@@ -32,6 +32,8 @@ const HomeImgVariants = {
   },
 };
 export default function Home() {
+  const maxIndex = 4;
+
   const [imgIndex, setImgIndex] = useState(1);
   const [next, setNext] = useState(true);
   const [leaving, setLeaving] = useState(false);
@@ -43,7 +45,7 @@ export default function Home() {
     else {
       setNext(next);
       toggleLeaving();
-      setImgIndex(prev => (next ? (prev === 3 ? 1 : prev + 1) : prev === 1 ? 3 : prev - 1));
+      setImgIndex(prev => (next ? (prev === maxIndex ? 1 : prev + 1) : prev === 1 ? maxIndex : prev - 1));
       console.log("Click! and nextState:", next);
     }
   };
@@ -58,6 +60,8 @@ export default function Home() {
     <HomeWrap>
       <AnimatePresence initial={false} custom={next} onExitComplete={toggleLeaving}>
         <Img
+          loading="lazy"
+          decoding="async"
           key={imgIndex}
           custom={next}
           variants={HomeImgVariants}
