@@ -1,20 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { isLoginAtom, userAtom } from "@atom/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { curUserAtom, isLoginModalAtom, isLoginSelector, userAtom } from "@atom/atom";
+import { Link, useMatch, useNavigate } from "react-router-dom";
 
-import { Link, useMatch } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faXing } from "@fortawesome/free-brands-svg-icons";
+import { motion, AnimatePresence } from "framer-motion";
 interface LoginInfo {
   email: string;
   password: string;
   name?: string;
 }
+const ModalVariant = {
+  initial: {
+    y: 30,
+    opacity: 0,
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+    },
+  },
+  exit: {
+    opacity: 0,
+  },
+};
+const OverlayVariant = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.6,
+    },
+  },
+  exit: {
+    opacity: 0,
+  },
+};
+
 export default function LoginModal() {
   const navigate = useNavigate();
   const {
@@ -22,38 +54,53 @@ export default function LoginModal() {
     formState: { errors },
     setError,
     handleSubmit,
-  } = useForm<LoginInfo>();
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
-
+  } = useForm<LoginInfo>({ mode: "onChange" });
+  const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
   const [isViewPassword, setIsViewPassword] = useState(false);
+  const navigator = useNavigate();
   const match = useMatch("/register");
   const onClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
-
+  const [curUser, setCurUser] = useRecoilState(curUserAtom);
   //회원가입 페이지 이동시 모달창 꺼짐
   useEffect(() => {
-    if (match) setIsLogin(prev => !prev);
+    if (match) setIsLoginModal(prev => !prev);
   }, [match]);
-  const onvalid = (data: LoginInfo) => {
-    const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API_KEY;
-    const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
 
-    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API_KEY;
+  const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
 
-    const onvalid = handleSubmit(data => {
-      console.log(data);
-      requestLogin(data);
-      //로그인 시
-    });
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const onClickKakao = () => {
+    // navigate(KAKAO_AUTH_URL);
+    window.location.href = KAKAO_AUTH_URL;
+  };
 
-    const onClickKakao = () => {
-      // navigate(KAKAO_AUTH_URL);
-      window.location.href = KAKAO_AUTH_URL;
-    };
-    return (
-      <Wrap>
-        <LoginForm onSubmit={onvalid}>
+  const onvalid = async (data: LoginInfo) => {
+    const { email, name, token } = await requestLogin(data);
+    setCurUser({ email, name, token });
+    console.log(curUser);
+  };
+
+  //로그인 시 모달비활성화,홈으로 이동
+  useEffect(() => {
+    if (isLogin) {
+      setIsLoginModal(false);
+      navigator("/");
+    }
+  }, [isLogin]);
+  return (
+    <Wrap>
+      <AnimatePresence>
+        <LoginForm
+          onSubmit={handleSubmit(onvalid)}
+          variants={ModalVariant}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
           <Title>로그인</Title>
           <EmailBox>
             <EmailInput
@@ -69,6 +116,8 @@ export default function LoginModal() {
                 },
               })}
             />
+
+            <ErrorMessage>{errors.email?.message}</ErrorMessage>
           </EmailBox>
           <PasswordBox>
             <PasswordInput
@@ -90,6 +139,8 @@ export default function LoginModal() {
                 onClick={onClickViewPassword}
               />
             </ViewPassword>
+
+            <ErrorMessage>{errors.password?.message}</ErrorMessage>
           </PasswordBox>
           <LoginBtn>로그인</LoginBtn>
           <UserBox>
@@ -102,16 +153,33 @@ export default function LoginModal() {
             </FindPassword>
           </UserBox>
           <SocialLoginBox>
-            <NaverLogin></NaverLogin>
+            <NaverLogin>네이버 로그인</NaverLogin>
             <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
           </SocialLoginBox>
-          <CloseBtn onClick={() => setIsLogin(prev => !prev)}>X</CloseBtn>
+          <CloseBtn onClick={() => setIsLoginModal(prev => !prev)}>
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19 3L11 11L3 19M3 3L19 19"
+                stroke="white"
+                stroke-width="5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </CloseBtn>
         </LoginForm>
-        <Overlay onClick={() => setIsLogin(prev => !prev)} />
-      </Wrap>
-    );
-  };
+        <Overlay
+          onClick={() => setIsLoginModal(prev => !prev)}
+          variants={OverlayVariant}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        />
+      </AnimatePresence>
+    </Wrap>
+  );
 }
+
 const Wrap = styled.div`
   position: fixed;
   width: 100vw;
@@ -120,7 +188,7 @@ const Wrap = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const LoginForm = styled.form`
+const LoginForm = styled(motion.form)`
   position: relative;
   z-index: 1000;
   width: 600px;
@@ -128,7 +196,7 @@ const LoginForm = styled.form`
   background-color: white;
   display: flex;
   flex-direction: column;
-
+  border-radius: 10px;
   align-items: center;
 `;
 const Title = styled.h1`
@@ -141,10 +209,9 @@ const EmailBox = styled.div`
   display: flex;
   width: 440px;
   flex-direction: column;
-`;
-const PasswordBox = styled(EmailBox)`
   position: relative;
 `;
+const PasswordBox = styled(EmailBox)``;
 const UserBox = styled(EmailBox)`
   height: 65px;
   flex-direction: row;
@@ -172,6 +239,16 @@ const Input = styled.input`
 `;
 const EmailInput = styled(Input)``;
 const PasswordInput = styled(Input)``;
+
+const ErrorMessage = styled.div`
+  position: absolute;
+  font-size: 12px;
+  color: ${props => props.theme.dangerColor};
+  height: 14px;
+  bottom: 10px;
+  right: 0;
+`;
+
 const ViewPassword = styled.div`
   position: absolute;
   height: 60px;
@@ -179,7 +256,7 @@ const ViewPassword = styled.div`
   display: flex;
   align-items: center;
 `;
-const Overlay = styled.div`
+const Overlay = styled(motion.div)`
   z-index: 100;
   position: fixed;
   left: 0px;
@@ -195,8 +272,8 @@ const CloseBtn = styled.button`
   width: 44px;
   height: 44px;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   border-radius: 10px;
 `;
 const LoginBtn = styled.button`

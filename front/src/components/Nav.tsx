@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
 import { useForm } from "react-hook-form";
 import LoginModal from "./modal/LoginModal";
-import { useRecoilState } from "recoil";
-import { isLoginAtom } from "@atom/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
 
 const Wrap = styled(motion.nav)`
   z-index: 1000;
@@ -34,10 +34,12 @@ const MenuBox = styled(Col)`
   margin: auto;
 `;
 const UserBox = styled(Col)`
+  flex-direction: column;
   justify-content: center;
   width: 90px;
   height: 90px;
   background-color: ${props => props.theme.accentColor};
+  cursor: pointer;
 `;
 const Logo = styled(motion.svg)`
   width: 180px;
@@ -66,7 +68,11 @@ const CurCircle = styled(motion.div)`
   bottom: -20px;
   background-color: ${props => props.theme.accentColor};
 `;
-
+const UserName = styled.div`
+  font-size: 18px;
+  color: white;
+  margin-top: 5px;
+`;
 // Variants
 const LogoVariants = {
   normal: {
@@ -92,7 +98,8 @@ interface SearchForm {
 export default function Nav() {
   const { pathname } = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
+  const [isLoginModal, setIsloginModal] = useRecoilState(isLoginModalAtom);
   const navigate = useNavigate();
   const [curState, setCurState] = useState(pathname === "/" ? "home" : pathname.slice(1));
   const { register, handleSubmit, reset } = useForm<SearchForm>();
@@ -169,7 +176,7 @@ export default function Nav() {
           ))}
         </Items>
       </MenuBox>
-      <UserBox onClick={() => setIsLogin(prev => !prev)}>
+      <UserBox onClick={() => setIsloginModal(cur => !cur)}>
         <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="45" height="45" fill="url(#pattern0)" />
           <defs>
@@ -184,8 +191,9 @@ export default function Nav() {
             />
           </defs>
         </svg>
+        <UserName>{isLogin ? "사용자" : "손님"}</UserName>
       </UserBox>
-      {isLogin && <LoginModal></LoginModal>}
+      {isLoginModal && <LoginModal></LoginModal>}
     </Wrap>
   );
 }

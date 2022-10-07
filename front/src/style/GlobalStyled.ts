@@ -18,8 +18,9 @@ export const GlobalStyled = createGlobalStyle`
     input{
         color:${props => props.theme.textColor};
         border:solid 1px ${props => props.theme.weekColor};
-        outline: solid 2px ${props => props.theme.mainColor};
-    
+        &:focus{
+            outline: solid 2px ${props => props.theme.mainColor};
+        }
     }
     input[type=password]{
         font-family:"Arial Black";
