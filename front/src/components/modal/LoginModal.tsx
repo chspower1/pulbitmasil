@@ -3,15 +3,21 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { isLoginAtom, userAtom } from "@atom/atom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { requestLogin } from "@api/api";
 interface LoginInfo {
   email: string;
   password: string;
   name?: string;
 }
+// declare global {
+//   interface Window {
+//     Kakao: any;
+//   }
+// }
 
 export default function LoginModal() {
+  const navigate = useNavigate();
   const {
     register,
     formState: { errors },
@@ -21,12 +27,21 @@ export default function LoginModal() {
   const [isLogin, setIsLogin] = useRecoilState(isLoginAtom);
   const [user, setUser] = useRecoilState(userAtom);
 
+  const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API_KEY;
+  const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
   const onvalid = handleSubmit(data => {
     console.log(data);
     requestLogin(data);
-
     //로그인 시
   });
+
+  const onClickKakao = () => {
+    // navigate(KAKAO_AUTH_URL);
+    window.location.href = KAKAO_AUTH_URL;
+  };
   return (
     <Wrap>
       <LoginForm onSubmit={onvalid}>
@@ -69,8 +84,8 @@ export default function LoginModal() {
           </Link>
         </UserBox>
         <SocialLoginBox>
-          <NaverLogin>네이버 로그인</NaverLogin>
-          <KakaoLogin>카카오 로그인</KakaoLogin>
+          <NaverLogin></NaverLogin>
+          <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
         </SocialLoginBox>
         <CloseBtn onClick={() => setIsLogin(prev => !prev)}>X</CloseBtn>
       </LoginForm>
