@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
+import { NaverLogin } from "./LoginModal";
 
 declare global {
   interface Window {
@@ -18,6 +19,7 @@ const CLIENT_ID = "PI99uUj8actDtIRQqkH0";
 const CALLBACK_URL = "http://localhost:3000/user/naver/callback";
 
 export default function NaverLoginFunction() {
+  const naverRef = useRef<any>();
   const [data, setData] = useState<User>({ name: "", email: "" });
   useEffect(CDM, []);
 
@@ -65,10 +67,13 @@ export default function NaverLoginFunction() {
         });
     }
   }
-
+  const handleNaverLogin = () => {
+    naverRef?.current!.children[0].click();
+  };
   return (
     <>
-      <div id="naverIdLogin"></div>
+      <div ref={naverRef} style={{ display: "none" }} id="naverIdLogin" />
+      <NaverLogin onClick={handleNaverLogin}>네이버 로그인</NaverLogin>
     </>
   );
 }

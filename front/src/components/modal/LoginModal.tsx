@@ -287,13 +287,13 @@ const LoginBtn = styled.button`
 const SocialLoginBox = styled(UserBox)`
   justify-content: space-between;
 `;
-const NaverLogin = styled(LoginBtn)`
+export const NaverLogin = styled(LoginBtn)`
   width: 210px;
   border-radius: 5px;
   font-family: "Sebang";
   background-color: #03c75a;
 `;
-const KakaoLogin = styled(NaverLogin)`
+export const KakaoLogin = styled(NaverLogin)`
   color: #402325;
   background-color: #ffe500;
   &:hover {
