@@ -15,6 +15,9 @@ interface User {
   email: string;
 }
 
+const CLIENT_ID = 'PI99uUj8actDtIRQqkH0';
+const CALLBACK_URL = 'http://localhost:3000/user/naver/callback';
+
 export default function NaverLoginFunction() {
   const [data, setData] = useState<User>({name:'', email:''});
   useEffect(CDM, []);
@@ -48,15 +51,16 @@ export default function NaverLoginFunction() {
         Authorization: location,
       };
 
-      // fetch('', {
-      //   method: 'get',
-      //   headers: header,
-      // })
-      //   .then((res) => res.json())
-      //   .then((res) => {
-      //     localStorage.setItem('wtw-token', res.token);
-      //     setData(res.user);
-      //   });
+      fetch(`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&state=STATE_STRING&redirect_uri=${CALLBACK_URL}`, {
+        method: 'get',
+        headers: header,
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          localStorage.setItem('access_token', res.token)
+          setData(res.user);
+        });
+        
     }
   }
 
