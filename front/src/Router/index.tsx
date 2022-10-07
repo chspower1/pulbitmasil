@@ -12,6 +12,7 @@ import Footer from "@components/Footer";
 import Chart from "./Chart";
 import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
+import Naver from "./Naver";
 
 const ContentContainer = styled.section`
   padding-top: 60px;
@@ -30,6 +31,7 @@ export default function Router() {
           <Route path="/register" element={<Register />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
+          <Route path="/user/naver/:" element={<Naver />} />
         </Routes>
       </ContentContainer>
       <ScrollBtn />
