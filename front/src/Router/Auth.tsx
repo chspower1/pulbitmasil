@@ -32,9 +32,5 @@ export default function Auth() {
     kakaoLogin(code!);
   }, []);
 
-  return (
-    <div style={{ fontSize: "300px" }}>
-      Authasfa;sjhdklasjhfkjlahfkljashdfkjlhsdaf;ljhsadklfhaskjldfhjkasdlfhkjlsadfhkjlasfhjkals
-    </div>
-  );
+  return <div style={{ fontSize: "300px" }}>카카오</div>;
 }

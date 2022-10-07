@@ -7,6 +7,7 @@ import LoginModal from "./modal/LoginModal";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
+import { userAtom } from "@atom/user";
 
 // Interface
 interface SearchForm {
@@ -50,14 +51,18 @@ export default function Nav() {
   const isLogin = useRecoilValue(isLoginSelector);
   const [isLoginModal, setIsloginModal] = useRecoilState(isLoginModalAtom);
   const navigate = useNavigate();
+  const [user, setUser] = useRecoilState(userAtom);
   const [curState, setCurState] = useState(pathname === "/" ? "home" : pathname.slice(1));
   const { register, handleSubmit, reset } = useForm<SearchForm>();
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  const navMenus = ["about", "map", "chart", "walking", "plogging"];
-  const navKorMenus = ["소개", "지도", "통계", "산책로", "플로깅"];
+  const navMenus = ["home", "about", "walking", "plogging"];
+  const navKorMenus = ["홈", "소개", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
-
+  const onClickLogout = async() => {
+    setUser(null);
+    
+  };
   useEffect(() => {
     scrollY.onChange(() => {
       // console.log(scrollY.get());
@@ -96,10 +101,11 @@ export default function Nav() {
         </Link>
       </LogoBox>
       <MenuBox>
+        <Logout onClick={onClickLogout}>로그아웃</Logout>
         <Items>
           <AnimatePresence>
             {navMenus.map((menu, index) => (
-              <Link key={index} to={menu}>
+              <Link key={index} to={menu === "home" ? "/" : menu}>
                 <Item onClick={() => setCurState(menu)}>
                   {navKorMenus[index]}
                   {curState === menu && <CurCircle layoutId="point" />}
@@ -110,7 +116,7 @@ export default function Nav() {
         </Items>
       </MenuBox>
       <UserBox onClick={() => setIsloginModal(cur => !cur)}>
-        <svg width="45" height="45" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="45" height="45" fill="url(#pattern0)" />
           <defs>
             <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -136,7 +142,7 @@ const Wrap = styled(motion.nav)`
   position: fixed;
   justify-content: space-between;
   font-size: 18px;
-  height: 90px;
+  height: 70px;
   width: 100%;
   padding-left: 20px;
 `;
@@ -159,8 +165,8 @@ const MenuBox = styled(Col)`
 const UserBox = styled(Col)`
   flex-direction: column;
   justify-content: center;
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   background-color: ${props => props.theme.accentColor};
   cursor: pointer;
 `;
@@ -192,9 +198,10 @@ const CurCircle = styled(motion.div)`
   background-color: ${props => props.theme.accentColor};
 `;
 const UserName = styled.div`
-  font-size: 18px;
+  font-size: 14px;
   color: white;
   margin-top: 5px;
 `;
 const LogoPath = styled(motion.path).attrs<{}>`
 `;
+const Logout = styled.button``;

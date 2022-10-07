@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { curUserAtom, isLoginModalAtom, isLoginSelector } from "@atom/atom";
+import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 
 import { kakaoLogin, requestLogin } from "@api/api";
@@ -12,6 +12,7 @@ import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faXing } from "@fortawesome/free-brands-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 import NaverLoginFunction from "./NaverLogin";
+import { userAtom } from "@atom/user";
 
 interface LoginInfo {
   email: string;
@@ -69,7 +70,7 @@ export default function LoginModal() {
   const onClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
-  const [curUser, setCurUser] = useRecoilState(curUserAtom);
+  const [curUser, setCurUser] = useRecoilState(userAtom);
   //회원가입 페이지 이동시 모달창 꺼짐
   useEffect(() => {
     if (match) setIsLoginModal(prev => !prev);

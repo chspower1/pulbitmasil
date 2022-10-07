@@ -16,7 +16,6 @@ import Naver from "./Naver";
 import Auth from "./Auth";
 
 const ContentContainer = styled.section`
-  padding-top: 60px;
   min-height: 100vh;
 `;
 export default function Router() {
@@ -39,7 +38,6 @@ export default function Router() {
         </Routes>
       </ContentContainer>
       <ScrollBtn />
-      <Footer />
     </BrowserRouter>
   );
 }

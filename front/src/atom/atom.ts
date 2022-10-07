@@ -1,12 +1,13 @@
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
+import { userAtom } from "./user";
 
 const { persistAtom } = recoilPersist();
 
 export const isLoginSelector = selector({
   key: "isLogin",
   get: ({ get }) => {
-    const curUser = get(curUserAtom);
+    const curUser = get(userAtom);
     const checkLogin = sessionStorage.getItem("userToken") && curUser?.token ? true : false;
     return checkLogin;
   },
@@ -14,14 +15,4 @@ export const isLoginSelector = selector({
 export const isLoginModalAtom = atom({
   key: "isLoginModal",
   default: false,
-});
-interface CurUser {
-  email: string;
-  name: string;
-  token: string;
-}
-export const curUserAtom = atom<CurUser | null>({
-  key: "curUser",
-  default: null,
-  effects_UNSTABLE: [persistAtom],
 });
