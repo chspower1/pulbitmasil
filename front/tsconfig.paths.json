@@ -8,8 +8,8 @@
       "@atom/*": [
         "src/atom/*"
       ],
-      "@styles/*": [
-        "src/styles/*"
+      "@style/*": [
+        "src/style/*"
       ],
       "@router/*": [
         "src/router/*"
@@ -18,7 +18,7 @@
         "src/api/*"
       ],
       "@images/*": [
-        "src/styles/images/*"
+        "src/style/images/*"
       ]
     }
   }
