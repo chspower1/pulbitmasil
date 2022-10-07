@@ -13,6 +13,7 @@ import Chart from "./Chart";
 import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
 import Naver from "./Naver";
+import Auth from "./Auth";
 
 const ContentContainer = styled.section`
   padding-top: 60px;
@@ -31,7 +32,10 @@ export default function Router() {
           <Route path="/register" element={<Register />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
-          <Route path="/user/naver/:" element={<Naver />} />
+
+          <Route path="/user/naver/callback" element={<Naver />} />
+
+          <Route path="/auth/kakao/callback" element={<Auth />} />
         </Routes>
       </ContentContainer>
       <ScrollBtn />
