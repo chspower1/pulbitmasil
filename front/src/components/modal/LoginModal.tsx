@@ -69,12 +69,11 @@ export default function LoginModal() {
     if (match) setIsLoginModal(prev => !prev);
   }, [match]);
 
-  const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API_KEY;
+  const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API;
   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const onClickKakao = () => {
-    // navigate(KAKAO_AUTH_URL);
     window.location.href = KAKAO_AUTH_URL;
   };
 
