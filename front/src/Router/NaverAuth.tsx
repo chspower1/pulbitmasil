@@ -2,13 +2,15 @@ import { naverLogin } from "@api/api";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { userAtom } from "@atom/user";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { isWelcomeModalAtom } from "@atom/atom";
 
 export default function NaverAuth() {
   const { hash } = useLocation();
   const navigator = useNavigate();
   const accessToken = hash.split("access_token=")[1].split("&state=")[0];
   const stateToken = hash.split("access_token=")[1].split("&state=")[1].split("&token_type=")[0];
+  const setIsWelcomeModal = useSetRecoilState(isWelcomeModalAtom);
   const [user, setUser] = useRecoilState(userAtom);
 
   // console.log(stateToken);
@@ -21,6 +23,7 @@ export default function NaverAuth() {
       console.log("네이버 User상태\n", user);
     }
     inAuthPage();
+    setIsWelcomeModal(true);
     navigator("/");
   }, []);
   return <div style={{ fontSize: "300px" }}>네이버</div>;

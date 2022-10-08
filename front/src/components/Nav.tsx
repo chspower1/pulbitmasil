@@ -63,6 +63,10 @@ export default function Nav() {
     sessionStorage.removeItem("userToken");
     setUser(null);
   };
+  const onClickUserBox = () => {
+    if (isLogin) return null;
+    else setIsloginModal(true);
+  };
   useEffect(() => {
     scrollY.onChange(() => {
       // console.log(scrollY.get());
@@ -73,6 +77,10 @@ export default function Nav() {
       }
     });
   }, []);
+  useEffect(() => {
+    pathname === "/" ? setCurState("home") : setCurState(pathname.slice(1));
+    console.log(pathname);
+  }, [pathname]);
   return (
     <>
       <Wrap variants={navVariants} initial="top" animate={navAnimation}>
@@ -115,7 +123,7 @@ export default function Nav() {
             </AnimatePresence>
           </Items>
         </MenuBox>
-        <UserBox onClick={() => setIsloginModal(cur => !cur)}>
+        <UserBox onClick={() => onClickUserBox()}>
           <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="45" height="45" fill="url(#pattern0)" />
             <defs>
@@ -130,7 +138,7 @@ export default function Nav() {
               />
             </defs>
           </svg>
-          <UserName>{isLogin ? "사용자" : "손님"}</UserName>
+          <UserName>{isLogin ? user?.name : "손님"}</UserName>
         </UserBox>
         <LoginModal></LoginModal>
       </Wrap>

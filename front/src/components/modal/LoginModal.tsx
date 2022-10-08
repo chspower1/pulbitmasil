@@ -92,6 +92,10 @@ export default function LoginModal() {
   // 로그인 버튼 클릭 시
   const onvalid = async (data: LoginInfo) => {
     const { email, name, token } = await requestLogin(data);
+    if (!email && !name && !token) {
+      alert("로그인 정보가 틀렸습니다.");
+      reset();
+    }
     console.log("풀빛마실 로그인, 넘어온 데이터\n", email, name, token);
     setCurUser(prev => ({ email, name, token }));
     console.log("풀빛마실 User상태\n", curUser);
@@ -100,16 +104,10 @@ export default function LoginModal() {
   //로그인 시 모달비활성화,홈으로 이동
   useEffect(() => {
     if (isLogin) {
-      closeLoginModal();
       navigator("/");
+      closeLoginModal();
     }
   }, [isLogin]);
-
-  //회원가입 페이지 이동시 모달창 꺼짐
-  useEffect(() => {
-    closeLoginModal();
-  }, [pathname]);
-
   return (
     <AnimatePresence>
       {isLoginModal && !isLogin && (
@@ -163,19 +161,21 @@ export default function LoginModal() {
             </PasswordBox>
             <LoginBtn>로그인</LoginBtn>
             <UserBox>
-              <Register>
+              <Register onClick={() => closeLoginModal()}>
                 <Link to="/register">회원가입 </Link>
               </Register>
 
-              <FindPassword>
+              <FindPassword onClick={() => closeLoginModal()}>
                 <Link to="/register">아이디,비밀번호 찾기</Link>
               </FindPassword>
             </UserBox>
             <SocialLoginBox>
               <NaverLoginBtn />
-              <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
+              <KakaoLogin type="button" onClick={onClickKakao}>
+                카카오 로그인
+              </KakaoLogin>
             </SocialLoginBox>
-            <CloseBtn onClick={() => closeLoginModal()}>
+            <CloseBtn type="button" onClick={() => closeLoginModal()}>
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
@@ -208,7 +208,7 @@ export const ModalWrap = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const LoginForm = styled(motion.form)`
+export const LoginForm = styled(motion.form)`
   position: relative;
   z-index: 1000;
   width: 600px;

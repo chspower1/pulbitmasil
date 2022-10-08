@@ -42,6 +42,7 @@ export async function requestLogin(loginInfo: User) {
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       },
     });
+    if (!data) return false;
     sessionStorage.setItem("userToken", data.token);
     console.log("풀빛마실로그인", data);
     return data;
