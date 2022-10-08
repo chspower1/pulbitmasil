@@ -28,6 +28,9 @@ router.get("/kakao", async function (req, res, next) {
       .then(result => {
         res.redirect(`/auth/kakao/info/:${result.data.access_token}`);
       })
+      // .then(result => {
+      //   res.status(200).json(result);
+      // })
       .catch(e => {
         console.log("에러2");
         res.send(e);
@@ -78,31 +81,27 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
       })
       .then(result => {
         const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-        const token = jwt.sign({ id: result.data.id, access_token: access_token }, secretKey);
-
-        console.log(
-          "------------------------------------------------------------------------------\n",
-          token,
-          result.data.id,
-          result.data.kakao_account.profile.nickname,
-          result.data.kakao_account?.email,
-          "\n------------------------------------------------------------------------------",
-        );
 
         const email = result.data.kakao_account?.email ?? "kakao" + result.data.id;
 
-        maria.query("SELECT email FROM USER WHERE email = ?", [email], async function (err, rows, fields) {
+        maria.query("SELECT * FROM USER WHERE email = ?", [email], async function (err, rows, fields) {
           if (!err) {
             if (!rows.length) {
-              maria.query("INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,'kakao')", [
-                result.data.kakao_account.profile.nickname,
-                email,
-              ]);
+              console.log(111);
+              maria.query(
+                "INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,'kakao')",
+                [result.data.kakao_account.profile.nickname, email],
+                async function (err, rows2, fields) {
+                  const token = jwt.sign({ id: rows2.insertId, access_token: access_token }, secretKey);
+                  res.status(200).json({ success: true, token: token });
+                },
+              );
+            } else {
+              const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
+              res.status(200).json({ success: true, token: token });
             }
           }
         });
-
-        res.status(200).json({ success: true, token: token });
       })
       .catch(e => {
         res.send(e);
