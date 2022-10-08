@@ -11,8 +11,8 @@ import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faXing } from "@fortawesome/free-brands-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
-import NaverLoginFunction from "./NaverLogin";
 import { userAtom } from "@atom/user";
+import NaverLoginBtn from "../NaverLoginBtn";
 
 interface LoginInfo {
   email: string;
@@ -166,7 +166,7 @@ export default function LoginModal() {
               </FindPassword>
             </UserBox>
             <SocialLoginBox>
-              <NaverLoginFunction />
+              <NaverLoginBtn />
               <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
             </SocialLoginBox>
             <CloseBtn onClick={() => setIsLoginModal(prev => !prev)}>

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useState } from "react";
-import { NaverLogin } from "./LoginModal";
+import { NaverLogin } from "./modal/LoginModal";
 
 declare global {
   interface Window {
@@ -18,7 +18,7 @@ interface User {
 const CLIENT_ID = "PI99uUj8actDtIRQqkH0";
 const CALLBACK_URL = "http://localhost:3000/user/naver/callback";
 
-export default function NaverLoginFunction() {
+export default function NaverLoginBtn() {
   const naverRef = useRef<any>();
   const [data, setData] = useState<User>({ name: "", email: "" });
   useEffect(CDM, []);

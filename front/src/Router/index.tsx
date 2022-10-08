@@ -31,9 +31,7 @@ export default function Router() {
           <Route path="/register" element={<Register />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
-
           <Route path="/user/naver/callback" element={<Naver />} />
-
           <Route path="/auth/kakao/callback" element={<Auth />} />
         </Routes>
       </ContentContainer>

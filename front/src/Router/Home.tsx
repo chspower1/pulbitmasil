@@ -49,6 +49,11 @@ export default function Home() {
       console.log("Click! and nextState:", next);
     }
   };
+  const onClickImgPoint = (imgIndex: number, num: number) => {
+    toggleLeaving();
+    setImgIndex(num);
+    imgIndex < num ? setNext(true) : setNext(false);
+  };
 
   useEffect(() => {
     const URL = {
@@ -74,12 +79,8 @@ export default function Home() {
           {[1, 2, 3, 4].map(num => (
             <ImgPointer
               key={num}
-              className={imgIndex === num ? "avtice" : "normal"}
-              onClick={() => {
-                toggleLeaving();
-                imgIndex < num ? setNext(true) : setNext(false);
-                setImgIndex(num);
-              }}
+              className={imgIndex === num ? "active" : "normal"}
+              onClick={() => onClickImgPoint(imgIndex, num)}
             />
           ))}
         </ImgPointerBox>
@@ -117,7 +118,7 @@ const RightBtn = styled(motion.button)`
 const LeftBtn = styled(RightBtn)`
   left: 0px;
 `;
-const ImgPointerBox = styled.div`
+const ImgPointerBox = styled(motion.div)`
   position: absolute;
   display: flex;
   justify-content: space-between;
@@ -131,13 +132,15 @@ const ImgPointer = styled(motion.div)`
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  background-color: white;
   cursor: pointer;
-
+  transition: all 1s ease;
   &.normal {
-    opacity: 0.3;
+    background-color: rgba(255, 255, 255, 0.3);
   }
   &.active {
-    opacity: 0.9;
+    background-color: rgba(255, 255, 255, 1);
+  }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.7);
   }
 `;
