@@ -4,6 +4,9 @@ import { getInfo } from "@api/api";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 //Variants
 const HomeImgVariants = {
@@ -49,11 +52,6 @@ export default function Home() {
       console.log("Click! and nextState:", next);
     }
   };
-  const onClickImgPoint = (imgIndex: number, num: number) => {
-    toggleLeaving();
-    setImgIndex(num);
-    imgIndex < num ? setNext(true) : setNext(false);
-  };
 
   useEffect(() => {
     const URL = {
@@ -76,48 +74,46 @@ export default function Home() {
           alt="#"
         />
         <ImgPointerBox>
-          {[1, 2, 3, 4].map(num => (
-            <ImgPointer
-              key={num}
-              className={imgIndex === num ? "active" : "normal"}
-              onClick={() => onClickImgPoint(imgIndex, num)}
-            />
-          ))}
+          {/* [1,2,3,4].map(num=>) */}
+          <ImgPointer />
+          <ImgPointer />
+          <ImgPointer />
+          <ImgPointer />
         </ImgPointerBox>
-      </AnimatePresence>
-      <RightBtn onClick={() => onClickArrowBtn(true)}>오른쪽</RightBtn>
-      <LeftBtn onClick={() => onClickArrowBtn(false)}>왼쪽</LeftBtn>
+        </AnimatePresence>
+        <RightBtn onClick={() => onClickArrowBtn(true)}><FontAwesomeIcon icon={faChevronRight} size={'4x'}/></RightBtn>
+        <LeftBtn onClick={() => onClickArrowBtn(false)}><FontAwesomeIcon icon={faChevronLeft} size={'4x'}/></LeftBtn>
+      <div></div>
     </HomeWrap>
   );
 }
 const HomeWrap = styled.div`
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 200vh;
-  overflow: hidden;
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  height: 100vh;
+  overflow-y: hidden;
 `;
 const Img = styled(motion.img)`
   position: absolute;
   width: 100vw;
-  /* width: ${window.innerWidth}; */
   height: 100vh;
   object-fit: cover;
-  overflow: hidden;
 `;
 const RightBtn = styled(motion.button)`
+  background-color: transparent;
   position: absolute;
   width: 100px;
   top: 50%;
-  right: 0px;
+  right: 0;
+  &:hover{
+            background-color: transparent;
+            transform: scale(1.2);
+        }
 `;
 const LeftBtn = styled(RightBtn)`
-  left: 0px;
+  left: 0;
 `;
-const ImgPointerBox = styled(motion.div)`
+const ImgPointerBox = styled.div`
   position: absolute;
   display: flex;
   justify-content: space-between;
@@ -131,15 +127,11 @@ const ImgPointer = styled(motion.div)`
   width: 10px;
   height: 10px;
   border-radius: 5px;
-  cursor: pointer;
-  transition: all 1s ease;
-  &.normal {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-  &.active {
-    background-color: rgba(255, 255, 255, 1);
-  }
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.7);
+  background-color: white;
+  opacity: 0.3;
+  .active {
+    opacity: 0.9;
   }
 `;
+
+
