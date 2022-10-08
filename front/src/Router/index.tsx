@@ -12,8 +12,8 @@ import Footer from "@components/Footer";
 import Chart from "./Chart";
 import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
-import Naver from "./Naver";
-import Auth from "./Auth";
+import Naver from "./NaverAuth";
+import KakaoAuth from "./KakaoAuth";
 import Walking from "./Walking";
 
 const ContentContainer = styled.section`
@@ -33,8 +33,8 @@ export default function Router() {
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
           <Route path="/walking" element={<Walking />} />
-          <Route path="/user/naver/callback" element={<Naver />} />
-          <Route path="/auth/kakao/callback" element={<Auth />} />
+          <Route path="/user/naver/callback/:" element={<Naver />} />
+          <Route path="/auth/kakao/callback/:" element={<KakaoAuth />} />
         </Routes>
       </ContentContainer>
       <ScrollBtn />

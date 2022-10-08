@@ -8,7 +8,7 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import { kakaoLogin, requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
-import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { faXing } from "@fortawesome/free-brands-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";

@@ -67,3 +67,7 @@ export async function kakaoLogin(code: string) {
   sessionStorage.setItem("userToken", data.token);
   return data;
 }
+export async function naverLogin(code: string) {
+  console.log(code);
+  
+}
