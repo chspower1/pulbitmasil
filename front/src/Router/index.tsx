@@ -33,8 +33,8 @@ export default function Router() {
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
           <Route path="/walking" element={<Walking />} />
-          <Route path="/user/naver/callback/:" element={<Naver />} />
-          <Route path="/auth/kakao/callback/:" element={<KakaoAuth />} />
+          <Route path="/user/naver/callback" element={<Naver />} />
+          <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
         </Routes>
       </ContentContainer>
       <ScrollBtn />

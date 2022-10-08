@@ -67,7 +67,8 @@ export async function kakaoLogin(code: string) {
   sessionStorage.setItem("userToken", data.token);
   return data;
 }
-export async function naverLogin(code: string) {
-  console.log(code);
-  
+export async function naverLogin(accessToken: string, stateToken: string) {
+  const { data } = await axios.get(`${BASE_URL}/auth/naver?access_token=${accessToken}?=${stateToken}`);
+  // sessionStorage.setItem("userToken", data.token);
+  console.log(data);
 }
