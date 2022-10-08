@@ -120,6 +120,26 @@ router.delete("/delete", login_required, async function (req, res, next) {
   }
 });
 
+router.put("/modify", login_required, async function (req, res, next) {
+  try {
+    const { name } = req.body;
+    const user_id = req.currentUserId;
+    console.log(user_id);
+    maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, user_id], async function (err, rows, fields) {
+      if (!err) {
+        res.status(200).json({
+          success: true,
+        });
+      } else {
+        console.log("err : " + err);
+        res.send(err);
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // modify 전, 비밀번호 체크
 router.post("/verify", login_required, async function (req, res, next) {
   try {
