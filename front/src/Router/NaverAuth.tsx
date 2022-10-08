@@ -10,7 +10,7 @@ export default function NaverAuth() {
   // console.log(stateToken);
   // console.log(accessToken);
   useEffect(() => {
-    // naverLogin(accessToken, stateToken);
+    naverLogin(accessToken, stateToken);
   }, []);
   return <div style={{ fontSize: "300px" }}>네이버</div>;
 }
