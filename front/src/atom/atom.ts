@@ -16,3 +16,7 @@ export const isLoginModalAtom = atom({
   key: "isLoginModal",
   default: false,
 });
+export const isWelcomeModalAtom = atom({
+  key: "isWelcomeModal",
+  default: false,
+});

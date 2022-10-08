@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
-import { Link, useMatch, useNavigate } from "react-router-dom";
+import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { kakaoLogin, requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +19,7 @@ interface LoginInfo {
   password: string;
   name?: string;
 }
-const ModalVariant = {
+export const ModalVariant = {
   initial: {
     y: 30,
     opacity: 0,
@@ -39,7 +39,7 @@ const ModalVariant = {
     },
   },
 };
-const OverlayVariant = {
+export const OverlayVariant = {
   initial: {
     opacity: 0,
   },
@@ -55,30 +55,26 @@ const OverlayVariant = {
 };
 
 export default function LoginModal() {
-  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<LoginInfo>({ mode: "onChange" });
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
   const isLogin = useRecoilValue(isLoginSelector);
   const [isViewPassword, setIsViewPassword] = useState(false);
   const navigator = useNavigate();
   const match = useMatch("/register");
-  const kakaoLoginMatch = useMatch(`/auth/kakao/callback?code=`);
   const onClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
   const [curUser, setCurUser] = useRecoilState(userAtom);
-  //회원가입 페이지 이동시 모달창 꺼짐
-  useEffect(() => {
-    if (match) setIsLoginModal(prev => !prev);
-  }, [match]);
 
+  // 카카오 로그인
   const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API;
   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
-
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const onClickKakao = () => {
     window.location.href = KAKAO_AUTH_URL;
@@ -89,25 +85,34 @@ export default function LoginModal() {
     kakaoLogin(code!);
   };
 
+  const closeLoginModal = () => {
+    setIsLoginModal(false);
+    reset();
+  };
+  // 로그인 버튼 클릭 시
   const onvalid = async (data: LoginInfo) => {
     const { email, name, token } = await requestLogin(data);
     setCurUser({ email, name, token });
     console.log(curUser);
   };
-  useEffect(() => {
-    console.log(kakaoLoginMatch);
-  }, []);
+
   //로그인 시 모달비활성화,홈으로 이동
   useEffect(() => {
     if (isLogin) {
-      setIsLoginModal(false);
+      closeLoginModal();
       navigator("/");
     }
   }, [isLogin]);
+
+  //회원가입 페이지 이동시 모달창 꺼짐
+  useEffect(() => {
+    closeLoginModal();
+  }, [pathname]);
+
   return (
     <AnimatePresence>
       {isLoginModal && !isLogin && (
-        <Wrap>
+        <ModalWrap>
           <LoginForm
             onSubmit={handleSubmit(onvalid)}
             variants={ModalVariant}
@@ -169,7 +174,7 @@ export default function LoginModal() {
               <NaverLoginBtn />
               <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
             </SocialLoginBox>
-            <CloseBtn onClick={() => setIsLoginModal(prev => !prev)}>
+            <CloseBtn onClick={() => closeLoginModal()}>
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
@@ -182,19 +187,19 @@ export default function LoginModal() {
             </CloseBtn>
           </LoginForm>
           <Overlay
-            onClick={() => setIsLoginModal(prev => !prev)}
+            onClick={() => closeLoginModal()}
             variants={OverlayVariant}
             initial="initial"
             animate="animate"
             exit="exit"
           />
-        </Wrap>
+        </ModalWrap>
       )}
     </AnimatePresence>
   );
 }
 
-const Wrap = styled.div`
+export const ModalWrap = styled.div`
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -270,7 +275,7 @@ const ViewPassword = styled.div`
   display: flex;
   align-items: center;
 `;
-const Overlay = styled(motion.div)`
+export const Overlay = styled(motion.div)`
   z-index: 100;
   position: fixed;
   left: 0px;
@@ -278,7 +283,7 @@ const Overlay = styled(motion.div)`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
 `;
-const CloseBtn = styled.button`
+export const CloseBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
