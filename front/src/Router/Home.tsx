@@ -101,7 +101,7 @@ const HomeWrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 200vh;
+  height: 100vh;
   overflow: hidden;
   ::-webkit-scrollbar {
     display: none;
