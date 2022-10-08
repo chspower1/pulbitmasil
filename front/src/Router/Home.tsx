@@ -67,7 +67,7 @@ export default function Home() {
           animate="animate"
           exit="exit"
           transition={{ duration: 1 }}
-          src={`/assets/images/home_img0${imgIndex}.jpg`}
+          src={`/assets/images/home/home_img0${imgIndex}.jpg`}
           alt="#"
         />
         <ImgPointerBox>
