@@ -58,12 +58,7 @@ export default function Home() {
     imgIndex < num ? setNext(true) : setNext(false);
   };
 
-  useEffect(() => {
-    const URL = {
-      name: "trash",
-    };
-    getInfo(URL);
-  }, []);
+  useEffect(() => {}, []);
   return (
     <HomeWrap>
       <AnimatePresence initial={false} custom={next} onExitComplete={toggleLeaving}>
