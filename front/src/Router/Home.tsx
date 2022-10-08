@@ -84,10 +84,9 @@ export default function Home() {
             />
           ))}
         </ImgPointerBox>
-        <RightBtn onClick={() => onClickArrowBtn(true)}>오른쪽</RightBtn>
-        <LeftBtn onClick={() => onClickArrowBtn(false)}>왼쪽</LeftBtn>
       </AnimatePresence>
-      <div></div>
+      <RightBtn onClick={() => onClickArrowBtn(true)}>오른쪽</RightBtn>
+      <LeftBtn onClick={() => onClickArrowBtn(false)}>왼쪽</LeftBtn>
     </HomeWrap>
   );
 }
@@ -95,14 +94,11 @@ const HomeWrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 200vh;
   overflow: hidden;
-  ::-webkit-scrollbar-track {
+  ::-webkit-scrollbar {
     display: none;
-    width: 0;
   }
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 `;
 const Img = styled(motion.img)`
   position: absolute;

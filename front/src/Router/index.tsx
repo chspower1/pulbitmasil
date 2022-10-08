@@ -22,6 +22,7 @@ const ContentContainer = styled.section`
     display: none;
     width: 0;
   }
+  overflow-x: hidden;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 `;
