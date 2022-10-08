@@ -122,21 +122,43 @@ router.get("/naver", async function (req, res, next) {
   console.log(req.query);
   try {
     axios
-      .post(`${NAVER_OAUTH_TOKEN_API_URL}`, {
+      .get(`${NAVER_OAUTH_TOKEN_API_URL}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
       })
       .then(result => {
-        console.log("------------------------------------------------", result);
+        console.log("------------------------------------------------", result.data.response);
         // res.redirect(`/auth/naver/info/:${result.data.access_token}`);
-        res.status(215).json(result);
+        const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+
+        const name = result.data.response.name;
+        const email = result.data.response.email;
+
+        maria.query("SELECT * FROM USER WHERE email = ?", [email], async function (err, rows, fields) {
+          if (!err) {
+            if (!rows.length) {
+              maria.query(
+                "INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,'naver')",
+                [name, email],
+                async function (err, rows2, fields) {
+                  const token = jwt.sign({ id: rows2.insertId, access_token: access_token }, secretKey);
+                  res.status(200).json({ success: true, token: token });
+                },
+              );
+            } else {
+              const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
+              console.log(token);
+              res.status(200).json({ success: true, token: token });
+            }
+          }
+        });
       })
       // .then(result => {
       //   res.status(200).json(result);
       // })
       .catch(e => {
-        console.log("에러2");
+        console.log("에러2", e);
         res.send(e);
       });
   } catch (e) {
