@@ -1,5 +1,6 @@
 /*global kakao*/
 import React, { useEffect } from "react";
+import styled from "styled-components";
 
 const { kakao }: any = window;
 export default function Map() {
@@ -20,8 +21,9 @@ export default function Map() {
   }, []);
 
   return (
-    <div>
-      <div id="map" style={{ width: "500px", height: "500px" }}></div>
-    </div>
+      <div>
+        <div id="map" style={{ width: "500px", height: "500px" }}></div>
+      </div>
   );
 }
+
