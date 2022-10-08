@@ -18,6 +18,12 @@ import Walking from "./Walking";
 
 const ContentContainer = styled.section`
   min-height: 100vh;
+  ::-webkit-scrollbar-track {
+    display: none;
+    width: 0;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 `;
 export default function Router() {
   return (
