@@ -9,13 +9,9 @@ const KAKAO_OAUTH_TOKEN_API_URL = "https://kauth.kakao.com/oauth/token";
 // const KAKAO_GET_TOKEN_INFO_API_URL = "https://kapi.kakao.com/v1/user/access_token_info";
 const KAKAO_GET_USER_INFO_API_URL = "https://kapi.kakao.com/v2/user/me";
 const NAVER_OAUTH_TOKEN_API_URL = "https://openapi.naver.com/v1/nid/me";
-const NAVER_GET_USER_INFO_API_URL = "https://nid.naver.com/oauth2.0/token";
 const grant_type = "authorization_code";
 const kakao_client_id = process.env.KAKAO_ID;
 const kakao_redirect_uri = process.env.KakaoCallbackURL;
-const naver_client_id = process.env.NAVER_ID;
-const naver_redirect_uri = process.env.NaverCallbackURL;
-const state = "RAMDOM_STATE";
 
 router.get("/kakao", async function (req, res, next) {
   const code = req.query.code;
@@ -97,13 +93,26 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
                 "INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,'kakao')",
                 [result.data.kakao_account.profile.nickname, email],
                 async function (err, rows2, fields) {
-                  const token = jwt.sign({ id: rows2.insertId, access_token: access_token }, secretKey);
-                  res.status(200).json({ success: true, token: token });
+                  const token = jwt.sign(
+                    {
+                      id: rows2.insertId,
+                      access_token: access_token,
+                    },
+                    secretKey,
+                  );
+                  res.status(200).json({
+                    success: true,
+                    name: result.data.kakao_account.profile.nickname,
+                    email: email,
+                    token: token,
+                  });
                 },
               );
             } else {
               const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
-              res.status(200).json({ success: true, token: token });
+              res
+                .status(200)
+                .json({ success: true, name: result.data.kakao_account.profile.nickname, email: email, token: token });
             }
           }
         });
@@ -143,13 +152,18 @@ router.get("/naver", async function (req, res, next) {
                 [name, email],
                 async function (err, rows2, fields) {
                   const token = jwt.sign({ id: rows2.insertId, access_token: access_token }, secretKey);
-                  res.status(200).json({ success: true, token: token });
+                  res.status(200).json({
+                    success: true,
+                    name: result.data.kakao_account.profile.nickname,
+                    email: email,
+                    token: token,
+                  });
                 },
               );
             } else {
               const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
               console.log(token);
-              res.status(200).json({ success: true, token: token });
+              res.status(200).json({ success: true, name: rows[0].name, email: rows[0].email, token: token });
             }
           }
         });
