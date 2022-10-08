@@ -92,8 +92,9 @@ export default function LoginModal() {
   // 로그인 버튼 클릭 시
   const onvalid = async (data: LoginInfo) => {
     const { email, name, token } = await requestLogin(data);
-    setCurUser({ email, name, token });
-    console.log(curUser);
+    console.log("풀빛마실 로그인, 넘어온 데이터\n", email, name, token);
+    setCurUser(prev => ({ email, name, token }));
+    console.log("풀빛마실 User상태\n", curUser);
   };
 
   //로그인 시 모달비활성화,홈으로 이동
