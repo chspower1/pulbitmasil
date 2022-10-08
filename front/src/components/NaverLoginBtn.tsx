@@ -51,7 +51,6 @@ export default function NaverLoginBtn() {
       const header = {
         Authorization: location,
       };
-
       fetch(
         `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&state=STATE_STRING&redirect_uri=${CALLBACK_URL}`,
         {

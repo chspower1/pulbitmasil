@@ -43,6 +43,7 @@ export async function requestLogin(loginInfo: User) {
       },
     });
     sessionStorage.setItem("userToken", data.token);
+    console.log("풀빛마실로그인", data);
     return data;
   } catch (err) {
     console.log(err);
@@ -65,6 +66,7 @@ export async function kakaoLogin(code: string) {
   console.log(`%cGET 요청 ${BASE_URL}/auth/kakao?code=${code}`, "color: #a25cd1;");
   const { data } = await axios.get(`${BASE_URL}/auth/kakao?code=${code}`);
   sessionStorage.setItem("userToken", data.token);
+  console.log("카카오로그인", data);
   return data;
 }
 export async function naverLogin(accessToken: string, stateToken: string) {
