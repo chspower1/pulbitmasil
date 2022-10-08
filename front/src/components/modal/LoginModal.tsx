@@ -106,90 +106,90 @@ export default function LoginModal() {
   }, [isLogin]);
   return (
     <AnimatePresence>
-      {isLoginModal && (
-        <Wrap>
-          <LoginForm
-            onSubmit={handleSubmit(onvalid)}
-            variants={ModalVariant}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            <Title>로그인</Title>
-            <EmailBox>
-              <EmailInput
-                id="email"
-                type="text"
-                placeholder="이메일을 입력해주세요."
-                {...register("email", {
-                  required: "이메일을 입력해주세요!",
-                  pattern: {
-                    value:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: "이메일 형식에 맞지 않습니다!",
-                  },
-                })}
-              />
+      {/* {isLoginModal && ( */}
+      <Wrap>
+        <LoginForm
+          onSubmit={handleSubmit(onvalid)}
+          variants={ModalVariant}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        >
+          <Title>로그인</Title>
+          <EmailBox>
+            <EmailInput
+              id="email"
+              type="text"
+              placeholder="이메일을 입력해주세요."
+              {...register("email", {
+                required: "이메일을 입력해주세요!",
+                pattern: {
+                  value:
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: "이메일 형식에 맞지 않습니다!",
+                },
+              })}
+            />
 
-              <ErrorMessage>{errors.email?.message}</ErrorMessage>
-            </EmailBox>
-            <PasswordBox>
-              <PasswordInput
-                id="password"
-                type={isViewPassword ? "text" : "password"}
-                placeholder="비밀번호를 입력해주세요."
-                {...register("password", {
-                  minLength: {
-                    value: 7,
-                    message: "7글자 이상 입력해주세요!",
-                  },
-                })}
+            <ErrorMessage>{errors.email?.message}</ErrorMessage>
+          </EmailBox>
+          <PasswordBox>
+            <PasswordInput
+              id="password"
+              type={isViewPassword ? "text" : "password"}
+              placeholder="비밀번호를 입력해주세요."
+              {...register("password", {
+                minLength: {
+                  value: 7,
+                  message: "7글자 이상 입력해주세요!",
+                },
+              })}
+            />
+            <ViewPassword>
+              <FontAwesomeIcon
+                icon={isViewPassword ? faEye : faEyeSlash}
+                color="#2A9C6B"
+                style={{ cursor: "pointer" }}
+                onClick={onClickViewPassword}
               />
-              <ViewPassword>
-                <FontAwesomeIcon
-                  icon={isViewPassword ? faEye : faEyeSlash}
-                  color="#2A9C6B"
-                  style={{ cursor: "pointer" }}
-                  onClick={onClickViewPassword}
-                />
-              </ViewPassword>
-              <ErrorMessage>{errors.password?.message}</ErrorMessage>
-            </PasswordBox>
-            <LoginBtn>로그인</LoginBtn>
-            <UserBox>
-              <Register>
-                <Link to="/register">회원가입 </Link>
-              </Register>
+            </ViewPassword>
+            <ErrorMessage>{errors.password?.message}</ErrorMessage>
+          </PasswordBox>
+          <LoginBtn>로그인</LoginBtn>
+          <UserBox>
+            <Register>
+              <Link to="/register">회원가입 </Link>
+            </Register>
 
-              <FindPassword>
-                <Link to="/register">아이디,비밀번호 찾기</Link>
-              </FindPassword>
-            </UserBox>
-            <SocialLoginBox>
-              <NaverLoginBtn />
-              <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
-            </SocialLoginBox>
-            <CloseBtn onClick={() => setIsLoginModal(prev => !prev)}>
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M19 3L11 11L3 19M3 3L19 19"
-                  stroke="white"
-                  stroke-width="5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </CloseBtn>
-          </LoginForm>
-          <Overlay
-            onClick={() => setIsLoginModal(prev => !prev)}
-            variants={OverlayVariant}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          />
-        </Wrap>
-      )}
+            <FindPassword>
+              <Link to="/register">아이디,비밀번호 찾기</Link>
+            </FindPassword>
+          </UserBox>
+          <SocialLoginBox>
+            <NaverLoginBtn />
+            <KakaoLogin onClick={onClickKakao}>카카오 로그인</KakaoLogin>
+          </SocialLoginBox>
+          <CloseBtn onClick={() => setIsLoginModal(prev => !prev)}>
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19 3L11 11L3 19M3 3L19 19"
+                stroke="white"
+                stroke-width="5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </CloseBtn>
+        </LoginForm>
+        <Overlay
+          onClick={() => setIsLoginModal(prev => !prev)}
+          variants={OverlayVariant}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+        />
+      </Wrap>
+      {/* )} */}
     </AnimatePresence>
   );
 }
