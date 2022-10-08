@@ -3,9 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import qs from "qs";
 import { kakaoLogin } from "@api/api";
+import { useRecoilState } from "recoil";
+import { curUserAtom } from "@atom/atom";
+import { data } from "@components/chart/LineChart";
 export default function Auth() {
   // calllback으로 받은 인가코드
   const code = new URL(window.location.href).searchParams.get("code");
+  const navigator = useNavigate();
   console.log(code);
   //   const navigator = useNavigate();
   //   const getToken = async () => {
@@ -28,8 +32,15 @@ export default function Auth() {
   //       console.log(err);
   //     }
   //   };
+  const [user, setUser] = useRecoilState(curUserAtom);
   useEffect(() => {
-    kakaoLogin(code!);
+    async function inAuthPage() {
+      const { name, email, token } = await kakaoLogin(code!);
+      setUser({ email, name, token });
+      console.log(name, email, token);
+    }
+    inAuthPage();
+    navigator("/");
   }, []);
 
   return (
