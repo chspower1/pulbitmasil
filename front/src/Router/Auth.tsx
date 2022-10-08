@@ -4,8 +4,8 @@ import axios from "axios";
 import qs from "qs";
 import { kakaoLogin } from "@api/api";
 import { useRecoilState } from "recoil";
-import { curUserAtom } from "@atom/atom";
 import { data } from "@components/chart/LineChart";
+import { userAtom } from "@atom/user";
 export default function Auth() {
   // calllback으로 받은 인가코드
   const code = new URL(window.location.href).searchParams.get("code");
@@ -32,7 +32,7 @@ export default function Auth() {
   //       console.log(err);
   //     }
   //   };
-  const [user, setUser] = useRecoilState(curUserAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   useEffect(() => {
     async function inAuthPage() {
       const { name, email, token } = await kakaoLogin(code!);

@@ -60,6 +60,7 @@ export default function Nav() {
   const navKorMenus = ["홈", "소개", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
   const onClickLogout = async () => {
+    sessionStorage.removeItem("userToken");
     setUser(null);
   };
   useEffect(() => {
@@ -100,7 +101,7 @@ export default function Nav() {
         </Link>
       </LogoBox>
       <MenuBox>
-        {/* <Logout onClick={onClickLogout}>로그아웃</Logout> */}
+        <Logout onClick={onClickLogout}>로그아웃</Logout>
         <Items>
           <AnimatePresence>
             {navMenus.map((menu, index) => (
@@ -131,7 +132,7 @@ export default function Nav() {
         </svg>
         <UserName>{isLogin ? "사용자" : "손님"}</UserName>
       </UserBox>
-      {/* <LoginModal></LoginModal> */}
+      <LoginModal></LoginModal>
     </Wrap>
   );
 }
