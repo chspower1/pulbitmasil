@@ -60,8 +60,6 @@ export default function Home() {
     <HomeWrap>
       <AnimatePresence initial={false} custom={next} onExitComplete={toggleLeaving}>
         <Img
-          loading="lazy"
-          decoding="async"
           key={imgIndex}
           custom={next}
           variants={HomeImgVariants}
@@ -72,7 +70,13 @@ export default function Home() {
           src={`/assets/images/home_img0${imgIndex}.jpg`}
           alt="#"
         />
-
+        <ImgPointerBox>
+          {/* [1,2,3,4].map(num=>) */}
+          <ImgPointer />
+          <ImgPointer />
+          <ImgPointer />
+          <ImgPointer />
+        </ImgPointerBox>
         <RightBtn onClick={() => onClickArrowBtn(true)}>오른쪽</RightBtn>
         <LeftBtn onClick={() => onClickArrowBtn(false)}>왼쪽</LeftBtn>
       </AnimatePresence>
@@ -100,4 +104,24 @@ const RightBtn = styled(motion.button)`
 `;
 const LeftBtn = styled(RightBtn)`
   left: 0px;
+`;
+const ImgPointerBox = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  bottom: 10px;
+  width: 80px;
+  right: 0;
+  left: 0;
+  margin: auto;
+`;
+const ImgPointer = styled(motion.div)`
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: white;
+  opacity: 0.3;
+  .active {
+    opacity: 0.9;
+  }
 `;
