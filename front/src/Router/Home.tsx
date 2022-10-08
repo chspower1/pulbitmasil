@@ -67,15 +67,21 @@ export default function Home() {
           animate="animate"
           exit="exit"
           transition={{ duration: 1 }}
-          src={`/assets/images/home_img0${imgIndex}.jpg`}
+          src={`/assets/images/home/home_img0${imgIndex}.jpg`}
           alt="#"
         />
         <ImgPointerBox>
-          {/* [1,2,3,4].map(num=>) */}
-          <ImgPointer />
-          <ImgPointer />
-          <ImgPointer />
-          <ImgPointer />
+          {[1, 2, 3, 4].map(num => (
+            <ImgPointer
+              key={num}
+              className={imgIndex === num ? "avtice" : "normal"}
+              onClick={() => {
+                toggleLeaving();
+                imgIndex < num ? setNext(true) : setNext(false);
+                setImgIndex(num);
+              }}
+            />
+          ))}
         </ImgPointerBox>
         <RightBtn onClick={() => onClickArrowBtn(true)}>오른쪽</RightBtn>
         <LeftBtn onClick={() => onClickArrowBtn(false)}>왼쪽</LeftBtn>
@@ -87,14 +93,20 @@ export default function Home() {
 const HomeWrap = styled.div`
   justify-content: center;
   align-items: center;
+  width: 100vw;
   height: 100vh;
-  overflow-y: hidden;
+  overflow: hidden;
+  ::-webkit-scrollbar-track {
+    display: none;
+    width: 0;
+  }
 `;
 const Img = styled(motion.img)`
   position: absolute;
   width: 100vw;
   height: 100vh;
   object-fit: cover;
+  overflow: hidden;
 `;
 const RightBtn = styled(motion.button)`
   position: absolute;
@@ -120,8 +132,12 @@ const ImgPointer = styled(motion.div)`
   height: 10px;
   border-radius: 5px;
   background-color: white;
-  opacity: 0.3;
-  .active {
+  cursor: pointer;
+
+  &.normal {
+    opacity: 0.3;
+  }
+  &.active {
     opacity: 0.9;
   }
 `;
