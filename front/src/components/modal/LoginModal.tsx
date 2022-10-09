@@ -108,7 +108,7 @@ export default function LoginModal() {
       closeLoginModal();
     }
   }, [isLogin]);
-  return (
+  return createPortal(
     <AnimatePresence>
       {isLoginModal && !isLogin && (
         <ModalWrap>
@@ -196,7 +196,8 @@ export default function LoginModal() {
           />
         </ModalWrap>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.getElementById("modal")!,
   );
 }
 
