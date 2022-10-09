@@ -20,6 +20,7 @@ import MyGreenStroll from "./MyGreenStroll";
 import WelcomeModal from "@components/modal/WelcomeModal";
 import Test from "./Test";
 import Review from "./Review";
+import Content from "@components/about/Content";
 
 const ContentContainer = styled.section`
   min-height: 100vh;

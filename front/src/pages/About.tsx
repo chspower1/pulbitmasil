@@ -15,5 +15,5 @@ export default function About() {
 }
 const AboutWrap = styled.div`
   display: flex;
-  height: 300vh;
+  height: 100vh;
 `;
