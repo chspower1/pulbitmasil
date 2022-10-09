@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
+import UserNav from "./UserNav";
 
 // Interface
 interface SearchForm {
@@ -64,8 +65,7 @@ export default function Nav() {
     setUser(null);
   };
   const handleClickUserBox = () => {
-    if (isLogin) return null;
-    else setIsloginModal(true);
+    isLogin ? setIsUserNav(cur => !cur) : setIsloginModal(cur => !cur);
   };
   useEffect(() => {
     scrollY.onChange(() => {
@@ -123,7 +123,7 @@ export default function Nav() {
             </AnimatePresence>
           </Items>
         </MenuBox>
-        <UserBox onClick={() => handleClickUserBox()}>
+        <UserBox onClick={handleClickUserBox}>
           <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="45" height="45" fill="url(#pattern0)" />
             <defs>
@@ -141,8 +141,8 @@ export default function Nav() {
           <UserName>{isLogin ? user?.name : "손님"}</UserName>
         </UserBox>
         <LoginModal></LoginModal>
+        {isUserNav && <UserNav setIsUserNav={setIsUserNav} />}
       </Wrap>
-      <Logout onClick={handleClickLogout}>테스트용 로그아웃</Logout>
     </>
   );
 }
@@ -214,10 +214,4 @@ const UserName = styled.div`
 `;
 const LogoPath = styled(motion.path).attrs<{}>`
 `;
-const Logout = styled.button`
-  font-size: 30px;
-  z-index: 1000;
-  position: absolute;
-  bottom: 100px;
-  left: 100px;
-`;
+const Logout = styled.button``;

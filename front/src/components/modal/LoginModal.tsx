@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { isLoginModalAtom, isLoginSelector, isWelcomeModalAtom } from "@atom/atom";
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { kakaoLogin, requestLogin } from "@api/api";
@@ -63,6 +63,7 @@ export default function LoginModal() {
   const [isViewPassword, setIsViewPassword] = useState(false);
   const navigator = useNavigate();
   const match = useMatch("/register");
+  const setIsWelcomeModal = useSetRecoilState(isWelcomeModalAtom);
   const handleClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
@@ -91,6 +92,8 @@ export default function LoginModal() {
     if (!email && !name && !token) {
       alert("로그인 정보가 틀렸습니다.");
       reset();
+    } else {
+      setIsWelcomeModal(true);
     }
     console.log("풀빛마실 로그인, 넘어온 데이터\n", email, name, token);
     setCurUser(prev => ({ email, name, token }));
