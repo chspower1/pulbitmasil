@@ -10,7 +10,7 @@ import { isLoginModalAtom, isLoginSelector, isLogoutModalAtom } from "@atom/atom
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
-import ModalPortal from "@components/modal/ModalPortal";
+// import ModalPortal from "@components/modal/ModalPortal";
 
 // Interface
 interface SearchForm {
@@ -85,8 +85,8 @@ export default function Nav() {
     });
   }, []);
   useEffect(() => {
-    pathname === "/" ? setCurState("home") : setCurState(pathname.slice(1));
-    console.log(pathname);
+    pathname === "/" ? setCurState("home") : setCurState(pathname.split("/")[1]);
+    console.log("현재 pathname", pathname);
   }, [pathname]);
   return (
     <>

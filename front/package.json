@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@ap.cx/react-fullpage": "^0.3.0",
     "@craco/craco": "^7.0.0-alpha.8",
     "@faker-js/faker": "^7.5.0",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
@@ -64,7 +63,6 @@
     ]
   },
   "devDependencies": {
-    "@types/jquery": "^3.5.14",
     "@types/react-scroll": "^1.8.4",
     "@types/styled-components": "^5.1.26",
     "craco-alias": "^3.0.1"
