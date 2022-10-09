@@ -99,10 +99,6 @@ const HomeWrap = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 const Img = styled(motion.img)`
   position: absolute;
