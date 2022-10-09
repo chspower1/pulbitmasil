@@ -1,4 +1,4 @@
-import Router from "@router/index";
+import Router from "./pages/index";
 
 import { GlobalStyled } from "./style/GlobalStyled";
 import { ThemeProvider } from "styled-components";

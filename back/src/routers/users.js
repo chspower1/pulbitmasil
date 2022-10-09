@@ -164,4 +164,20 @@ router.post("/verify", login_required, async function (req, res, next) {
   }
 });
 
+router.get("/mypage", login_required, function (req, res) {
+  const id = req.currentUserId;
+  maria.query(
+    `SELECT * FROM USER INNER JOIN REVIEW ON USER.id = REVIEW.user_id where id = ?`,
+    [id],
+    function (err, rows, fields) {
+      if (!err) {
+        res.send(rows);
+      } else {
+        console.log("err : " + err);
+        res.send(err);
+      }
+    },
+  );
+});
+
 module.exports = router;

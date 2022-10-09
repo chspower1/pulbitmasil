@@ -3,15 +3,21 @@ import { Link, useLocation, useNavigate, useRoutes } from "react-router-dom";
 import styled from "styled-components";
 import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
 import { useForm } from "react-hook-form";
-import LoginModal from "./modal/LoginModal";
+import LoginModal from "../modal/LoginModal";
+import LogoutModal from "@components/modal/LogoutModal";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
+import { isLoginModalAtom, isLoginSelector, isLogoutModalAtom } from "@atom/atom";
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
+import UserNav from "@components/UserNav";
 
 // Interface
 interface SearchForm {
   keyword: string;
+}
+
+export interface UserNavProps {
+  setIsUserNav: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Variants
@@ -50,22 +56,25 @@ export default function Nav() {
   const [searchOpen, setSearchOpen] = useState(false);
   const isLogin = useRecoilValue(isLoginSelector);
   const [isLoginModal, setIsloginModal] = useRecoilState(isLoginModalAtom);
+  const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState(userAtom);
   const [curState, setCurState] = useState(pathname === "/" ? "home" : pathname.slice(1));
   const { register, handleSubmit, reset } = useForm<SearchForm>();
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  const navMenus = ["home", "about", "walking", "plogging"];
-  const navKorMenus = ["홈", "소개", "산책로", "플로깅"];
+  const navMenus = ["home", "about", "walking", "plogging", "review"];
+  const navKorMenus = ["홈", "소개", "산책로", "풀빛마실 모임", "후기"];
   const userMenus = ["login", "register"];
-  const onClickLogout = async () => {
-    sessionStorage.removeItem("userToken");
-    setUser(null);
+
+  const [isUserNav, setIsUserNav] = useState(false);
+
+  const handleClickLogout = async () => {
+    isLogin && console.log("test: click logout");
+    isLogin && setIsLogoutModal(true);
   };
-  const onClickUserBox = () => {
-    if (isLogin) return null;
-    else setIsloginModal(true);
+  const handleClickUserBox = () => {
+    isLogin ? setIsUserNav(cur => !cur) : setIsloginModal(cur => !cur);
   };
   useEffect(() => {
     scrollY.onChange(() => {
@@ -123,7 +132,7 @@ export default function Nav() {
             </AnimatePresence>
           </Items>
         </MenuBox>
-        <UserBox onClick={() => onClickUserBox()}>
+        <UserBox onClick={handleClickUserBox}>
           <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="45" height="45" fill="url(#pattern0)" />
             <defs>
@@ -141,8 +150,9 @@ export default function Nav() {
           <UserName>{isLogin ? user?.name : "손님"}</UserName>
         </UserBox>
         <LoginModal></LoginModal>
+        {isUserNav && <UserNav setIsUserNav={setIsUserNav}></UserNav>}
+        <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
       </Wrap>
-      <Logout onClick={onClickLogout}>테스트용 로그아웃</Logout>
     </>
   );
 }
@@ -214,10 +224,4 @@ const UserName = styled.div`
 `;
 const LogoPath = styled(motion.path).attrs<{}>`
 `;
-const Logout = styled.button`
-  font-size: 30px;
-  z-index: 1000;
-  position: absolute;
-  bottom: 100px;
-  left: 100px;
-`;
+const Logout = styled.button``;

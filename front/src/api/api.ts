@@ -1,27 +1,27 @@
 import axios from "axios";
+import { Review } from "src/types/review";
+import { UserLoginForm, UserRegisterForm } from "src/types/user";
 
 const BASE_URL = "http://localhost:5001";
 
-interface getProps {
-  name: string;
-  option?: string;
-}
-export async function getInfo({ name, option }: getProps) {
-  try {
-    if (!option) option = "";
-    console.log(`${BASE_URL}/${name}/${option}`);
-    const { data } = await (await fetch(`${BASE_URL}/${name}/${option}`)).json();
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-}
+const axiosInstance = axios.create({
+  baseURL: BASE_URL,
+});
 
-interface User {
-  email: string;
-  password: string;
-  name?: string;
-}
+// interface getProps {
+//   name: string;
+//   option?: string;
+// }
+// export async function getInfo({ name, option }: getProps) {
+//   try {
+//     if (!option) option = "";
+//     console.log(`${BASE_URL}/${name}/${option}`);
+//     const { data } = await (await axiosInstance.get(`${name}/${option}`)).json();
+//     return data;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
 
 //토큰을 가지고있음을 헤더에 알려주는코드
 // function setAuthorizationToken(token: any) {
@@ -32,11 +32,11 @@ interface User {
 //   }
 // }
 
-export async function requestLogin(loginInfo: User) {
+export async function requestLogin(loginInfo: UserLoginForm) {
   const bodyData = JSON.stringify(loginInfo);
 
   try {
-    const { data } = await axios.post(`${BASE_URL}/user/login`, bodyData, {
+    const { data } = await axiosInstance.post(`user/login`, bodyData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -51,12 +51,11 @@ export async function requestLogin(loginInfo: User) {
   }
 }
 
-export async function registerUser(newUser: User) {
+export async function registerUser(newUser: UserRegisterForm) {
   const bodyData = JSON.stringify(newUser);
-  console.log(`%cGET 요청 ${BASE_URL + "/user/register"}`, "color: #a25cd1;");
+  console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
 
-  // endpoint 백엔드와 상의필요
-  return axios.post(`${BASE_URL}/user/register`, bodyData, {
+  return axiosInstance.post(`/user/register`, bodyData, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -65,14 +64,27 @@ export async function registerUser(newUser: User) {
 
 export async function kakaoLogin(code: string) {
   console.log(`%cGET 요청 ${BASE_URL}/auth/kakao?code=${code}`, "color: #a25cd1;");
-  const { data } = await axios.get(`${BASE_URL}/auth/kakao?code=${code}`);
+  const { data } = await axiosInstance.get(`auth/kakao?code=${code}`);
   sessionStorage.setItem("userToken", data.token);
   console.log("카카오로그인", data);
   return data;
 }
 export async function naverLogin(accessToken: string, stateToken: string) {
-  const { data } = await axios.get(`${BASE_URL}/auth/naver?access_token=${accessToken}&state_token=${stateToken}`);
+  const { data } = await axiosInstance.get(`auth/naver?access_token=${accessToken}&state_token=${stateToken}`);
   sessionStorage.setItem("userToken", data.token);
   console.log("네이버로그인", data);
   return data;
+}
+
+export async function uploadReview(contents: Review) {
+  const bodyData = JSON.stringify(contents);
+  console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
+  console.log(bodyData);
+
+  // endpoint 백엔드와 상의필요
+  return axiosInstance.post(`/user/review`, bodyData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
