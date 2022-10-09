@@ -1,18 +1,36 @@
 import React from "react";
-import $ from "jquery";
-import "fullpage.js";
 import styled from "styled-components";
+import ReactFullpage from "@fullpage/react-fullpage";
+const anchors = ["firstPage", "secondPage", "thirdPage"];
 export default function Content() {
-  $((): void => {
-    ($("#fullpage") as any).fullpage({
-      scrollOverflow: true,
-    });
-  });
   return (
     <ContentWrap id="fullpage">
-      <Section01 className="section" />
-      <Section02 className="section" />
-      <Section03 className="section" />
+      <ReactFullpage
+        anchors={anchors}
+        navigation
+        navigationTooltips={anchors}
+        sectionsColor={["#7fff00", "#00ffff", "#29ab87"]}
+        onLeave={(origin, destination, direction) => {
+          console.log("onLeave event", { origin, destination, direction });
+        }}
+        render={({ state, fullpageApi }) => {
+          // console.log("render prop change", state, fullpageApi);
+
+          return (
+            <div>
+              <Section01 className="section">
+                <h3>Section 1</h3>
+              </Section01>
+              <Section02 className="section">
+                <h3>Section 2</h3>
+              </Section02>
+              <Section03 className="section">
+                <h3>Section 3</h3>
+              </Section03>
+            </div>
+          );
+        }}
+      />
     </ContentWrap>
   );
 }

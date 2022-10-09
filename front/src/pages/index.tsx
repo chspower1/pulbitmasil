@@ -19,6 +19,7 @@ import UserInfo from "./UserInfo";
 import MyGreenStroll from "./MyGreenStroll";
 import WelcomeModal from "@components/modal/WelcomeModal";
 import Test from "./Test";
+import Review from "./Review";
 
 const ContentContainer = styled.section`
   min-height: 100vh;
@@ -42,6 +43,7 @@ export default function Router() {
           <Route path="/myGreenStroll" element={<MyGreenStroll />} />
           <Route path="/user/naver/callback" element={<Naver />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
+          <Route path="/review" element={<Review />} />
           <Route path="/test" element={<Test />} />
         </Routes>
       </ContentContainer>
