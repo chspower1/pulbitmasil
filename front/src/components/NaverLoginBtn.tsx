@@ -16,7 +16,7 @@ interface User {
 }
 
 const CLIENT_ID = "PI99uUj8actDtIRQqkH0";
-const CALLBACK_URL = "http://localhost:3000/user/naver/callback";
+const CALLBACK_URL = "http://localhost:3000/auth/naver/callback";
 
 export default function NaverLoginBtn() {
   const naverRef = useRef<any>();
