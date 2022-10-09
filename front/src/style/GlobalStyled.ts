@@ -10,7 +10,6 @@ export const GlobalStyled = createGlobalStyle`
     
     body {
         font-family: "Sebang";
-        overflow: hidden;
   ::-webkit-scrollbar {
     display: none;
   }

@@ -29,6 +29,7 @@
     "react-hook-form": "^7.36.1",
     "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
+    "react-scroll": "^1.8.7",
     "recoil": "^0.7.5",
     "recoil-persist": "^4.2.0",
     "styled-components": "^5.3.6",
@@ -61,6 +62,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-scroll": "^1.8.4",
     "@types/styled-components": "^5.1.26",
     "craco-alias": "^3.0.1"
   }

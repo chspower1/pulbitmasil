@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "@components/layout/Nav";
 
 import Home from "./Home";
-import About from "./About";
+import About from "./about";
 import Map from "./Map";
 import Register from "./Register";
 import styled from "styled-components";
@@ -19,13 +19,6 @@ import WelcomeModal from "@components/modal/WelcomeModal";
 
 const ContentContainer = styled.section`
   min-height: 100vh;
-  ::-webkit-scrollbar-track {
-    display: none;
-    width: 0;
-  }
-  overflow-x: hidden;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 `;
 export default function Router() {
   return (

@@ -103,7 +103,6 @@ const HomeWrap = styled.div`
 const Img = styled(motion.img)`
   position: absolute;
   width: 100vw;
-  /* width: ${window.innerWidth}; */
   height: 100vh;
   object-fit: cover;
   overflow: hidden;
