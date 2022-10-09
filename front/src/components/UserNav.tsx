@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { isLogoutModalAtom } from "@atom/atom";
+import { UserNavProps } from "./layout/Nav";
 
-
-
-export default function UserNav() {
+export default function UserNav({ setIsUserNav }: UserNavProps) {
   const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
   const userNavKorMenus = ["계정 정보", "나의 풀빛마실", "로그아웃"];
   const setIsLogoutModal = useSetRecoilState(isLogoutModalAtom);
@@ -14,6 +13,7 @@ export default function UserNav() {
 
   const onClickLogout = async () => {
     setIsLogoutModal(true);
+    setIsUserNav(false);
   };
 
   return (

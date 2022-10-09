@@ -16,6 +16,10 @@ interface SearchForm {
   keyword: string;
 }
 
+export interface UserNavProps {
+  setIsUserNav: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 // Variants
 const LogoVariants = {
   initial: {
@@ -146,7 +150,7 @@ export default function Nav() {
           <UserName>{isLogin ? user?.name : "손님"}</UserName>
         </UserBox>
         <LoginModal></LoginModal>
-        {isUserNav && <UserNav />}
+        {isUserNav && <UserNav setIsUserNav={setIsUserNav}></UserNav>}
         <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
       </Wrap>
     </>

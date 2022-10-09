@@ -6,10 +6,8 @@ import styled from "styled-components";
 import { CloseBtn, LoginForm, ModalVariant, ModalWrap, Overlay, OverlayVariant } from "./LoginModal";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
+import { UserNavProps } from "@components/layout/Nav";
 
-interface UserNavProps {
-  setIsUserNav: React.Dispatch<React.SetStateAction<boolean>>;
-}
 export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
   const [user, setUser] = useRecoilState(userAtom);
