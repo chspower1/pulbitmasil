@@ -8,6 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
+import UserNav from "./UserNav";
 
 // Interface
 interface SearchForm {
@@ -59,10 +60,15 @@ export default function Nav() {
   const navMenus = ["home", "about", "walking", "plogging"];
   const navKorMenus = ["홈", "소개", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
-  const onClickLogout = async () => {
-    sessionStorage.removeItem("userToken");
-    setUser(null);
-  };
+  const [userMenu, setuserMenu] = useState(false);
+  // const onClickLogout = async () => {
+  //   sessionStorage.removeItem("userToken");
+  //   setUser(null);
+  // };
+
+  const onClickUserMenu = () => {
+    if(userMenu){<UserNav />}
+  }
   useEffect(() => {
     scrollY.onChange(() => {
       // console.log(scrollY.get());
@@ -101,7 +107,7 @@ export default function Nav() {
         </Link>
       </LogoBox>
       <MenuBox>
-        <Logout onClick={onClickLogout}>로그아웃</Logout>
+        {/* <Logout onClick={onClickLogout}>로그아웃</Logout> */}
         <Items>
           <AnimatePresence>
             {navMenus.map((menu, index) => (
@@ -115,7 +121,9 @@ export default function Nav() {
           </AnimatePresence>
         </Items>
       </MenuBox>
-      <UserBox onClick={() => setIsloginModal(cur => !cur)}>
+      <UserBox 
+      onClick={isLogin ? () => setuserMenu(cur => !cur) : () => setIsloginModal(cur => !cur)}
+      >
         <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="45" height="45" fill="url(#pattern0)" />
           <defs>
@@ -204,4 +212,4 @@ const UserName = styled.div`
 `;
 const LogoPath = styled(motion.path).attrs<{}>`
 `;
-const Logout = styled.button``;
+// const Logout = styled.button``;

@@ -15,6 +15,8 @@ import ScrollBtn from "@components/ScrollBtn";
 import Naver from "./NaverAuth";
 import KakaoAuth from "./KakaoAuth";
 import Walking from "./Walking";
+import UserInfo from "./UserInfo";
+import MyGreenStroll from "./MyGreenStroll";
 
 const ContentContainer = styled.section`
   min-height: 100vh;
@@ -40,6 +42,8 @@ export default function Router() {
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
           <Route path="/walking" element={<Walking />} />
+          <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/myGreenStroll" element={<MyGreenStroll />} />
           <Route path="/user/naver/callback" element={<Naver />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
         </Routes>
