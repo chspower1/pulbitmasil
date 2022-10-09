@@ -16,6 +16,7 @@ import Naver from "./NaverAuth";
 import KakaoAuth from "./KakaoAuth";
 import Walking from "./Walking";
 import WelcomeModal from "@components/modal/WelcomeModal";
+import Test from "./Test";
 
 const ContentContainer = styled.section`
   min-height: 100vh;
@@ -37,6 +38,7 @@ export default function Router() {
           <Route path="/walking" element={<Walking />} />
           <Route path="/auth/naver/callback" element={<Naver />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </ContentContainer>
       <ScrollBtn />

@@ -1,31 +1,27 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
+import $ from "jquery";
+import "fullpage.js";
 import styled from "styled-components";
 export default function Content() {
-  const wrapRef = useRef<any>();
-  useEffect(() => {
-    const wheelHandler = (e: any) => {
-      e.preventDefault();
-      // 스크롤 행동 구현
-    };
-    const wrapRefCurrent: any = wrapRef.current;
-    wrapRefCurrent.addEventListener("wheel", wheelHandler);
-    return () => {
-      wrapRefCurrent.removeEventListener("wheel", wheelHandler);
-    };
-  }, []);
+  $((): void => {
+    ($("#fullpage") as any).fullpage({
+      scrollOverflow: true,
+    });
+  });
   return (
-    <ContentWrap ref={wrapRef}>
-      <Section01 id="1" />
-      <Section02 id="2" />
-      <Section03 id="3" />
+    <ContentWrap id="fullpage">
+      <Section01 className="section" />
+      <Section02 className="section" />
+      <Section03 className="section" />
     </ContentWrap>
   );
 }
 const ContentWrap = styled.div`
+  height: 1000vh;
   width: 80%;
   margin-left: 20%;
 `;
-const Section01 = styled.section`
+const Section01 = styled.div`
   height: 100vh;
   background-color: blue;
 `;
