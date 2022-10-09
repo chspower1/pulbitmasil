@@ -7,6 +7,7 @@ import { CloseBtn, LoginForm, ModalVariant, ModalWrap, Overlay, OverlayVariant }
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
+import { createPortal } from "react-dom";
 
 export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
@@ -19,7 +20,7 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
     setUser(null);
   };
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isLogoutModal && (
         <WelcomeModalWrap>
@@ -38,7 +39,8 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
           </WelcomeModalContainer>
         </WelcomeModalWrap>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.getElementById("modal")!,
   );
 }
 const WelcomeModalWrap = styled(ModalWrap)`

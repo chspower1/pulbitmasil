@@ -99,6 +99,7 @@ const HomeWrap = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
+  margin-top: -70px;
 `;
 const Img = styled(motion.img)`
   position: absolute;

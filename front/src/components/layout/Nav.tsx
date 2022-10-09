@@ -10,6 +10,7 @@ import { isLoginModalAtom, isLoginSelector, isLogoutModalAtom } from "@atom/atom
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
+import ModalPortal from "@components/modal/ModalPortal";
 
 // Interface
 interface SearchForm {
@@ -69,11 +70,8 @@ export default function Nav() {
 
   const [isUserNav, setIsUserNav] = useState(false);
 
-  const handleClickLogout = async () => {
-    isLogin && console.log("test: click logout");
-    isLogin && setIsLogoutModal(true);
-  };
   const handleClickUserBox = () => {
+    // ModalPortal(LoginModal); 포탈적용 어떻게 해야할지 모르겠음
     isLogin ? setIsUserNav(cur => !cur) : setIsloginModal(cur => !cur);
   };
   useEffect(() => {
@@ -161,6 +159,7 @@ const Wrap = styled(motion.nav)`
   display: flex;
   position: fixed;
   justify-content: space-between;
+  top: 0px;
   font-size: 18px;
   height: 70px;
   width: 100%;

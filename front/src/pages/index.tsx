@@ -12,7 +12,7 @@ import Footer from "@components/layout/Footer";
 import Chart from "./Chart";
 import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
-import Naver from "./NaverAuth";
+import NaverAuth from "./NaverAuth";
 import KakaoAuth from "./KakaoAuth";
 import Walking from "./Walking";
 import UserInfo from "./UserInfo";
@@ -20,9 +20,9 @@ import MyGreenStroll from "./MyGreenStroll";
 import WelcomeModal from "@components/modal/WelcomeModal";
 import Review from "./Review";
 import ReviewForm from "./ReviewForm";
-
 const ContentContainer = styled.section`
-  min-height: 100vh;
+  margin-top: 70px;
+  height: 100vh;
 `;
 export default function Router() {
   return (
@@ -43,7 +43,7 @@ export default function Router() {
           <Route path="/review/write" element={<ReviewForm />} />
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/myGreenStroll" element={<MyGreenStroll />} />
-          <Route path="/user/naver/callback" element={<Naver />} />
+          <Route path="/auth/naver/callback" element={<NaverAuth />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
         </Routes>
       </ContentContainer>

@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
 import { UserLoginForm } from "src/types/user";
+import { createPortal } from "react-dom";
 
 export const ModalVariant = {
   initial: {
@@ -103,11 +104,11 @@ export default function LoginModal() {
   //로그인 시 모달비활성화,홈으로 이동
   useEffect(() => {
     if (isLogin) {
-      navigator("/");
+      // navigator("/");
       closeLoginModal();
     }
   }, [isLogin]);
-  return (
+  return createPortal(
     <AnimatePresence>
       {isLoginModal && !isLogin && (
         <ModalWrap>
@@ -195,7 +196,8 @@ export default function LoginModal() {
           />
         </ModalWrap>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.getElementById("modal")!,
   );
 }
 
