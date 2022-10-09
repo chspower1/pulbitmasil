@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, useRoutes } from "react-router-dom";
 import styled from "styled-components";
 import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
 import { useForm } from "react-hook-form";
-import LoginModal from "./modal/LoginModal";
+import LoginModal from "../modal/LoginModal";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
@@ -59,11 +59,11 @@ export default function Nav() {
   const navMenus = ["home", "about", "walking", "plogging"];
   const navKorMenus = ["홈", "소개", "산책로", "플로깅"];
   const userMenus = ["login", "register"];
-  const onClickLogout = async () => {
+  const handleClickLogout = async () => {
     sessionStorage.removeItem("userToken");
     setUser(null);
   };
-  const onClickUserBox = () => {
+  const handleClickUserBox = () => {
     if (isLogin) return null;
     else setIsloginModal(true);
   };
@@ -123,7 +123,7 @@ export default function Nav() {
             </AnimatePresence>
           </Items>
         </MenuBox>
-        <UserBox onClick={() => onClickUserBox()}>
+        <UserBox onClick={() => handleClickUserBox()}>
           <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="45" height="45" fill="url(#pattern0)" />
             <defs>
@@ -142,7 +142,7 @@ export default function Nav() {
         </UserBox>
         <LoginModal></LoginModal>
       </Wrap>
-      <Logout onClick={onClickLogout}>테스트용 로그아웃</Logout>
+      <Logout onClick={handleClickLogout}>테스트용 로그아웃</Logout>
     </>
   );
 }

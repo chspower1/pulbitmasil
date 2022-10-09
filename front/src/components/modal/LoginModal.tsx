@@ -13,12 +13,8 @@ import { faXing } from "@fortawesome/free-brands-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
+import { UserLoginForm } from "src/types/user";
 
-interface LoginInfo {
-  email: string;
-  password: string;
-  name?: string;
-}
 export const ModalVariant = {
   initial: {
     y: 30,
@@ -61,13 +57,13 @@ export default function LoginModal() {
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<LoginInfo>({ mode: "onChange" });
+  } = useForm<UserLoginForm>({ mode: "onChange" });
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
   const isLogin = useRecoilValue(isLoginSelector);
   const [isViewPassword, setIsViewPassword] = useState(false);
   const navigator = useNavigate();
   const match = useMatch("/register");
-  const onClickViewPassword = () => {
+  const handleClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
   const [curUser, setCurUser] = useRecoilState(userAtom);
@@ -76,7 +72,7 @@ export default function LoginModal() {
   const REST_API_KEY = process.env.REACT_APP_KAKAO_LOGIN_API;
   const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  const onClickKakao = () => {
+  const handleClickKakao = () => {
     window.location.href = KAKAO_AUTH_URL;
     const href = window.location.href;
     let params = new URL(window.location.href).searchParams;
@@ -90,7 +86,7 @@ export default function LoginModal() {
     reset();
   };
   // 로그인 버튼 클릭 시
-  const onvalid = async (data: LoginInfo) => {
+  const onvalid = async (data: UserLoginForm) => {
     const { email, name, token } = await requestLogin(data);
     if (!email && !name && !token) {
       alert("로그인 정보가 틀렸습니다.");
@@ -154,7 +150,7 @@ export default function LoginModal() {
                   icon={isViewPassword ? faEye : faEyeSlash}
                   color="#2A9C6B"
                   style={{ cursor: "pointer" }}
-                  onClick={onClickViewPassword}
+                  onClick={handleClickViewPassword}
                 />
               </ViewPassword>
               <ErrorMessage>{errors.password?.message}</ErrorMessage>
@@ -171,7 +167,7 @@ export default function LoginModal() {
             </UserBox>
             <SocialLoginBox>
               <NaverLoginBtn />
-              <KakaoLogin type="button" onClick={onClickKakao}>
+              <KakaoLogin type="button" onClick={handleClickKakao}>
                 카카오 로그인
               </KakaoLogin>
             </SocialLoginBox>

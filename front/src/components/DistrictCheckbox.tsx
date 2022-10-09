@@ -26,7 +26,7 @@ export default function DistrictCheckbox() {
       setCheckedList(checkedList.filter(el => el !== item));
     }
   };
-
+  
   console.log(checkedList)
   return(
     <CheckBox>

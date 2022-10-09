@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { getInfo } from "@api/api";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
@@ -44,7 +43,7 @@ export default function Home() {
   const toggleLeaving = () => {
     setLeaving(prev => !prev);
   };
-  const onClickArrowBtn = (next: boolean) => {
+  const handleClickArrowBtn = (next: boolean) => {
     if (leaving) return console.log(leaving);
     else {
       setNext(next);
@@ -53,7 +52,7 @@ export default function Home() {
       console.log("Click! and nextState:", next);
     }
   };
-  const onClickImgPoint = (imgIndex: number, num: number) => {
+  const handleClickImgPoint = (imgIndex: number, num: number) => {
     toggleLeaving();
     setImgIndex(num);
     imgIndex < num ? setNext(true) : setNext(false);
@@ -81,15 +80,15 @@ export default function Home() {
             <ImgPointer
               key={num}
               className={imgIndex === num ? "active" : "normal"}
-              onClick={() => onClickImgPoint(imgIndex, num)}
+              onClick={() => handleClickImgPoint(imgIndex, num)}
             />
           ))}
         </ImgPointerBox>
       </AnimatePresence>
-      <RightBtn onClick={() => onClickArrowBtn(true)}>
+      <RightBtn onClick={() => handleClickArrowBtn(true)}>
         <FontAwesomeIcon icon={faChevronRight} size={"4x"} />
       </RightBtn>
-      <LeftBtn onClick={() => onClickArrowBtn(false)}>
+      <LeftBtn onClick={() => handleClickArrowBtn(false)}>
         <FontAwesomeIcon icon={faChevronLeft} size={"4x"} />
       </LeftBtn>
     </HomeWrap>

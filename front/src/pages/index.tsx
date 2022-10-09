@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Nav from "@components/Nav";
+import Nav from "@components/layout/Nav";
 
 import Home from "./Home";
 import About from "./About";
 import Map from "./Map";
 import Register from "./Register";
 import styled from "styled-components";
-import Footer from "@components/Footer";
+import Footer from "@components/layout/Footer";
 import Chart from "./Chart";
 import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";

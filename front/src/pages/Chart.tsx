@@ -9,18 +9,14 @@ import TrashBarChart from "@components/chart/TrashBarChart";
 export default function Chart() {
   const [isSelect, setIsSelect] = useState(false);
 
-  const onClickFalse = () => setIsSelect(false);
-  const onClickTrue = () => setIsSelect(true);
   return (
     <div>
       <ChartContainer>
         <BtnBox>
-          <Btn onClick={onClickFalse}>서울 자치구별 쓰레기통 현황</Btn>
-          <Btn onClick={onClickTrue}>서울 자치구별 두드림길 현황</Btn>
+          <Btn onClick={() => setIsSelect(false)}>서울 자치구별 쓰레기통 현황</Btn>
+          <Btn onClick={() => setIsSelect(true)}>서울 자치구별 두드림길 현황</Btn>
         </BtnBox>
-        <ChartBox>
-          {isSelect ? <RoadBarChart /> : <TrashBarChart />}
-        </ChartBox>
+        <ChartBox>{isSelect ? <RoadBarChart /> : <TrashBarChart />}</ChartBox>
       </ChartContainer>
     </div>
   );
