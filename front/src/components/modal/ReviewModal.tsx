@@ -1,5 +1,6 @@
-import { CloseBtn, LoginForm, ModalVariant, ModalWrap, Overlay, OverlayVariant } from "./LoginModal";
+import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import styled from "styled-components";
+import { ModalWrap, ModalContainer } from "@style/ModalStyle";
 
 export default function ReviewModal() {
   return (
@@ -17,7 +18,7 @@ export default function ReviewModal() {
 const WelcomeModalWrap = styled(ModalWrap)`
   z-index: 1000;
 `;
-const WelcomeModalContainer = styled(LoginForm)`
+const WelcomeModalContainer = styled(ModalContainer)`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -3,9 +3,10 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { CloseBtn, LoginForm, ModalVariant, ModalWrap, Overlay, OverlayVariant } from "./LoginModal";
+import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
+import { Accent, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
 export default function WelcomeModal() {
   const [isWelcomeModal, setIsWelcomeModal] = useRecoilState(isWelcomeModalAtom);
   const user = useRecoilValue(userAtom);
@@ -53,22 +54,14 @@ export default function WelcomeModal() {
 const WelcomeModalWrap = styled(ModalWrap)`
   z-index: 1000;
 `;
-const WelcomeModalContainer = styled(LoginForm)`
+const WelcomeModalContainer = styled(ModalContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 500px;
   height: 200px;
 `;
-const Desc = styled.p`
-  display: flex;
-  font-size: 30px;
-  color: ${props => props.theme.textColor};
-  margin-bottom: 18px;
-`;
-const Accent = styled.h1`
-  color: ${props => props.theme.mainColor};
-`;
+
 const WelcomeCloseBtn = styled(CloseBtn)`
   width: 36px;
   height: 36px;

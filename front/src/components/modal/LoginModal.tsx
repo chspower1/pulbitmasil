@@ -8,13 +8,13 @@ import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 import { kakaoLogin, requestLogin } from "@api/api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
-import { faArrowRight, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { faXing } from "@fortawesome/free-brands-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
 import { UserLoginForm } from "src/types/user";
 import { createPortal } from "react-dom";
+import { ModalWrap as LoginModalWrap, ModalContainer as LoginForm, ModalTitle as LoginTitle } from "@style/ModalStyle";
 
 export const ModalVariant = {
   initial: {
@@ -108,10 +108,10 @@ export default function LoginModal() {
       closeLoginModal();
     }
   }, [isLogin]);
-  return createPortal(
+  return (
     <AnimatePresence>
       {isLoginModal && !isLogin && (
-        <ModalWrap>
+        <LoginModalWrap>
           <LoginForm
             onSubmit={handleSubmit(onvalid)}
             variants={ModalVariant}
@@ -119,7 +119,7 @@ export default function LoginModal() {
             animate="animate"
             exit="exit"
           >
-            <Title>로그인</Title>
+            <LoginTitle>로그인</LoginTitle>
             <EmailBox>
               <EmailInput
                 id="email"
@@ -194,38 +194,12 @@ export default function LoginModal() {
             animate="animate"
             exit="exit"
           />
-        </ModalWrap>
+        </LoginModalWrap>
       )}
-    </AnimatePresence>,
-    document.getElementById("modal")!,
+    </AnimatePresence>
   );
 }
 
-export const ModalWrap = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-export const LoginForm = styled(motion.form)`
-  position: relative;
-  z-index: 1000;
-  width: 600px;
-  height: 570px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  border-radius: 10px;
-  align-items: center;
-`;
-const Title = styled.h1`
-  margin-top: 70px;
-  margin-bottom: 24px;
-  font-size: 32px;
-  color: ${props => props.theme.mainColor};
-`;
 const EmailBox = styled.div`
   display: flex;
   width: 440px;

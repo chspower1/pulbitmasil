@@ -3,7 +3,8 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { CloseBtn, LoginForm, ModalVariant, ModalWrap, Overlay, OverlayVariant } from "./LoginModal";
+import { ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
+import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
@@ -20,82 +21,67 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
     setUser(null);
   };
 
-  return createPortal(
+  return (
     <AnimatePresence>
       {isLogoutModal && (
-        <WelcomeModalWrap>
-          <WelcomeModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
-            <TitleContainer>
-              <Accent>로그아웃 </Accent>하시겠습니까?
-            </TitleContainer>
+        <LogoutModalWrap>
+          <LogoutModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
+            <LogoutDesc>
+              <Accent>로그아웃&nbsp; </Accent>하시겠습니까?
+            </LogoutDesc>
             <BtnContainer>
-              <Btn type="button" onClick={handleClickLogout}>
-                네
-              </Btn>
-              <Btn type="button" onClick={() => setIsLogoutModal(false)}>
-                아니요
-              </Btn>
+              <LogoutBtn type="button" onClick={handleClickLogout}>
+                로그아웃
+              </LogoutBtn>
+
+              <CloseBtn type="button" onClick={() => setIsLogoutModal(false)}>
+                취소
+              </CloseBtn>
             </BtnContainer>
-          </WelcomeModalContainer>
-        </WelcomeModalWrap>
+          </LogoutModalContainer>
+          <Overlay
+            onClick={() => setIsLogoutModal(false)}
+            variants={OverlayVariant}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          />
+        </LogoutModalWrap>
       )}
-    </AnimatePresence>,
-    document.getElementById("modal")!,
+    </AnimatePresence>
   );
 }
-const WelcomeModalWrap = styled(ModalWrap)`
-  z-index: 1000;
-`;
-const WelcomeModalContainer = styled(LoginForm)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const LogoutModalContainer = styled(ModalContainer)`
   width: 500px;
   height: 200px;
-  border-radius: 10px;
-  align-items: center;
-  justify-content: center;
-`;
-const Desc = styled.p`
   display: flex;
-  font-size: 30px;
-  color: ${props => props.theme.textColor};
-  margin-bottom: 18px;
+  flex-direction: column;
+  align-items: center;
 `;
-const Accent = styled.span`
-  color: ${props => props.theme.dangerColor};
+const LogoutDesc = styled(Desc)`
+  margin-top: 60px;
+  margin-bottom: 40px;
 `;
-const WelcomeCloseBtn = styled(CloseBtn)`
-  width: 36px;
-  height: 36px;
-  top: 10px;
-  right: 10px;
-`;
-const StartBtn = styled.button`
+
+const LogoutBtn = styled.button`
+  width: 100px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  font-size: 8px;
-  width: 180px;
-  height: 40px;
+  font-size: 22px;
+  background-color: ${props => props.theme.dangerColor};
+  &:hover {
+    background-color: #cc5e43;
+  }
 `;
-
-const TitleContainer = styled.div`
-  font-size: 32px;
+const Accent = styled.h1`
+  color: ${props => props.theme.dangerColor};
 `;
-
-const BtnContainer = styled.div`
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* &:first-child {
-    color: ${props => props.theme.dangerColor};
-  } */
-`;
-
-const Btn = styled(StartBtn)`
-  font-size: 18px;
-  margin-right: 10px;
+const CloseBtn = styled(LogoutBtn)`
+  background-color: ${props => props.theme.mainColor};
+  &:hover {
+    background-color: ${props => props.theme.accentColor};
+  }
 `;
