@@ -56,8 +56,8 @@ export default function Nav() {
   const { register, handleSubmit, reset } = useForm<SearchForm>();
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  const navMenus = ["home", "about", "walking", "plogging"];
-  const navKorMenus = ["홈", "소개", "산책로", "플로깅"];
+  const navMenus = ["home", "about", "walking", "plogging", "review"];
+  const navKorMenus = ["홈", "소개", "산책로", "풀빛마실 모임", "후기"];
   const userMenus = ["login", "register"];
   const handleClickLogout = async () => {
     sessionStorage.removeItem("userToken");
