@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "@components/layout/Nav";
 
 import Home from "./Home";
-import About from "./about";
+import About from "./About";
 import Map from "./Map";
 import Register from "./Register";
 import styled from "styled-components";
