@@ -14,12 +14,11 @@ export default function Content() {
       }}
       render={({ state, fullpageApi }) => {
         console.log("render prop change", state, fullpageApi);
-
         return (
           <ContentWrap>
-            <Section01 className="section">Section 1</Section01>
-            <Section02 className="section">Section 2</Section02>
-            <Section03 className="section">Section 3</Section03>
+            <Section01 id="1" className="section"></Section01>
+            <Section02 id="2" className="section"></Section02>
+            <Section03 id="3" className="section"></Section03>
           </ContentWrap>
         );
       }}
@@ -29,12 +28,13 @@ export default function Content() {
 const ContentWrap = styled.div`
   width: 80vw;
   margin-left: 20vw;
+  height: 100vw;
   ::-webkit-scrollbar {
     display: none;
   }
 `;
 const Section01 = styled.div`
-  height: 100%;
+  height: 100vh;
 
   font-size: 400px;
 `;

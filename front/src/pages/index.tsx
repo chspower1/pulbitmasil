@@ -23,7 +23,7 @@ import Review from "./Review";
 import Content from "@components/about/Content";
 
 const ContentContainer = styled.section`
-  min-height: 100vh;
+  height: 100vh;
 `;
 export default function Router() {
   return (
