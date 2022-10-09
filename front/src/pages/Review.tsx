@@ -1,8 +1,10 @@
 import Card from "@components/Card";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Review() {
+  const navigate = useNavigate();
   return (
     <ReviewWrap>
       <TitleContainer>
@@ -11,7 +13,7 @@ export default function Review() {
           <Accent>플로깅</Accent> 후기를 공유해주세요!
         </SubTitle>
       </TitleContainer>
-      <ReviewBtn>후기 작성 go go!</ReviewBtn>
+      <ReviewBtn onClick={() => navigate("/review/write")}>후기 작성 go go!</ReviewBtn>
       <CardContainer>
         <Card></Card>
         <Card></Card>
@@ -24,7 +26,7 @@ export default function Review() {
 
 const ReviewWrap = styled.div`
   position: relative;
-  padding-top: 50px;
+  padding-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +40,6 @@ const TitleContainer = styled.div`
 const Title = styled.h1`
   font-weight: 700;
   font-size: 50px;
-  padding-top: 100px;
   text-align: center;
   color: ${props => props.theme.mainColor};
   text-decoration: underline;

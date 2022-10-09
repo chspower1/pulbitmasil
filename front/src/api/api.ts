@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Review } from "src/types/review";
 import { UserLoginForm, UserRegisterForm } from "src/types/user";
 
 const BASE_URL = "http://localhost:5001";
@@ -54,7 +55,6 @@ export async function registerUser(newUser: UserRegisterForm) {
   const bodyData = JSON.stringify(newUser);
   console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
 
-  // endpoint 백엔드와 상의필요
   return axiosInstance.post(`/user/register`, bodyData, {
     headers: {
       "Content-Type": "application/json",
@@ -74,4 +74,17 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   sessionStorage.setItem("userToken", data.token);
   console.log("네이버로그인", data);
   return data;
+}
+
+export async function uploadReview(contents: Review) {
+  const bodyData = JSON.stringify(contents);
+  console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
+  console.log(bodyData);
+
+  // endpoint 백엔드와 상의필요
+  return axiosInstance.post(`/user/review`, bodyData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
