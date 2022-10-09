@@ -17,6 +17,7 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const handleClickLogout = () => {
     sessionStorage.removeItem("userToken");
     setIsUserNav(false);
+    setIsLogoutModal(false);
     setUser(null);
   };
 
@@ -29,8 +30,12 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
               <Accent>로그아웃 </Accent>하시겠습니까?
             </TitleContainer>
             <BtnContainer>
-              <Btn onClick={handleClickLogout}>네</Btn>
-              <Btn onClick={() => setIsLogoutModal(false)}>아니요</Btn>
+              <Btn type="button" onClick={handleClickLogout}>
+                네
+              </Btn>
+              <Btn type="button" onClick={() => setIsLogoutModal(false)}>
+                아니요
+              </Btn>
             </BtnContainer>
           </WelcomeModalContainer>
         </WelcomeModalWrap>
