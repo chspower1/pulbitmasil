@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { userAtom } from "@atom/user";
 
 //Variants
 const HomeImgVariants = {
@@ -36,7 +37,7 @@ const HomeImgVariants = {
 };
 export default function Home() {
   const maxIndex = 4;
-
+  const [user, setUser] = useRecoilState(userAtom);
   const [imgIndex, setImgIndex] = useState(1);
   const [next, setNext] = useState(true);
   const [leaving, setLeaving] = useState(false);
@@ -58,7 +59,9 @@ export default function Home() {
     imgIndex < num ? setNext(true) : setNext(false);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(user);
+  }, []);
   return (
     <HomeWrap>
       <AnimatePresence initial={false} custom={next} onExitComplete={toggleLeaving}>
@@ -116,9 +119,11 @@ const RightBtn = styled(motion.button)`
   width: 100px;
   top: 50%;
   right: 0;
+  opacity: 0.5;
   &:hover {
     background-color: transparent;
-    transform: scale(1.2);
+    transform: scale(1.1);
+    opacity: 0.7;
   }
 `;
 const LeftBtn = styled(RightBtn)`
