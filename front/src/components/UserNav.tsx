@@ -1,21 +1,19 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
+import { isLogoutModalAtom } from "@atom/atom";
 
-interface UserNavProps {
-  setIsUserNav: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
-export default function UserNav({ setIsUserNav }: UserNavProps) {
+
+export default function UserNav() {
   const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
   const userNavKorMenus = ["계정 정보", "나의 풀빛마실", "로그아웃"];
+  const setIsLogoutModal = useSetRecoilState(isLogoutModalAtom);
   const [user, setUser] = useRecoilState(userAtom);
 
   const onClickLogout = async () => {
-    sessionStorage.removeItem("userToken");
-    setIsUserNav(false);
-    setUser(null);
+    setIsLogoutModal(true);
   };
 
   return (

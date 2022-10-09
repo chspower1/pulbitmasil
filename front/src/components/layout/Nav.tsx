@@ -146,8 +146,8 @@ export default function Nav() {
           <UserName>{isLogin ? user?.name : "손님"}</UserName>
         </UserBox>
         <LoginModal></LoginModal>
-        {isUserNav && <UserNav setIsUserNav={setIsUserNav} />}
-        <LogoutModal></LogoutModal>
+        {isUserNav && <UserNav />}
+        <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
       </Wrap>
     </>
   );
