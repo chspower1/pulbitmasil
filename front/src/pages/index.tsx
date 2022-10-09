@@ -23,6 +23,7 @@ import Review from "./Review";
 import Content from "@components/about/Content";
 
 const ContentContainer = styled.section`
+  margin-top: 70px;
   height: 100vh;
 `;
 export default function Router() {

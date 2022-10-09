@@ -69,10 +69,6 @@ export default function Nav() {
 
   const [isUserNav, setIsUserNav] = useState(false);
 
-  const handleClickLogout = async () => {
-    isLogin && console.log("test: click logout");
-    isLogin && setIsLogoutModal(true);
-  };
   const handleClickUserBox = () => {
     isLogin ? setIsUserNav(cur => !cur) : setIsloginModal(cur => !cur);
   };
@@ -161,6 +157,7 @@ const Wrap = styled(motion.nav)`
   display: flex;
   position: fixed;
   justify-content: space-between;
+  top: 0px;
   font-size: 18px;
   height: 70px;
   width: 100%;
