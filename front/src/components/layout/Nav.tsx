@@ -4,8 +4,9 @@ import styled from "styled-components";
 import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
 import { useForm } from "react-hook-form";
 import LoginModal from "../modal/LoginModal";
+import LogoutModal from "@components/modal/LogoutModal";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
+import { isLoginModalAtom, isLoginSelector, isLogoutModalAtom } from "@atom/atom";
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 
@@ -50,6 +51,7 @@ export default function Nav() {
   const [searchOpen, setSearchOpen] = useState(false);
   const isLogin = useRecoilValue(isLoginSelector);
   const [isLoginModal, setIsloginModal] = useRecoilState(isLoginModalAtom);
+  const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState(userAtom);
   const [curState, setCurState] = useState(pathname === "/" ? "home" : pathname.slice(1));
@@ -59,9 +61,18 @@ export default function Nav() {
   const navMenus = ["home", "about", "walking", "plogging", "review"];
   const navKorMenus = ["홈", "소개", "산책로", "풀빛마실 모임", "후기"];
   const userMenus = ["login", "register"];
+  useEffect(() => {
+    console.log(isLogoutModal);
+    console.log(isLogin);
+  }, [isLogoutModal]);
+
   const handleClickLogout = async () => {
-    sessionStorage.removeItem("userToken");
-    setUser(null);
+    isLogin && console.log("test: click logout");
+    isLogin && setIsLogoutModal(true);
+
+    //확인버튼
+    // sessionStorage.removeItem("userToken");
+    // setUser(null);
   };
   const handleClickUserBox = () => {
     if (isLogin) return null;
