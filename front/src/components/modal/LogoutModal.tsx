@@ -8,24 +8,26 @@ import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 export default function LogoutModal() {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
-  const user = useRecoilValue(userAtom);
-  const closeLogoutModal = () => {
-    setIsLogoutModal(false);
+  const [user, setUser] = useRecoilState(userAtom);
+
+  const handleClickLogout = () => {
+    sessionStorage.removeItem("userToken");
+    setUser(null);
   };
+
   return (
     <AnimatePresence>
       {isLogoutModal && (
         <WelcomeModalWrap>
           <WelcomeModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
-            sdadsadsad
+            <TitleContainer>
+              <Accent>로그아웃 </Accent>하시겠습니까?
+            </TitleContainer>
+            <BtnContainer>
+              <Btn onClick={handleClickLogout}>네</Btn>
+              <Btn onClick={() => setIsLogoutModal(false)}>아니요</Btn>
+            </BtnContainer>
           </WelcomeModalContainer>
-          <Overlay
-            onClick={closeLogoutModal}
-            variants={OverlayVariant}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          />
         </WelcomeModalWrap>
       )}
     </AnimatePresence>
@@ -40,6 +42,9 @@ const WelcomeModalContainer = styled(LoginForm)`
   align-items: center;
   width: 500px;
   height: 200px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
 `;
 const Desc = styled.p`
   display: flex;
@@ -47,8 +52,8 @@ const Desc = styled.p`
   color: ${props => props.theme.textColor};
   margin-bottom: 18px;
 `;
-const Accent = styled.h1`
-  color: ${props => props.theme.mainColor};
+const Accent = styled.span`
+  color: ${props => props.theme.dangerColor};
 `;
 const WelcomeCloseBtn = styled(CloseBtn)`
   width: 36px;
@@ -61,7 +66,26 @@ const StartBtn = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 5px;
-  font-size: 22px;
+  font-size: 8px;
   width: 180px;
   height: 40px;
+`;
+
+const TitleContainer = styled.div`
+  font-size: 32px;
+`;
+
+const BtnContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* &:first-child {
+    color: ${props => props.theme.dangerColor};
+  } */
+`;
+
+const Btn = styled(StartBtn)`
+  font-size: 18px;
+  margin-right: 10px;
 `;

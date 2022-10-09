@@ -69,10 +69,6 @@ export default function Nav() {
   const handleClickLogout = async () => {
     isLogin && console.log("test: click logout");
     isLogin && setIsLogoutModal(true);
-
-    //확인버튼
-    // sessionStorage.removeItem("userToken");
-    // setUser(null);
   };
   const handleClickUserBox = () => {
     if (isLogin) return null;
