@@ -12,7 +12,7 @@ import Footer from "@components/layout/Footer";
 import Chart from "./Chart";
 import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
-import Naver from "./NaverAuth";
+import NaverAuth from "./NaverAuth";
 import KakaoAuth from "./KakaoAuth";
 import Walking from "./Walking";
 import UserInfo from "./UserInfo";
@@ -42,7 +42,7 @@ export default function Router() {
           <Route path="/walking" element={<Walking />} />
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/myGreenStroll" element={<MyGreenStroll />} />
-          <Route path="/user/naver/callback" element={<Naver />} />
+          <Route path="/auth/naver/callback" element={<NaverAuth />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
           <Route path="/review" element={<Review />} />
           <Route path="/test" element={<Test />} />
