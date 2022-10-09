@@ -152,6 +152,7 @@ export default function Nav() {
           <UserName>{isLogin ? user?.name : "손님"}</UserName>
         </UserBox>
         <LoginModal></LoginModal>
+        <LogoutModal></LogoutModal>
       </Wrap>
       <Logout onClick={handleClickLogout}>테스트용 로그아웃</Logout>
     </>
