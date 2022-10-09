@@ -61,7 +61,6 @@ export default function Nav() {
   const navKorMenus = ["홈", "소개", "산책로", "플로깅"];
   const [isUserNav, setIsUserNav] = useState(false);
   const onClickUserBox = () => {
-
     isLogin ? setIsUserNav(cur => !cur) : setIsloginModal(cur => !cur);
   };
   useEffect(() => {
@@ -137,6 +136,7 @@ export default function Nav() {
         <UserName>{isLogin ? "사용자" : "손님"}</UserName>
       </UserBox>
       <LoginModal></LoginModal>
+      {isUserNav && <UserNav setIsUserNav={setIsUserNav} />}
     </Wrap>
   );
 }
