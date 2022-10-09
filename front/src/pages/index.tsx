@@ -19,6 +19,7 @@ import UserInfo from "./UserInfo";
 import MyGreenStroll from "./MyGreenStroll";
 import WelcomeModal from "@components/modal/WelcomeModal";
 import Test from "./Test";
+import Review from "./Review";
 
 const ContentContainer = styled.section`
   min-height: 100vh;
@@ -38,6 +39,7 @@ export default function Router() {
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
           <Route path="/walking" element={<Walking />} />
+          <Route path="/review" element={<Review />} />
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/myGreenStroll" element={<MyGreenStroll />} />
           <Route path="/user/naver/callback" element={<Naver />} />
