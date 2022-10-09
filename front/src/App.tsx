@@ -1,40 +1,16 @@
-import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { reset } from "styled-reset";
-import "./fonts/fonts.css";
-import Router from "./Router";
-const GlobalStyled = createGlobalStyle`
-    ${reset}
-    
-    h1{
-        font-family: "SebangBold";
-    }
-    * {
-        font-family: "Sebang";
-        box-sizing: border-box;
-    }
-    body {
-        font-family: "Sebang";
+import Router from "@router/index";
 
-    }
-    a{
-        text-decoration: none;
-    }
-    button {
-        border-radius: 10px;
-        border: none;
-        padding: 10px 20px;
-        outline: none;
-        transition:color 0.4s ease;
-        transition:background-color 0.4s ease;
-    }
-`;
+import { GlobalStyled } from "./style/GlobalStyled";
+import { ThemeProvider } from "styled-components";
+import { lightTheme } from "./style/theme/theme";
+
 function App() {
-    return (
-        <>
-            <GlobalStyled />
-            <Router />
-        </>
-    );
+  return (
+    <ThemeProvider theme={lightTheme}>
+      <GlobalStyled />
+      <Router />
+    </ThemeProvider>
+  );
 }
 
 export default App;
