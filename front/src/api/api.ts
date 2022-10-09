@@ -75,3 +75,9 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   console.log("네이버로그인", data);
   return data;
 }
+
+export async function WalkingData(params:any) {
+  const { data } = await axiosInstance.get(`/walk`);
+  console.log(data);
+  return data;
+}

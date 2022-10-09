@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
-export default function Home() {
+export default function Walking(){
+
   return (
     <WalkWrap>
       <ChartBtn>차트로 보기</ChartBtn>
@@ -15,7 +16,10 @@ export default function Home() {
           </svg>
         </button>
       </Input>
-      <MapBox>Map</MapBox>
+      <DataBox>
+        <MapBox>Map</MapBox>
+        <CourseBox>CourseData</CourseBox>
+      </DataBox>
     </WalkWrap>
   );
 }
@@ -76,12 +80,27 @@ const Input = styled.label`
     position: absolute;
     top: -10px;
     right: 5px;
+    &:hover {
+      background-color: transparent;
+      transform: scale(1.1);
+    }
   }
+`;
+const DataBox = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 4.5em;
 `;
 
 const MapBox = styled.div`
-  margin-top: 4.5em;
   width: 800px;
   height: 500px;
   background-color: #008037;
+  margin: 10px;
+`;
+
+const CourseBox = styled(MapBox)`
+  width: 860px;
+  height: 430px;
+  background-color: #2A9C6B;
 `;
