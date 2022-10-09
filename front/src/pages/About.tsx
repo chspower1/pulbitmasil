@@ -7,8 +7,8 @@ import Content from "@components/about/Content";
 export default function About() {
   return (
     <AboutWrap>
-      <SideBar />
-      <Content />
+      {/* <SideBar />
+      <Content /> */}
     </AboutWrap>
   );
 }

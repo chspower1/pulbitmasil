@@ -8,7 +8,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginModalAtom, isLoginSelector } from "@atom/atom";
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
-import UserNav from "./UserNav";
+import UserNav from "@components/UserNav";
 
 // Interface
 interface SearchForm {
@@ -60,6 +60,7 @@ export default function Nav() {
   const navMenus = ["home", "about", "walking", "plogging", "review"];
   const navKorMenus = ["홈", "소개", "산책로", "풀빛마실 모임", "후기"];
   const userMenus = ["login", "register"];
+  const [isUserNav, setIsUserNav] = useState(false);
   const handleClickLogout = async () => {
     sessionStorage.removeItem("userToken");
     setUser(null);
