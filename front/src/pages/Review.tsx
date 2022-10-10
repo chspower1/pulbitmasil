@@ -1,10 +1,23 @@
+import { getReview } from "@api/api";
 import Card from "@components/Card";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Review() {
   const navigate = useNavigate();
+  const [reviews, setReveiws] = useState([]);
+
+  useEffect(() => {
+    getReview().then(data => {
+      console.log(data);
+      setReveiws(data);
+    });
+  }, []);
+  useEffect(() => {
+    console.log(reviews);
+  }, [reviews]);
+
   return (
     <ReviewWrap>
       <TitleContainer>
