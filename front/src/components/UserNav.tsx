@@ -11,7 +11,7 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
   const setIsLogoutModal = useSetRecoilState(isLogoutModalAtom);
   const [user, setUser] = useRecoilState(userAtom);
 
-  const onClickLogout = async () => {
+  const handleClickLogout = async () => {
     setIsLogoutModal(true);
     setIsUserNav(false);
   };
@@ -21,7 +21,7 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
       {userNavMenus.map((menu, index) => (
         <Link key={index} to={menu === "logout" ? "" : menu}>
           {menu === "logout" ? (
-            <Button onClick={onClickLogout}>{userNavKorMenus[index]}</Button>
+            <Button onClick={handleClickLogout}>{userNavKorMenus[index]}</Button>
           ) : (
             <Button>{userNavKorMenus[index]}</Button>
           )}
