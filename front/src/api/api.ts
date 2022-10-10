@@ -47,6 +47,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
     console.log("풀빛마실로그인", data);
     return data;
   } catch (err) {
+    // alert("로그인 정보가 옳지 않습니다!");
     console.log(err);
   }
 }
