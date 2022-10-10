@@ -3,14 +3,16 @@ import Map from "@components/Map";
 import WalkTable from "@components/WalkTable";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-
+import roadJson from "../test_data/dododo.json";
 export default function WalkRoad() {
-  const { isLoading, data } = useQuery(["walkRoad"], getWalkRoad, {
-    onSettled(data) {
-      console.log(data);
-    },
-  });
-  console.log(isLoading);
+  // const { isLoading, data } = useQuery(["walkRoad"], getWalkRoad, {
+  //   onSettled(data) {
+  //     console.log(data);
+  //   },
+  // });
+  const { data: testJson } = roadJson;
+  console.log(testJson);
+  // console.log(isLoading);
   return (
     <WalkWrap>
       <ChartBtn>차트로 보기</ChartBtn>
