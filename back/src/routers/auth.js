@@ -47,7 +47,7 @@ router.get("/kakao", async function (req, res, next) {
 //         },
 //       })
 //       .then(result => {
-//         const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+//         const secretKey = process.env.JWT_SECRET_KEY;
 //         const token = jwt.sign({ id: result.data.id, access_token: access_token }, secretKey);
 
 //         console.log(
@@ -76,7 +76,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
       },
     })
     .then(result => {
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
 
       const email = result.data.kakao_account?.email ?? "kakao" + result.data.id;
 
@@ -105,9 +105,13 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
             );
           } else {
             const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
-            res
-              .status(200)
-              .json({ success: true, name: result.data.kakao_account.profile.nickname, email: email, token: token });
+            res.status(200).json({
+              success: true,
+              id: rows[0].id,
+              name: result.data.kakao_account.profile.nickname,
+              email: email,
+              token: token,
+            });
           }
         }
       });
@@ -130,7 +134,7 @@ router.get("/naver", async function (req, res, next) {
     .then(result => {
       console.log("------------------------------------------------", result.data.response);
       // res.redirect(`/auth/naver/info/:${result.data.access_token}`);
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
 
       const name = result.data.response.name;
       const email = result.data.response.email;
@@ -154,7 +158,9 @@ router.get("/naver", async function (req, res, next) {
           } else {
             const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
             console.log(token);
-            res.status(200).json({ success: true, name: rows[0].name, email: rows[0].email, token: token });
+            res
+              .status(200)
+              .json({ success: true, id: rows[0].id, name: rows[0].name, email: rows[0].email, token: token });
           }
         }
       });
@@ -209,7 +215,7 @@ router.get("/naver", async function (req, res, next) {
 //         },
 //       })
 //       .then(result => {
-//         const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+//         const secretKey = process.env.JWT_SECRET_KEY;
 
 //         const email = result.data.kakao_account?.email ?? "naver" + result.data.id;
 
