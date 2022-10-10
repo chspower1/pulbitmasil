@@ -76,6 +76,7 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   return data;
 }
 
+
 export async function uploadReview(contents: Review) {
   const bodyData = JSON.stringify(contents);
   console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
@@ -88,3 +89,10 @@ export async function uploadReview(contents: Review) {
     },
   });
 }
+
+export async function WalkingData(params:any) {
+  const { data } = await axiosInstance.get(`/walk`);
+  console.log(data);
+  return data;
+}
+
