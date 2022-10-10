@@ -76,7 +76,6 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   return data;
 }
 
-
 export async function getReview() {
   console.log(`%cGET 요청 ${BASE_URL}/review/select`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review/select`);
@@ -96,9 +95,12 @@ export async function uploadReview(contents: Review) {
   });
 }
 
-export async function WalkingData(params:any) {
-  const { data } = await axiosInstance.get(`/walk`);
-  console.log(data);
-  return data;
+export async function getWalkRoad() {
+  try {
+    const data = await axiosInstance.get(`walk/select`);
+    console.log(data);
+    return data;
+  } catch (err) {
+    console.log("getWalkRoad Error", err);
+  }
 }
-
