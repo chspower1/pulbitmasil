@@ -1,3 +1,4 @@
+import WalkTable from "@components/WalkTable";
 import styled from "styled-components";
 
 export default function Walking(){
@@ -18,7 +19,7 @@ export default function Walking(){
       </Input>
       <DataBox>
         <MapBox>Map</MapBox>
-        <CourseBox>CourseData</CourseBox>
+        <CourseBox><WalkTable/></CourseBox>
       </DataBox>
     </WalkWrap>
   );
