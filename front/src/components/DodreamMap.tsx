@@ -45,7 +45,7 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
     // 지도생성
     let container = document.getElementById("map");
     let options = {
-      center: new kakao.maps.LatLng(37.5585362386, 127.1605311028),
+      center: new kakao.maps.LatLng(37.5587081222, 127.1583825733),
       level: 3,
     };
     let map = new kakao.maps.Map(container, options);
@@ -58,12 +58,32 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
         lating: new kakao.maps.Lating(road.x, road.y),
       };
     });
-    let marker = new kakao.maps.Marker({
-      map,
-      position: markerPosition,
-      title: "강덕초교",
-    });
-    marker.setMap(map);
+    let positions = [
+      {
+        latlng: new kakao.maps.LatLng(37.5585362386, 127.1605311028),
+        title: "강덕초교",
+      },
+      {
+        latlng: new kakao.maps.LatLng(37.5587081222, 127.1583825733),
+        title: "방죽근린공원",
+      },
+      {
+        latlng: new kakao.maps.LatLng(37.5566133611, 127.1574240392),
+        title: "온조대왕문화체육관",
+      },
+    ];
+    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    for (let i = 0; i < positions.length; i++) {
+      var imageSize = new kakao.maps.Size(24, 35);
+      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title: positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image: markerImage, // 마커 이미지
+      });
+    }
+    // marker.setMap(map);
     // 여러개 마커 생성
     // for (let i = 0; i < markerPositions.length; i++) {
     //   let marker = new kakao.maps.Marker({
