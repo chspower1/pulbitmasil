@@ -9,11 +9,15 @@ var usersRouter = require("./src/routers/users");
 var trashRouter = require("./src/routers/trash");
 var authRouter = require("./src/routers/auth");
 var reviewRouter = require("./src/routers/review");
+var walkRouter = require("./src/routers/walk");
+
+const maria = require("./src/db/connect/maria");
+const errorMiddleware = require("./src/middlewares/error_middleware");
 
 const app = express();
 
 app.use(cors());
-const maria = require("./src/db/connect/maria");
+
 maria.connect();
 
 // view engine setup
@@ -31,6 +35,9 @@ app.use("/user", usersRouter);
 app.use("/trash", trashRouter);
 app.use("/auth", authRouter);
 app.use("/review", reviewRouter);
+app.use("/walk", walkRouter);
+
+app.use(errorMiddleware);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
