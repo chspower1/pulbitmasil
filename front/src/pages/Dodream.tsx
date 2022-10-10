@@ -6,7 +6,7 @@ import styled from "styled-components";
 import roadJson from "../test_data/dodream.json";
 import { IDodream } from "../types/dodream";
 export default function Dodream() {
-  // const { isLoading, data } = useQuery(["walkRoad"], getWalkRoad, {
+  // const { isLoading, data } = useQuery(["dodream"], getDodream, {
   //   onSettled(data) {
   //     console.log(data);
   //   },
