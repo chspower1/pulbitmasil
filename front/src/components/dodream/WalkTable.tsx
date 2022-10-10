@@ -104,23 +104,23 @@ export default function WalkTable({ dodream }: { dodream: any }) {
   );
 }
 
- const TableWrapper = styled.div`
+const TableWrapper = styled.div`
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
-  color: #636E72;
+  color: #636e72;
   text-align: center;
   background-color: white;
   padding: 0;
   height: 400px;
   overflow-y: scroll;
- `;
+`;
 
 const Styles = styled.div`
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
-  color: #636E72;
+  color: #636e72;
   text-align: center;
   background-color: white;
 
@@ -132,7 +132,7 @@ const Styles = styled.div`
       position: sticky;
       top: 0px;
       margin: 0 0 0 0;
-      background-color: #C7E1D6;
+      background-color: #c7e1d6;
     }
 
     tr {

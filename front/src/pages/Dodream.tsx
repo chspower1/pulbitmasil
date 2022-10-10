@@ -20,7 +20,7 @@ export default function Dodream() {
           <MapContainer>
             <DodreamMap dodream={dodream} />
           </MapContainer>
-          <RightBox>
+          <RightContainer>
             {/* <ChartBtn>차트로 보기</ChartBtn> */}
             <Title>서울시 산책로 현황</Title>
             <Input>
@@ -37,7 +37,7 @@ export default function Dodream() {
             <CourseBox>
               <WalkTable dodream={dodream} />
             </CourseBox>
-          </RightBox>
+          </RightContainer>
         </WalkWrap>
       )}
     </>
@@ -108,26 +108,29 @@ const Input = styled.label`
 `;
 
 const CourseBox = styled.div`
+  margin-top: 70px;
   width: 860px;
   height: 400px;
   background-color: #2a9c6b;
   border: none;
 `;
 
-const RightBox = styled.div`
+const RightContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 900px;
+  margin-right: 60px;
+  width: 55%;
+  height: 100%;
 `;
 
 const MapContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  width: 700px;
-  height: 800px;
+  width: 45%;
+  height: 100vh;
   /* background-color: #008037; */
   /* margin: 30px; */
   margin-top: 70px;

@@ -100,7 +100,7 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
 }
 const MapBox = styled.div`
   width: 700px;
-  height: 800px;
+  height: 750px;
   border: 5px solid #88caae;
   border-radius: 10px;
 `;
