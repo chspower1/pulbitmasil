@@ -11,7 +11,7 @@ router.get("/", function (req, res, next) {
 router.get("/select", function (req, res) {
   maria.query("SELECT * FROM WALK", function (err, rows, fields) {
     if (!err) {
-      res.status.json(rows);
+      res.status(200).json(rows);
     } else {
       console.log("err : " + err);
       res.send(err);
