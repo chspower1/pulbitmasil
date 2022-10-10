@@ -9,32 +9,36 @@ export default function Content() {
       navigation
       navigationTooltips={anchors}
       sectionsColor={["#f7f7f7", "#C7E1D6", "#d8d8d8"]}
+      scrollingSpeed={1000}
       onLeave={(origin, destination, direction) => {
         console.log("onLeave event", { origin, destination, direction });
       }}
       render={({ state, fullpageApi }) => {
         console.log("render prop change", state, fullpageApi);
         return (
-          <ContentWrap>
-            <Section01 id="1" className="section">
+          <ReactFullpage.Wrapper>
+            <Section01 className="section">
               <Box>
+                <button onClick={() => fullpageApi.moveSectionDown()}>Click me to move down</button>
                 <Title>첫번째 컨테츠입니다.</Title>
                 <Description>내용입니다.</Description>
               </Box>
             </Section01>
-            <Section02 id="2" className="section">
+            <Section02 className="section">
               <Box>
+                <button onClick={() => fullpageApi.moveSectionUp()}>Click me to move up</button>
                 <Title>두번째 컨테츠입니다.</Title>
                 <Description>내용입니다.</Description>
+                <button onClick={() => fullpageApi.moveSectionDown()}>Click me to move down</button>
               </Box>
             </Section02>
-            <Section03 id="3" className="section">
+            <Section03 className="section">
               <Box>
                 <Title>세번째 컨테츠입니다.</Title>
                 <Description>내용입니다.</Description>
               </Box>
             </Section03>
-          </ContentWrap>
+          </ReactFullpage.Wrapper>
         );
       }}
     />
