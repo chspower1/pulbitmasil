@@ -3,7 +3,7 @@ import Map from "@components/Map";
 import WalkTable from "@components/dodream/WalkTable";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import roadJson from "../test_data/dododo.json";
+import roadJson from "../test_data/dodream.json";
 import { IDodream } from "../types/dodream";
 export default function WalkRoad() {
   // const { isLoading, data } = useQuery(["walkRoad"], getWalkRoad, {

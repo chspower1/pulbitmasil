@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useTable } from "react-table";
 import { useMemo, useEffect, useState } from "react";
-import testDoream from "../../test_data/dododo.json";
+import testDoream from "../../test_data/dodream.json";
 const data = {
   course_level: "1",
   course_name: "관악산 자락길(무장애숲길)",
