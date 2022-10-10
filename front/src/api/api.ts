@@ -96,7 +96,7 @@ export async function uploadReview(contents: Review) {
   });
 }
 
-export async function getWalkRoad() {
+export async function getDodream() {
   try {
     const data = await axiosInstance.get(`dodream/select`);
     console.log(data);

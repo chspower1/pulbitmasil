@@ -2,16 +2,6 @@ import styled from "styled-components";
 import { useTable } from "react-table";
 import { useMemo, useEffect, useState } from "react";
 import testDoream from "../../test_data/dodream.json";
-const data = {
-  course_level: "1",
-  course_name: "관악산 자락길(무장애숲길)",
-  distance: "1.3km",
-  area_gu: "관악구",
-  lead_time: "30분",
-  course_category_nm: "근교산자락길",
-};
-
-const columns = ["area_gu", "course_name", "course_category_nm", "course_level", "distance", "lead_time"];
 
 interface Tableprops {
   columns: any;
@@ -24,7 +14,6 @@ function Table({ columns, data }: Tableprops) {
     columns,
     data,
   });
-  console.log("----------------------", data);
   return (
     <table {...getTableProps()}>
       <thead>
@@ -52,7 +41,7 @@ function Table({ columns, data }: Tableprops) {
   );
 }
 
-export default function WalkTable({ data }: { data: any }) {
+export default function WalkTable({ dodream }: { dodream: any }) {
   const columns = useMemo(
     () => [
       {
@@ -82,48 +71,33 @@ export default function WalkTable({ data }: { data: any }) {
     ],
     [],
   );
-  const [testData, setTestData] = useState([{}]);
-  const asdfasdfdasf = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 3, 2, 2].map(i => ({
-    course_level: "1",
-    course_name: "관악산 자락길(무장애숲길)",
-    distance: "1.3km",
-    area_gu: "관악구",
-    lead_time: "30분",
-    course_category_nm: "근교산자락길",
-  }));
+  const { data: test } = testDoream;
+  const [newDodream, setNewDodream] = useState<any | null>([]);
   useEffect(() => {
-    const { data: test111 } = testDoream;
-    // test111.map(i => {
-    //   console.log(Object.keys(i.course_name));
-    // });
-    // console.log(test111);
-
-    test111.map((item: any, index) => {
-      const nameArr = Object.keys(item.course_name) as any[];
+    test.map((road: any) => {
+      const nameArr = Object.keys(road.course_name) as any[];
       nameArr.map((name, index) => {
-        // console.log(item.course_category_nm, index, name);
-        const course_category_nm = item.course_category_nm;
+        // console.log(road.course_category_nm, index, name);
+        const course_category_nm = road.course_category_nm;
         const course_name = name;
-        const distance = item.course_name[name][0].distance;
-        const area_gu = item.course_name[name][0].area_gu;
-        const lead_time = item.course_name[name][0].lead_time;
-        const course_level = item.course_name[name][0].course_level;
-        const newItem = { course_category_nm, course_name, distance, area_gu, lead_time, course_level };
+        const distance = road.course_name[name][0].distance;
+        const area_gu = road.course_name[name][0].area_gu;
+        const lead_time = road.course_name[name][0].lead_time;
+        const course_level = road.course_name[name][0].course_level;
+        const newRoad = { course_category_nm, course_name, distance, area_gu, lead_time, course_level };
 
         // console.log(course_category_nm, course_name, distance);
-        setTestData((prev: any) => {
-          return [...prev, newItem];
+        setNewDodream((prev: any) => {
+          return [...prev, newRoad];
         });
       });
     });
-
-    // console.log(testData.slice(0, 10));
   }, []);
-  // const data : any = useMemo(() => data, []);
-  if (!testData) return null;
+
+  if (!newDodream) return null;
   return (
     <Styles>
-      <Table columns={columns} data={testData} />
+      <Table columns={columns} data={newDodream} />
     </Styles>
   );
 }

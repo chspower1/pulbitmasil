@@ -9,7 +9,7 @@ var usersRouter = require("./src/routers/users");
 var trashRouter = require("./src/routers/trash");
 var authRouter = require("./src/routers/auth");
 var reviewRouter = require("./src/routers/review");
-var walkRouter = require("./src/routers/walk");
+var dodreamRouter = require("./src/routers/dodream");
 
 const maria = require("./src/db/connect/maria");
 const errorMiddleware = require("./src/middlewares/error_middleware");
@@ -35,7 +35,7 @@ app.use("/user", usersRouter);
 app.use("/trash", trashRouter);
 app.use("/auth", authRouter);
 app.use("/review", reviewRouter);
-app.use("/dodream", walkRouter);
+app.use("/dodream", dodreamRouter);
 
 app.use(errorMiddleware);
 

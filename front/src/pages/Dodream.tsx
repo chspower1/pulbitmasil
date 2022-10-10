@@ -1,43 +1,46 @@
-import { getWalkRoad } from "@api/api";
+import { getDodream } from "@api/api";
 import Map from "@components/Map";
 import WalkTable from "@components/dodream/WalkTable";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import roadJson from "../test_data/dodream.json";
-import { IDodream } from "../types/dodream";
+
 export default function Dodream() {
-  // const { isLoading, data } = useQuery(["dodream"], getDodream, {
-  //   onSettled(data) {
-  //     console.log(data);
-  //   },
-  // });
-  const { data: testJson } = roadJson;
-  console.log(testJson);
+  const { isLoading, data: dodream } = useQuery(["dodream"], getDodream, {
+    onSettled(data) {
+      console.log("11111111111111111", data);
+    },
+  });
   // console.log(isLoading);
   return (
-    <WalkWrap>
-      <ChartBtn>차트로 보기</ChartBtn>
-      <Title>서울시 산책로 현황</Title>
-      <Input>
-        <input placeholder="산책로를 검색해보세요!" />
-        <button>
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M10.5 0C4.71878 0 0 4.71878 0 10.5C0 16.2812 4.71878 21 10.5 21C13.122 21 15.5175 20.022 17.3613 18.4219L18 19.0605V21L27 30L30 27L21 18H19.0605L18.4219 17.3613C20.022 15.5175 21 13.122 21 10.5C21 4.71878 16.2812 0 10.5 0ZM10.5 3C14.6599 3 18 6.3401 18 10.5C18 14.6599 14.6599 18 10.5 18C6.3401 18 3 14.6599 3 10.5C3 6.3401 6.3401 3 10.5 3Z"
-              fill="#008037"
-            />
-          </svg>
-        </button>
-      </Input>
-      <DataBox>
-        <MapBox>
-          <Map />
-        </MapBox>
-        <CourseBox>
-          <WalkTable data={testJson} />
-        </CourseBox>
-      </DataBox>
-    </WalkWrap>
+    <>
+      {isLoading ? (
+        "로딩중입니다."
+      ) : (
+        <WalkWrap>
+          <ChartBtn>차트로 보기</ChartBtn>
+          <Title>서울시 산책로 현황</Title>
+          <Input>
+            <input placeholder="산책로를 검색해보세요!" />
+            <button>
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.5 0C4.71878 0 0 4.71878 0 10.5C0 16.2812 4.71878 21 10.5 21C13.122 21 15.5175 20.022 17.3613 18.4219L18 19.0605V21L27 30L30 27L21 18H19.0605L18.4219 17.3613C20.022 15.5175 21 13.122 21 10.5C21 4.71878 16.2812 0 10.5 0ZM10.5 3C14.6599 3 18 6.3401 18 10.5C18 14.6599 14.6599 18 10.5 18C6.3401 18 3 14.6599 3 10.5C3 6.3401 6.3401 3 10.5 3Z"
+                  fill="#008037"
+                />
+              </svg>
+            </button>
+          </Input>
+          <DataBox>
+            <MapBox>
+              <Map />
+            </MapBox>
+            <CourseBox>
+              <WalkTable dodream={dodream} />
+            </CourseBox>
+          </DataBox>
+        </WalkWrap>
+      )}
+    </>
   );
 }
 const WalkWrap = styled.div`
