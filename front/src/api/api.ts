@@ -99,7 +99,7 @@ export async function uploadReview(contents: Review) {
 export async function getDodream() {
   try {
     const data = await axiosInstance.get(`dodream/select`);
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (err) {
     console.log("getWalkRoad Error", err);

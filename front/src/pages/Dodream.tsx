@@ -1,5 +1,5 @@
 import { getDodream } from "@api/api";
-import Map from "@components/Map";
+import DodreamMap from "@components/DodreamMap";
 import WalkTable from "@components/dodream/WalkTable";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
@@ -7,7 +7,7 @@ import styled from "styled-components";
 export default function Dodream() {
   const { isLoading, data: dodream } = useQuery(["dodream"], getDodream, {
     onSettled(data) {
-      console.log("11111111111111111", data);
+      // console.log("11111111111111111", data);
     },
   });
   // console.log(isLoading);
@@ -32,7 +32,7 @@ export default function Dodream() {
           </Input>
           <DataBox>
             <MapBox>
-              <Map />
+              <DodreamMap dodream={dodream} />
             </MapBox>
             <CourseBox>
               <WalkTable dodream={dodream} />
