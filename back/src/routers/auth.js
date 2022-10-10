@@ -105,9 +105,13 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
             );
           } else {
             const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
-            res
-              .status(200)
-              .json({ success: true, name: result.data.kakao_account.profile.nickname, email: email, token: token });
+            res.status(200).json({
+              success: true,
+              id: rows[0].id,
+              name: result.data.kakao_account.profile.nickname,
+              email: email,
+              token: token,
+            });
           }
         }
       });
@@ -154,7 +158,9 @@ router.get("/naver", async function (req, res, next) {
           } else {
             const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
             console.log(token);
-            res.status(200).json({ success: true, name: rows[0].name, email: rows[0].email, token: token });
+            res
+              .status(200)
+              .json({ success: true, id: rows[0].id, name: rows[0].name, email: rows[0].email, token: token });
           }
         }
       });

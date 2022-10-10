@@ -1,12 +1,13 @@
 import { getReview } from "@api/api";
-import Card from "@components/Card";
+import Card from "@components/ReviewCard";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { IReview } from "src/types/review";
 
 export default function Review() {
   const navigate = useNavigate();
-  const [reviews, setReveiws] = useState([]);
+  const [reviews, setReveiws] = useState<IReview[]>();
 
   useEffect(() => {
     getReview().then(data => {
@@ -15,7 +16,7 @@ export default function Review() {
     });
   }, []);
   useEffect(() => {
-    console.log(reviews);
+    console.log("review", reviews);
   }, [reviews]);
 
   return (
@@ -28,10 +29,10 @@ export default function Review() {
       </TitleContainer>
       <ReviewBtn onClick={() => navigate("/review/write")}>후기 작성 go go!</ReviewBtn>
       <CardContainer>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
+        {reviews &&
+          reviews.map(review => {
+            return <Card review={review}></Card>;
+          })}
       </CardContainer>
     </ReviewWrap>
   );

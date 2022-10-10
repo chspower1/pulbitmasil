@@ -76,7 +76,6 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   return data;
 }
 
-
 export async function getReview() {
   console.log(`%cGET 요청 ${BASE_URL}/review/select`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review/select`);
@@ -85,10 +84,10 @@ export async function getReview() {
 
 export async function uploadReview(contents: Review) {
   const bodyData = JSON.stringify(contents);
-  console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
+  console.log(`%cPOST 요청 ${BASE_URL + "/user/review"}`, "color: #a25cd1;");
   console.log(bodyData);
 
-  return axiosInstance.post(`/review/create`, bodyData, {
+  return axiosInstance.post(`review/create`, bodyData, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -96,9 +95,8 @@ export async function uploadReview(contents: Review) {
   });
 }
 
-export async function WalkingData(params:any) {
+export async function WalkingData(params: any) {
   const { data } = await axiosInstance.get(`/walk`);
   console.log(data);
   return data;
 }
-

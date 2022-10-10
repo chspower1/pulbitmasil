@@ -1,6 +1,10 @@
+import React from "react";
+import { IReview } from "src/types/review";
 import styled from "styled-components";
 
-export default function Card() {
+export default function Card({ review }: IReview): React.ReactElement {
+  console.log(review);
+  const { id, name, description, createAt } = review;
   return (
     <CardWrap>
       <InfoContainer>
