@@ -1,23 +1,21 @@
-import { getReview } from "@api/api";
+import { getReviews } from "@api/api";
 import Card from "@components/ReviewCard";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IReview } from "src/types/review";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Review() {
   const navigate = useNavigate();
-  const [reviews, setReveiws] = useState<IReview[]>();
+  // const [reviews, setReveiws] = useState<IReview[]>();
+  const { isLoading, data: reviews } = useQuery<IReview[]>(["review"], getReviews);
 
-  useEffect(() => {
-    getReview().then(data => {
-      console.log(data);
-      setReveiws(data);
-    });
-  }, []);
-  useEffect(() => {
-    console.log("review", reviews);
-  }, [reviews]);
+  // useEffect(() => {
+  //   console.log("review", reviews);
+  //   console.log("isError", isError);
+  //   console.log("isLoading", isLoading);
+  // }, [reviews]);
 
   return (
     <ReviewWrap>

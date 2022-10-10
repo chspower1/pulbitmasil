@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { getReview, uploadReview } from "@api/api";
-import { Review, ReviewContent } from "src/types/review";
+import { getReviews, uploadReview } from "@api/api";
+import { IReview, IReviewContent } from "src/types/review";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate } from "react-router-dom";
@@ -19,12 +19,12 @@ export default function ReviewForm() {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<ReviewContent>();
+  } = useForm<IReviewContent>();
 
   //확인버튼 누를때 현재시간 생성후 넘겨줌,
   const handleSubmitReview = handleSubmit(data => {
     // post 요청
-    const newData: Review = {
+    const newData: IReview = {
       title: data.title,
       description: data.description,
       createAt: new Date(),
