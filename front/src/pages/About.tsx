@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ReactFullpage from "@fullpage/react-fullpage";
+import SideBar from "@components/about/SideBar";
 const anchors = ["firstPage", "secondPage", "thirdPage"];
 export default function Content() {
   return (
@@ -19,17 +20,14 @@ export default function Content() {
           <ReactFullpage.Wrapper>
             <Section01 className="section">
               <Box>
-                <button onClick={() => fullpageApi.moveSectionDown()}>Click me to move down</button>
                 <Title>첫번째 컨테츠입니다.</Title>
                 <Description>내용입니다.</Description>
               </Box>
             </Section01>
             <Section02 className="section">
               <Box>
-                <button onClick={() => fullpageApi.moveSectionUp()}>Click me to move up</button>
                 <Title>두번째 컨테츠입니다.</Title>
                 <Description>내용입니다.</Description>
-                <button onClick={() => fullpageApi.moveSectionDown()}>Click me to move down</button>
               </Box>
             </Section02>
             <Section03 className="section">
@@ -47,7 +45,6 @@ export default function Content() {
 const ContentWrap = styled.div`
   width: 80vw;
   margin-left: 20vw;
-  height: 100vw;
   ::-webkit-scrollbar {
     display: none;
   }
@@ -72,4 +69,7 @@ const Title = styled.h1`
 const Description = styled.p`
   font-size: 22px;
   color: ${props => props.theme.textColor};
+`;
+const MoveUpBtn = styled.div`
+  top: 20px;
 `;

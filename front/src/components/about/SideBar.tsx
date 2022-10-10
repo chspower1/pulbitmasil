@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 export default function SideBar() {
   const navigator = useNavigate();
+  // const handleClickBtn = (page: number, e: React.MouseEvent) => {
+  //   window.fullpage_api.moveTo("firstPage");
+  // };
   return (
     <SideBarWrap>
       <button onClick={() => navigator("/about#firstPage")}>01</button>
@@ -20,7 +23,6 @@ export default function SideBar() {
   );
 }
 const SideBarWrap = styled.nav`
-  position: fixed;
   display: flex;
   flex-direction: column;
   /* padding-top: 70px; */
