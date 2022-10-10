@@ -1,5 +1,6 @@
 import { getWalkRoad } from "@api/api";
 import Map from "@components/Map";
+import WalkTable from "@components/WalkTable";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 
@@ -29,7 +30,9 @@ export default function WalkRoad() {
         <MapBox>
           <Map />
         </MapBox>
-        <CourseBox><WalkTable/></CourseBox>
+        <CourseBox>
+          <WalkTable />
+        </CourseBox>
       </DataBox>
     </WalkWrap>
   );
