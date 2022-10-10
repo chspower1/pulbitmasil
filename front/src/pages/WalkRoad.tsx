@@ -3,7 +3,7 @@ import Map from "@components/Map";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 
-export default function Walking() {
+export default function WalkRoad() {
   const { isLoading, data } = useQuery(["walkRoad"], getWalkRoad, {
     onSettled(data) {
       console.log(data);

@@ -12,7 +12,7 @@ import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
 import NaverAuth from "./NaverAuth";
 import KakaoAuth from "./KakaoAuth";
-import Walking from "./Walking";
+import WalkRoad from "./WalkRoad";
 import UserInfo from "./UserInfo";
 import MyGreenStroll from "./MyGreenStroll";
 import WelcomeModal from "@components/modal/WelcomeModal";
@@ -35,7 +35,7 @@ export default function Router() {
           <Route path="/register" element={<Register />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
-          <Route path="/walking" element={<Walking />} />
+          <Route path="/walk-road" element={<WalkRoad />} />
           <Route path="/review" element={<Review />} />
           <Route path="/review/write" element={<ReviewForm />} />
           <Route path="/userInfo" element={<UserInfo />} />
