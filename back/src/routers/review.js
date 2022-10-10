@@ -27,24 +27,21 @@ router.get("/select", function (req, res) {
 // 리뷰 작성
 router.post("/create", login_required, async function (req, res, next) {
   const user_id = req.currentUserId;
-  try {
-    const { title, description, createAt } = req.body;
 
-    maria.query(
-      `INSERT INTO REVIEW(user_id, title, description, createAt) VALUES(?,?,?,?)`,
-      [user_id, title, description, createAt],
-      function (err, rows, fields) {
-        if (!err) {
-          res.status(200).json({ success: true, title: title, description: description, createAt: createAt });
-        } else {
-          console.log("err : " + err);
-          res.send(err);
-        }
-      },
-    );
-  } catch (error) {
-    next(error);
-  }
+  const { title, description, createAt } = req.body;
+
+  maria.query(
+    `INSERT INTO REVIEW(userId, title, description, createAt) VALUES(?,?,?,?)`,
+    [user_id, title, description, createAt],
+    function (err, rows, fields) {
+      if (!err) {
+        res.status(200).json({ success: true, title: title, description: description, createAt: createAt });
+      } else {
+        console.log("err : " + err);
+        res.send(err);
+      }
+    },
+  );
 });
 
 // router.delete("/delete", login_required, async function (req, res, next) {
