@@ -1,5 +1,5 @@
 import { getDodream } from "@api/api";
-import DodreamMap from "@components/DodreamMap";
+import DodreamMap from "@components/dodream/DodreamMap";
 import WalkTable from "@components/dodream/WalkTable";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";

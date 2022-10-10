@@ -1,7 +1,7 @@
 /*global kakao*/
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import testDoream from "../test_data/dodream.json";
+import testDoream from "../../test_data/dodream.json";
 const { kakao }: any = window;
 
 interface NewDodream {
@@ -66,7 +66,7 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
     let container = document.getElementById("map");
     let options = {
       center: new kakao.maps.LatLng(37.5587081222, 127.1583825733),
-      level: 3,
+      level: 7,
     };
     let map = new kakao.maps.Map(container, options);
 
@@ -76,31 +76,56 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
       console.log("-------------", road.x, road.y);
       return {
         title: road.course_name,
+        content: road.course_name,
         latlng: new kakao.maps.LatLng(road.x, road.y),
       };
     });
-    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    let imageSrc = "/assets/images/1.png";
+
+    // 데이터 기반 마커 생성
     for (let i = 0; i < markerPositions!.length; i++) {
-      var imageSize = new kakao.maps.Size(24, 35);
-      var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+      let imageSize = new kakao.maps.Size(30, 40);
+      let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
       var marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: markerPositions![i].latlng, // 마커를 표시할 위치
         title: markerPositions![i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image: markerImage, // 마커 이미지
       });
+      var infowindow = new kakao.maps.InfoWindow({
+        content: `<div style="width:150px;text-align:center;padding:8px;background-color:#2A9C6B;color:white;">${
+          markerPositions![i].content
+        }</div>`, // 인포윈도우에 표시할 내용
+      });
+      kakao.maps.event.addListener(marker, "mouseover", makeOverListener(map, marker, infowindow));
+      kakao.maps.event.addListener(marker, "mouseout", makeOutListener(infowindow));
+    }
+    function makeOverListener(map: any, marker: any, infowindow: any) {
+      return function () {
+        infowindow.open(map, marker);
+      };
+    }
+
+    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+    function makeOutListener(infowindow: any) {
+      return function () {
+        infowindow.close();
+      };
     }
   }, [newDodream]);
 
-  return (
-    <div>
-      <MapBox id="map"></MapBox>
-    </div>
-  );
+  return <MapBox id="map" />;
 }
 const MapBox = styled.div`
   width: 700px;
   height: 750px;
   border: 5px solid #88caae;
   border-radius: 10px;
+`;
+const DescBox = styled.div`
+  width: 150px;
+  text-align: center;
+  padding: 8px;
+  background-color: #2a9c6b;
+  color: white;
 `;
