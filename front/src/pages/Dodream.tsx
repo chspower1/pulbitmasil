@@ -18,9 +18,7 @@ export default function Dodream() {
       ) : (
         <WalkWrap>
           <MapContainer>
-            <MapBox>
-              <DodreamMap dodream={dodream} />
-            </MapBox>
+            <DodreamMap dodream={dodream} />
           </MapContainer>
           <RightBox>
             {/* <ChartBtn>차트로 보기</ChartBtn> */}
@@ -109,17 +107,7 @@ const Input = styled.label`
   }
 `;
 
-const MapBox = styled.div`
-  width: 40em;
-  height: 46em;
-  background-color: #008037;
-  /* margin: 30px; */
-  margin-top: 70px;
-  border: 5px solid #88CAAE;
-  border-radius: 10px;
-`;
-
-const CourseBox = styled(MapBox)`
+const CourseBox = styled.div`
   width: 860px;
   height: 400px;
   background-color: #2a9c6b;
@@ -131,11 +119,16 @@ const RightBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 900px
+  width: 900px;
 `;
 
 const MapContainer = styled.div`
   display: flex;
   justify-content: center;
-  width: 70vh;
+  align-items: center;
+  width: 700px;
+  height: 800px;
+  /* background-color: #008037; */
+  /* margin: 30px; */
+  margin-top: 70px;
 `;

@@ -94,7 +94,13 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
 
   return (
     <div>
-      <div id="map" style={{ width: "500px", height: "500px" }}></div>
+      <MapBox id="map"></MapBox>
     </div>
   );
 }
+const MapBox = styled.div`
+  width: 700px;
+  height: 800px;
+  border: 5px solid #88caae;
+  border-radius: 10px;
+`;
