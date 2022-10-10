@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import json from "../../test_data/new_trash_count.json";
@@ -6,14 +6,9 @@ import styled from "styled-components";
 import { Container } from "../../style/Container";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+type Trash = "담배꽁초" | "일반담배꽁초" | "일반쓰레기" | "재활용쓰레기" | "항아리형";
 interface TrashCount {
-  [key: string]: {
-    담배꽁초: number;
-    일반담배꽁초: number;
-    일반쓰레기: number;
-    재활용쓰레기: number;
-    항아리형: number;
-  };
+  [key: string]: Record<Trash, number>;
 }
 interface Data {
   labels: string[];
@@ -50,7 +45,8 @@ export default function BarChart() {
   const [trash, setTrash] = useState<TrashCount>(json);
   const [labels, setLabels] = useState(Object.keys(trash));
 
-  const changeHandler = (checked: boolean, id: string) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { checked, id } = e.currentTarget;
     // console.log(checked, id);
     if (checked === true) {
       setLabels([...labels, id].sort());
@@ -126,9 +122,7 @@ export default function BarChart() {
               type="checkbox"
               name="color"
               checked={labels.includes(label) || false}
-              onChange={e => {
-                changeHandler(e.currentTarget.checked, label);
-              }}
+              onChange={handleChange}
             />{" "}
             {label}
           </label>

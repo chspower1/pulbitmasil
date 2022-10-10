@@ -1,21 +1,15 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { registerUser } from "@api/api";
+import { UserRegisterForm } from "src/types/user";
 
 export default function Register() {
-  interface User {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword?: string;
-  }
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<User>();
+  } = useForm<UserRegisterForm>();
 
   const onSubmitRegister = handleSubmit(data => {
     delete data.confirmPassword;
