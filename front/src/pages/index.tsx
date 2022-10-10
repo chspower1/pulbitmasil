@@ -41,6 +41,7 @@ export default function Router() {
           <Route path="/walking" element={<Walking />} />
           <Route path="/review" element={<Review />} />
           <Route path="/review/write" element={<ReviewForm />} />
+          <Route path="/review/edit/:reviewId" element={<ReviewForm />} />
           <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/myGreenStroll" element={<MyGreenStroll />} />
           <Route path="/auth/naver/callback" element={<NaverAuth />} />

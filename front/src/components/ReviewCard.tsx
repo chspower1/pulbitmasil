@@ -1,19 +1,32 @@
-import React from "react";
+import { userAtom } from "@atom/user";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { IReview } from "src/types/review";
 import styled from "styled-components";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
-  console.log(review);
-  const { id, title, description, createAt } = review;
+  const { userId, reviewId, title, description, createAt } = review;
+  const [isEdit, setIsEdit] = useState(false);
+  const user = useRecoilValue(userAtom);
+  const navigate = useNavigate();
+
+  const handleClickEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // navigate("");
+    // setIsEdit(true);
+  };
+
   return (
     <CardWrap>
       <InfoContainer>
         <CardImg />
         <InfoBox>
-          <p>닉네임:</p>
+          <p>닉네임: {title}</p>
           <p>날짜: </p>
         </InfoBox>
       </InfoContainer>
+      <p>{description}</p>
+      {user?.id === userId ? <button onClick={handleClickEdit}>수정</button> : null}
     </CardWrap>
   );
 }

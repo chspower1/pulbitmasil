@@ -10,7 +10,6 @@ import { userAtom } from "@atom/user";
 import { useNavigate } from "react-router-dom";
 
 export default function ReviewForm() {
-  const [runningDate, setRunningDate] = useState(new Date());
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
 

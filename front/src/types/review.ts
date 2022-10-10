@@ -1,5 +1,6 @@
 export interface IReview {
-  id?: number; // 작성자
+  userId?: number; // 작성자
+  reviewId?: number;
   title: string;
   description: string;
   createAt: Date;

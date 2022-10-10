@@ -8,14 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function Review() {
   const navigate = useNavigate();
-  // const [reviews, setReveiws] = useState<IReview[]>();
   const { isLoading, data: reviews } = useQuery<IReview[]>(["review"], getReviews);
-
-  // useEffect(() => {
-  //   console.log("review", reviews);
-  //   console.log("isError", isError);
-  //   console.log("isLoading", isLoading);
-  // }, [reviews]);
 
   return (
     <ReviewWrap>
