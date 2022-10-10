@@ -15,29 +15,31 @@ function Table({ columns, data }: Tableprops) {
     data,
   });
   return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-              })}
+    <TableWrapper>
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </TableWrapper>
   );
 }
 
@@ -102,12 +104,36 @@ export default function WalkTable({ dodream }: { dodream: any }) {
   );
 }
 
+ const TableWrapper = styled.div`
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #636E72;
+  text-align: center;
+  background-color: white;
+  padding: 0;
+  height: 400px;
+  overflow-y: scroll;
+ `;
+
 const Styles = styled.div`
-  padding: 1rem;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: #636E72;
+  text-align: center;
+  background-color: white;
 
   table {
     border-spacing: 0;
-    border: 1px solid black;
+    text-align: center;
+    width: 100%;
+    thead {
+      position: sticky;
+      top: 0px;
+      margin: 0 0 0 0;
+      background-color: #C7E1D6;
+    }
 
     tr {
       :last-child {
@@ -121,8 +147,6 @@ const Styles = styled.div`
     td {
       margin: 0;
       padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
 
       :last-child {
         border-right: 0;
