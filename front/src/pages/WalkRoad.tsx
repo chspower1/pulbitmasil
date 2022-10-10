@@ -1,9 +1,10 @@
 import { getWalkRoad } from "@api/api";
 import Map from "@components/Map";
-import WalkTable from "@components/WalkTable";
+import WalkTable from "@components/dodream/WalkTable";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import roadJson from "../test_data/dododo.json";
+import { IDodream } from "../types/dodream";
 export default function WalkRoad() {
   // const { isLoading, data } = useQuery(["walkRoad"], getWalkRoad, {
   //   onSettled(data) {
@@ -33,7 +34,7 @@ export default function WalkRoad() {
           <Map />
         </MapBox>
         <CourseBox>
-          <WalkTable />
+          <WalkTable data={testJson} />
         </CourseBox>
       </DataBox>
     </WalkWrap>
