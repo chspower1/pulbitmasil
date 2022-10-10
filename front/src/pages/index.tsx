@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Nav from "@components/Nav";
+import Nav from "@components/layout/Nav";
 
 import Home from "./Home";
 import About from "./About";
 import Map from "./Map";
 import Register from "./Register";
 import styled from "styled-components";
-import Footer from "@components/Footer";
+import Footer from "@components/layout/Footer";
 import Chart from "./Chart";
 import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
@@ -18,16 +18,10 @@ import Walking from "./Walking";
 import UserInfo from "./UserInfo";
 import MyGreenStroll from "./MyGreenStroll";
 import WelcomeModal from "@components/modal/WelcomeModal";
+import Test from "./Test";
 
 const ContentContainer = styled.section`
   min-height: 100vh;
-  ::-webkit-scrollbar-track {
-    display: none;
-    width: 0;
-  }
-  overflow-x: hidden;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 `;
 export default function Router() {
   return (
@@ -48,6 +42,7 @@ export default function Router() {
           <Route path="/myGreenStroll" element={<MyGreenStroll />} />
           <Route path="/user/naver/callback" element={<Naver />} />
           <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
+          <Route path="/test" element={<Test />} />
         </Routes>
       </ContentContainer>
       <ScrollBtn />
