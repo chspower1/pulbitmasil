@@ -13,24 +13,23 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "User" });
 });
 
-// 편의 기능
-router.get("/create", async function (req, res) {
-  maria.query(
-    `CREATE TABLE USER (
-    id INT primary key AUTO_INCREMENT,
-    name VARCHAR(10) NOT NULL,
-    email VARCHAR(30) UNIQUE NOT NULL,
-    hashedPassword VARCHAR(100) NOT NULL)`,
-    function (err, rows, fields) {
-      if (!err) {
-        res.send(rows);
-      } else {
-        console.log("err : " + err);
-        res.send(err);
-      }
-    },
-  );
-});
+// router.get("/create", async function (req, res) {
+//   maria.query(
+//     `CREATE TABLE USER (
+//     id INT primary key AUTO_INCREMENT,
+//     name VARCHAR(10) NOT NULL,
+//     email VARCHAR(30) UNIQUE NOT NULL,
+//     hashedPassword VARCHAR(100) NOT NULL)`,
+//     function (err, rows, fields) {
+//       if (!err) {
+//         res.send(rows);
+//       } else {
+//         console.log("err : " + err);
+//         res.send(err);
+//       }
+//     },
+//   );
+// });
 
 router.get("/select", function (req, res) {
   maria.query("SELECT * FROM USER", function (err, rows, fields) {
