@@ -1,17 +1,14 @@
 import { useForm } from "react-hook-form";
 // import DatePicker from "react-datepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { uploadReview } from "@api/api";
-import { Review } from "src/types/review";
+import { getReview, uploadReview } from "@api/api";
+import { Review, ReviewContent } from "src/types/review";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate } from "react-router-dom";
 
-interface ReviewForm {
-  contents: string;
-}
 export default function ReviewForm() {
   const [runningDate, setRunningDate] = useState(new Date());
   const user = useRecoilValue(userAtom);
@@ -22,22 +19,22 @@ export default function ReviewForm() {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<ReviewForm>();
+  } = useForm<ReviewContent>();
 
   //확인버튼 누를때 현재시간 생성후 넘겨줌,
-  const handleClickReview = () => {
+  const handleSubmitReview = handleSubmit(data => {
     // post 요청
-    const data: Review = {
-      name: user!.name, // 사용자 닉네임
-      email: user!.email, // 이메일주소
-      writeDate: new Date(), //
-      createDate: new Date(),
+    const newData: Review = {
+      title: data.title,
+      description: data.description,
+      createAt: new Date(),
     };
-    uploadReview(data);
-  };
+    console.log(newData);
+    uploadReview(newData);
+  });
 
   return (
-    <ReviewWrap>
+    <FormWrap onSubmit={handleSubmitReview}>
       <TitleContainer>
         <Title>플로깅</Title>
         <SubTitle>
@@ -60,23 +57,29 @@ export default function ReviewForm() {
           </select> */}
 
       <ReviewInput
-        placeholder="후기를 적어주세요."
-        {...register("contents", {
+        style={{ height: "60px" }}
+        placeholder="제목을 입력해주세요."
+        {...register("title", {
+          required: { value: true, message: "제목을 입력해주세요." },
+        })}
+      />
+
+      <ReviewInput
+        placeholder="내용을 입력해주세요."
+        {...register("description", {
           required: { value: true, message: "내용을 입력해주세요." },
         })}
       />
 
       <ButtonContainer>
-        <Button type="submit" onClick={handleClickReview}>
-          등록하기
-        </Button>
+        <Button type="submit">등록하기</Button>
         <Button onClick={() => navigate("/review")}>취소</Button>
       </ButtonContainer>
-    </ReviewWrap>
+    </FormWrap>
   );
 }
 
-const ReviewWrap = styled.div`
+const FormWrap = styled.form`
   position: relative;
   padding: 0 450px;
   padding-top: 100px;
@@ -125,10 +128,11 @@ const ReviewContainer = styled.div`
   margin-top: 30px;
 `;
 const ReviewInput = styled.textarea`
-  width: 100%;
+  width: 500px;
   height: 400px;
   font-size: 16px;
-  padding: 20px 20px;
+  padding: 10px 10px;
+  resize: none;
 `;
 
 const ButtonContainer = styled.div`
