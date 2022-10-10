@@ -29,7 +29,7 @@ export default function WalkRoad() {
         <MapBox>
           <Map />
         </MapBox>
-        <CourseBox>CourseData</CourseBox>
+        <CourseBox><WalkTable/></CourseBox>
       </DataBox>
     </WalkWrap>
   );
