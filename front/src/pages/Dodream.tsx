@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import roadJson from "../test_data/dodream.json";
 import { IDodream } from "../types/dodream";
-export default function WalkRoad() {
+export default function Dodream() {
   // const { isLoading, data } = useQuery(["walkRoad"], getWalkRoad, {
   //   onSettled(data) {
   //     console.log(data);
