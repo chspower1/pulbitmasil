@@ -25,6 +25,8 @@ export default function Map() {
     kakao.maps.event.addListener(marker, "click", function () {
       alert("gldd");
     });
+
+    // 
   }, []);
 
   return (

@@ -53,6 +53,7 @@ export default function Home() {
     }
   };
   const handleClickImgPoint = (imgIndex: number, num: number) => {
+    if (leaving) return console.log(leaving);
     toggleLeaving();
     setImgIndex(num);
     imgIndex < num ? setNext(true) : setNext(false);

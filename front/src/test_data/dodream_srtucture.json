@@ -9,22 +9,27 @@
           "lead_time": "30분",
           "relate_subway": "2호선",
           "lovel": 1,
-          "content":"내용",
-          "trafic_info":"교통편",
-          "reg_data":123124,
-          "CPI":[{
-            "name":"산책로1",
-            "coordinate": { "x": 1213, "y": 12312 }
-          },{
-            "name":"산책로2",
-            "coordinate": { "x": 1213, "y": 12312 }
-          },{
-            "name":"산책로3",
-            "coordinate": { "x": 1213, "y": 12312 }
-          },{
-            "name":"산책로4",
-            "coordinate": { "x": 1213, "y": 12312 }
-          }]
+          "content": "내용",
+          "trafic_info": "교통편",
+          "reg_data": 123124,
+          "CPI": [
+            {
+              "name": "산책로1",
+              "coordinate": { "x": 1213, "y": 12312 }
+            },
+            {
+              "name": "산책로2",
+              "coordinate": { "x": 1213, "y": 12312 }
+            },
+            {
+              "name": "산책로3",
+              "coordinate": { "x": 1213, "y": 12312 }
+            },
+            {
+              "name": "산책로4",
+              "coordinate": { "x": 1213, "y": 12312 }
+            }
+          ]
         }
       }
     },
@@ -98,4 +103,3 @@
     }
   }
 }
-코스카테고리네임 > 코스네임 > 상세설명들
