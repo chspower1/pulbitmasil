@@ -5,15 +5,14 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { IReview } from "src/types/review";
 import { useQuery } from "@tanstack/react-query";
+import { useRecoilState } from "recoil";
+import { isReviewDeleteAtom } from "@atom/atom";
 
 export default function Review() {
   const isEdit = false;
   const navigate = useNavigate();
-  const { isLoading, data: reviews } = useQuery<IReview[]>(["reviews"], getReviews);
-
-  useEffect(() => {
-    console.log(reviews);
-  }, [isLoading]);
+  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
+  const { isLoading, data: reviews } = useQuery<IReview[]>(["reviews"], getReviews, { enabled: !isReviewDeleteModal });
 
   return (
     <ReviewWrap>

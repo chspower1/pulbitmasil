@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { Accent, BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
 import { IReview } from "src/types/review";
@@ -12,16 +12,12 @@ import { deleteReview } from "@api/review";
 
 export default function ReviewDeleteModal({ review }: { review: IReview }) {
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
-  // const user = useRecoilValue(userAtom);
-
+  const navigate = useNavigate();
   const closeDeleteModal = async () => {
     setIsReviewDeleteModal(false);
     const data = await deleteReview(review);
-    console.log(data.status);
   };
-  useEffect(() => {
-    console.log("change!!!!! isReviewDeleteModal ", isReviewDeleteModal);
-  }, [isReviewDeleteModal]);
+
   return (
     <AnimatePresence>
       {isReviewDeleteModal && (
