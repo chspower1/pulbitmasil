@@ -13,18 +13,23 @@ import { deleteReview } from "@api/review";
 interface ReviewDeleteModalProps {
   reviewId: number;
   userId: number;
+  setRevies: React.Dispatch<React.SetStateAction<IReview[] | undefined>>;
 }
 
-export default function ReviewDeleteModal({ reviewId, userId }: ReviewDeleteModalProps) {
+export default function ReviewDeleteModal({ reviewId, userId, setRevies }: ReviewDeleteModalProps) {
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
   const navigate = useNavigate();
-  const handleClickConfirm = async () => {
-    // e.preventDefault();
-    setIsReviewDeleteModal(null);
+  const handleClickConfirm = async (e: React.MouseEvent) => {
+    e.preventDefault();
     const data = await deleteReview({ reviewId, userId });
+    setRevies(reviews => {
+      return reviews?.filter(review => review.reviewId !== isReviewDeleteModal);
+    });
+    setIsReviewDeleteModal(null);
     console.log(data);
   };
-  const handleClickCancel = () => {
+  const handleClickCancel = (e: React.MouseEvent) => {
+    e.preventDefault();
     setIsReviewDeleteModal(null);
   };
 

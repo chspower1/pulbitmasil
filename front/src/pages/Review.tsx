@@ -15,25 +15,35 @@ export default function Review() {
   const isEdit = false;
   const navigate = useNavigate();
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
-  const { isLoading, data: reviews } = useQuery<IReview[]>(["reviews"], getReviews);
-
+  const [reviews, setRevies] = useState<IReview[] | undefined>();
+  const { isLoading } = useQuery<IReview[]>(["reviews"], getReviews, {
+    onSuccess(data) {
+      setRevies(data);
+    },
+  });
   return (
-    <ReviewWrap>
-      <TitleContainer>
-        <Title>Review</Title>
-        <SubTitle>
-          <Accent>플로깅</Accent> 후기를 공유해주세요!
-        </SubTitle>
-      </TitleContainer>
-      {isReviewDeleteModal && <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} />}
-      <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>후기 작성 go go!</ReviewBtn>
-      <CardContainer>
-        {reviews &&
-          reviews.map(review => {
-            return <Card review={review}></Card>;
-          })}
-      </CardContainer>
-    </ReviewWrap>
+    <>
+      {isLoading || (
+        <ReviewWrap>
+          <TitleContainer>
+            <Title>Review</Title>
+            <SubTitle>
+              <Accent>플로깅</Accent> 후기를 공유해주세요!
+            </SubTitle>
+          </TitleContainer>
+          {isReviewDeleteModal && (
+            <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
+          )}
+          <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>후기 작성 go go!</ReviewBtn>
+          <CardContainer>
+            {reviews &&
+              reviews.map(review => {
+                return <Card review={review}></Card>;
+              })}
+          </CardContainer>
+        </ReviewWrap>
+      )}
+    </>
   );
 }
 
