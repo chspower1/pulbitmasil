@@ -8,13 +8,16 @@ import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { Accent, BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
 import { IReview } from "src/types/review";
+import { deleteReview } from "@api/review";
 
-export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
+export default function ReviewDeleteModal({ review }: { review: IReview }) {
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
   // const user = useRecoilValue(userAtom);
 
-  const closeDeleteModal = () => {
+  const closeDeleteModal = async () => {
     setIsReviewDeleteModal(false);
+    const data = await deleteReview(review);
+    console.log(data.status);
   };
   useEffect(() => {
     console.log("change!!!!! isReviewDeleteModal ", isReviewDeleteModal);

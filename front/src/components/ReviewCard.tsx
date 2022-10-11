@@ -29,7 +29,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 
   return (
     <CardWrap whileHover={{ scale: 1.1 }}>
-      <ReviewDeleteModal reviewId={review?.reviewId!} />
+      <ReviewDeleteModal review={review} />
       <InfoContainer>
         <CardImg />
         <InfoBox>

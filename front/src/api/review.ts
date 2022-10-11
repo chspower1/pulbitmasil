@@ -56,11 +56,12 @@ export async function deleteReview(contents: IReview) {
   const bodyData = { userId: contents.userId };
 
   console.log(`%cDELETE 요청 ${BASE_URL}/review/${contents.reviewId}`, "color: #a25cd1;");
-  return axiosInstance.put(`review/${contents.reviewId}`, bodyData, {
+  return axiosInstance.delete(`review/${contents.reviewId}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
+    data: { ...bodyData },
     params: {
       reviewId: contents.reviewId,
     },
