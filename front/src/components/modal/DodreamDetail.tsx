@@ -48,11 +48,6 @@ export default function DodreamDetalModal() {
       marker.setMap(detailMap);
     }
   }, [isDodreamDetalModal]);
-  useEffect(() => {
-    const time = String(selectedDodream?.lead_time).split(".");
-    console.log(time);
-  }, []);
-  // console.log(selectedDodream);
   return (
     <AnimatePresence>
       {isDodreamDetalModal && (
