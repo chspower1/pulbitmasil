@@ -9,9 +9,6 @@ import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 export default function DodreamDetalModal() {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
   const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
-  const handleClickLogout = () => {
-    setIsDodreamDetalModal(false);
-  };
 
   return (
     <AnimatePresence>
