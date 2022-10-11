@@ -8,3 +8,7 @@ export const dodreamAtom = atom({
   default: null,
   effects_UNSTABLE: [persistAtom],
 });
+export const isDodreamDetalModalAtom = atom({
+  key: "dodreamDetailModal",
+  default: false,
+});

@@ -10,6 +10,7 @@ import { isLoginModalAtom, isLoginSelector, isLogoutModalAtom } from "@atom/atom
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
+import DodreamDetalModal from "@components/modal/DodreamDetail";
 // import ModalPortal from "@components/modal/ModalPortal";
 
 // Interface
@@ -148,6 +149,7 @@ export default function Nav() {
           <UserName>{isLogin ? user?.name : "손님"}</UserName>
         </UserBox>
         <LoginModal></LoginModal>
+        <DodreamDetalModal />
         {isUserNav && <UserNav setIsUserNav={setIsUserNav}></UserNav>}
         <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
       </Wrap>

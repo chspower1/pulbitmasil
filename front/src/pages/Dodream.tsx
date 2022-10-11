@@ -1,6 +1,7 @@
 import { getDodream } from "@api/api";
 import DodreamMap from "@components/dodream/DodreamMap";
 import WalkTable from "@components/dodream/WalkTable";
+import DodreamDetalModal from "@components/modal/DodreamDetail";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 
@@ -38,6 +39,7 @@ export default function Dodream() {
               <WalkTable dodream={dodream} />
             </CourseBox>
           </RightContainer>
+          
         </WalkWrap>
       )}
     </>

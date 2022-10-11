@@ -1,7 +1,11 @@
 /*global kakao*/
+import LogoutModal from "@components/modal/LogoutModal";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import testDoream from "../../test_data/dodream.json";
+import DodreamDetail from "@components/modal/DodreamDetail";
+import { useRecoilState } from "recoil";
+import { isDodreamDetalModalAtom } from "@atom/dodream";
 const { kakao }: any = window;
 
 interface NewDodream {
@@ -18,7 +22,8 @@ interface NewDodream {
 export default function DodreamMap({ dodream }: { dodream: any }) {
   const { data: test } = testDoream;
   const [newDodream, setNewDodream] = useState<NewDodream[] | null>([]);
-  //카카오 지도
+  const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
+  //데이터 추출 및 newDodream에 저장
   useEffect(() => {
     // 두드림 정보 변환
     test.map((road: any) => {
@@ -70,8 +75,7 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
     };
     let map = new kakao.maps.Map(container, options);
 
-    // 마커 생성하기
-    let markerPosition = new kakao.maps.LatLng(37.5585362386, 127.1605311028); // 표시 될 위치
+    // 마커 데이터 할당
     let markerPositions = newDodream?.map(road => {
       console.log("-------------", road.x, road.y);
       return {
@@ -86,35 +90,45 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
     for (let i = 0; i < markerPositions!.length; i++) {
       let imageSize = new kakao.maps.Size(30, 40);
       let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-      var marker = new kakao.maps.Marker({
+      let marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: markerPositions![i].latlng, // 마커를 표시할 위치
         title: markerPositions![i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image: markerImage, // 마커 이미지
       });
-      var infowindow = new kakao.maps.InfoWindow({
+      let infowindow = new kakao.maps.InfoWindow({
+        // 인포윈도우에 표시할 내용
         content: `<div style="width:150px;text-align:center;padding:8px;background-color:#2A9C6B;color:white;">${
           markerPositions![i].content
-        }</div>`, // 인포윈도우에 표시할 내용
+        }</div>`,
       });
       kakao.maps.event.addListener(marker, "mouseover", makeOverListener(map, marker, infowindow));
       kakao.maps.event.addListener(marker, "mouseout", makeOutListener(infowindow));
-    }
-    function makeOverListener(map: any, marker: any, infowindow: any) {
-      return function () {
-        infowindow.open(map, marker);
-      };
-    }
+      // 마커에 클릭 이번트 등록하기
+      kakao.maps.event.addListener(marker, "click", () => handleClickMarker(markerPositions![i].content));
+      function makeOverListener(map: any, marker: any, infowindow: any) {
+        return function () {
+          infowindow.open(map, marker);
+        };
+      }
 
-    // 인포윈도우를 닫는 클로저를 만드는 함수입니다
-    function makeOutListener(infowindow: any) {
-      return function () {
-        infowindow.close();
-      };
+      // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+      function makeOutListener(infowindow: any) {
+        return function () {
+          infowindow.close();
+        };
+      }
+      function handleClickMarker(info: any) {
+        setIsDodreamDetalModal(true);
+      }
     }
   }, [newDodream]);
 
-  return <MapBox id="map" />;
+  return (
+    <>
+      <MapBox id="map" />
+    </>
+  );
 }
 const MapBox = styled.div`
   width: 700px;
