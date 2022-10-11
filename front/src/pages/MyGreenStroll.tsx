@@ -1,8 +1,12 @@
-import styled from "styled-components"
-
+import styled from "styled-components";
+import TrashBarChart from "@components/chart/TrashBarChart";
 
 export default function MyGreenStroll() {
-  return<Test>MyGreenStroll</Test>
+  return (
+    <Test>
+      <TrashBarChart />
+    </Test>
+  );
 }
 
 const Test = styled.div`

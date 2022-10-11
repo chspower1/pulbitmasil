@@ -2,8 +2,8 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
-import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
+import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
+import { ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 
 const { kakao }: any = window;
@@ -53,22 +53,53 @@ export default function DodreamDetalModal() {
       {isDodreamDetalModal && (
         <LogoutModalWrap>
           <DodreamModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
-            <div id="detailMap" style={{ width: "300px", height: "350px" }}></div>
-            <DodreamDesc>
-              <Accent>{selectedDodream?.course_name}</Accent>
-            </DodreamDesc>
-            <div>{selectedDodream?.course_category_nm}</div>
-            <div>{selectedDodream?.area_gu}</div>
-            <div>{selectedDodream?.distance}</div>
-            <div>{selectedDodream?.lead_time}</div>
-            <div>{selectedDodream?.course_level}</div>
-            <div>{selectedDodream?.traffic_info}</div>
-            <div>{selectedDodream?.content}</div>
-            <BtnContainer>
-              <CloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>
-                취소
-              </CloseBtn>
-            </BtnContainer>
+            <CourseName>{selectedDodream?.course_name}</CourseName>
+            <MapBox id="detailMap"></MapBox>
+            <DescContainer>
+              <Row>
+                <Box>
+                  <Title>길 종류 :</Title>
+                  <Desc>{selectedDodream?.course_category_nm.split("/")[0]}</Desc>
+                </Box>
+                <Box>
+                  <Title>자치구 :</Title>
+                  <Desc>{selectedDodream?.area_gu}</Desc>
+                </Box>
+              </Row>
+              <Row>
+                <Box>
+                  <Title>거리 :</Title>
+                  <Desc>{selectedDodream?.distance}</Desc>
+                </Box>
+                <Box>
+                  <Title>소요시간 :</Title>
+                  <Desc>{selectedDodream?.lead_time}</Desc>
+                </Box>
+                <Box>
+                  <Title>코스 레벨 :</Title>
+                  <Desc>Level {selectedDodream?.course_level}</Desc>
+                </Box>
+              </Row>
+              <DetailRow>
+                <BoldTitle>교통편</BoldTitle>
+                <LongDesc>{selectedDodream?.traffic_info}</LongDesc>
+              </DetailRow>
+              <DetailRow>
+                <BoldTitle>설명</BoldTitle>
+                <LongDesc>{selectedDodream?.content}</LongDesc>
+              </DetailRow>
+            </DescContainer>
+            <CloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M19 3L11 11L3 19M3 3L19 19"
+                  stroke="white"
+                  stroke-width="5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </CloseBtn>
           </DodreamModalContainer>
           <Overlay
             onClick={() => setIsDodreamDetalModal(false)}
@@ -90,12 +121,53 @@ const DodreamModalContainer = styled(ModalContainer)`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0px 150px;
 `;
-const DodreamDesc = styled(Desc)`
+const CourseName = styled.h1`
+  font-size: 42px;
+  color: ${props => props.theme.mainColor};
+`;
+const MapBox = styled.div`
+  width: 700px;
+  height: 350px;
+  border-radius: 5px;
+  border: solid 5px ${props => props.theme.weekColor};
+`;
+const DescContainer = styled.div`
   margin-top: 60px;
   margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
 `;
-
+const Row = styled.div`
+  display: flex;
+  /* height: 60px; */
+`;
+const DetailRow = styled(Row)`
+  justify-content: space-between;
+`;
+const Box = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
+  height: 60px;
+  margin-right: 30px;
+`;
+const Title = styled.div`
+  color: ${props => props.theme.textColor};
+  font-size: 18px;
+`;
+const BoldTitle = styled(Title)`
+  font-family: "SebangBold";
+`;
+const Desc = styled.h1`
+  font-size: 22px;
+  color: ${props => props.theme.mainColor};
+`;
+const LongDesc = styled(Title)`
+  width: 630px;
+`;
 const LogoutBtn = styled.button`
   width: 100px;
   height: 40px;
@@ -111,10 +183,4 @@ const LogoutBtn = styled.button`
 `;
 const Accent = styled.h1`
   color: ${props => props.theme.dangerColor};
-`;
-const CloseBtn = styled(LogoutBtn)`
-  background-color: ${props => props.theme.mainColor};
-  &:hover {
-    background-color: ${props => props.theme.accentColor};
-  }
 `;
