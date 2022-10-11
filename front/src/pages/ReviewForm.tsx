@@ -16,22 +16,12 @@ export default function ReviewForm() {
   const location = useLocation();
 
   const { state } = useLocation();
-  const isEdit = state.isEdit;
+  const isEdit = state.isEdit as boolean;
   console.log(isEdit);
 
-  // const { isLoading, data: review } = isEdit&& useQuery<IReview[]>(["review"], () => getReview(state.reviewId));
-  console.log("---------------", state);
-  useEffect(() => {
-    async function aa() {
-      if (isEdit) {
-        const review = await getEditReview(state.reviewId);
-        console.log(getEditReview(state.reviewId));
-        console.log(typeof review);
-        console.log("review", review);
-      }
-    }
-    aa();
-  }, []);
+  const { isLoading, data: review } = useQuery<IReview[]>(["review"], () => getEditReview(state.reviewId), {
+    enabled: isEdit,
+  });
 
   const {
     register,
