@@ -10,7 +10,21 @@ import { IDodream } from "@type/dodream";
 
 export default function Dodream() {
   const { isLoading, data: dodream } = useQuery<IDodream[] | undefined>(["dodream"], getDodream);
-  const courseCategory = ["한강지천길", "근교산자락길", "서울둘레길", "한양도성길", "생태문화길"];
+  const courseCategory = ["전체", "한강지천길/계절길", "근교산자락길", "서울둘레길", "한양도성길", "생태문화길"];
+  const [selectedCategory, setSelectedCategory] = useState(dodream); 
+
+  const filterCategory = (cateoryNames : string) => { 
+    let filteredCategory = dodream?.filter(cateory => cateory.course_category_nm === cateoryNames);
+    return filteredCategory
+  }
+
+  const handleCategory = (e : Event) => {
+    let categoryName = (e.target as HTMLElement).value;
+    categoryName !== "전체" ? 
+    setSelectedCategory(filterCategory(categoryName)) :
+    setSelectedCategory(dodream);
+  }
+
   return (
     <>
       {isLoading ? (
@@ -36,11 +50,17 @@ export default function Dodream() {
             </Input>
             <BtnBox>
               {courseCategory.map((course, index) => (
-                <Button value={course}>{course}</Button>
+                <Button 
+                  key={index}
+                  value={course}
+                  onClick={handleCategory}
+                >
+                  {course}
+                </Button>
               ))}
             </BtnBox>
             <CourseBox>
-              <WalkTable dodream={dodream!} />
+              <WalkTable dodream={selectedCategory!} />
             </CourseBox>
           </RightContainer>
         </WalkWrap>
