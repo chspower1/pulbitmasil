@@ -2,22 +2,19 @@ import React, { useState } from "react";
 import { useAsyncDebounce } from "react-table";
 import styled from "styled-components";
 
-export default function DodreamFilter({
-  preGlobalFilteredRows,
-  globalFilter,
-  setGlobalFilter,
-}) {
+export default function DodreamFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }: any) {
   const count = preGlobalFilteredRows.length;
   const [value, setValue] = useState(globalFilter);
-  const onChange = useAsyncDebounce((value) => {
+  const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value || undefined);
   }, 300);
 
   return (
     <Input>
-      <input placeholder="산책로를 검색해보세요!" 
+      <input
+        placeholder="산책로를 검색해보세요!"
         value={value || ""}
-        onChange={(e) => {
+        onChange={e => {
           setValue(e.target.value);
           onChange(e.target.value);
         }}

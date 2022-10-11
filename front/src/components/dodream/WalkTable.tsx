@@ -5,31 +5,34 @@ import { IDodream } from "@type/dodream";
 import DodreamFilter from "./DodreamFilter";
 
 interface Tableprops {
-  columns: any;
-  data: any;
+  columns: {
+    Header: string;
+    accessor: string;
+  }[];
+  data: IDodream[];
 }
 
 function Table({ columns, data }: Tableprops) {
   const courseCategory = ["전체", "한강지천길/계절길", "근교산자락길", "서울둘레길", "한양도성길", "생태문화길"];
   const [selectedCategory, setSelectedCategory] = useState(data);
-  const { 
-    getTableProps, 
-    getTableBodyProps, 
-    headerGroups, 
-    rows, 
-    prepareRow, 
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
     preGlobalFilteredRows,
     setGlobalFilter,
     state,
-  } = useTable({
-    // @ts-ignore
-    columns,
-    data,
-  },
-  useGlobalFilter,
-  useSortBy,
+  } = useTable(
+    {
+      // @ts-ignore
+      columns,
+      data,
+    },
+    useGlobalFilter,
+    useSortBy,
   );
-
 
   const filterCategory = (cateoryNames: string) => {
     let filteredCategory = data?.filter(cateory => cateory.course_category_nm === cateoryNames);
@@ -73,7 +76,7 @@ function Table({ columns, data }: Tableprops) {
             {rows.map((row, i) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} >
+                <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
                     return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                   })}
@@ -86,8 +89,6 @@ function Table({ columns, data }: Tableprops) {
     </WholeWrapper>
   );
 }
-
-
 
 export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   const columns = useMemo(
@@ -120,7 +121,7 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
     [],
   );
   if (!dodream) return null;
-  
+
   return (
     <Styles>
       <Table columns={columns} data={dodream} />
@@ -131,7 +132,7 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
 const WholeWrapper = styled.div`
   height: 500px;
   background-color: none;
-`
+`;
 
 const TableWrapper = styled.div`
   font-weight: 400;
