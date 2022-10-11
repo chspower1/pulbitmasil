@@ -98,23 +98,27 @@ router.put("/:reviewId", login_required, async function (req, res, next) {
   }
 });
 
-// router.delete("/delete", login_required, async function (req, res, next) {
-//   try {
-//     const user_id = req.currentUserId;
+router.delete("/:reviewId", login_required, async function (req, res, next) {
+  try {
+    const reviewer = req.body.userId;
+    const userId = req.currentUserId;
+    const reviewId = req.params.reviewId;
 
-//     maria.query(` USER SET name = ? WHERE id = ?`, [name, user_id], async function (err, rows, fields) {
-//       if (!err) {
-//         res
-//           .status(200)
-//           .json({ success: true, success: true, email: email, name: rows[0].name, id: rows[0].id, token: token });
-//       } else {
-//         console.log("err : " + err);
-//         res.send(err);
-//       }
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+    if (reviewer !== userId) {
+      return res.sendStatus(432);
+    }
+
+    maria.query(`DELETE FROM REVIEW WHERE reviewId = ?`, [reviewId], async function (err, rows, fields) {
+      if (!err) {
+        res.status(200).json({ success: true });
+      } else {
+        console.log("err : " + err);
+        res.send(err);
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
