@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import { ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
-
+import ReactMarkdown from "react-markdown";
 const { kakao }: any = window;
 
 export default function DodreamDetalModal() {
@@ -48,6 +48,11 @@ export default function DodreamDetalModal() {
       marker.setMap(detailMap);
     }
   }, [isDodreamDetalModal]);
+  useEffect(() => {
+    const content = selectedDodream?.content;
+    console.log(content);
+  }, []);
+  // console.log(selectedDodream);
   return (
     <AnimatePresence>
       {isDodreamDetalModal && (
@@ -82,11 +87,11 @@ export default function DodreamDetalModal() {
               </Row>
               <DetailRow>
                 <BoldTitle>교통편</BoldTitle>
-                <LongDesc>{selectedDodream?.traffic_info}</LongDesc>
+                <LongDesc dangerouslySetInnerHTML={{ __html: `${selectedDodream?.traffic_info!}` }} />
               </DetailRow>
               <DetailRow>
                 <BoldTitle>설명</BoldTitle>
-                <LongDesc>{selectedDodream?.content}</LongDesc>
+                <LongDesc dangerouslySetInnerHTML={{ __html: `${selectedDodream?.content!}` }} />
               </DetailRow>
             </DescContainer>
             <CloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>
@@ -124,6 +129,7 @@ const DodreamModalContainer = styled(ModalContainer)`
   padding: 0px 150px;
 `;
 const CourseName = styled.h1`
+  margin: 25px;
   font-size: 42px;
   color: ${props => props.theme.mainColor};
 `;
@@ -134,8 +140,7 @@ const MapBox = styled.div`
   border: solid 5px ${props => props.theme.weekColor};
 `;
 const DescContainer = styled.div`
-  margin-top: 60px;
-  margin-bottom: 40px;
+  margin-bottom: 25px;
   display: flex;
   flex-direction: column;
 `;
@@ -145,6 +150,7 @@ const Row = styled.div`
 `;
 const DetailRow = styled(Row)`
   justify-content: space-between;
+  margin-bottom: 40px;
 `;
 const Box = styled.div`
   display: flex;
@@ -166,7 +172,13 @@ const Desc = styled.h1`
   color: ${props => props.theme.mainColor};
 `;
 const LongDesc = styled(Title)`
+  line-height: 1.4;
   width: 630px;
+  height: 130px;
+  overflow: scroll;
+  text-overflow: ellipsis;
+  border: solid 1px ${props => props.theme.weekColor};
+  padding: 10px;
 `;
 const LogoutBtn = styled.button`
   width: 100px;
