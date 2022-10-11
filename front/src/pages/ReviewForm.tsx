@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { getReview, getReviews, uploadReview } from "@api/review";
+import { getEditReview, getReviews, uploadReview } from "@api/review";
 import { IReview, IReviewContent } from "src/types/review";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
@@ -18,13 +18,17 @@ export default function ReviewForm() {
   const { state } = useLocation();
   const isEdit = state.isEdit;
   console.log(isEdit);
-  let review: any; // any 변경필요
+  let review: IReview[]; // any 변경필요
 
-  if (isEdit) {
-    review = getReview(state.reviewId);
-    console.log(review);
-  }
-  // const { isLoading, data: review } = useQuery<IReview[]>(["review"], () => getReview(state.reviewId));
+  // const { isLoading, data: review } = isEdit&& useQuery<IReview[]>(["review"], () => getReview(state.reviewId));
+
+  useEffect(() => {
+    if (isEdit) {
+      review = getEditReview(state.reviewId) as IReview[];
+      console.log(getEditReview(state.reviewId));
+      console.log(typeof review);
+    }
+  }, []);
 
   const {
     register,

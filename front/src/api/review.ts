@@ -7,12 +7,6 @@ const axiosInstance = axios.create({
   baseURL: BASE_URL,
 });
 
-export async function getReviews() {
-  console.log(`%cGET 요청 ${BASE_URL}/review/select`, "color: #a25cd1;");
-  const { data } = await axiosInstance.get(`review/select`);
-  return data;
-}
-
 export async function uploadReview(contents: IReview) {
   const bodyData = JSON.stringify(contents);
   console.log(`%cPOST 요청 ${BASE_URL + "/user/review"}`, "color: #a25cd1;");
@@ -41,13 +35,19 @@ export async function editReview(contents: IReview) {
     },
   });
 }
+export async function getReviews() {
+  console.log(`%cGET 요청 ${BASE_URL}/review`, "color: #a25cd1;");
+  const { data } = await axiosInstance.get(`review`);
+  return data;
+}
 
-export async function getReview(reviewId: number) {
+export async function getEditReview(reviewId: number) {
   console.log(`%cGET 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
-  const { data } = await axiosInstance.get(`review/select`, {
+  const { data } = await axiosInstance.get(`review/${reviewId}`, {
     params: {
       reviewId,
     },
   });
+  // console.log(data);
   return data;
 }

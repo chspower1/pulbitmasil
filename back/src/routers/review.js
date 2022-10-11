@@ -9,14 +9,15 @@ const login_required = require("../middlewares/login_required");
 const maria = require("../db/connect/maria");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Review" });
-});
+// router.get("/", function (req, res, next) {
+//   res.render("index", { title: "Review" });
+// });
 
 router.get("/", function (req, res) {
   maria.query("SELECT * FROM REVIEW", function (err, rows, fields) {
     if (!err) {
       res.send(rows);
+      console.log(rows);
     } else {
       console.log("err : " + err);
       res.send(err);

@@ -11,6 +11,10 @@ export default function Review() {
   const navigate = useNavigate();
   const { isLoading, data: reviews } = useQuery<IReview[]>(["reviews"], getReviews);
 
+  useEffect(() => {
+    console.log(reviews);
+  }, [isLoading]);
+
   return (
     <ReviewWrap>
       <TitleContainer>
