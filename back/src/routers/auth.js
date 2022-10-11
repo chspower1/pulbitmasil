@@ -47,7 +47,7 @@ router.get("/kakao", async function (req, res, next) {
 //         },
 //       })
 //       .then(result => {
-//         const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+//         const secretKey = process.env.JWT_SECRET_KEY;
 //         const token = jwt.sign({ id: result.data.id, access_token: access_token }, secretKey);
 
 //         console.log(
@@ -76,7 +76,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
       },
     })
     .then(result => {
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
 
       const email = result.data.kakao_account?.email ?? "kakao" + result.data.id;
 
@@ -134,7 +134,7 @@ router.get("/naver", async function (req, res, next) {
     .then(result => {
       console.log("------------------------------------------------", result.data.response);
       // res.redirect(`/auth/naver/info/:${result.data.access_token}`);
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
 
       const name = result.data.response.name;
       const email = result.data.response.email;
@@ -215,7 +215,7 @@ router.get("/naver", async function (req, res, next) {
 //         },
 //       })
 //       .then(result => {
-//         const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+//         const secretKey = process.env.JWT_SECRET_KEY;
 
 //         const email = result.data.kakao_account?.email ?? "naver" + result.data.id;
 

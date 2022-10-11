@@ -2,13 +2,13 @@
 
 const maria = require("./maria");
 
-var data = require("../../../../data/dodream/organized_dodream_");
+var data = require("../../../../data/dodream/organized_dodream.json");
 
 var x = data.data;
 
 for (i = 0; i < x.length; i++) {
   maria.query(
-    "INSERT INTO WALK(course_level, course_name, cpi_idx, distance, relate_subway, area_gu, lead_time, detail_course, course_category_nm, x, y) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+    "INSERT INTO WALK(course_level, course_name, cpi_idx, distance, relate_subway, area_gu, lead_time, detail_course, course_category_nm, x, y,cpi_content) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
     [
       x[i].course_level,
       x[i].course_name,
@@ -21,6 +21,7 @@ for (i = 0; i < x.length; i++) {
       x[i].course_category_nm,
       x[i].x,
       x[i].y,
+      x[i].cpi_content,
     ],
   );
   console.log(i);

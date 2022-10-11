@@ -35,7 +35,7 @@ app.use("/user", usersRouter);
 app.use("/trash", trashRouter);
 app.use("/auth", authRouter);
 app.use("/review", reviewRouter);
-app.use("/walk", walkRouter);
+app.use("/dodream", walkRouter);
 
 app.use(errorMiddleware);
 
