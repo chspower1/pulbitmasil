@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IReview } from "src/types/review";
+import { IReview } from "@type/review";
 
 const BASE_URL = "http://localhost:5001";
 

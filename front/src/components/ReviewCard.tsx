@@ -2,7 +2,7 @@ import { userAtom } from "@atom/user";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { IReview } from "src/types/review";
+import { IReview } from "@type/review";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { isReviewDeleteAtom } from "@atom/atom";

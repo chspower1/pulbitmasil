@@ -3,7 +3,7 @@ import Card from "@components/ReviewCard";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
-import { IReview } from "src/types/review";
+import { IReview } from "@type/review";
 import { useQuery } from "@tanstack/react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isReviewDeleteAtom } from "@atom/atom";

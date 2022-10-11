@@ -8,30 +8,6 @@ const axiosInstance = axios.create({
   baseURL: BASE_URL,
 });
 
-// interface getProps {
-//   name: string;
-//   option?: string;
-// }
-// export async function getInfo({ name, option }: getProps) {
-//   try {
-//     if (!option) option = "";
-//     console.log(`${BASE_URL}/${name}/${option}`);
-//     const { data } = await (await axiosInstance.get(`${name}/${option}`)).json();
-//     return data;
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
-
-//토큰을 가지고있음을 헤더에 알려주는코드
-// function setAuthorizationToken(token: any) {
-//   if (token) {
-//     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-//   } else {
-//     delete axios.defaults.headers.common["Authorization"];
-//   }
-// }
-
 export async function requestLogin(loginInfo: UserLoginForm) {
   const bodyData = JSON.stringify(loginInfo);
 

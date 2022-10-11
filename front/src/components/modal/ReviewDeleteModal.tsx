@@ -7,7 +7,7 @@ import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import { Link, useNavigate } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { Accent, BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap, ModalWrap } from "@style/ModalStyle";
-import { IReview } from "src/types/review";
+import { IReview } from "@type/review";
 import { deleteReview } from "@api/review";
 
 interface ReviewDeleteModalProps {

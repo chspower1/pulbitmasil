@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { editReview, getOneReview, getReviews, createReview } from "@api/review";
-import { IReview, IReviewContent } from "src/types/review";
+import { IReview, IReviewContent } from "@type/review";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate, useLocation } from "react-router-dom";
