@@ -14,6 +14,7 @@ function Table({ columns, data }: Tableprops) {
     columns,
     data,
   });
+
   return (
     <TableWrapper>
       <table {...getTableProps()}>
@@ -30,7 +31,7 @@ function Table({ columns, data }: Tableprops) {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()}>
+              <tr {...row.getRowProps()} >
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                 })}
@@ -47,20 +48,16 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   const columns = useMemo(
     () => [
       {
-        Header: "지역",
-        accessor: "area_gu",
+        Header: "유형",
+        accessor: "course_category_nm",
       },
       {
         Header: "이름",
         accessor: "course_name",
       },
       {
-        Header: "유형",
-        accessor: "course_category_nm",
-      },
-      {
-        Header: "코스레벨",
-        accessor: "course_level",
+        Header: "지역",
+        accessor: "area_gu",
       },
       {
         Header: "거리",
@@ -69,6 +66,10 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
       {
         Header: "소요시간",
         accessor: "lead_time",
+      },
+      {
+        Header: "코스레벨",
+        accessor: "course_level",
       },
     ],
     [],
@@ -118,6 +119,9 @@ const Styles = styled.div`
         td {
           border-bottom: 0;
         }
+      }
+      :hover {
+        background-color: rgba(217, 217, 217, 0.5);
       }
     }
 

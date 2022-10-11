@@ -56,6 +56,15 @@ export default function Dodream() {
       });
     },
   });
+  // console.log(isLoading);
+  const courseCategory = ['한강지천길', '근교산자락길', '서울둘레길', '한양도성길', '생태문화길']
+
+  // const handleClickCategory = (dodorem: any, e: any) => {
+  //   const categoryBtnName = e.target.value;
+  //   const courseCategoryNm = Object.values(dodorem.course_category_nm);
+  //   const changedCategory = dodorem.filter(categoryBtnName === courseCategoryNm)
+  //   console.log(changedCategory)
+  // }
 
   return (
     <>
@@ -80,6 +89,11 @@ export default function Dodream() {
                 </svg>
               </button>
             </Input>
+            <BtnBox>
+              {courseCategory.map((course, index) => (
+                  <Button value={course}>{course}</Button>
+              ))}
+            </BtnBox>
             <CourseBox>
               <WalkTable dodream={dodream!} />
             </CourseBox>
@@ -154,7 +168,6 @@ const Input = styled.label`
 `;
 
 const CourseBox = styled.div`
-  margin-top: 70px;
   width: 860px;
   height: 400px;
   background-color: #2a9c6b;
@@ -180,4 +193,25 @@ const MapContainer = styled.div`
   /* background-color: #008037; */
   /* margin: 30px; */
   margin-top: 70px;
+`;
+
+const BtnBox = styled.div`
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+`
+
+const Button = styled.button`
+  margin: 0 7px;
+  padding: 0.5em;
+  width: 140px;
+  height: 50px;
+  font-weight: 400;
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: #88CAAE;
+  
+  :hover {
+    font-weight: 900;
+  }
 `;
