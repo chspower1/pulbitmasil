@@ -166,6 +166,7 @@ const Wrap = styled(motion.nav)`
   height: 70px;
   width: 100%;
   padding-left: 20px;
+  overflow: hidden;
 `;
 const Col = styled.div`
   display: flex;

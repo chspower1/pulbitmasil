@@ -25,27 +25,29 @@ const ContentContainer = styled.section`
 export default function Router() {
   return (
     <BrowserRouter>
-      <Nav />
-      <WelcomeModal />
-      <ContentContainer>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/chart" element={<Chart />} />
-          <Route path="/plogging" element={<Plogging />} />
-          <Route path="/dodream" element={<Dodream />} />
-          <Route path="/review" element={<Review />} />
-          <Route path="/review/write" element={<ReviewForm />} />
-          <Route path="/review/edit/:reviewId" element={<ReviewForm />} />
-          <Route path="/userInfo" element={<UserInfo />} />
-          <Route path="/myGreenStroll" element={<MyGreenStroll />} />
-          <Route path="/auth/naver/callback" element={<NaverAuth />} />
-          <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
-        </Routes>
-      </ContentContainer>
-      <ScrollBtn />
+      <div>
+        <Nav />
+        <WelcomeModal />
+        <ContentContainer>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/chart" element={<Chart />} />
+            <Route path="/plogging" element={<Plogging />} />
+            <Route path="/dodream" element={<Dodream />} />
+            <Route path="/review" element={<Review />} />
+            <Route path="/review/write" element={<ReviewForm />} />
+            <Route path="/review/edit/:reviewId" element={<ReviewForm />} />
+            <Route path="/userInfo" element={<UserInfo />} />
+            <Route path="/myGreenStroll" element={<MyGreenStroll />} />
+            <Route path="/auth/naver/callback" element={<NaverAuth />} />
+            <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
+          </Routes>
+        </ContentContainer>
+        <ScrollBtn />
+      </div>
     </BrowserRouter>
   );
 }

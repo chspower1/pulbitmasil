@@ -35,7 +35,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
       <p>{title}</p>
       <p>{description}</p>
       {user?.id === userId ? (
-        <button onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, reviewId } })}>수정</button>
+        <button onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } })}>수정</button>
       ) : null}
     </CardWrap>
   );
