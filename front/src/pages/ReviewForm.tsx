@@ -3,15 +3,28 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { getReviews, uploadReview } from "@api/api";
+import { getReview, getReviews, uploadReview } from "@api/review";
 import { IReview, IReviewContent } from "src/types/review";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ReviewForm() {
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { state } = useLocation();
+  const isEdit = state.isEdit;
+  console.log(isEdit);
+  let review: any; // any 변경필요
+
+  if (isEdit) {
+    review = getReview(state.reviewId);
+    console.log(review);
+  }
+  // const { isLoading, data: review } = useQuery<IReview[]>(["review"], () => getReview(state.reviewId));
 
   const {
     register,
@@ -20,17 +33,24 @@ export default function ReviewForm() {
     watch,
   } = useForm<IReviewContent>();
 
-  //확인버튼 누를때 현재시간 생성후 넘겨줌,
   const handleSubmitReview = handleSubmit(data => {
-    // post 요청
-    const newData: IReview = {
-      title: data.title,
-      description: data.description,
-      createAt: new Date(),
-    };
-    console.log(newData);
-    uploadReview(newData);
+    if (!isEdit) {
+      console.log("click! false!!");
+      const newData: IReview = {
+        title: data.title,
+        description: data.description,
+        createAt: new Date(),
+      };
+      console.log(newData);
+      uploadReview(newData);
+      navigate("/review");
+    }
   });
+  const handleClickCancel = () => {
+    if (!isEdit) {
+      navigate("/review");
+    }
+  };
 
   return (
     <FormWrap onSubmit={handleSubmitReview}>
@@ -72,7 +92,7 @@ export default function ReviewForm() {
 
       <ButtonContainer>
         <Button type="submit">등록하기</Button>
-        <Button onClick={() => navigate("/review")}>취소</Button>
+        <Button onClick={handleClickCancel}>취소</Button>
       </ButtonContainer>
     </FormWrap>
   );

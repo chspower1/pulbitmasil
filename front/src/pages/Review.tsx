@@ -1,14 +1,15 @@
-import { getReviews } from "@api/api";
+import { getReviews, uploadReview } from "@api/review";
 import Card from "@components/ReviewCard";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { IReview } from "src/types/review";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Review() {
+  const isEdit = false;
   const navigate = useNavigate();
-  const { isLoading, data: reviews } = useQuery<IReview[]>(["review"], getReviews);
+  const { isLoading, data: reviews } = useQuery<IReview[]>(["reviews"], getReviews);
 
   return (
     <ReviewWrap>
@@ -18,7 +19,8 @@ export default function Review() {
           <Accent>플로깅</Accent> 후기를 공유해주세요!
         </SubTitle>
       </TitleContainer>
-      <ReviewBtn onClick={() => navigate("/review/write")}>후기 작성 go go!</ReviewBtn>
+
+      <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>후기 작성 go go!</ReviewBtn>
       <CardContainer>
         {reviews &&
           reviews.map(review => {
@@ -58,9 +60,7 @@ const SubTitle = styled.p`
 const Accent = styled.span`
   color: ${props => props.theme.dangerColor};
 `;
-const ReviewBtn = styled.button`
-  border-radius: 20px;
-`;
+
 const CardContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -69,4 +69,7 @@ const CardContainer = styled.div`
   height: 100%;
   padding-top: 50px;
   padding-bottom: 80px;
+`;
+const ReviewBtn = styled.button`
+  border-radius: 20px;
 `;

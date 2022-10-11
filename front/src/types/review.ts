@@ -3,7 +3,7 @@ export interface IReview {
   reviewId?: number;
   title: string;
   description: string;
-  createAt: Date;
+  createAt?: Date;
 }
 
 export interface IReviewContent extends Omit<IReview, "createAt"> {}

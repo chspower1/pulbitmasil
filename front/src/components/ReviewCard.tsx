@@ -7,14 +7,21 @@ import styled from "styled-components";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, title, description, createAt } = review;
-  const [isEdit, setIsEdit] = useState(false);
+  const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
 
-  const handleClickEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    // navigate("");
-    // setIsEdit(true);
+  // const handleClickEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  // };
+  const changeDayForm = (createAt: Date): string => {
+    const createDay = new Date(createAt);
+    const year = createDay.getFullYear();
+    const month = createDay.getMonth() + 1;
+    const date = createDay.getDate();
+
+    return `${year}-${month >= 10 ? month : "0" + month}-${date >= 10 ? date : "0" + date}`;
   };
+  const day = changeDayForm(createAt!);
 
   return (
     <CardWrap>
@@ -22,11 +29,13 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
         <CardImg />
         <InfoBox>
           <p>닉네임: {title}</p>
-          <p>날짜: </p>
+          <p>날짜:{day} </p>
         </InfoBox>
       </InfoContainer>
       <p>{description}</p>
-      {user?.id === userId ? <button onClick={handleClickEdit}>수정</button> : null}
+      {user?.id === userId ? (
+        <button onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, reviewId } })}>수정</button>
+      ) : null}
     </CardWrap>
   );
 }
