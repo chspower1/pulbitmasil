@@ -18,16 +18,19 @@ export default function ReviewForm() {
   const { state } = useLocation();
   const isEdit = state.isEdit;
   console.log(isEdit);
-  let review: IReview[]; // any 변경필요
 
   // const { isLoading, data: review } = isEdit&& useQuery<IReview[]>(["review"], () => getReview(state.reviewId));
-
+  console.log("---------------", state);
   useEffect(() => {
-    if (isEdit) {
-      review = getEditReview(state.reviewId) as IReview[];
-      console.log(getEditReview(state.reviewId));
-      console.log(typeof review);
+    async function aa() {
+      if (isEdit) {
+        const review = await getEditReview(state.reviewId);
+        console.log(getEditReview(state.reviewId));
+        console.log(typeof review);
+        console.log("review", review);
+      }
     }
+    aa();
   }, []);
 
   const {

@@ -48,6 +48,6 @@ export async function getEditReview(reviewId: number) {
       reviewId,
     },
   });
-  // console.log(data);
+  console.log("----------------", data);
   return data;
 }
