@@ -13,14 +13,39 @@ export default function DodreamDetalModal() {
   const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
   useEffect(() => {
     if (isDodreamDetalModal) {
-      var staticMapContainer = document.getElementById("staticMap"), // 이미지 지도를 표시할 div
-        staticMapOption = {
+      let detailMapContainer = document.getElementById("detailMap"), // 이미지 지도를 표시할 div
+        detailMapOption = {
           center: new kakao.maps.LatLng(selectedDodream?.x, selectedDodream?.y), // 이미지 지도의 중심좌표
           level: 3, // 이미지 지도의 확대 레벨
         };
 
-      // 이미지 지도를 표시할 div와 옵션으로 이미지 지도를 생성합니다
-      var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+      //  지도 생성
+      let detailMap = new kakao.maps.Map(detailMapContainer, detailMapOption);
+
+      // 코스 이름 메세지 설정
+      let iwContent = `<div style="min-width:150px;max-width:400px;text-align:center;padding:8px;background-color:#2A9C6B;color:white;">${selectedDodream?.course_name}</div>`; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+      let iwPosition = new kakao.maps.LatLng(selectedDodream?.x! + 0.00035, selectedDodream?.y); //인포윈도우 표시 위치입니다
+      var infowindow = new kakao.maps.InfoWindow({
+        map: detailMap, // 인포윈도우가 표시될 지도
+        position: iwPosition,
+        content: iwContent,
+      });
+
+      // 마커 이미지
+      let imageSrc = "/assets/icon/pointer.png";
+      let imageSize = new kakao.maps.Size(30, 40);
+      let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+
+      // 마커 위치
+      let markerPosition = new kakao.maps.LatLng(selectedDodream?.x, selectedDodream?.y);
+
+      // 마커를 생성
+      let marker = new kakao.maps.Marker({
+        image: markerImage,
+        position: markerPosition,
+      });
+      // 마커 지도 위 표시
+      marker.setMap(detailMap);
     }
   }, [isDodreamDetalModal]);
   return (
@@ -28,7 +53,7 @@ export default function DodreamDetalModal() {
       {isDodreamDetalModal && (
         <LogoutModalWrap>
           <DodreamModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
-            <div id="staticMap" style={{ width: "300px", height: "350px" }}></div>
+            <div id="detailMap" style={{ width: "300px", height: "350px" }}></div>
             <DodreamDesc>
               <Accent>{selectedDodream?.course_name}</Accent>
             </DodreamDesc>

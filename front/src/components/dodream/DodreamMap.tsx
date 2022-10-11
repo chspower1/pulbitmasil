@@ -40,6 +40,7 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
         latlng: new kakao.maps.LatLng(road.x, road.y),
       };
     });
+    // 마커 이미지
     let imageSrc = "/assets/icon/pointer.png";
 
     // 데이터 기반 마커 생성
