@@ -1,4 +1,4 @@
-import { getReviews, uploadReview } from "@api/review";
+import { getReviews } from "@api/review";
 import Card from "@components/ReviewCard";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";

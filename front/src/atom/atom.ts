@@ -24,3 +24,8 @@ export const isWelcomeModalAtom = atom({
   key: "isWelcomeModal",
   default: false,
 });
+
+export const isReviewDeleteAtom = atom({
+  key: "isReviewDeleteModal",
+  default: false,
+});

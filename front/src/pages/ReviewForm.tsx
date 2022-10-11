@@ -3,7 +3,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { editReview, getOneReview, getReviews, uploadReview } from "@api/review";
+import { editReview, getOneReview, getReviews, createReview } from "@api/review";
 import { IReview, IReviewContent } from "src/types/review";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
@@ -13,13 +13,11 @@ import { useQuery } from "@tanstack/react-query";
 export default function ReviewForm() {
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
-  const location = useLocation();
   const { state } = useLocation();
   const isEdit = state?.isEdit! as boolean;
   const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.review.userId : true;
   console.log(isEdit);
   const [review, setReview] = useState<IReview>(state?.review!);
-  const [reviewData, setReviewData] = useState<IReview>();
   const {
     register,
     handleSubmit,
@@ -28,21 +26,27 @@ export default function ReviewForm() {
   } = useForm<IReviewContent>();
   const handleSubmitReview = handleSubmit(data => {
     if (!isEdit) {
+      // setReview({
+      //   name: user?.name!,
+      //   title: data.title,
+      //   description: data.description,
+      //   createAt: new Date(),
+      // })
       const newData: IReview = {
         name: user?.name!,
         title: data.title,
         description: data.description,
         createAt: new Date(),
       };
-      uploadReview(newData);
+      createReview(newData);
       navigate("/review");
     } else {
+      // setReview({ ...review!, title: watch("title"), description: watch("description") });
       const newData: IReview = {
-        ...reviewData!,
+        ...review!,
         title: watch("title"),
         description: watch("description"),
       };
-      console.log(newData);
       editReview(newData);
       navigate("/review");
     }

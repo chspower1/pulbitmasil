@@ -1,15 +1,19 @@
 import { userAtom } from "@atom/user";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { IReview } from "src/types/review";
 import styled from "styled-components";
+import { motion } from "framer-motion";
+import { isReviewDeleteAtom } from "@atom/atom";
+import ReviewDeleteModal from "./modal/ReviewDeleteModal";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, title, description, createAt } = review;
   const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
+  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
 
   // const handleClickEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
   // };
@@ -24,7 +28,8 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const day = changeDayForm(createAt!);
 
   return (
-    <CardWrap>
+    <CardWrap whileHover={{ scale: 1.1 }}>
+      <ReviewDeleteModal reviewId={review?.reviewId!} />
       <InfoContainer>
         <CardImg />
         <InfoBox>
@@ -37,11 +42,22 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
       {user?.id === userId ? (
         <button onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } })}>수정</button>
       ) : null}
+
+      {user?.id === userId ? (
+        <button
+          onClick={() => {
+            console.log("clickclicilc");
+            setIsReviewDeleteModal(true);
+          }}
+        >
+          삭제
+        </button>
+      ) : null}
     </CardWrap>
   );
 }
 
-const CardWrap = styled.div`
+const CardWrap = styled(motion.div)`
   width: 23%;
   height: 500px;
   background-color: #f5f5f5;
