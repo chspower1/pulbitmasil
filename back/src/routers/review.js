@@ -13,8 +13,20 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "Review" });
 });
 
-router.get("/select", function (req, res) {
+router.get("/", function (req, res) {
   maria.query("SELECT * FROM REVIEW", function (err, rows, fields) {
+    if (!err) {
+      res.send(rows);
+    } else {
+      console.log("err : " + err);
+      res.send(err);
+    }
+  });
+});
+
+router.get("/:reviewId", function (req, res) {
+  const reviewId = req.params.reviewId;
+  maria.query("SELECT * FROM REVIEW WhERE reviewId = ?", [reviewId], function (err, rows, fields) {
     if (!err) {
       res.send(rows);
     } else {
@@ -54,6 +66,36 @@ router.post("/create", login_required, async function (req, res, next) {
   }
 });
 
+// 빈 값이 들어오면 에러가 아니라 수정만 안 하도록 바꾸기
+router.put("/:reviewId", login_required, async function (req, res, next) {
+  try {
+    const reviewer = req.body.userId;
+    const userId = req.currentUserId;
+    if (reviewer !== userId) {
+      return res.sendStatus(432);
+    }
+    const title = req.body.title ?? null;
+    const description = req.body.description ?? null;
+    const reviewId = req.params.reviewId;
+    maria.query(
+      `UPDATE REVIEW SET title = ?, description = ? WHERE reviewId = ?`,
+      [title, description, reviewId],
+      async function (err, rows, fields) {
+        if (!err) {
+          res.status(200).json({
+            success: true,
+          });
+        } else {
+          console.log("err : " + err);
+          res.send(err);
+        }
+      },
+    );
+  } catch (error) {
+    next(error);
+  }
+});
+
 // router.delete("/delete", login_required, async function (req, res, next) {
 //   try {
 //     const user_id = req.currentUserId;
@@ -63,26 +105,6 @@ router.post("/create", login_required, async function (req, res, next) {
 //         res
 //           .status(200)
 //           .json({ success: true, success: true, email: email, name: rows[0].name, id: rows[0].id, token: token });
-//       } else {
-//         console.log("err : " + err);
-//         res.send(err);
-//       }
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-// router.put("/modify", login_required, async function (req, res, next) {
-//   try {
-//     const { name } = req.body;
-//     const user_id = req.currentUserId;
-//     console.log(user_id);
-//     maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, user_id], async function (err, rows, fields) {
-//       if (!err) {
-//         res.status(200).json({
-//           success: true,
-//         });
 //       } else {
 //         console.log("err : " + err);
 //         res.send(err);
