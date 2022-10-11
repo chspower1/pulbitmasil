@@ -40,11 +40,11 @@ router.get("/:reviewId", function (req, res) {
 router.post("/create", login_required, async function (req, res, next) {
   const userId = req.currentUserId;
   try {
-    const { title, description, createAt } = req.body;
+    const { title, description, createAt, name } = req.body;
 
     maria.query(
-      `INSERT INTO REVIEW(userId, title, description, createAt) VALUES(?,?,?,?)`,
-      [userId, title, description, createAt],
+      `INSERT INTO REVIEW(userId, title, description, createAt, userName) VALUES(?,?,?,?,?)`,
+      [userId, title, description, createAt, name],
       function (err, rows, fields) {
         if (!err) {
           res.status(200).json({
@@ -53,6 +53,7 @@ router.post("/create", login_required, async function (req, res, next) {
             description: description,
             createAt: createAt,
             userId: userId,
+            name: name,
             reviewId: rows.insertId,
           });
         } else {
