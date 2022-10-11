@@ -9,7 +9,6 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
   const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
   const userNavKorMenus = ["계정 정보", "나의 풀빛마실", "로그아웃"];
   const setIsLogoutModal = useSetRecoilState(isLogoutModalAtom);
-  const [user, setUser] = useRecoilState(userAtom);
 
   const handleClickLogout = async () => {
     setIsLogoutModal(true);
@@ -32,7 +31,7 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
 }
 
 const UserNavWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   right: 0px;

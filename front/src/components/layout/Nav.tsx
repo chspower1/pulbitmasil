@@ -62,13 +62,10 @@ export default function Nav() {
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState(userAtom);
   const [curState, setCurState] = useState(pathname === "/" ? "home" : pathname.slice(1));
-  const { register, handleSubmit, reset } = useForm<SearchForm>();
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
   const navMenus = ["home", "about", "dodream", "plogging", "review"];
   const navKorMenus = ["홈", "소개", "산책로", "풀빛마실 모임", "후기"];
-  const userMenus = ["login", "register"];
-
   const [isUserNav, setIsUserNav] = useState(false);
 
   const handleClickUserBox = () => {
