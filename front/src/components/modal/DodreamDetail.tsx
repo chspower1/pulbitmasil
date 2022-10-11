@@ -49,8 +49,8 @@ export default function DodreamDetalModal() {
     }
   }, [isDodreamDetalModal]);
   useEffect(() => {
-    const content = selectedDodream?.content;
-    console.log(content);
+    const time = String(selectedDodream?.lead_time).split(".");
+    console.log(time);
   }, []);
   // console.log(selectedDodream);
   return (
@@ -74,11 +74,13 @@ export default function DodreamDetalModal() {
               <Row>
                 <Box>
                   <Title>거리 :</Title>
-                  <Desc>{selectedDodream?.distance}</Desc>
+                  <Desc>{`${selectedDodream?.distance}km`}</Desc>
                 </Box>
                 <Box>
                   <Title>소요시간 :</Title>
-                  <Desc>{selectedDodream?.lead_time}</Desc>
+                  <Desc>{`${String(selectedDodream?.lead_time).split(".")[0]}시간 ${
+                    parseInt(String(selectedDodream?.lead_time).split(".")[1], 6) * 10
+                  }분`}</Desc>
                 </Box>
                 <Box>
                   <Title>코스 레벨 :</Title>
