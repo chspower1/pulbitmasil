@@ -18,16 +18,18 @@ interface dodream {
   x: number;
   y: number;
 }
-
 export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
   const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
   useEffect(() => {
     // 지도생성
+    const xy = selectedDodream
+      ? { x: selectedDodream.x, y: selectedDodream.y }
+      : { x: 37.5585362386, y: 127.1605311028 };
     let container = document.getElementById("map");
     let options = {
-      center: new kakao.maps.LatLng(37.5587081222, 127.1583825733),
-      level: 7,
+      center: new kakao.maps.LatLng(xy.x, xy.y),
+      level: selectedDodream ? 3 : 7,
     };
     let map = new kakao.maps.Map(container, options);
 
@@ -59,6 +61,15 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
           markerPositions![i].content
         }</div>`,
       });
+
+      // 맵 이동시 디폴트로 인포윈도우 띄우기
+      if (selectedDodream) {
+        let defaultInfowindow = new kakao.maps.InfoWindow({
+          map: map, // 인포윈도우가 표시될 지도
+          position: new kakao.maps.LatLng(xy.x + 0.00035, xy.y),
+          content: `<div style="width:150px;text-align:center;padding:8px;background-color:#2A9C6B;color:white;">${selectedDodream?.course_name}</div>`,
+        });
+      }
       // 마커에 호버/클릭 이번트 등록하기
       kakao.maps.event.addListener(marker, "mouseover", makeOverListener(map, marker, infowindow));
       kakao.maps.event.addListener(marker, "mouseout", makeOutListener(infowindow));
@@ -84,7 +95,7 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
         setIsDodreamDetalModal(true);
       }
     }
-  }, [dodream]);
+  }, [dodream, selectedDodream]);
 
   return (
     <>

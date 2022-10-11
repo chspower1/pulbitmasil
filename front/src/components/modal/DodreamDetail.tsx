@@ -8,19 +8,19 @@ import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import ReactMarkdown from "react-markdown";
 const { kakao }: any = window;
 
+export function convertTime(time: number) {
+  const hour = `${String(time).split(".")[0]}시간` !== "0시간" ? `${String(time).split(".")[0]}시간` : "";
+  const minute =
+    `${parseInt(String(time).split(".")[1], 6) * 10}분` !== "NaN분"
+      ? `${parseInt(String(time).split(".")[1], 6) * 10}분`
+      : "";
+  return `${hour} ${minute}`;
+}
+
 export default function DodreamDetalModal() {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
   const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
-  function convertTime(time: number) {
-    const hour = `${String(time).split(".")[0]}시간` !== "0시간" ? `${String(time).split(".")[0]}시간` : "";
-    const minute =
-      `${parseInt(String(time).split(".")[1], 6) * 10}분` !== "NaN분"
-        ? `${parseInt(String(time).split(".")[1], 6) * 10}분`
-        : "";
-    console.log(hour, minute);
 
-    return `${hour} ${minute}`;
-  }
   useEffect(() => {
     if (isDodreamDetalModal) {
       let detailMapContainer = document.getElementById("detailMap"), // 이미지 지도를 표시할 div

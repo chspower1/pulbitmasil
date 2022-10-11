@@ -6,7 +6,7 @@ export interface IDodream {
   content: string;
   course_level: number;
   detail_course: string;
-  distance: number;
+  distance: string;
   lead_time: number;
   reg_date: number;
   relate_subway: string;

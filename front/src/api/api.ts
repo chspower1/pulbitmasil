@@ -108,7 +108,7 @@ export async function getDodream() {
         const index = mapIndex;
         const course_category_nm = road.course_category_nm as string;
         const course_name = name as string;
-        const distance = road.course_name[name][0].distance as number;
+        const distance = String(Math.round(road.course_name[name][0].distance * 10) / 10) + "km";
         const area_gu = road.course_name[name][0].area_gu as string;
         const lead_time = road.course_name[name][0].lead_time as number;
         const course_level = road.course_name[name][0].course_level as number;

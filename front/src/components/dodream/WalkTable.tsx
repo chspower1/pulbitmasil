@@ -3,6 +3,9 @@ import { useGlobalFilter, useTable, useSortBy } from "react-table";
 import { useMemo, useEffect, useState } from "react";
 import { IDodream } from "@type/dodream";
 import DodreamFilter from "./DodreamFilter";
+import { convertTime } from "@components/modal/DodreamDetail";
+import { selectedDodreamAtom } from "@atom/dodream";
+import { SetterOrUpdater, useSetRecoilState } from "recoil";
 
 interface Tableprops {
   columns: {
@@ -12,9 +15,10 @@ interface Tableprops {
   data: IDodream[];
   dodream: IDodream[];
   setDodream: React.Dispatch<React.SetStateAction<IDodream[]>>;
+  setSelectedDodream: SetterOrUpdater<IDodream | null>;
 }
 
-function Table({ columns, data, setDodream, dodream }: Tableprops) {
+function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Tableprops) {
   const courseCategory = ["전체", "한강지천길/계절길", "근교산자락길", "서울둘레길", "한양도성길", "생태문화길"];
 
   const {
@@ -80,7 +84,21 @@ function Table({ columns, data, setDodream, dodream }: Tableprops) {
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                    if (cell.column.id === "course_name") {
+                      return (
+                        <td
+                          style={{ color: "#2f8353", cursor: "pointer" }}
+                          onClick={() => {
+                            const target = dodream.filter(road => road.course_name === (cell.value as string));
+                            console.log(target[0]);
+                            setSelectedDodream(target[0]);
+                          }}
+                          {...cell.getCellProps()}
+                        >
+                          {cell.render("Cell")}
+                        </td>
+                      );
+                    } else return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                   })}
                 </tr>
               );
@@ -94,6 +112,7 @@ function Table({ columns, data, setDodream, dodream }: Tableprops) {
 
 export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   const [selectedCategory, setSelectedCategory] = useState(dodream);
+  const setSelectedDodream = useSetRecoilState(selectedDodreamAtom);
   const columns = useMemo(
     () => [
       {
@@ -115,6 +134,7 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
       {
         Header: "소요시간",
         accessor: "lead_time",
+        Cell: ({ value }: { value: number }) => convertTime(value),
       },
       {
         Header: "코스레벨",
@@ -126,7 +146,13 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
 
   return (
     <Styles>
-      <Table columns={columns} data={selectedCategory} setDodream={setSelectedCategory} dodream={dodream} />
+      <Table
+        columns={columns}
+        data={selectedCategory}
+        setDodream={setSelectedCategory}
+        dodream={dodream}
+        setSelectedDodream={setSelectedDodream}
+      />
     </Styles>
   );
 }
