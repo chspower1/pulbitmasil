@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { registerUser } from "@api/api";
-import { UserRegisterForm } from "src/types/user";
+import { UserRegisterForm } from "@type/user";
 
 export default function Register() {
   const {

@@ -12,7 +12,7 @@ import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
-import { UserLoginForm } from "src/types/user";
+import { UserLoginForm } from "@type/user";
 import { createPortal } from "react-dom";
 import { ModalWrap as LoginModalWrap, ModalContainer as LoginForm, ModalTitle as LoginTitle } from "@style/ModalStyle";
 
@@ -171,9 +171,7 @@ export default function LoginModal() {
             </UserBox>
             <SocialLoginBox>
               <NaverLoginBtn />
-              <KakaoLogin type="button" onClick={handleClickKakao}>
-                카카오 로그인
-              </KakaoLogin>
+              <KakaoLogin src="/assets/images/kakao_login_btn.png" onClick={handleClickKakao} />
             </SocialLoginBox>
             <CloseBtn type="button" onClick={() => closeLoginModal()}>
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -280,16 +278,6 @@ const LoginBtn = styled.button`
 const SocialLoginBox = styled(UserBox)`
   justify-content: space-between;
 `;
-export const NaverLogin = styled(LoginBtn)`
-  width: 210px;
-  border-radius: 5px;
-  font-family: "Sebang";
-  background-color: #03c75a;
-`;
-export const KakaoLogin = styled(NaverLogin)`
-  color: #402325;
-  background-color: #ffe500;
-  &:hover {
-    background-color: #ebd832;
-  }
-`;
+
+export const NaverLogin = styled.img``;
+export const KakaoLogin = styled.img``;
