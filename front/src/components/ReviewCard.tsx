@@ -28,10 +28,11 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
       <InfoContainer>
         <CardImg />
         <InfoBox>
-          <p>닉네임: {title}</p>
+          <p>아이디: {userId}</p>
           <p>날짜:{day} </p>
         </InfoBox>
       </InfoContainer>
+      <p>{title}</p>
       <p>{description}</p>
       {user?.id === userId ? (
         <button onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, reviewId } })}>수정</button>

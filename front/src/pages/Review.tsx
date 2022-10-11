@@ -73,6 +73,7 @@ const CardContainer = styled.div`
   height: 100%;
   padding-top: 50px;
   padding-bottom: 80px;
+  flex-wrap: wrap;
 `;
 const ReviewBtn = styled.button`
   border-radius: 20px;

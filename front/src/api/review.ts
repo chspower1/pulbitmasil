@@ -35,19 +35,19 @@ export async function editReview(contents: IReview) {
     },
   });
 }
+
 export async function getReviews() {
   console.log(`%cGET 요청 ${BASE_URL}/review`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review`);
   return data;
 }
 
-export async function getEditReview(reviewId: number) {
+export async function getOneReview(reviewId: number) {
   console.log(`%cGET 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review/${reviewId}`, {
     params: {
       reviewId,
     },
   });
-  console.log("----------------", data);
   return data;
 }

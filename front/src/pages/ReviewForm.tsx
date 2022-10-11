@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 // import DatePicker from "react-datepicker";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { getEditReview, getReviews, uploadReview } from "@api/review";
+import { editReview, getOneReview, getReviews, uploadReview } from "@api/review";
 import { IReview, IReviewContent } from "src/types/review";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
@@ -19,9 +19,15 @@ export default function ReviewForm() {
   const isEdit = state.isEdit as boolean;
   console.log(isEdit);
 
-  const { isLoading, data: review } = useQuery<IReview[]>(["review"], () => getEditReview(state.reviewId), {
+  const { isLoading, data: review } = useQuery<IReview[]>(["review"], () => getOneReview(state.reviewId), {
     enabled: isEdit,
   });
+  const [reviewData, setReviewData] = useState<IReview>();
+
+  useEffect(() => {
+    console.log(review?.[0]);
+    review && setReviewData(review?.[0]);
+  }, [isLoading]);
 
   const {
     register,
@@ -32,21 +38,26 @@ export default function ReviewForm() {
 
   const handleSubmitReview = handleSubmit(data => {
     if (!isEdit) {
-      console.log("click! false!!");
       const newData: IReview = {
         title: data.title,
         description: data.description,
         createAt: new Date(),
       };
-      console.log(newData);
       uploadReview(newData);
+      navigate("/review");
+    } else {
+      const newData: IReview = {
+        ...reviewData,
+        title: watch("title"),
+        description: watch("description"),
+      };
+      console.log(newData);
+      editReview(newData);
       navigate("/review");
     }
   });
   const handleClickCancel = () => {
-    if (!isEdit) {
-      navigate("/review");
-    }
+    navigate("/review");
   };
 
   return (
@@ -74,6 +85,7 @@ export default function ReviewForm() {
 
       <ReviewInput
         style={{ height: "60px" }}
+        defaultValue={review ? review[0]?.title : ""}
         placeholder="제목을 입력해주세요."
         {...register("title", {
           required: { value: true, message: "제목을 입력해주세요." },
@@ -82,6 +94,7 @@ export default function ReviewForm() {
 
       <ReviewInput
         placeholder="내용을 입력해주세요."
+        defaultValue={review ? review[0]?.description : ""}
         {...register("description", {
           required: { value: true, message: "내용을 입력해주세요." },
         })}
