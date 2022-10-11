@@ -10,11 +10,13 @@ interface Tableprops {
     accessor: string;
   }[];
   data: IDodream[];
+  dodream: IDodream[];
+  setDodream: React.Dispatch<React.SetStateAction<IDodream[]>>;
 }
 
-function Table({ columns, data }: Tableprops) {
+function Table({ columns, data, setDodream, dodream }: Tableprops) {
   const courseCategory = ["전체", "한강지천길/계절길", "근교산자락길", "서울둘레길", "한양도성길", "생태문화길"];
-  const [selectedCategory, setSelectedCategory] = useState(data);
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -35,13 +37,13 @@ function Table({ columns, data }: Tableprops) {
   );
 
   const filterCategory = (cateoryNames: string) => {
-    let filteredCategory = data?.filter(cateory => cateory.course_category_nm === cateoryNames);
+    let filteredCategory = dodream?.filter(cateory => cateory.course_category_nm === cateoryNames);
     return filteredCategory;
   };
 
   const handleCategory = (e: React.MouseEvent) => {
     let categoryName = (e.target as HTMLButtonElement).value;
-    categoryName !== "전체" ? setSelectedCategory(filterCategory(categoryName)) : setSelectedCategory(data);
+    categoryName !== "전체" ? setDodream(filterCategory(categoryName)) : setDodream(dodream);
   };
 
   return (
@@ -91,6 +93,7 @@ function Table({ columns, data }: Tableprops) {
 }
 
 export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
+  const [selectedCategory, setSelectedCategory] = useState(dodream);
   const columns = useMemo(
     () => [
       {
@@ -120,11 +123,10 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
     ],
     [],
   );
-  if (!dodream) return null;
 
   return (
     <Styles>
-      <Table columns={columns} data={dodream} />
+      <Table columns={columns} data={selectedCategory} setDodream={setSelectedCategory} dodream={dodream} />
     </Styles>
   );
 }
