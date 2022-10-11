@@ -26,9 +26,9 @@ export const isWelcomeModalAtom = atom({
 });
 
 //Review
-export const isReviewDeleteAtom = atom({
+export const isReviewDeleteAtom = atom<number | null>({
   key: "isReviewDeleteModal",
-  default: false,
+  default: null,
 });
 
 export const isReviewCancelAtom = atom({

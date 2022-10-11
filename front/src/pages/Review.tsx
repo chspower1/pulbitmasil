@@ -5,10 +5,13 @@ import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { IReview } from "src/types/review";
 import { useQuery } from "@tanstack/react-query";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { isReviewDeleteAtom } from "@atom/atom";
+import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
+import { userAtom } from "@atom/user";
 
 export default function Review() {
+  const user = useRecoilValue(userAtom);
   const isEdit = false;
   const navigate = useNavigate();
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
@@ -22,7 +25,7 @@ export default function Review() {
           <Accent>플로깅</Accent> 후기를 공유해주세요!
         </SubTitle>
       </TitleContainer>
-
+      {isReviewDeleteModal && <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} />}
       <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>후기 작성 go go!</ReviewBtn>
       <CardContainer>
         {reviews &&

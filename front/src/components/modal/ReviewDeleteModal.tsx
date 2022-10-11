@@ -10,17 +10,22 @@ import { Accent, BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWra
 import { IReview } from "src/types/review";
 import { deleteReview } from "@api/review";
 
-export default function ReviewDeleteModal({ review }: { review: IReview }) {
+interface ReviewDeleteModalProps {
+  reviewId: number;
+  userId: number;
+}
+
+export default function ReviewDeleteModal({ reviewId, userId }: ReviewDeleteModalProps) {
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
   const navigate = useNavigate();
-  const handleClickConfirm = async (e: React.MouseEvent<HTMLElement>) => {
+  const handleClickConfirm = async () => {
     // e.preventDefault();
-    setIsReviewDeleteModal(false);
-    const data = await deleteReview(review);
+    setIsReviewDeleteModal(null);
+    const data = await deleteReview({ reviewId, userId });
+    console.log(data);
   };
-  const handleClickCancel = (e: React.MouseEvent<HTMLElement>) => {
-    e.preventDefault();
-    setIsReviewDeleteModal(false);
+  const handleClickCancel = () => {
+    setIsReviewDeleteModal(null);
   };
 
   return (
@@ -39,12 +44,26 @@ export default function ReviewDeleteModal({ review }: { review: IReview }) {
 }
 
 const WelcomeModalWrap = styled(ModalWrap)`
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
   z-index: 1000;
 `;
 const WelcomeModalContainer = styled(ModalContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  margin: auto;
+
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
   width: 500px;
   height: 200px;
 `;

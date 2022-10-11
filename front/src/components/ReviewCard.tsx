@@ -28,32 +28,33 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const day = changeDayForm(createAt!);
 
   return (
-    <CardWrap whileHover={{ scale: 1.1 }}>
-      <ReviewDeleteModal review={review} />
-      <InfoContainer>
-        <CardImg />
-        <InfoBox>
-          <p>아이디: {userId}</p>
-          <p>날짜:{day} </p>
-        </InfoBox>
-      </InfoContainer>
-      <p>{title}</p>
-      <p>{description}</p>
-      {user?.id === userId ? (
-        <button onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } })}>수정</button>
-      ) : null}
+    <>
+      <CardWrap>
+        <InfoContainer>
+          <CardImg />
+          <InfoBox>
+            <p>아이디: {userId}</p>
+            <p>날짜:{day} </p>
+          </InfoBox>
+        </InfoContainer>
+        <p>{title}</p>
+        <p>{description}</p>
+        {user?.id === userId ? (
+          <button onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } })}>수정</button>
+        ) : null}
 
-      {user?.id === userId ? (
-        <button
-          onClick={() => {
-            console.log("clickclicilc");
-            setIsReviewDeleteModal(true);
-          }}
-        >
-          삭제
-        </button>
-      ) : null}
-    </CardWrap>
+        {user?.id === userId ? (
+          <button
+            onClick={() => {
+              console.log("clickclicilc");
+              setIsReviewDeleteModal(reviewId!);
+            }}
+          >
+            삭제
+          </button>
+        ) : null}
+      </CardWrap>
+    </>
   );
 }
 

@@ -92,8 +92,10 @@ export default function ReviewForm() {
           />
 
           <ButtonContainer>
-            <Button type="submit">{review ? "수정하기" : "등록하기"}</Button>
-            <Button onClick={handleClickCancel}>취소</Button>
+            <Button>{review ? "수정하기" : "등록하기"}</Button>
+            <Button type="button" onClick={handleClickCancel}>
+              취소
+            </Button>
           </ButtonContainer>
           <ReviewModal />
         </FormWrap>

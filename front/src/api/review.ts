@@ -39,6 +39,7 @@ export async function editReview(contents: IReview) {
 export async function getReviews() {
   console.log(`%cGET 요청 ${BASE_URL}/review`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review`);
+  console.log(data);
   return data;
 }
 
@@ -52,18 +53,16 @@ export async function getOneReview(reviewId: number) {
   return data;
 }
 
-export async function deleteReview(contents: IReview) {
-  const bodyData = { userId: contents.userId };
-
-  console.log(`%cDELETE 요청 ${BASE_URL}/review/${contents.reviewId}`, "color: #a25cd1;");
-  return axiosInstance.delete(`review/${contents.reviewId}`, {
+export async function deleteReview({ reviewId, userId }: { reviewId: number; userId: number }) {
+  console.log(`%cDELETE 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
+  return axiosInstance.delete(`review/${reviewId}`, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
-    data: { ...bodyData },
+    data: { userId },
     params: {
-      reviewId: contents.reviewId,
+      reviewId,
     },
   });
 }
