@@ -5,16 +5,14 @@ import Nav from "@components/layout/Nav";
 
 import Home from "./Home";
 import About from "./About";
-import Map from "./Map";
 import Register from "./Register";
 import styled from "styled-components";
-import Footer from "@components/layout/Footer";
 import Chart from "./Chart";
 import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
-import NaverAuth from "./NaverAuth";
-import KakaoAuth from "./KakaoAuth";
-import Walking from "./Walking";
+import NaverAuth from "./Auth/NaverAuth";
+import KakaoAuth from "./Auth/KakaoAuth";
+import Dodream from "./Dodream";
 import UserInfo from "./UserInfo";
 import MyGreenStroll from "./MyGreenStroll";
 import WelcomeModal from "@components/modal/WelcomeModal";
@@ -34,11 +32,10 @@ export default function Router() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/map" element={<Map />} />
           <Route path="/register" element={<Register />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/plogging" element={<Plogging />} />
-          <Route path="/walking" element={<Walking />} />
+          <Route path="/dodream" element={<Dodream />} />
           <Route path="/review" element={<Review />} />
           <Route path="/review/write" element={<ReviewForm />} />
           <Route path="/review/edit/:reviewId" element={<ReviewForm />} />

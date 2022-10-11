@@ -89,7 +89,7 @@ router.post("/login", async function (req, res, next) {
         return res.status(400).json({ success: false });
       }
 
-      const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+      const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ id: rows[0].id }, secretKey);
 
       res.status(200).json({ success: true, email: email, id: rows[0].id, token: token, name: rows[0].name });
@@ -164,10 +164,10 @@ router.post("/verify", login_required, async function (req, res, next) {
 });
 
 router.get("/mypage", login_required, function (req, res) {
-  const id = req.currentUserId;
+  const userId = req.currentUserId;
   maria.query(
-    `SELECT * FROM USER INNER JOIN REVIEW ON USER.id = REVIEW.user_id where id = ?`,
-    [id],
+    `SELECT * FROM USER INNER JOIN REVIEW ON USER.id = REVIEW.userId where id = ?`,
+    [userId],
     function (err, rows, fields) {
       if (!err) {
         res.send(rows);

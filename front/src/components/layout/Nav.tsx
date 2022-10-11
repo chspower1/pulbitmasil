@@ -10,6 +10,7 @@ import { isLoginModalAtom, isLoginSelector, isLogoutModalAtom } from "@atom/atom
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
+import DodreamDetalModal from "@components/modal/DodreamDetail";
 // import ModalPortal from "@components/modal/ModalPortal";
 
 // Interface
@@ -64,7 +65,7 @@ export default function Nav() {
   const { register, handleSubmit, reset } = useForm<SearchForm>();
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  const navMenus = ["home", "about", "walking", "plogging", "review"];
+  const navMenus = ["home", "about", "dodream", "plogging", "review"];
   const navKorMenus = ["홈", "소개", "산책로", "풀빛마실 모임", "후기"];
   const userMenus = ["login", "register"];
 
@@ -148,6 +149,7 @@ export default function Nav() {
           <UserName>{isLogin ? user?.name : "손님"}</UserName>
         </UserBox>
         <LoginModal></LoginModal>
+        <DodreamDetalModal />
         {isUserNav && <UserNav setIsUserNav={setIsUserNav}></UserNav>}
         <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
       </Wrap>

@@ -19,6 +19,9 @@
       ],
       "@images/*": [
         "src/style/images/*"
+      ],
+      "@types/*": [
+        "src/types/*"
       ]
     }
   }
