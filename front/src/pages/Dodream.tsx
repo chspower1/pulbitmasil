@@ -6,11 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 
 export default function Dodream() {
-  const { isLoading, data: dodream } = useQuery(["dodream"], getDodream, {
-    onSettled(data) {
-      // console.log("11111111111111111", data);
-    },
-  });
+  const { isLoading, data: dodream } = useQuery(["dodream"], getDodream);
   // console.log(isLoading);
   return (
     <>
@@ -39,7 +35,6 @@ export default function Dodream() {
               <WalkTable dodream={dodream} />
             </CourseBox>
           </RightContainer>
-          
         </WalkWrap>
       )}
     </>

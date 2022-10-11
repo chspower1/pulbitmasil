@@ -2,7 +2,6 @@
 import LogoutModal from "@components/modal/LogoutModal";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import testDoream from "../../test_data/dodream.json";
 import DodreamDetail from "@components/modal/DodreamDetail";
 import { useRecoilState } from "recoil";
 import { isDodreamDetalModalAtom } from "@atom/dodream";
@@ -20,13 +19,12 @@ interface NewDodream {
 }
 
 export default function DodreamMap({ dodream }: { dodream: any }) {
-  const { data: test } = testDoream;
   const [newDodream, setNewDodream] = useState<NewDodream[] | null>([]);
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
   //데이터 추출 및 newDodream에 저장
   useEffect(() => {
     // 두드림 정보 변환
-    test.map((road: any) => {
+    dodream.map((road: any) => {
       const nameArr = Object.keys(road.course_name) as any[];
       nameArr.map((name, index) => {
         // console.log(road.course_category_nm, index, name);
@@ -40,7 +38,7 @@ export default function DodreamMap({ dodream }: { dodream: any }) {
         const y = road.course_name[name][0].CPI[0].y;
         const newRoad = { course_category_nm, course_name, distance, area_gu, lead_time, course_level, x, y };
 
-        console.log(course_category_nm, course_name, distance, area_gu, lead_time, course_level, x, y);
+        // console.log(course_category_nm, course_name, distance, area_gu, lead_time, course_level, x, y);
         setNewDodream((prev: any) => {
           return [...prev, newRoad];
         });

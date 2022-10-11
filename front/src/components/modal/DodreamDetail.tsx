@@ -19,13 +19,9 @@ export default function DodreamDetalModal() {
         <LogoutModalWrap>
           <LogoutModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <LogoutDesc>
-              <Accent>로그아웃&nbsp; </Accent>하시겠습니까?
+              <Accent>두드림모달</Accent>
             </LogoutDesc>
             <BtnContainer>
-              <LogoutBtn type="button" onClick={handleClickLogout}>
-                로그아웃
-              </LogoutBtn>
-
               <CloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>
                 취소
               </CloseBtn>

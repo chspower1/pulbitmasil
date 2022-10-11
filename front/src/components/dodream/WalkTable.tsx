@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useTable } from "react-table";
 import { useMemo, useEffect, useState } from "react";
-import testDoream from "../../test_data/dodream.json";
 
 interface Tableprops {
   columns: any;
@@ -73,10 +72,10 @@ export default function WalkTable({ dodream }: { dodream: any }) {
     ],
     [],
   );
-  const { data: test } = testDoream;
   const [newDodream, setNewDodream] = useState<any | null>([]);
   useEffect(() => {
-    test.map((road: any) => {
+    console.log("----------------", dodream);
+    dodream.map((road: any) => {
       const nameArr = Object.keys(road.course_name) as any[];
       nameArr.map((name, index) => {
         // console.log(road.course_category_nm, index, name);

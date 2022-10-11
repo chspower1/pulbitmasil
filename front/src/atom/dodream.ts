@@ -12,3 +12,7 @@ export const isDodreamDetalModalAtom = atom({
   key: "dodreamDetailModal",
   default: false,
 });
+export const selectedDodreamAtom = atom({
+  key: "selectedDodream",
+  default: {},
+});
