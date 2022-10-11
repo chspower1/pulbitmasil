@@ -12,7 +12,7 @@ export default function Review() {
   const isEdit = false;
   const navigate = useNavigate();
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
-  const { isLoading, data: reviews } = useQuery<IReview[]>(["reviews"], getReviews, { enabled: !isReviewDeleteModal });
+  const { isLoading, data: reviews } = useQuery<IReview[]>(["reviews"], getReviews);
 
   return (
     <ReviewWrap>

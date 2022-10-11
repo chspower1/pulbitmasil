@@ -5,10 +5,12 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { editReview, getOneReview, getReviews, createReview } from "@api/review";
 import { IReview, IReviewContent } from "src/types/review";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { isReviewCancelAtom } from "@atom/atom";
+import ReviewModal from "@components/modal/ReviewModal";
 
 export default function ReviewForm() {
   const user = useRecoilValue(userAtom);
@@ -16,14 +18,19 @@ export default function ReviewForm() {
   const { state } = useLocation();
   const isEdit = state?.isEdit! as boolean;
   const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.review.userId : true;
-  console.log(isEdit);
   const [review, setReview] = useState<IReview>(state?.review!);
+
+  const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
   } = useForm<IReviewContent>();
+  useEffect(() => {
+    setIsReviewCancelModal(false);
+  }, []);
+
   const handleSubmitReview = handleSubmit(data => {
     if (!isEdit) {
       // setReview({
@@ -52,7 +59,8 @@ export default function ReviewForm() {
     }
   });
   const handleClickCancel = () => {
-    navigate("/review");
+    console.log("click!!!!!!");
+    setIsReviewCancelModal(true);
   };
   return (
     <>
@@ -65,19 +73,6 @@ export default function ReviewForm() {
               <Accent> 생생한 경험</Accent>를 공유해주세요!
             </SubTitle>
           </TitleContainer>
-
-          {/* <label htmlFor="pet-select">Choose a pet:</label>
-
-        <select
-          id="pet-select"
-          {...register("pets", {
-            required: true,
-          })}
-        >
-          <option value="">--Please choose an option--</option>
-          <option value="dog">Dog</option>
-          <option value="cat">Cat</option>
-        </select> */}
 
           <ReviewInput
             style={{ height: "60px" }}
@@ -97,9 +92,10 @@ export default function ReviewForm() {
           />
 
           <ButtonContainer>
-            <Button type="submit">등록하기</Button>
+            <Button type="submit">{review ? "수정하기" : "등록하기"}</Button>
             <Button onClick={handleClickCancel}>취소</Button>
           </ButtonContainer>
+          <ReviewModal />
         </FormWrap>
       ) : (
         "권한이 없습니다."
