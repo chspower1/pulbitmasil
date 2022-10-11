@@ -1,9 +1,10 @@
+import { IDodream } from "../type/dodream";
 import { atom } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-export const dodreamAtom = atom({
+export const dodreamAtom = atom<IDodream[] | null>({
   key: "dodream",
   default: null,
   effects_UNSTABLE: [persistAtom],

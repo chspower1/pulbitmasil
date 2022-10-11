@@ -11,6 +11,8 @@ export interface IDodream {
   reg_date: number;
   relate_subway: string;
   traffic_info: string;
+  x: number;
+  y: number;
 }
 
 export interface CourseName {

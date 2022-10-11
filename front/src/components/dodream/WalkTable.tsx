@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useTable } from "react-table";
 import { useMemo, useEffect, useState } from "react";
+import { IDodream } from "@type/dodream";
 
 interface Tableprops {
   columns: any;
@@ -42,7 +43,7 @@ function Table({ columns, data }: Tableprops) {
   );
 }
 
-export default function WalkTable({ dodream }: { dodream: any }) {
+export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   const columns = useMemo(
     () => [
       {
@@ -72,33 +73,11 @@ export default function WalkTable({ dodream }: { dodream: any }) {
     ],
     [],
   );
-  const [newDodream, setNewDodream] = useState<any | null>([]);
-  useEffect(() => {
-    console.log("----------------", dodream);
-    dodream.map((road: any) => {
-      const nameArr = Object.keys(road.course_name) as any[];
-      nameArr.map((name, index) => {
-        // console.log(road.course_category_nm, index, name);
-        const course_category_nm = road.course_category_nm;
-        const course_name = name;
-        const distance = road.course_name[name][0].distance;
-        const area_gu = road.course_name[name][0].area_gu;
-        const lead_time = road.course_name[name][0].lead_time;
-        const course_level = road.course_name[name][0].course_level;
-        const newRoad = { course_category_nm, course_name, distance, area_gu, lead_time, course_level };
 
-        // console.log(course_category_nm, course_name, distance);
-        setNewDodream((prev: any) => {
-          return [...prev, newRoad];
-        });
-      });
-    });
-  }, []);
-
-  if (!newDodream) return null;
+  if (!dodream) return null;
   return (
     <Styles>
-      <Table columns={columns} data={newDodream} />
+      <Table columns={columns} data={dodream} />
     </Styles>
   );
 }

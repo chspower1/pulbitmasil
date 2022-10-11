@@ -1,6 +1,6 @@
 import axios from "axios";
-import { Review } from "src/types/review";
-import { UserLoginForm, UserRegisterForm } from "src/types/user";
+import { Review } from "@type/review";
+import { UserLoginForm, UserRegisterForm } from "@type/user";
 
 const BASE_URL = "http://localhost:5001";
 

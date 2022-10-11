@@ -12,7 +12,7 @@ import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
-import { UserLoginForm } from "src/types/user";
+import { UserLoginForm } from "@type/user";
 import { createPortal } from "react-dom";
 import { ModalWrap as LoginModalWrap, ModalContainer as LoginForm, ModalTitle as LoginTitle } from "@style/ModalStyle";
 

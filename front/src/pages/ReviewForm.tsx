@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { getReview, uploadReview } from "@api/api";
-import { Review, ReviewContent } from "src/types/review";
+import { Review, ReviewContent } from "@type/review";
 import { useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate } from "react-router-dom";

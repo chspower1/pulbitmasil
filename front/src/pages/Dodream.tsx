@@ -4,10 +4,59 @@ import WalkTable from "@components/dodream/WalkTable";
 import DodreamDetalModal from "@components/modal/DodreamDetail";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { dodreamAtom } from "@atom/dodream";
 
 export default function Dodream() {
-  const { isLoading, data: dodream } = useQuery(["dodream"], getDodream);
-  // console.log(isLoading);
+  const [dodream, setDodream] = useRecoilState(dodreamAtom);
+  const { isLoading } = useQuery(["dodream"], getDodream, {
+    // dodream 데이터 변환
+    onSuccess(data) {
+      data.map((road: any) => {
+        const nameArr = Object.keys(road.course_name) as string[];
+        nameArr.map((name, mapIndex) => {
+          // console.log(road.course_category_nm, index, name);
+          const index = mapIndex;
+          const course_category_nm = road.course_category_nm as string;
+          const course_name = name as string;
+          const distance = road.course_name[name][0].distance as string;
+          const area_gu = road.course_name[name][0].area_gu as string;
+          const lead_time = road.course_name[name][0].lead_time as string;
+          const course_level = road.course_name[name][0].course_level as number;
+          const content = road.course_name[name][0].content as string;
+          const detail_course = road.course_name[name][0].detail_course as string;
+          const reg_date = road.course_name[name][0].reg_date as number;
+          const relate_subway = road.course_name[name][0].relate_subway as string;
+          const traffic_info = road.course_name[name][0].traffic_info as string;
+          const x = road.course_name[name][0].CPI[0].x as number;
+          const y = road.course_name[name][0].CPI[0].y as number;
+          const newRoad = {
+            index,
+            course_category_nm,
+            course_name,
+            area_gu,
+            content,
+            course_level,
+            detail_course,
+            distance,
+            lead_time,
+            reg_date,
+            relate_subway,
+            traffic_info,
+            x,
+            y,
+          };
+          // console.log(course_category_nm, course_name, distance, area_gu, lead_time, course_level, x, y);
+          dodream === null
+            ? setDodream([newRoad])
+            : setDodream(prev => {
+                return [...prev!, newRoad];
+              });
+        });
+      });
+    },
+  });
+
   return (
     <>
       {isLoading ? (
@@ -15,7 +64,7 @@ export default function Dodream() {
       ) : (
         <WalkWrap>
           <MapContainer>
-            <DodreamMap dodream={dodream} />
+            <DodreamMap dodream={dodream!} />
           </MapContainer>
           <RightContainer>
             {/* <ChartBtn>차트로 보기</ChartBtn> */}
@@ -32,7 +81,7 @@ export default function Dodream() {
               </button>
             </Input>
             <CourseBox>
-              <WalkTable dodream={dodream} />
+              <WalkTable dodream={dodream!} />
             </CourseBox>
           </RightContainer>
         </WalkWrap>
