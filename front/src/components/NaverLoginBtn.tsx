@@ -76,9 +76,7 @@ export default function NaverLoginBtn() {
   return (
     <>
       <div ref={naverRef} style={{ display: "none" }} id="naverIdLogin" />
-      <NaverLogin type="button" onClick={handleNaverLogin}>
-        네이버 로그인
-      </NaverLogin>
+      <NaverLogin src="/assets/images/naver_login_btn.png" onClick={handleNaverLogin} />
     </>
   );
 }
