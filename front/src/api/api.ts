@@ -108,9 +108,9 @@ export async function getDodream() {
         const index = mapIndex;
         const course_category_nm = road.course_category_nm as string;
         const course_name = name as string;
-        const distance = road.course_name[name][0].distance as string;
+        const distance = road.course_name[name][0].distance as number;
         const area_gu = road.course_name[name][0].area_gu as string;
-        const lead_time = road.course_name[name][0].lead_time as string;
+        const lead_time = road.course_name[name][0].lead_time as number;
         const course_level = road.course_name[name][0].course_level as number;
         const content = road.course_name[name][0].content as string;
         const detail_course = road.course_name[name][0].detail_course as string;

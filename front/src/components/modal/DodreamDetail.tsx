@@ -11,6 +11,16 @@ const { kakao }: any = window;
 export default function DodreamDetalModal() {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
   const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
+  function convertTime(time: number) {
+    const hour = `${String(time).split(".")[0]}시간` !== "0시간" ? `${String(time).split(".")[0]}시간` : "";
+    const minute =
+      `${parseInt(String(time).split(".")[1], 6) * 10}분` !== "NaN분"
+        ? `${parseInt(String(time).split(".")[1], 6) * 10}분`
+        : "";
+    console.log(hour, minute);
+
+    return `${hour} ${minute}`;
+  }
   useEffect(() => {
     if (isDodreamDetalModal) {
       let detailMapContainer = document.getElementById("detailMap"), // 이미지 지도를 표시할 div
@@ -73,9 +83,7 @@ export default function DodreamDetalModal() {
                 </Box>
                 <Box>
                   <Title>소요시간 :</Title>
-                  <Desc>{`${String(selectedDodream?.lead_time).split(".")[0]}시간 ${
-                    parseInt(String(selectedDodream?.lead_time).split(".")[1], 6) * 10
-                  }분`}</Desc>
+                  <Desc>{convertTime(selectedDodream?.lead_time!)}</Desc>
                 </Box>
                 <Box>
                   <Title>코스 레벨 :</Title>
