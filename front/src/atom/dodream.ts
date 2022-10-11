@@ -4,16 +4,11 @@ import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist();
 
-export const dodreamAtom = atom<IDodream[] | null>({
-  key: "dodream",
-  default: null,
-  effects_UNSTABLE: [persistAtom],
-});
 export const isDodreamDetalModalAtom = atom({
   key: "dodreamDetailModal",
   default: false,
 });
-export const selectedDodreamAtom = atom({
+export const selectedDodreamAtom = atom<IDodream | null>({
   key: "selectedDodream",
-  default: {},
+  default: null,
 });

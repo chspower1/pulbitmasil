@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DodreamDetail from "@components/modal/DodreamDetail";
 import { useRecoilState } from "recoil";
-import { isDodreamDetalModalAtom } from "@atom/dodream";
+import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import { IDodream } from "@type/dodream";
 const { kakao }: any = window;
 
@@ -21,7 +21,7 @@ interface dodream {
 
 export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
-
+  const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
   useEffect(() => {
     // 지도생성
     let container = document.getElementById("map");
@@ -58,23 +58,28 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
           markerPositions![i].content
         }</div>`,
       });
+      // 마커에 호버/클릭 이번트 등록하기
       kakao.maps.event.addListener(marker, "mouseover", makeOverListener(map, marker, infowindow));
       kakao.maps.event.addListener(marker, "mouseout", makeOutListener(infowindow));
-      // 마커에 클릭 이번트 등록하기
-      kakao.maps.event.addListener(marker, "click", () => handleClickMarker(markerPositions![i].content));
+      kakao.maps.event.addListener(marker, "click", () => handleClickMarker(dodream[i]));
+
+      // 마우스 호버 시 함수
       function makeOverListener(map: any, marker: any, infowindow: any) {
         return function () {
           infowindow.open(map, marker);
         };
       }
 
-      // 인포윈도우를 닫는 클로저를 만드는 함수입니다
+      // 마우스 리빙 시 함수
       function makeOutListener(infowindow: any) {
         return function () {
           infowindow.close();
         };
       }
-      function handleClickMarker(info: any) {
+      // 마우스 클릭 시 함수
+      function handleClickMarker(dodream: IDodream) {
+        console.log(dodream);
+        setSelectedDodream(dodream);
         setIsDodreamDetalModal(true);
       }
     }

@@ -4,11 +4,11 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
-import { isDodreamDetalModalAtom } from "@atom/dodream";
+import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 
 export default function DodreamDetalModal() {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
-
+  const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
   const handleClickLogout = () => {
     setIsDodreamDetalModal(false);
   };
@@ -19,7 +19,7 @@ export default function DodreamDetalModal() {
         <LogoutModalWrap>
           <LogoutModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <LogoutDesc>
-              <Accent>두드림모달</Accent>
+              <Accent>{selectedDodream?.course_name}</Accent>
             </LogoutDesc>
             <BtnContainer>
               <CloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>

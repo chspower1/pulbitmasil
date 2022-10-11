@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Review } from "@type/review";
 import { UserLoginForm, UserRegisterForm } from "@type/user";
+import { IDodream } from "@type/dodream";
 
 const BASE_URL = "http://localhost:5001";
 
@@ -99,8 +100,45 @@ export async function uploadReview(contents: Review) {
 export async function getDodream() {
   try {
     const { data } = await axiosInstance.get(`dodream`);
-    console.log(data);
-    return data;
+    const dodream: IDodream[] = [];
+    data.map((road: any) => {
+      const nameArr = Object.keys(road.course_name) as string[];
+      nameArr.map((name, mapIndex) => {
+        // console.log(road.course_category_nm, index, name);
+        const index = mapIndex;
+        const course_category_nm = road.course_category_nm as string;
+        const course_name = name as string;
+        const distance = road.course_name[name][0].distance as string;
+        const area_gu = road.course_name[name][0].area_gu as string;
+        const lead_time = road.course_name[name][0].lead_time as string;
+        const course_level = road.course_name[name][0].course_level as number;
+        const content = road.course_name[name][0].content as string;
+        const detail_course = road.course_name[name][0].detail_course as string;
+        const reg_date = road.course_name[name][0].reg_date as number;
+        const relate_subway = road.course_name[name][0].relate_subway as string;
+        const traffic_info = road.course_name[name][0].traffic_info as string;
+        const x = road.course_name[name][0].CPI[0].x as number;
+        const y = road.course_name[name][0].CPI[0].y as number;
+        const newRoad = {
+          index,
+          course_category_nm,
+          course_name,
+          area_gu,
+          content,
+          course_level,
+          detail_course,
+          distance,
+          lead_time,
+          reg_date,
+          relate_subway,
+          traffic_info,
+          x,
+          y,
+        };
+        dodream.push(newRoad);
+      });
+    });
+    return dodream;
   } catch (err) {
     console.log("getDodream Error", err);
   }
