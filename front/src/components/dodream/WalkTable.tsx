@@ -31,7 +31,7 @@ function Table({ columns, data }: Tableprops) {
           {rows.map((row, i) => {
             prepareRow(row);
             return (
-              <tr {...row.getRowProps()} >
+              <tr {...row.getRowProps()}>
                 {row.cells.map(cell => {
                   return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                 })}
@@ -85,7 +85,7 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
 
 const TableWrapper = styled.div`
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 21px;
   color: #636e72;
   text-align: center;
