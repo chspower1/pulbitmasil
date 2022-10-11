@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useTable } from "react-table";
+import { useGlobalFilter, useTable, useSortBy } from "react-table";
 import { useMemo, useEffect, useState } from "react";
 import { IDodream } from "@type/dodream";
+import DodreamFilter from "./DodreamFilter";
 
 interface Tableprops {
   columns: any;
@@ -9,40 +10,84 @@ interface Tableprops {
 }
 
 function Table({ columns, data }: Tableprops) {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
+  const courseCategory = ["전체", "한강지천길/계절길", "근교산자락길", "서울둘레길", "한양도성길", "생태문화길"];
+  const [selectedCategory, setSelectedCategory] = useState(data);
+  const { 
+    getTableProps, 
+    getTableBodyProps, 
+    headerGroups, 
+    rows, 
+    prepareRow, 
+    preGlobalFilteredRows,
+    setGlobalFilter,
+    state,
+  } = useTable({
     // @ts-ignore
     columns,
     data,
-  });
+  },
+  useGlobalFilter,
+  useSortBy,
+  );
+
+
+  const filterCategory = (cateoryNames: string) => {
+    let filteredCategory = data?.filter(cateory => cateory.course_category_nm === cateoryNames);
+    return filteredCategory;
+  };
+
+  const handleCategory = (e: React.MouseEvent) => {
+    let categoryName = (e.target as HTMLButtonElement).value;
+    categoryName !== "전체" ? setSelectedCategory(filterCategory(categoryName)) : setSelectedCategory(data);
+  };
 
   return (
-    <TableWrapper>
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()} >
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-                })}
+    <WholeWrapper>
+      <DodreamFilter
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        setGlobalFilter={setGlobalFilter}
+        globalFilter={state.globalFilter}
+      />
+      <BtnBox>
+        {courseCategory.map((course, index) => (
+          <Button key={index} value={course} onClick={handleCategory}>
+            {course}
+          </Button>
+        ))}
+      </BtnBox>
+      <TableWrapper>
+        <table {...getTableProps()}>
+          <thead>
+            {headerGroups.map(headerGroup => (
+              <tr {...headerGroup.getHeaderGroupProps()}>
+                {headerGroup.headers.map(column => (
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                    {column.render("Header")}
+                    {column.isSorted ? (column.isSortedDesc ? " ▼" : " ▲") : ""}
+                  </th>
+                ))}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </TableWrapper>
+            ))}
+          </thead>
+          <tbody {...getTableBodyProps()}>
+            {rows.map((row, i) => {
+              prepareRow(row);
+              return (
+                <tr {...row.getRowProps()} >
+                  {row.cells.map(cell => {
+                    return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </TableWrapper>
+    </WholeWrapper>
   );
 }
+
+
 
 export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   const columns = useMemo(
@@ -74,14 +119,19 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
     ],
     [],
   );
-
   if (!dodream) return null;
+  
   return (
     <Styles>
       <Table columns={columns} data={dodream} />
     </Styles>
   );
 }
+
+const WholeWrapper = styled.div`
+  height: 500px;
+  background-color: none;
+`
 
 const TableWrapper = styled.div`
   font-weight: 400;
@@ -101,7 +151,6 @@ const Styles = styled.div`
   line-height: 21px;
   color: #636e72;
   text-align: center;
-  background-color: white;
 
   table {
     border-spacing: 0;
@@ -134,5 +183,25 @@ const Styles = styled.div`
         border-right: 0;
       }
     }
+  }
+`;
+const BtnBox = styled.div`
+  margin-top: 70px;
+  display: flex;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  margin: 0 7px;
+  padding: 0.5em 0.3em;
+  width: 140px;
+  height: 50px;
+  font-weight: 400;
+  font-size: 18px;
+  border-radius: 5px;
+  background-color: #88caae;
+
+  :hover {
+    font-weight: 900;
   }
 `;
