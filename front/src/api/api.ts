@@ -2,7 +2,7 @@ import axios from "axios";
 import { UserLoginForm, UserRegisterForm } from "@type/user";
 import { IDodream } from "@type/dodream";
 
-const BASE_URL = `http://${window.location.hostname}:5001`;
+const BASE_URL = `http://kdt-ai5-team09.elicecoding.com/:5001`;
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
