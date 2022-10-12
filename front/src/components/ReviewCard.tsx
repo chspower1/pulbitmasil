@@ -1,12 +1,13 @@
 import { userAtom } from "@atom/user";
 import React, { useEffect, useState } from "react";
-import { useMatch, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { IReview } from "@type/review";
 import styled from "styled-components";
-import { AnimateSharedLayout, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { isReviewDeleteAtom } from "@atom/atom";
-import ReviewDetailModal from "./modal/ReviewDetailModal";
+import ReviewDeleteModal from "./modal/ReviewDeleteModal";
+import { Accent } from "@style/ModalStyle";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, description, createAt, userName } = review;
@@ -15,11 +16,10 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const navigate = useNavigate();
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
   const randomNum = Math.floor(Math.random() * 8) + 1;
-  const [isReviewSelect, setIsReviewSelect] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   console.log(review);
-  // }, []);
+  useEffect(() => {
+    // console.log(review);
+  }, []);
   const changeDayForm = (createAt: Date): string => {
     const createDay = new Date(createAt);
     const year = createDay.getFullYear();
@@ -32,33 +32,36 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 
   return (
     <>
-      <CardWrap
-        onClick={() => {
-          navigate(`/review/${reviewId}`);
-          // setIsReviewSelect(true);
-        }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 1 }}
-      >
-        <ImgContainer>
-          <ReviewImg src="/assets/images/review_test.jpg" alt="review image"></ReviewImg>
-        </ImgContainer>
-        <ReviewContainer>
-          <InfoContainer>
-            <CardImg src={`/assets/icon/profile0${randomNum}.png`} />
-            <InfoBox>
-              <p style={{ fontSize: "18px" }}>
-                <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
-              </p>
-              <p style={{ fontSize: "14px", marginTop: "5px" }}>{day} </p>
-            </InfoBox>
-            <p style={{ position: "absolute", right: "10px" }}>지역</p>
-          </InfoContainer>
-          <TextContainer>
-            <p style={{ color: "#636E72", fontSize: "18px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
-            <Description>{description}</Description>
-          </TextContainer>
-        </ReviewContainer>
+      <CardWrap whileHover={{ scale: 1.1 }} layoutId={`${reviewId}wrap`}>
+        <motion.div
+          onClick={() => {
+            navigate(`${reviewId}`);
+          }}
+        >
+          <ImgContainer>
+            <ReviewImg
+              src="/assets/images/review_test.jpg"
+              alt="review image"
+              layoutId={`${reviewId}image`}
+            ></ReviewImg>
+          </ImgContainer>
+          <ReviewContainer>
+            <InfoContainer>
+              <CardImg src={`/assets/icon/profile0${randomNum}.png`} />
+              <InfoBox>
+                <p style={{ fontSize: "18px" }}>
+                  <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
+                </p>
+                <p style={{ fontSize: "14px", marginTop: "5px" }}>{day} </p>
+              </InfoBox>
+              <p style={{ position: "absolute", right: "10px" }}>지역</p>
+            </InfoContainer>
+            <TextContainer>
+              <p style={{ color: "#636E72", fontSize: "18px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
+              <Description>{description}</Description>
+            </TextContainer>
+          </ReviewContainer>
+        </motion.div>
         <ButtonContainer>
           {user?.id === userId ? (
             <Btn onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } })}>수정</Btn>
@@ -67,6 +70,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           {user?.id === userId ? (
             <Btn
               onClick={() => {
+                // console.log("clickclicilc");
                 setIsReviewDeleteModal(reviewId!);
               }}
             >
@@ -79,7 +83,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   );
 }
 
-const CardWrap = styled(motion.div)`
+const CardWrap = styled(motion(motion.div))`
   width: 370px;
   height: 480px;
   background-color: white;
@@ -87,7 +91,7 @@ const CardWrap = styled(motion.div)`
   margin: 0 23px;
   margin-bottom: 40px;
 `;
-const InfoContainer = styled.div`
+const InfoContainer = styled(motion.div)`
   display: flex;
   position: relative;
   flex-direction: row;
@@ -95,31 +99,31 @@ const InfoContainer = styled.div`
   height: 35px;
   margin: auto;
 `;
-const ReviewContainer = styled.div`
+const ReviewContainer = styled(motion.div)`
   width: 100%;
   padding: 20px;
 `;
 
-const ImgContainer = styled.div`
+const ImgContainer = styled(motion.div)`
   width: 370px;
   height: 245px;
   position: relative;
 `;
-const TextContainer = styled.div`
+const TextContainer = styled(motion.div)`
   width: 100%;
   height: 100px;
   margin-top: 20px;
 `;
 
-const ReviewImg = styled.img`
+const ReviewImg = styled(motion.img)`
   position: absolute;
-   top: 0;
-   left: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
 `;
 
-const InfoBox = styled.div`
+const InfoBox = styled(motion.div)`
   margin-left: 20px;
   display: flex;
   flex-direction: column;
@@ -127,23 +131,23 @@ const InfoBox = styled.div`
 `;
 
 //이미지로 변경예정
-const CardImg = styled.img`
+const CardImg = styled(motion.img)`
   width: 30px;
   height: 30px;
 `;
-const ButtonContainer = styled.div`
+const ButtonContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
   margin: auto;
 `;
-const Btn = styled.button`
+const Btn = styled(motion.button)`
   width: 50%;
   height: 20px;
   &:first-child {
     border-right: 1px #388e3c solid;
   }
 `;
-const Description = styled.p`
+const Description = styled(motion.p)`
   text-overflow: ellipsis;
   letter-spacing: 1px;
   line-height: 1.3em;

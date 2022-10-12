@@ -47,7 +47,7 @@ export default function Review() {
               <CardBox>
                 {reviews ? (
                   reviews.map(review => {
-                    return <Card review={review}></Card>;
+                    return <Card  review={review}></Card>;
                   })
                 ) : (
                   <div>후기없음</div>
