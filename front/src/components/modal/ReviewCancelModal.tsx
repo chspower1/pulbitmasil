@@ -1,48 +1,36 @@
-import { isReviewDeleteAtom } from "@atom/atom";
-import { AnimatePresence } from "framer-motion";
-import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import styled from "styled-components";
-import { Overlay, OverlayVariant } from "./LoginModal";
+import { BtnContainer, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
+import { useRecoilState } from "recoil";
+import { isReviewCancelAtom } from "@atom/atom";
+import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap, ModalWrap } from "@style/ModalStyle";
-import { IReview } from "@type/review";
-import { deleteReview } from "@api/review";
-
-interface ReviewDeleteModalProps {
-  reviewId: number;
-  userId: number;
-  setRevies: React.Dispatch<React.SetStateAction<IReview[] | undefined>>;
-}
-
-export default function ReviewDeleteModal({ reviewId, userId, setRevies }: ReviewDeleteModalProps) {
-  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
-  const handleClickConfirm = async (e: React.MouseEvent) => {
+export default function ReviewModal() {
+  const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
+  const navigate = useNavigate();
+  const handleClickCancel = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    const data = await deleteReview({ reviewId, userId });
-    setRevies(reviews => {
-      return reviews?.filter(review => review.reviewId !== isReviewDeleteModal);
-    });
-    setIsReviewDeleteModal(null);
-    console.log(data);
+    setIsReviewCancelModal(false);
   };
-  const handleClickCancel = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsReviewDeleteModal(null);
+  const handleClickConfirm = () => {
+    navigate("/review");
+    setIsReviewCancelModal(false);
   };
 
   return (
     <AnimatePresence>
-      {isReviewDeleteModal && (
+      {isReviewCancelModal && (
         <ReviewModalWrap>
           <ReviewModalContainer>
-            <DeleteDesc>
-              <Accent>삭제</Accent> 하시겠습니까?
-            </DeleteDesc>
+            <CancelDesc>
+              <Accent>취소</Accent>하시겠습니까?
+            </CancelDesc>
+            <CancelDesc className="second">작성한 내용이 모두 사라집니다.</CancelDesc>
+
             <BtnContainer>
-              <DeleteBtn type="button" onClick={handleClickConfirm}>
+              <CancelBtn type="button" onClick={handleClickConfirm}>
                 네
-              </DeleteBtn>
+              </CancelBtn>
               <CloseBtn type="button" onClick={handleClickCancel}>
                 아니요
               </CloseBtn>
@@ -89,12 +77,13 @@ const Accent = styled.span`
   font-weight: bold;
 `;
 
-const DeleteDesc = styled(Desc)`
-  margin-top: 40px;
-  margin-bottom: 40px;
+const CancelDesc = styled(Desc)`
+  &.second {
+    font-size: 22px;
+  }
 `;
 
-const DeleteBtn = styled.button`
+const CancelBtn = styled.button`
   width: 100px;
   height: 40px;
   display: flex;
@@ -107,7 +96,7 @@ const DeleteBtn = styled.button`
     background-color: #cc5e43;
   }
 `;
-const CloseBtn = styled(DeleteBtn)`
+const CloseBtn = styled(CancelBtn)`
   background-color: ${props => props.theme.mainColor};
   &:hover {
     background-color: ${props => props.theme.accentColor};

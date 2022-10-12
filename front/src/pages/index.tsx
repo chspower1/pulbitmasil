@@ -18,6 +18,7 @@ import GreenCrew from "./GreenCrew";
 import WelcomeModal from "@components/modal/WelcomeModal";
 import Review from "./Review";
 import ReviewForm from "./ReviewForm";
+import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 
 export default function Router() {
   return (
@@ -33,6 +34,7 @@ export default function Router() {
         <Route path="/plogging" element={<Plogging />} />
         <Route path="/dodream" element={<Dodream />} />
         <Route path="/review" element={<Review />} />
+        <Route path="/review/:reviewId" element={<Review />} />
         <Route path="/review/write" element={<ReviewForm />} />
         <Route path="/review/edit/:reviewId" element={<ReviewForm />} />
         <Route path="/userInfo" element={<UserInfo />} />

@@ -1,13 +1,12 @@
 import { userAtom } from "@atom/user";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { IReview } from "@type/review";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { AnimateSharedLayout, motion } from "framer-motion";
 import { isReviewDeleteAtom } from "@atom/atom";
-import ReviewDeleteModal from "./modal/ReviewDeleteModal";
-import { Accent } from "@style/ModalStyle";
+import ReviewDetailModal from "./modal/ReviewDetailModal";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, description, createAt, userName } = review;
@@ -16,10 +15,11 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const navigate = useNavigate();
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
   const randomNum = Math.floor(Math.random() * 8) + 1;
+  const [isReviewSelect, setIsReviewSelect] = useState<boolean>(false);
 
-  useEffect(() => {
-    console.log(review);
-  }, []);
+  // useEffect(() => {
+  //   console.log(review);
+  // }, []);
   const changeDayForm = (createAt: Date): string => {
     const createDay = new Date(createAt);
     const year = createDay.getFullYear();
@@ -32,7 +32,14 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 
   return (
     <>
-      <CardWrap whileHover={{ scale: 1.1 }}>
+      <CardWrap
+        onClick={() => {
+          navigate(`/review/${reviewId}`);
+          // setIsReviewSelect(true);
+        }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 1 }}
+      >
         <ImgContainer>
           <ReviewImg src="/assets/images/review_test.jpg" alt="review image"></ReviewImg>
         </ImgContainer>
@@ -60,7 +67,6 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           {user?.id === userId ? (
             <Btn
               onClick={() => {
-                console.log("clickclicilc");
                 setIsReviewDeleteModal(reviewId!);
               }}
             >
