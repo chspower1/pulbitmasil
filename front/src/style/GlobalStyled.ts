@@ -19,7 +19,8 @@ export const GlobalStyled = createGlobalStyle`
         text-decoration: none; 
         color:${props => props.theme.textColor};
     }
-    input{
+ 
+    input,select{
         color:${props => props.theme.textColor};
         border:solid 1px ${props => props.theme.weekColor};
         &:focus{
