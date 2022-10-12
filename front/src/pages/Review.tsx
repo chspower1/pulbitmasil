@@ -38,8 +38,8 @@ export default function Review() {
           {isReviewDeleteModal && (
             <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
           )}
+          <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>이야기 작성</ReviewBtn>
           <CardContainer>
-            <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>이야기 작성</ReviewBtn>
             <CardBox>
               {reviews ? (
                 reviews.map(review => {
@@ -57,6 +57,7 @@ export default function Review() {
 }
 
 const ReviewWrap = styled(Wrapper)`
+  margin-top: 50px;
   flex-direction: column;
   background-image: url("/assets/images/walk.jpg");
 `;
@@ -88,9 +89,9 @@ const Accent = styled.span`
 
 const CardContainer = styled.div`
   width: 100%;
-  height: 80%;
 
-  position: relative;
+  height: 100%;
+  overflow-y: scroll;
 `;
 
 const ReviewBtn = styled.button`
@@ -98,7 +99,7 @@ const ReviewBtn = styled.button`
   width: 140px;
   height: 50px;
   font-size: 20px;
-  margin-left: auto;
+  margin-bottom: 30px;
 `;
 const CardBox = styled.div`
   display: flex;
@@ -108,4 +109,5 @@ const CardBox = styled.div`
   width: 100%;
   height: 100%;
   overflow-y: scroll;
+  padding-bottom: 80px;
 `;
