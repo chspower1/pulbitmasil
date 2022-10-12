@@ -38,6 +38,9 @@ export const GlobalStyled = createGlobalStyle`
         color:white;
         padding-top:20px;
         padding-bottom:20px;
+        display: flex;
+  justify-content: center;
+  align-items: center;
         border:none;
         cursor:pointer;
         transition:all 0.4s ease; 
