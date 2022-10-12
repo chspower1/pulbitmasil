@@ -20,7 +20,7 @@ export function convertTime(time: number) {
 export default function DodreamDetalModal() {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
   const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
-
+  
   useEffect(() => {
     if (isDodreamDetalModal) {
       let detailMapContainer = document.getElementById("detailMap"), // 이미지 지도를 표시할 div

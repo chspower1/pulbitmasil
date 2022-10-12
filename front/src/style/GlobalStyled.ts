@@ -1,6 +1,5 @@
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { reset } from "styled-reset";
-import "./fonts/fonts.css";
 export const GlobalStyled = createGlobalStyle`
     ${reset}
     
@@ -12,8 +11,8 @@ export const GlobalStyled = createGlobalStyle`
         height:100vh;
         overflow: hidden;
         font-family: "Sebang";
-  ::-webkit-scrollbar {
-    display: none;
+        ::-webkit-scrollbar {
+        display: none;
   }
     }
     a{

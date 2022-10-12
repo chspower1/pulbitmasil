@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { isReviewDeleteAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { userAtom } from "@atom/user";
-import { Wrapper } from "@style/Container";
+import { Box, Container, Wrapper } from "@style/Container";
 
 export default function Review() {
   const user = useRecoilValue(userAtom);
@@ -38,8 +38,8 @@ export default function Review() {
           {isReviewDeleteModal && (
             <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
           )}
-          <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>이야기 작성</ReviewBtn>
           <CardContainer>
+            <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>이야기 작성</ReviewBtn>
             <CardBox>
               {reviews ? (
                 reviews.map(review => {
@@ -87,10 +87,11 @@ const Accent = styled.span`
   color: ${props => props.theme.dangerColor};
 `;
 
-const CardContainer = styled.div`
+const CardContainer = styled(Container)`
+  flex-direction: column;
+  justify-content: flex-start;
   width: 100%;
-
-  height: 100%;
+  height: 90%;
   overflow-y: scroll;
 `;
 
@@ -101,13 +102,10 @@ const ReviewBtn = styled.button`
   font-size: 20px;
   margin-bottom: 30px;
 `;
-const CardBox = styled.div`
-  display: flex;
+const CardBox = styled(Box)`
   flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
   width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  padding-bottom: 80px;
+  height: auto;
+
+  /* padding-bottom: 80px; */
 `;
