@@ -125,10 +125,9 @@ const Description = styled.p`
 `;
 const InputBox = styled.div`
   position: relative;
-  width:530px; 
+  width: 530px;
   color: #8d8d8d;
-  margin-bottom:25px;
-r
+  margin-bottom: 25px;
 `;
 const InputTitle = styled.h3`
   font-size: 13px;

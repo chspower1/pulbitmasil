@@ -25,7 +25,7 @@ const ContentContainer = styled.section`
 export default function Router() {
   return (
     <BrowserRouter>
-      <Nav />
+      {/* <Nav /> */}
       <WelcomeModal />
       <ContentContainer>
         <Routes>
