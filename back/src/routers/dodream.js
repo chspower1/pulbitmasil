@@ -7,10 +7,7 @@ const dodream = require("../db/mongoDB/DoDream");
 router.get("/", function (req, res, next) {
   dodream()
     .then(result => res.status(200).json(result))
-    .catch(console.error)
-    .finally(() => 
-    // console.log("Done.")
-    );
+    .catch(console.error);
 });
 
 module.exports = router;

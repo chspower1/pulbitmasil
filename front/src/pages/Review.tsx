@@ -48,6 +48,7 @@ export default function Review() {
               ) : (
                 <div>후기없음</div>
               )}
+              
             </CardBox>
           </CardContainer>
         </ReviewWrap>
