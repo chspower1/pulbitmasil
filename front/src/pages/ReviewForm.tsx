@@ -41,8 +41,7 @@ export default function ReviewForm() {
       //   createAt: new Date(),
       // })
       const newData: IReview = {
-        name: user?.name!,
-        title: data.title,
+        userName: user?.name!,
         description: data.description,
         createAt: new Date(),
       };
@@ -52,7 +51,6 @@ export default function ReviewForm() {
       // setReview({ ...review!, title: watch("title"), description: watch("description") });
       const newData: IReview = {
         ...review!,
-        title: watch("title"),
         description: watch("description"),
       };
       editReview(newData);
@@ -60,13 +58,12 @@ export default function ReviewForm() {
     }
   });
   const handleClickCancel = () => {
-    console.log("click!!!!!!");
     setIsReviewCancelModal(true);
   };
   return (
     <>
       {checkUser ? (
-        <FormWrap onSubmit={handleSubmitReview}>
+        <FormWrap as="form" onSubmit={handleSubmitReview}>
           <TitleContainer>
             <Title>플로깅</Title>
             <SubTitle>
@@ -75,14 +72,14 @@ export default function ReviewForm() {
             </SubTitle>
           </TitleContainer>
 
-          <ReviewInput
+          {/* <ReviewInput
             style={{ height: "60px" }}
             defaultValue={review?.title}
             placeholder="제목을 입력해주세요."
             {...register("title", {
               required: { value: true, message: "제목을 입력해주세요." },
             })}
-          />
+          /> */}
 
           <ReviewInput
             placeholder="내용을 입력해주세요."
@@ -108,9 +105,10 @@ export default function ReviewForm() {
 }
 
 const FormWrap = styled(Wrapper)`
-  position: relative;
   flex-direction: column;
   background-image: url("/assets/images/walk.jpg");
+  margin-top: 50px;
+  padding: 50px 250px;
 `;
 
 const TitleContainer = styled.div`
@@ -159,7 +157,7 @@ const ReviewInput = styled.textarea`
 `;
 
 const ButtonContainer = styled.div`
-  width: 100%;
+  width: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;

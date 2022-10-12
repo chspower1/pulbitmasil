@@ -10,17 +10,16 @@ import ReviewDeleteModal from "./modal/ReviewDeleteModal";
 import { Accent } from "@style/ModalStyle";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
-  const { userId, reviewId, title, description, createAt, userName } = review;
+  const { userId, reviewId, description, createAt, userName } = review;
   const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
+  const randomNum = Math.floor(Math.random() * 8) + 1;
 
   useEffect(() => {
     console.log(review);
   }, []);
-  // const handleClickEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
-  // };
   const changeDayForm = (createAt: Date): string => {
     const createDay = new Date(createAt);
     const year = createDay.getFullYear();
@@ -39,7 +38,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
         </ImgContainer>
         <ReviewContainer>
           <InfoContainer>
-            <CardImg src="/assets/icon/profile01.png" />
+            <CardImg src={`/assets/icon/profile0${randomNum}.png`} />
             <InfoBox>
               <p style={{ fontSize: "18px" }}>
                 <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
@@ -89,12 +88,6 @@ const InfoContainer = styled.div`
   align-items: center;
   height: 35px;
   margin: auto;
-  /* &:after {
-    display: block;
-    width: 60px;
-    border-bottom: 1px solid black;
-    margin: 20px auto;
-  } */
 `;
 const ReviewContainer = styled.div`
   width: 100%;
