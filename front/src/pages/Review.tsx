@@ -22,8 +22,8 @@ export default function Review() {
     },
   });
   useEffect(() => {
-    console.log(user);
-  }, []);
+    console.log(reviews);
+  }, [reviews]);
   return (
     <>
       {isLoading || (
@@ -37,12 +37,17 @@ export default function Review() {
           {isReviewDeleteModal && (
             <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
           )}
-          <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>이야기 작성</ReviewBtn>
           <CardContainer>
-            {reviews &&
-              reviews.map(review => {
-                return <Card review={review}></Card>;
-              })}
+            <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>이야기 작성</ReviewBtn>
+            <CardBox>
+              {reviews ? (
+                reviews.map(review => {
+                  return <Card review={review}></Card>;
+                })
+              ) : (
+                <div>후기없음</div>
+              )}
+            </CardBox>
           </CardContainer>
         </ReviewWrap>
       )}
@@ -86,19 +91,24 @@ const Accent = styled.span`
 `;
 
 const CardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 90%;
+  width: 100%;
   height: 100%;
-  padding-top: 50px;
-  padding-bottom: 80px;
+  position: relative;
 `;
+
 const ReviewBtn = styled.button`
   border-radius: 5px;
   width: 140px;
   height: 50px;
   font-size: 20px;
   margin-left: auto;
+`;
+const CardBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  padding-top: 100px;
+  padding-bottom: 80px;
 `;

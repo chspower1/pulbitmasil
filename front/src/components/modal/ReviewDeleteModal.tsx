@@ -36,28 +36,30 @@ export default function ReviewDeleteModal({ reviewId, userId, setRevies }: Revie
   return (
     <AnimatePresence>
       {isReviewDeleteModal && (
-        <WelcomeModalWrap>
-          <WelcomeModalContainer>
+        <ReviewModalWrap>
+          <ReviewModalContainer>
             <Accent>삭제&nbsp; </Accent>하시겠습니까?
             <button onClick={handleClickConfirm}>네</button>
             <button onClick={handleClickCancel}>아니요</button>
-          </WelcomeModalContainer>
-        </WelcomeModalWrap>
+          </ReviewModalContainer>
+        </ReviewModalWrap>
       )}
+      <Overlay onClick={handleClickCancel} variants={OverlayVariant} initial="initial" animate="animate" exit="exit" />
     </AnimatePresence>
   );
 }
 
-const WelcomeModalWrap = styled(ModalWrap)`
+const ReviewModalWrap = styled(ModalWrap)`
   position: fixed;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
   z-index: 1000;
 `;
-const WelcomeModalContainer = styled(ModalContainer)`
+const ReviewModalContainer = styled(ModalContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
