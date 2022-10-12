@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Wrapper as RegisterWrapper } from "@style/Container";
 
 export default function Register() {
   const [isViewPassword, setIsViewPassword] = useState(false);
@@ -26,7 +27,7 @@ export default function Register() {
   });
 
   return (
-    <Wrapper>
+    <RegisterWrapper>
       <FormContainer>
         <Title>회원가입</Title>
         <Description>풀빛마실 멤버로 참여해보세요!</Description>
@@ -114,7 +115,7 @@ export default function Register() {
           <Button>가입하기</Button>
         </Form>
       </FormContainer>
-    </Wrapper>
+    </RegisterWrapper>
   );
 }
 const Wrapper = styled.div`

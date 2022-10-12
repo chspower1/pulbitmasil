@@ -42,13 +42,6 @@ export default function Content() {
     />
   );
 }
-const ContentWrap = styled.div`
-  width: 80vw;
-  margin-left: 20vw;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
 const Section01 = styled.div`
   height: 100vh;
 `;

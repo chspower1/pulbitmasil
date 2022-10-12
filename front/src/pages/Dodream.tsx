@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { useRecoilState } from "recoil";
 import { IDodream } from "@type/dodream";
-
+import { Wrapper } from "@style/Container";
 export default function Dodream() {
   const { isLoading, data: dodream } = useQuery<IDodream[] | undefined>(["dodream"], getDodream);
 
@@ -31,14 +31,7 @@ export default function Dodream() {
     </>
   );
 }
-const WalkWrap = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  margin-top: -70px;
-  overflow-y: hidden;
+const WalkWrap = styled(Wrapper)`
   background-image: url("/assets/images/walk.jpg");
 `;
 

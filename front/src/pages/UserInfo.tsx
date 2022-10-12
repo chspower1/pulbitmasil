@@ -1,5 +1,5 @@
-
+import { Wrapper as UserInfoWrapper } from "@style/Container";
 
 export default function UserInfo() {
-  return<div>UserInfo</div>
+  return <UserInfoWrapper>UserInfo</UserInfoWrapper>;
 }

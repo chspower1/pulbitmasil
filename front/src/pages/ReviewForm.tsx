@@ -11,6 +11,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewModal";
+import { Wrapper } from "@style/Container";
 
 export default function ReviewForm() {
   const user = useRecoilValue(userAtom);
@@ -106,14 +107,9 @@ export default function ReviewForm() {
   );
 }
 
-const FormWrap = styled.form`
+const FormWrap = styled(Wrapper)`
   position: relative;
-  padding: 0 450px;
-  padding-top: 100px;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100vh;
   background-image: url("/assets/images/walk.jpg");
 `;
 

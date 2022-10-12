@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
-
+import { Wrapper as HomeWrapper } from "@style/Container";
 //Variants
 const HomeImgVariants = {
   initial: (next: boolean) => {
@@ -63,7 +63,7 @@ export default function Home() {
     console.log(user);
   }, []);
   return (
-    <HomeWrap>
+    <HomeWrapper>
       <AnimatePresence initial={false} custom={next} onExitComplete={toggleLeaving}>
         <Img
           key={imgIndex}
@@ -92,16 +92,10 @@ export default function Home() {
       <LeftBtn onClick={() => handleClickArrowBtn(false)}>
         <FontAwesomeIcon icon={faChevronLeft} size={"4x"} />
       </LeftBtn>
-    </HomeWrap>
+    </HomeWrapper>
   );
 }
-const HomeWrap = styled.div`
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  margin-top: -70px;
-`;
+
 const Img = styled(motion.img)`
   position: absolute;
   width: 100vw;

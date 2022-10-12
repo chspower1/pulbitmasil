@@ -9,6 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { isReviewDeleteAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { userAtom } from "@atom/user";
+import { Wrapper } from "@style/Container";
 
 export default function Review() {
   const user = useRecoilValue(userAtom);
@@ -50,13 +51,8 @@ export default function Review() {
   );
 }
 
-const ReviewWrap = styled.div`
-  position: relative;
-  padding: 0 200px;
-  padding-top: 90px;
-  display: flex;
+const ReviewWrap = styled(Wrapper)`
   flex-direction: column;
-  height: 100vh;
   background-image: url("/assets/images/walk.jpg");
 `;
 
@@ -94,6 +90,7 @@ const CardContainer = styled.div`
   height: 100%;
   padding-top: 50px;
   padding-bottom: 80px;
+  overflow-y: scroll;
 `;
 const ReviewBtn = styled.button`
   border-radius: 5px;

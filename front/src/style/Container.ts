@@ -1,22 +1,23 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.section`
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  padding-top: 70px;
+`;
+
 export const Container = styled.div`
-  background: #ffffff;
-  border-radius: 15px;
-  color: black;
-  margin: 0.3em;
-  padding: 0.3em;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 export const Box = styled.div`
-  background: #ffffff;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  color: black;
-  margin: 0.3em;
-  padding: 0.3em;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
