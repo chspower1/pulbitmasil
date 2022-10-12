@@ -8,7 +8,6 @@ import { IReview, IReviewContent } from "@type/review";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewModal";
 import { Wrapper } from "@style/Container";
@@ -33,13 +32,8 @@ export default function ReviewForm() {
   }, []);
 
   const handleSubmitReview = handleSubmit(data => {
+    console.log("click");
     if (!isEdit) {
-      // setReview({
-      //   name: user?.name!,
-      //   title: data.title,
-      //   description: data.description,
-      //   createAt: new Date(),
-      // })
       const newData: IReview = {
         name: user?.name!,
         title: data.title,
@@ -66,7 +60,7 @@ export default function ReviewForm() {
   return (
     <>
       {checkUser ? (
-        <FormWrap onSubmit={handleSubmitReview}>
+        <FormWrap as="form" onSubmit={handleSubmitReview}>
           <TitleContainer>
             <Title>플로깅</Title>
             <SubTitle>

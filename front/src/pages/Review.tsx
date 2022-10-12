@@ -88,10 +88,8 @@ const Accent = styled.span`
 
 const CardContainer = styled.div`
   width: 100%;
-  height: 100%;
-  padding-top: 50px;
-  padding-bottom: 80px;
-  overflow-y: scroll;
+  height: 80%;
+
   position: relative;
 `;
 
@@ -108,6 +106,6 @@ const CardBox = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 80px;
+  height: 100%;
+  overflow-y: scroll;
 `;

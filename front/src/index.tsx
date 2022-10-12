@@ -15,6 +15,5 @@ root.render(
         <App />
       </QueryClientProvider>
     </RecoilRoot>
-    ,
   </React.StrictMode>,
 );

@@ -13,7 +13,7 @@ const HomeImgVariants = {
   initial: (next: boolean) => {
     console.log("exit", next);
     return {
-      x: next ? -1920 : 1920,
+      x: next ? -window.innerWidth : window.innerWidth,
 
       transition: {
         duration: 1,
@@ -23,7 +23,7 @@ const HomeImgVariants = {
   exit: (next: boolean) => {
     console.log("entry", next);
     return {
-      x: next ? 1920 : -1920,
+      x: next ? window.innerWidth : -window.innerWidth,
     };
   },
   animate: {
@@ -37,6 +37,7 @@ const HomeImgVariants = {
 export default function Home() {
   const maxIndex = 4;
   const [user, setUser] = useRecoilState(userAtom);
+  const [click, setClick] = useState(false);
   const [imgIndex, setImgIndex] = useState(1);
   const [next, setNext] = useState(true);
   const [leaving, setLeaving] = useState(false);
@@ -60,7 +61,13 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log(user);
+    console.log("turn");
+    const timer = setInterval(() => {
+      handleClickArrowBtn(true);
+    }, 7000);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
   }, []);
   return (
     <HomeWrapper>
@@ -86,7 +93,12 @@ export default function Home() {
           ))}
         </ImgPointerBox>
       </AnimatePresence>
-      <RightBtn onClick={() => handleClickArrowBtn(true)}>
+      <RightBtn
+        onClick={() => {
+          setClick(cur => !cur);
+          handleClickArrowBtn(true);
+        }}
+      >
         <FontAwesomeIcon icon={faChevronRight} size={"4x"} />
       </RightBtn>
       <LeftBtn onClick={() => handleClickArrowBtn(false)}>
@@ -100,8 +112,8 @@ const Img = styled(motion.img)`
   position: absolute;
   width: 100vw;
   height: 100vh;
+  filter: brightness(0.7);
   object-fit: cover;
-  overflow: hidden;
 `;
 const RightBtn = styled(motion.button)`
   background-color: transparent;
@@ -136,12 +148,12 @@ const ImgPointer = styled(motion.div)`
   cursor: pointer;
   transition: all 1s ease;
   &.normal {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgb(255, 255, 255);
   }
   &.active {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: rgb(140, 214, 178);
   }
   &:hover {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgb(106, 202, 156);
   }
 `;
