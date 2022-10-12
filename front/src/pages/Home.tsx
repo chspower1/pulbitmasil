@@ -59,7 +59,9 @@ export default function Home() {
     setImgIndex(num);
     imgIndex < num ? setNext(true) : setNext(false);
   };
-
+  // const timer = setInterval(() => {
+  //   handleClickArrowBtn(true);
+  // }, 7000);
   useEffect(() => {
     console.log("turn");
     const timer = setInterval(() => {
@@ -68,7 +70,7 @@ export default function Home() {
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, []);
+  }, [click]);
   return (
     <HomeWrapper>
       <AnimatePresence initial={false} custom={next} onExitComplete={toggleLeaving}>
@@ -148,12 +150,12 @@ const ImgPointer = styled(motion.div)`
   cursor: pointer;
   transition: all 1s ease;
   &.normal {
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.7);
   }
   &.active {
-    background-color: rgb(140, 214, 178);
+    background-color: rgba(22, 158, 92, 0.7);
   }
   &:hover {
-    background-color: rgb(106, 202, 156);
+    background-color: rgb(106, 202, 156, 0.7);
   }
 `;
