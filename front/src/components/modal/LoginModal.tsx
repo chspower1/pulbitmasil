@@ -242,7 +242,7 @@ const ErrorMessage = styled.div`
   right: 0;
 `;
 
-const ViewPassword = styled.div`
+export const ViewPassword = styled.div`
   position: absolute;
   height: 60px;
   right: 10px;

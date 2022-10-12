@@ -2,8 +2,14 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { registerUser } from "@api/api";
 import { UserRegisterForm } from "@type/user";
+import { ViewPassword } from "@components/modal/LoginModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Register() {
+  const [isViewPassword, setIsViewPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -57,7 +63,7 @@ export default function Register() {
             <InputTitle>비밀번호</InputTitle>
             <Input
               placeholder="숫자,특수문자,영문 포함 8자리 이상"
-              type="text"
+              type={isViewPassword ? "text" : "password"}
               id="password"
               // type="password"
               {...register("password", {
@@ -65,6 +71,14 @@ export default function Register() {
                 minLength: { value: 8, message: "8자 이상 입력해주세요." },
               })}
             />
+            <ViewPassword style={{ top: "18px" }}>
+              <FontAwesomeIcon
+                icon={isViewPassword ? faEye : faEyeSlash}
+                color="#2A9C6B"
+                style={{ cursor: "pointer" }}
+                onClick={() => setIsViewPassword(cur => !cur)}
+              />
+            </ViewPassword>
             <ErrorMessage>{errors.password?.message}</ErrorMessage>
           </InputBox>
 
@@ -72,7 +86,7 @@ export default function Register() {
             <InputTitle>비밀번호 확인</InputTitle>
             <Input
               placeholder="동일한 비밀번호를 입력해주세요."
-              type="text"
+              type={isViewPassword ? "text" : "password"}
               id="confirmPassword"
               {...register("confirmPassword", {
                 required: { value: true, message: "비밀번호가 일치하지 않습니다." },
@@ -104,7 +118,8 @@ const FormContainer = styled.div`
   position: relative;
   width: 700px;
   height: 750px;
-  padding: 65px 30px;
+  padding: 60px;
+  padding-bottom: 75px;
   color: #bdbdbd;
   float: right;
   display: flex;
@@ -112,7 +127,7 @@ const FormContainer = styled.div`
   align-items: center;
 `;
 
-const Title = styled.p`
+const Title = styled.h1`
   font-size: 32px;
   font-weight: bold;
   margin-bottom: 30px;
@@ -120,7 +135,7 @@ const Title = styled.p`
 `;
 const Description = styled.p`
   font-size: 16px;
-  margin-bottom: 50px;
+  margin-bottom: 45px;
   color: ${props => props.theme.textColor};
 `;
 const InputBox = styled.div`
@@ -138,6 +153,7 @@ const Input = styled.input`
   width: 530px;
   height: 50px;
   font-size: 18px;
+  padding: auto;
   padding-left: 10px;
   color: ${props => props.theme.textColor};
   ::placeholder {
@@ -157,10 +173,7 @@ const Button = styled.button`
   width: 200px;
   height: 64px;
   font-size: 18px;
-  &:not(:first-child) {
-    margin-left: 5px;
-  }
-  margin-top: 20px;
+  margin-top: 45px;
 `;
 
 const Form = styled.form`

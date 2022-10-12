@@ -27,10 +27,13 @@ export const GlobalStyled = createGlobalStyle`
     }
     input[type=password]{
         font-family:"Arial Black";
-        letter-spacing :1px;
+        letter-spacing :1.5px;
         font-size:20px;
+        padding-bottom:7px;
         ::placeholder{
             font-family: "Sebang";
+            font-size:18px;
+            letter-spacing: 0px;
         }
     }
     button { 
