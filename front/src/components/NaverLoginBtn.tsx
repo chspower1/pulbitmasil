@@ -18,7 +18,7 @@ interface User {
 }
 
 const CLIENT_ID = "PI99uUj8actDtIRQqkH0";
-const CALLBACK_URL = "http://localhost:3000/auth/naver/callback";
+const CALLBACK_URL = "http://kdt-ai5-team09.elicecoding.com/auth/naver/callback";
 
 export default function NaverLoginBtn() {
   const naverRef = useRef<any>();
@@ -34,7 +34,7 @@ export default function NaverLoginBtn() {
   function Naver() {
     const naverLogin = new naver.LoginWithNaverId({
       clientId: "PI99uUj8actDtIRQqkH0",
-      callbackUrl: "http://localhost:3000/auth/naver/callback",
+      callbackUrl: "http://kdt-ai5-team09.elicecoding.com/auth/naver/callback",
       callbackHandle: true,
       isPopup: false,
       loginButton: {
