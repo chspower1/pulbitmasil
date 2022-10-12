@@ -253,6 +253,7 @@ export const Overlay = styled(motion.div)`
   z-index: 100;
   position: fixed;
   left: 0px;
+  top: 0px;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
