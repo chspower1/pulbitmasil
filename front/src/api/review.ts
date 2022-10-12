@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IReview } from "@type/review";
 
-const BASE_URL = "http://localhost:5001";
+const BASE_URL = `http://${window.location.hostname}:5001`;
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
