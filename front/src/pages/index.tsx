@@ -45,7 +45,7 @@ export default function Router() {
           <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
         </Routes>
       </ContentContainer>
-      <ScrollBtn />
+      {/* <ScrollBtn /> */}
     </BrowserRouter>
   );
 }
