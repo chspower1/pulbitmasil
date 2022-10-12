@@ -47,15 +47,20 @@ export default function Review() {
               <CardBox>
                 {reviews ? (
                   reviews.map(review => {
-                    return <Card  review={review}></Card>;
+                    return <Card review={review}></Card>;
                   })
                 ) : (
                   <div>후기없음</div>
                 )}
               </CardBox>
             </CardContainer>
+
+            {reviewMatch ? (
+              <ReviewDetailModal
+                review={reviews?.filter(review => review.reviewId === parseInt(reviewMatch?.params.reviewId!))[0]!}
+              />
+            ) : null}
           </ReviewWrap>
-          {reviewMatch ? <ReviewDetailModal reviewId={parseInt(reviewMatch.params.reviewId!)} /> : null}
         </>
       )}
     </>
@@ -63,6 +68,7 @@ export default function Review() {
 }
 
 const ReviewWrap = styled(Wrapper)`
+  position: relative;
   margin-top: 50px;
   flex-direction: column;
   background-image: url("/assets/images/walk.jpg");

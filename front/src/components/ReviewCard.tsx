@@ -9,6 +9,15 @@ import { isReviewDeleteAtom } from "@atom/atom";
 import ReviewDeleteModal from "./modal/ReviewDeleteModal";
 import { Accent } from "@style/ModalStyle";
 
+export const changeDayForm = (createAt: Date): string => {
+  const createDay = new Date(createAt);
+  const year = createDay.getFullYear();
+  const month = createDay.getMonth() + 1;
+  const date = createDay.getDate();
+
+  return `${year}-${month >= 10 ? month : "0" + month}-${date >= 10 ? date : "0" + date}`;
+};
+
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, description, createAt, userName } = review;
   const isEdit = true;
@@ -20,14 +29,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   useEffect(() => {
     // console.log(review);
   }, []);
-  const changeDayForm = (createAt: Date): string => {
-    const createDay = new Date(createAt);
-    const year = createDay.getFullYear();
-    const month = createDay.getMonth() + 1;
-    const date = createDay.getDate();
 
-    return `${year}-${month >= 10 ? month : "0" + month}-${date >= 10 ? date : "0" + date}`;
-  };
   const day = changeDayForm(createAt!);
 
   return (
@@ -70,7 +72,6 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           {user?.id === userId ? (
             <Btn
               onClick={() => {
-                // console.log("clickclicilc");
                 setIsReviewDeleteModal(reviewId!);
               }}
             >
