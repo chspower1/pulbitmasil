@@ -108,7 +108,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
             res.status(200).json({
               success: true,
               id: rows[0].id,
-              name: result.data.kakao_account.profile.nickname,
+              name: rows[0].name,
               email: email,
               token: token,
             });
@@ -123,7 +123,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
 
 router.get("/naver", async function (req, res, next) {
   const access_token = req.query.access_token;
-  console.log(req.query);
+  // console.log(req.query);
 
   axios
     .get(`${NAVER_OAUTH_TOKEN_API_URL}`, {
@@ -132,8 +132,6 @@ router.get("/naver", async function (req, res, next) {
       },
     })
     .then(result => {
-      console.log("------------------------------------------------", result.data.response);
-      // res.redirect(`/auth/naver/info/:${result.data.access_token}`);
       const secretKey = process.env.JWT_SECRET_KEY;
 
       const name = result.data.response.name;
@@ -149,7 +147,7 @@ router.get("/naver", async function (req, res, next) {
                 const token = jwt.sign({ id: rows2.insertId, access_token: access_token }, secretKey);
                 res.status(200).json({
                   success: true,
-                  name: result.data.kakao_account.profile.nickname,
+                  name: name,
                   email: email,
                   token: token,
                 });
@@ -157,7 +155,7 @@ router.get("/naver", async function (req, res, next) {
             );
           } else {
             const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
-            console.log(token);
+
             res
               .status(200)
               .json({ success: true, id: rows[0].id, name: rows[0].name, email: rows[0].email, token: token });

@@ -122,10 +122,10 @@ router.delete("/delete", login_required, async function (req, res, next) {
 router.put("/modify", login_required, async function (req, res, next) {
   try {
     const { name } = req.body;
-    const user_id = req.currentUserId;
-    console.log(user_id);
-    maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, user_id], async function (err, rows, fields) {
+    const userId = req.currentUserId;
+    maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId], async function (err, rows, fields) {
       if (!err) {
+        maria.query("UPDATE REVIEW SET userName = ? WHERE userId = ?", [name, userId]);
         res.status(200).json({
           success: true,
         });
