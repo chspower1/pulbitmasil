@@ -21,11 +21,12 @@ export default function Register() {
     <Wrapper>
       <FormContainer>
         <Title>회원가입</Title>
-        <p>가입을 통해 더 많은 서비스를 만나보세요!</p>
+        <Description>풀빛마실 멤버로 참여해보세요!</Description>
         <Form onSubmit={onSubmitRegister}>
-          <InputContainer>
-            <p>이름</p>
+          <InputBox>
+            <InputTitle>이름</InputTitle>
             <Input
+              placeholder="이름을 입력해주세요."
               id="name"
               type="text"
               {...register("name", {
@@ -33,11 +34,12 @@ export default function Register() {
               })}
             />
             <ErrorMessage>{errors.name?.message}</ErrorMessage>
-          </InputContainer>
+          </InputBox>
 
-          <InputContainer>
-            <p>이메일</p>
+          <InputBox>
+            <InputTitle>이메일</InputTitle>
             <Input
+              placeholder="이메일을 입력해주세요."
               type="text"
               id="id"
               {...register("email", {
@@ -50,11 +52,11 @@ export default function Register() {
               })}
             />
             <ErrorMessage>{errors.email?.message}</ErrorMessage>
-          </InputContainer>
-
-          <InputContainer>
-            <p>비밀번호</p>
+          </InputBox>
+          <InputBox>
+            <InputTitle>비밀번호</InputTitle>
             <Input
+              placeholder="숫자,특수문자,영문 포함 8자리 이상"
               type="text"
               id="password"
               // type="password"
@@ -64,11 +66,12 @@ export default function Register() {
               })}
             />
             <ErrorMessage>{errors.password?.message}</ErrorMessage>
-          </InputContainer>
+          </InputBox>
 
-          <InputContainer>
-            <p>비밀번호 확인</p>
+          <InputBox>
+            <InputTitle>비밀번호 확인</InputTitle>
             <Input
+              placeholder="동일한 비밀번호를 입력해주세요."
               type="text"
               id="confirmPassword"
               {...register("confirmPassword", {
@@ -76,87 +79,85 @@ export default function Register() {
                 validate: value => value === watch("password"),
               })}
             />
-            {errors.confirmPassword && errors.confirmPassword.type === "validate" && (
-              <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>
-            )}
-          </InputContainer>
-          <Button type="submit">가입하기</Button>
-          <Button>로그인</Button>
+
+            <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+          </InputBox>
+          <Button>가입하기</Button>
         </Form>
       </FormContainer>
     </Wrapper>
   );
 }
 const Wrapper = styled.div`
-  /* background-image: url(../../register.jpg); */
-  color: black;
-  /* background-image: url(${process.env.PUBLIC_URL}/register.jpg); */
-  width: 100%;
-  height: 100%;
+  background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
   background-repeat: no-repeat;
   background-size: cover;
   /* opacity: 0.5; */
 `;
 const FormContainer = styled.div`
+  background-color: white;
   position: relative;
-  width: 500px;
-  height: 600px;
-  border: 8px solid beige;
-  border-radius: 20px;
-  padding: 50px 30px;
+  width: 700px;
+  height: 750px;
+  padding: 65px 30px;
   color: #bdbdbd;
-  margin: auto;
   float: right;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
-
-// const FormContainer = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   margin-top: 50px;
-// `;
 
 const Title = styled.p`
-  width: 100%;
-  font-size: 26px;
+  font-size: 32px;
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #00600f;
+  margin-bottom: 30px;
+  color: ${props => props.theme.mainColor};
 `;
-
-const InputContainer = styled.div`
-  width: 80%;
-  color: #8d8d8d;
-  &:first-child {
-    margin-top: 40px;
-  }
-  &:not(:first-child) {
-    margin-top: 30px;
-  }
-  margin: auto;
-`;
-
-const Input = styled.input`
-  display: block;
-  width: 100%;
-  margin-top: 5px;
+const Description = styled.p`
   font-size: 16px;
-  border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  padding: 5px 10px;
-
-  :focus {
-    outline: none;
+  margin-bottom: 50px;
+  color: ${props => props.theme.textColor};
+`;
+const InputBox = styled.div`
+  position: relative;
+  width:530px; 
+  color: #8d8d8d;
+  margin-bottom:25px;
+r
+`;
+const InputTitle = styled.h3`
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: ${props => props.theme.textColor};
+`;
+const Input = styled.input`
+  width: 530px;
+  height: 50px;
+  font-size: 18px;
+  padding-left: 10px;
+  color: ${props => props.theme.textColor};
+  ::placeholder {
+    color: ${props => props.theme.weekColor};
   }
 `;
-const ErrorMessage = styled.p`
+const ErrorMessage = styled.div`
+  position: absolute;
   font-size: 12px;
-  color: red;
-  margin-top: 10px;
+  color: ${props => props.theme.dangerColor};
+  height: 14px;
+  right: 0px;
+  bottom: -20px;
 `;
 
 const Button = styled.button`
-  width: 48%;
+  width: 200px;
+  height: 64px;
+  font-size: 18px;
   &:not(:first-child) {
     margin-left: 5px;
   }
@@ -164,8 +165,12 @@ const Button = styled.button`
 `;
 
 const Form = styled.form`
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 530px;
+  height: 500px;
   margin: auto;
-  display: inline;
-  margin: 0px;
+  /* display: inline; */
 `;
