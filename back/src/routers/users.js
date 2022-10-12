@@ -36,7 +36,7 @@ router.get("/select", function (req, res) {
     if (!err) {
       res.send(rows);
     } else {
-      console.log("err : " + err);
+      // console.log("err : " + err);
       res.send(err);
     }
   });
@@ -48,7 +48,7 @@ router.get("/init", function (req, res) {
     if (!err) {
       res.send(rows);
     } else {
-      console.log("err : " + err);
+      // console.log("err : " + err);
       res.send(err);
     }
   });
@@ -67,7 +67,7 @@ router.post("/register", async function (req, res, next) {
         if (!err) {
           res.status(200).json({ success: true, message: "user register success" });
         } else {
-          console.log("err : " + err);
+          // console.log("err : " + err);
           res.send(err);
         }
       },

@@ -5,7 +5,7 @@ function login_required(req, res, next) {
   console.log(req.headers);
 
   if (userToken === "null") {
-    console.log("Authorization 토큰: 없음");
+    // console.log("Authorization 토큰: 없음");
     return res.status(400).send("로그인한 유저만 사용할 수 있는 서비스");
   }
 

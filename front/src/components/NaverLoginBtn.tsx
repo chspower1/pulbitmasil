@@ -63,7 +63,7 @@ export default function NaverLoginBtn() {
       )
         .then(res => res.json())
         .then(res => {
-          console.log(res);
+          // console.log(res);
           localStorage.setItem("access_token", res.token);
           setData(res.user);
         });

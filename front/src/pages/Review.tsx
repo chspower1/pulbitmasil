@@ -23,7 +23,7 @@ export default function Review() {
     },
   });
   useEffect(() => {
-    console.log(reviews);
+    // console.log(reviews);
   }, [reviews]);
   return (
     <>

@@ -22,7 +22,7 @@ export default function Register() {
 
   const onSubmitRegister = handleSubmit(data => {
     delete data.confirmPassword;
-    console.log(data);
+    // console.log(data);
     registerUser(data);
   });
 

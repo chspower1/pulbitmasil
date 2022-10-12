@@ -20,7 +20,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
     });
     if (!data) return false;
     sessionStorage.setItem("userToken", data.token);
-    console.log("풀빛마실로그인", data);
+    // console.log("풀빛마실로그인", data);
     return data;
   } catch (err) {
     // alert("로그인 정보가 옳지 않습니다!");
@@ -30,7 +30,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
 
 export async function registerUser(newUser: UserRegisterForm) {
   const bodyData = JSON.stringify(newUser);
-  console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
+  // console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
 
   return axiosInstance.post(`user/register`, bodyData, {
     headers: {
@@ -40,22 +40,22 @@ export async function registerUser(newUser: UserRegisterForm) {
 }
 
 export async function kakaoLogin(code: string) {
-  console.log(`%cGET 요청 ${BASE_URL}auth/kakao?code=${code}`, "color: #a25cd1;");
+  // console.log(`%cGET 요청 ${BASE_URL}auth/kakao?code=${code}`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`auth/kakao?code=${code}`);
   sessionStorage.setItem("userToken", data.token);
-  console.log("카카오로그인", data);
+  // console.log("카카오로그인", data);
   return data;
 }
 export async function naverLogin(accessToken: string, stateToken: string) {
   const { data } = await axiosInstance.get(`auth/naver?access_token=${accessToken}&state_token=${stateToken}`);
   sessionStorage.setItem("userToken", data.token);
-  console.log("네이버로그인", data);
+  // console.log("네이버로그인", data);
   return data;
 }
 
 export async function WalkingData(params: any) {
   const { data } = await axiosInstance.get(`walk`);
-  console.log(data);
+  // console.log(data);
   return data;
 }
 

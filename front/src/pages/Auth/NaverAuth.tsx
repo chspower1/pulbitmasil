@@ -18,9 +18,9 @@ export default function NaverAuth() {
   useEffect(() => {
     async function inAuthPage() {
       const { id, name, email, token } = await naverLogin(accessToken, stateToken);
-      console.log("네이버 로그인, 넘어온 데이터\n", id, email, name, token);
+      // console.log("네이버 로그인, 넘어온 데이터\n", id, email, name, token);
       setUser({ id, email, name, token });
-      console.log("네이버 User상태\n", user);
+      // console.log("네이버 User상태\n", user);
     }
     inAuthPage();
     setIsWelcomeModal(true);

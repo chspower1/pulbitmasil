@@ -18,7 +18,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const randomNum = Math.floor(Math.random() * 8) + 1;
 
   useEffect(() => {
-    console.log(review);
+    // console.log(review);
   }, []);
   const changeDayForm = (createAt: Date): string => {
     const createDay = new Date(createAt);
@@ -60,7 +60,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           {user?.id === userId ? (
             <Btn
               onClick={() => {
-                console.log("clickclicilc");
+                // console.log("clickclicilc");
                 setIsReviewDeleteModal(reviewId!);
               }}
             >

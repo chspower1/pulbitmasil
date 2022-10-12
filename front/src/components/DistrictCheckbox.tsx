@@ -17,7 +17,7 @@ export default function DistrictCheckbox() {
   const [trash, setTrash] = useState<TrashCount>(json);
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const labels = Object.keys(trash);
-  console.log(labels);
+  // console.log(labels);
 
   const onCheckedElement = (checked:boolean, item:string) => {
     if (checked) {
@@ -27,7 +27,7 @@ export default function DistrictCheckbox() {
     }
   };
   
-  console.log(checkedList)
+  // console.log(checkedList)
   return(
     <CheckBox>
       <DistrictCheckBox>

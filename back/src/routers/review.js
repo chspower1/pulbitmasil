@@ -17,9 +17,9 @@ router.get("/", function (req, res) {
   maria.query("SELECT * FROM REVIEW", function (err, rows, fields) {
     if (!err) {
       res.send(rows);
-      console.log(rows);
+      // console.log(rows);
     } else {
-      console.log("err : " + err);
+      // console.log("err : " + err);
       res.send(err);
     }
   });
@@ -31,7 +31,7 @@ router.get("/:reviewId", function (req, res) {
     if (!err) {
       res.send(rows);
     } else {
-      console.log("err : " + err);
+      // console.log("err : " + err);
       res.send(err);
     }
   });
@@ -57,7 +57,7 @@ router.post("/create", login_required, async function (req, res, next) {
             reviewId: rows.insertId,
           });
         } else {
-          console.log("err : " + err);
+          // console.log("err : " + err);
           res.send(err);
         }
       },
@@ -87,7 +87,7 @@ router.put("/:reviewId", login_required, async function (req, res, next) {
             success: true,
           });
         } else {
-          console.log("err : " + err);
+          // console.log("err : " + err);
           res.send(err);
         }
       },
@@ -111,7 +111,7 @@ router.delete("/:reviewId", login_required, async function (req, res, next) {
       if (!err) {
         res.status(200).json({ success: true });
       } else {
-        console.log("err : " + err);
+        // console.log("err : " + err);
         res.send(err);
       }
     });

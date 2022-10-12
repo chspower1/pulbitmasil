@@ -6,6 +6,7 @@ import DodreamDetail from "@components/modal/DodreamDetail";
 import { useRecoilState } from "recoil";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import { IDodream } from "@type/dodream";
+
 const { kakao }: any = window;
 
 interface dodream {

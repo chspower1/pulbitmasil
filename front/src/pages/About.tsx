@@ -12,10 +12,10 @@ export default function Content() {
       sectionsColor={["#f7f7f7", "#C7E1D6", "#d8d8d8"]}
       scrollingSpeed={1000}
       onLeave={(origin, destination, direction) => {
-        console.log("onLeave event", { origin, destination, direction });
+        // console.log("onLeave event", { origin, destination, direction });
       }}
       render={({ state, fullpageApi }) => {
-        console.log("render prop change", state, fullpageApi);
+        // console.log("render prop change", state, fullpageApi);
         return (
           <ReactFullpage.Wrapper>
             <Section01 className="section">

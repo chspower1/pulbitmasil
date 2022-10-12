@@ -9,8 +9,8 @@ const axiosInstance = axios.create({
 
 export async function createReview(contents: IReview) {
   const bodyData = JSON.stringify(contents);
-  console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
-  console.log(bodyData);
+  // console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
+  // console.log(bodyData);
 
   return axiosInstance.post(`review/create`, bodyData, {
     headers: {
@@ -22,8 +22,8 @@ export async function createReview(contents: IReview) {
 
 export async function editReview(contents: IReview) {
   const bodyData = JSON.stringify(contents);
-  console.log(`%cPUT 요청 ${BASE_URL}/review/${contents.reviewId}`, "color: #a25cd1;");
-  console.log(bodyData);
+  // console.log(`%cPUT 요청 ${BASE_URL}/review/${contents.reviewId}`, "color: #a25cd1;");
+  // console.log(bodyData);
 
   return axiosInstance.put(`review/${contents.reviewId}`, bodyData, {
     headers: {
@@ -37,14 +37,14 @@ export async function editReview(contents: IReview) {
 }
 
 export async function getReviews() {
-  console.log(`%cGET 요청 ${BASE_URL}/review`, "color: #a25cd1;");
+  // console.log(`%cGET 요청 ${BASE_URL}/review`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review`);
-  console.log(data);
+  // console.log(data);
   return data;
 }
 
 export async function getOneReview(reviewId: number) {
-  console.log(`%cGET 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
+  // console.log(`%cGET 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review/${reviewId}`, {
     params: {
       reviewId,
@@ -54,7 +54,7 @@ export async function getOneReview(reviewId: number) {
 }
 
 export async function deleteReview({ reviewId, userId }: { reviewId: number; userId: number }) {
-  console.log(`%cDELETE 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
+  // console.log(`%cDELETE 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
   return axiosInstance.delete(`review/${reviewId}`, {
     headers: {
       "Content-Type": "application/json",

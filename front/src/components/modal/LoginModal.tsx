@@ -79,8 +79,7 @@ export default function LoginModal() {
     const href = window.location.href;
     let params = new URL(window.location.href).searchParams;
     let code = params.get("code");
-    console.log(code);
-    kakaoLogin(code!);
+    // console.log(code);
   };
 
   const closeLoginModal = () => {
@@ -96,9 +95,9 @@ export default function LoginModal() {
     } else {
       setIsWelcomeModal(true);
     }
-    console.log("풀빛마실 로그인, 넘어온 데이터\n", id, email, name, token);
+    // console.log("풀빛마실 로그인, 넘어온 데이터\n", id, email, name, token);
     setCurUser(prev => ({ id, email, name, token }));
-    console.log("풀빛마실 User상태\n", curUser);
+    // console.log("풀빛마실 User상태\n", curUser);
   };
 
   //로그인 시 모달비활성화,홈으로 이동

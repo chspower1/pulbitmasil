@@ -26,7 +26,7 @@ export default function ReviewDeleteModal({ reviewId, userId, setRevies }: Revie
       return reviews?.filter(review => review.reviewId !== isReviewDeleteModal);
     });
     setIsReviewDeleteModal(null);
-    console.log(data);
+    // console.log(data);
   };
   const handleClickCancel = (e: React.MouseEvent) => {
     e.preventDefault();

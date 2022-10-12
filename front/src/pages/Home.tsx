@@ -11,7 +11,7 @@ import { Wrapper as HomeWrapper } from "@style/Container";
 //Variants
 const HomeImgVariants = {
   initial: (next: boolean) => {
-    console.log("exit", next);
+    // console.log("exit", next);
     return {
       x: next ? -window.innerWidth : window.innerWidth,
 
@@ -21,7 +21,7 @@ const HomeImgVariants = {
     };
   },
   exit: (next: boolean) => {
-    console.log("entry", next);
+    // console.log("entry", next);
     return {
       x: next ? window.innerWidth : -window.innerWidth,
     };
@@ -50,7 +50,7 @@ export default function Home() {
       setNext(next);
       toggleLeaving();
       setImgIndex(prev => (next ? (prev === maxIndex ? 1 : prev + 1) : prev === 1 ? maxIndex : prev - 1));
-      console.log("Click! and nextState:", next);
+      // console.log("Click! and nextState:", next);
     }
   };
   const handleClickImgPoint = (imgIndex: number, num: number) => {
@@ -63,7 +63,7 @@ export default function Home() {
   //   handleClickArrowBtn(true);
   // }, 7000);
   useEffect(() => {
-    console.log("turn");
+    // console.log("turn");
     const timer = setInterval(() => {
       handleClickArrowBtn(true);
     }, 7000);

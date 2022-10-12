@@ -17,12 +17,12 @@ export default function KakaoAuth() {
   useEffect(() => {
     async function inAuthPage() {
       const { id, name, email, token } = await kakaoLogin(code!);
-      console.log("카카오 로그인, 넘어온 데이터\n", email, name, token);
+      // console.log("카카오 로그인, 넘어온 데이터\n", email, name, token);
       setUser(prev => {
         const newUser = { id, name, email, token };
         return { ...newUser };
       });
-      console.log("카카오 User상태\n", user);
+      // console.log("카카오 User상태\n", user);
     }
     inAuthPage();
     setIsWelcomeModal(true);

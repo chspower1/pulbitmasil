@@ -32,7 +32,7 @@ router.get("/kakao", async function (req, res, next) {
     //   res.status(200).json(result);
     // })
     .catch(e => {
-      console.log("에러2");
+      // console.log("에러2");
       res.send(e);
     });
 });
@@ -83,7 +83,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
       maria.query("SELECT * FROM USER WHERE email = ?", [email], async function (err, rows, fields) {
         if (!err) {
           if (!rows.length) {
-            console.log(111);
+            // console.log(111);
             maria.query(
               "INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,'kakao')",
               [result.data.kakao_account.profile.nickname, email],
@@ -167,7 +167,7 @@ router.get("/naver", async function (req, res, next) {
     //   res.status(200).json(result);
     // })
     .catch(e => {
-      console.log("에러2", e);
+      // console.log("에러2", e);
       res.send(e);
     });
 });
