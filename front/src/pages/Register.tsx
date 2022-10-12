@@ -10,11 +10,13 @@ import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 export default function Register() {
   const [isViewPassword, setIsViewPassword] = useState(false);
+  const [isViewConfirmPassword, setIsViewConfirmPassword] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
+    getValues,
   } = useForm<UserRegisterForm>();
 
   const onSubmitRegister = handleSubmit(data => {
@@ -86,13 +88,26 @@ export default function Register() {
             <InputTitle>비밀번호 확인</InputTitle>
             <Input
               placeholder="동일한 비밀번호를 입력해주세요."
-              type={isViewPassword ? "text" : "password"}
+              type={isViewConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               {...register("confirmPassword", {
-                required: { value: true, message: "비밀번호가 일치하지 않습니다." },
-                validate: value => value === watch("password"),
+                required: "비밀번호를 한번 더 입력해 주세요",
+                validate: {
+                  mathchesPreviousPassword: value => {
+                    const { password } = getValues();
+                    return password === value || "비밀번호가 일치하지 않습니다.";
+                  },
+                },
               })}
             />
+            <ViewPassword style={{ top: "18px" }}>
+              <FontAwesomeIcon
+                icon={isViewConfirmPassword ? faEye : faEyeSlash}
+                color="#2A9C6B"
+                style={{ cursor: "pointer" }}
+                onClick={() => setIsViewConfirmPassword(cur => !cur)}
+              />
+            </ViewPassword>
 
             <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
           </InputBox>
