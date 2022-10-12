@@ -21,20 +21,23 @@ export default function Review() {
       setRevies(data);
     },
   });
+  useEffect(() => {
+    console.log(user);
+  }, []);
   return (
     <>
       {isLoading || (
         <ReviewWrap>
           <TitleContainer>
-            <Title>Review</Title>
+            <Title>풀빛마실 이야기</Title>
             <SubTitle>
-              <Accent>플로깅</Accent> 후기를 공유해주세요!
+              <Accent>풀빛마실</Accent> 후기를 공유해주세요!
             </SubTitle>
           </TitleContainer>
           {isReviewDeleteModal && (
             <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
           )}
-          <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>후기 작성 go go!</ReviewBtn>
+          <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>이야기 작성</ReviewBtn>
           <CardContainer>
             {reviews &&
               reviews.map(review => {
@@ -49,15 +52,16 @@ export default function Review() {
 
 const ReviewWrap = styled.div`
   position: relative;
-  padding-top: 100px;
+  padding: 0 200px;
+  padding-top: 90px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 100vh;
   background-image: url("/assets/images/walk.jpg");
 `;
 
 const TitleContainer = styled.div`
+  text-align: center;
   margin-bottom: 20px;
 `;
 const Title = styled.h1`
@@ -65,11 +69,15 @@ const Title = styled.h1`
   font-size: 50px;
   text-align: center;
   color: ${props => props.theme.mainColor};
-  text-decoration: underline;
-  text-underline-position: under;
+  /* text-decoration: underline;
+  text-underline-position: under; */
+  border-bottom: 1px solid #eceff1;
+  width: 500px;
+  margin: auto;
+  padding-bottom: 10px;
 `;
 const SubTitle = styled.p`
-  font-size: 25px;
+  font-size: 20px;
   margin-top: 30px;
   color: ${props => props.theme.mainColor};
 `;
@@ -79,14 +87,18 @@ const Accent = styled.span`
 
 const CardContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-around;
   width: 90%;
   height: 100%;
   padding-top: 50px;
   padding-bottom: 80px;
-  flex-wrap: wrap;
 `;
 const ReviewBtn = styled.button`
-  border-radius: 20px;
+  border-radius: 5px;
+  width: 140px;
+  height: 50px;
+  font-size: 20px;
+  margin-left: auto;
 `;

@@ -30,6 +30,9 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   return (
     <>
       <CardWrap>
+        <ImgContainer>
+          <ReviewImg src="/assets/images/review_test.jpg" alt="review image"></ReviewImg>
+        </ImgContainer>
         <InfoContainer>
           <CardImg />
           <InfoBox>
@@ -59,10 +62,9 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 }
 
 const CardWrap = styled(motion.div)`
-  width: 23%;
-  height: 500px;
+  width: 370px;
+  height: 480px;
   background-color: #f5f5f5;
-  border-radius: 20px;
   box-shadow: 5px 5px #c7c7c7;
 `;
 const InfoContainer = styled.div`
@@ -75,6 +77,20 @@ const InfoContainer = styled.div`
     border-bottom: 1px solid black;
     margin: 20px auto;
   } */
+`;
+
+const ImgContainer = styled.div`
+  width: 370px;
+  height: 245px;
+  position: relative;
+`;
+
+const ReviewImg = styled.img`
+  position: absolute;
+   top: 0;
+   left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 const InfoBox = styled.div`
