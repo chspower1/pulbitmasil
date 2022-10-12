@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Wrapper as RegisterWrapper } from "@style/Container";
+import { Wrapper } from "@style/Container";
 
 export default function Register() {
   const [isViewPassword, setIsViewPassword] = useState(false);
@@ -118,7 +118,7 @@ export default function Register() {
     </RegisterWrapper>
   );
 }
-const Wrapper = styled.div`
+const RegisterWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
   display: flex;
   justify-content: center;
