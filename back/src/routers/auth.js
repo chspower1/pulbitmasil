@@ -108,7 +108,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
             res.status(200).json({
               success: true,
               id: rows[0].id,
-              name: result.data.kakao_account.profile.nickname,
+              name: rows[0].name,
               email: email,
               token: token,
             });
