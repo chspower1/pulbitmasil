@@ -5,7 +5,6 @@ import Home from "./Home";
 import About from "./About";
 import Register from "./Register";
 import Chart from "./Chart";
-import Plogging from "./Plogging";
 import ScrollBtn from "@components/ScrollBtn";
 import NaverAuth from "./Auth/NaverAuth";
 import KakaoAuth from "./Auth/KakaoAuth";
@@ -28,7 +27,6 @@ export default function Router() {
         <Route path="/about" element={<About />} />
         <Route path="/register" element={<Register />} />
         <Route path="/chart" element={<Chart />} />
-        <Route path="/plogging" element={<Plogging />} />
         <Route path="/dodream" element={<Dodream />} />
         <Route path="/review" element={<Review />} />
         <Route path="/review/:reviewId" element={<Review />} />
