@@ -34,6 +34,7 @@ export default function ReviewForm() {
   const handleSubmitReview = handleSubmit(data => {
     // console.log("click");
     if (!isEdit) {
+      console.log(data);
       const newData: IReview = {
         name: user?.name!,
         description: data.description,

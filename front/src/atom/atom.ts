@@ -4,14 +4,7 @@ import { userAtom } from "./user";
 
 const { persistAtom } = recoilPersist();
 
-export const isLoginSelector = selector({
-  key: "isLogin",
-  get: ({ get }) => {
-    const user = get(userAtom);
-    const checkLogin = sessionStorage.getItem("userToken") && user?.token ? true : false;
-    return checkLogin;
-  },
-});
+
 export const isLoginModalAtom = atom({
   key: "isLoginModal",
   default: false,

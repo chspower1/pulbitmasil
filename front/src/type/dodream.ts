@@ -11,6 +11,10 @@ export interface IDodream {
   reg_date: number;
   relate_subway: string;
   traffic_info: string;
+  cpi: Cpi[];
+}
+export interface Cpi {
+  cpi: string;
   x: number;
   y: number;
 }

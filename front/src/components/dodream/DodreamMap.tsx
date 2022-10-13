@@ -9,23 +9,13 @@ import { IDodream } from "@type/dodream";
 
 const { kakao }: any = window;
 
-interface dodream {
-  course_category_nm: string;
-  course_name: string;
-  distance: string;
-  area_gu: string;
-  lead_time: string;
-  course_level: string;
-  x: number;
-  y: number;
-}
 export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
   const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
   useEffect(() => {
     // 지도생성
     const xy = selectedDodream
-      ? { x: selectedDodream.x, y: selectedDodream.y }
+      ? { x: selectedDodream.cpi[0].x, y: selectedDodream.cpi[0].y }
       : { x: 37.5585362386, y: 127.1605311028 };
     let container = document.getElementById("map");
     let options = {
@@ -40,7 +30,7 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
       return {
         title: road.course_name,
         content: road.course_name,
-        latlng: new kakao.maps.LatLng(road.x, road.y),
+        latlng: new kakao.maps.LatLng(road.cpi[0].x, road.cpi[0].y),
       };
     });
     // 마커 이미지

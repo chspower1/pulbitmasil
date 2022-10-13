@@ -13,61 +13,63 @@ const maria = require("../db/connect/maria");
 //   res.render("index", { title: "Review" });
 // });
 
-router.get("/", function (req, res) {
-  maria.query(
-    "SELECT reviewId, userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
-    function (err, rows, fields) {
-      if (!err) {
-        res.send(rows);
-        // console.log(rows);
-      } else {
-        // console.log("err : " + err);
-        res.send(err);
-      }
-    },
-  );
-});
+// router.get("/", function (req, res) {
+//   maria.query(
+//     "SELECT userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
+//     function (err, rows, fields) {
+//       if (!err) {
+//         res.send(rows);
+//         // console.log(rows);
+//       } else {
+//         // console.log("err : " + err);
+//         res.send(err);
+//       }
+//     },
+//   );
+// });
 
-router.get("/:reviewId", function (req, res) {
-  const reviewId = req.params.reviewId;
-  maria.query(
-    "SELECT userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId where reviewId = ?",
-    [reviewId],
-    function (err, rows, fields) {
-      if (!err) {
-        res.send(rows);
-      } else {
-        // console.log("err : " + err);
-        res.send(err);
-      }
-    },
-  );
-});
+// router.get("/:reviewId", function (req, res) {
+//   const reviewId = req.params.reviewId;
+//   maria.query(
+//     "SELECT userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId where reviewId = ?",
+//     [reviewId],
+//     function (err, rows, fields) {
+//       if (!err) {
+//         res.send(rows);
+//       } else {
+//         // console.log("err : " + err);
+//         res.send(err);
+//       }
+//     },
+//   );
+// });
 
-// 리뷰 작성
-router.post("/create", login_required, async function (req, res, next) {
+// 멤버 추가
+router.post("/:crewId", login_required, async function (req, res, next) {
   const userId = req.currentUserId;
+  const crewId = req.params.crewId;
   try {
-    const { description, createAt } = req.body;
-
-    maria.query(
-      `INSERT INTO REVIEW(userId, description, createAt) VALUES(?,?,?)`,
-      [userId, description, createAt],
-      function (err, rows, fields) {
-        if (!err) {
-          res.status(200).json({
-            success: true,
-            description: description,
-            createAt: createAt,
-            userId: userId,
-            reviewId: rows.insertId,
-          });
-        } else {
-          // console.log("err : " + err);
-          res.send(err);
-        }
-      },
-    );
+    const member = await maria.query(`SELECT * FROM GREENCREW WHERE crewId = ?`, [crewId]);
+    console.log(member);
+    // maria.query(
+    //   `INSERT INTO REVIEW(userId, description, createAt, userName) VALUES(?,?,?,?)`,
+    //   [userId, description, createAt, userName],
+    //   function (err, rows, fields) {
+    //     if (!err) {
+    //       res.status(200).json({
+    //         success: true,
+    //         description: description,
+    //         createAt: createAt,
+    //         userId: userId,
+    //         userName: userName,
+    //         reviewId: rows.insertId,
+    //       });
+    //     } else {
+    //       // console.log("err : " + err);
+    //       res.send(err);
+    //     }
+    //   },
+    // );
   } catch (error) {
     next(error);
   }

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { isLoginModalAtom, isLoginSelector, isWelcomeModalAtom } from "@atom/atom";
+import { isLoginModalAtom, isWelcomeModalAtom } from "@atom/atom";
+import { isLoginSelector } from "@atom/user";
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { kakaoLogin, requestLogin } from "@api/api";

@@ -125,7 +125,6 @@ router.put("/modify", login_required, async function (req, res, next) {
     const userId = req.currentUserId;
     maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId], async function (err, rows, fields) {
       if (!err) {
-        maria.query("UPDATE REVIEW SET userName = ? WHERE userId = ?", [name, userId]);
         res.status(200).json({
           success: true,
         });
