@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
-
-const jwt = require("jsonwebtoken");
-
 const login_required = require("../middlewares/login_required");
-
 const maria = require("../db/connect/maria");
+
+const { upload } = require("../middlewares/file_upload");
+const uploadSingle = upload.single("file");
+require("dotenv").config();
+
+global.hostURL = process.env.Upload;
 
 /* GET home page. */
 // router.get("/", function (req, res, next) {
@@ -15,7 +16,7 @@ const maria = require("../db/connect/maria");
 
 router.get("/", function (req, res) {
   maria.query(
-    "SELECT reviewId, userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
+    "SELECT reviewId, userId, description,createAt, name, reviewImg FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
     function (err, rows, fields) {
       if (!err) {
         res.send(rows);
@@ -31,7 +32,7 @@ router.get("/", function (req, res) {
 router.get("/:reviewId", function (req, res) {
   const reviewId = req.params.reviewId;
   maria.query(
-    "SELECT userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId where reviewId = ?",
+    "SELECT userId, description,createAt, name, reviewImg FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId where reviewId = ?",
     [reviewId],
     function (err, rows, fields) {
       if (!err) {
@@ -45,14 +46,25 @@ router.get("/:reviewId", function (req, res) {
 });
 
 // 리뷰 작성
-router.post("/create", login_required, async function (req, res, next) {
+router.post("/create", login_required, uploadSingle, async function (req, res, next) {
   const userId = req.currentUserId;
+
   try {
     const { description, createAt } = req.body;
 
+    let imgName;
+    if (req.file) {
+      imgName = hostURL + req.file.filename;
+    } else {
+      imgName = hostURL + "default.jpg";
+    }
+
+    console.log(req.file);
+    console.log(imgName);
+
     maria.query(
-      `INSERT INTO REVIEW(userId, description, createAt) VALUES(?,?,?)`,
-      [userId, description, createAt],
+      `INSERT INTO REVIEW(userId, description, createAt, reviewImg) VALUES(?,?,?,?)`,
+      [userId, description, createAt, imgName],
       function (err, rows, fields) {
         if (!err) {
           res.status(200).json({
@@ -61,6 +73,7 @@ router.post("/create", login_required, async function (req, res, next) {
             createAt: createAt,
             userId: userId,
             reviewId: rows.insertId,
+            reviewImg: imgName,
           });
         } else {
           // console.log("err : " + err);
@@ -74,19 +87,28 @@ router.post("/create", login_required, async function (req, res, next) {
 });
 
 // 빈 값이 들어오면 에러가 아니라 수정만 안 하도록 바꾸기
-router.put("/:reviewId", login_required, async function (req, res, next) {
+router.put("/:reviewId", login_required, uploadSingle, async function (req, res, next) {
   try {
-    const reviewer = req.body.userId;
+    const reviewer = parseInt(req.body.userId);
     const userId = req.currentUserId;
+
     if (reviewer !== userId) {
       return res.sendStatus(432);
     }
-    // const title = req.body.title ?? null;
+
+    let imgName;
+    if (req.file) {
+      imgName = hostURL + req.file.filename;
+    } else {
+      imgName = imgName = hostURL + "default.jpg";
+    }
+
     const description = req.body.description ?? null;
     const reviewId = req.params.reviewId;
+
     maria.query(
-      `UPDATE REVIEW SET  description = ? WHERE reviewId = ?`,
-      [description, reviewId],
+      `UPDATE REVIEW SET  description = ?, reviewImg = ?  WHERE reviewId = ?`,
+      [description, imgName, reviewId],
       async function (err, rows, fields) {
         if (!err) {
           res.status(200).json({
