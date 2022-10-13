@@ -32,7 +32,7 @@ export default function Review() {
   };
 
   useEffect(() => {
-    // console.log(reviews);
+    console.log(reviews);
   }, [reviews]);
   return (
     <>
@@ -41,15 +41,17 @@ export default function Review() {
           <ReviewWrap>
             <TitleContainer>
               <Title>풀빛마실 이야기</Title>
+            </TitleContainer>
+            <CardContainer>
               <SubTitle>
                 <Accent>풀빛마실</Accent> 후기를 공유해주세요!
               </SubTitle>
-            </TitleContainer>
-            {isReviewDeleteModal && (
-              <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
-            )}
-            <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
-            <CardContainer>
+
+              {isReviewDeleteModal && (
+                <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
+              )}
+              <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
+
               <CardBox>
                 {reviews ? (
                   reviews?.map(review => {
@@ -83,11 +85,10 @@ const ReviewWrap = styled(Wrapper)`
 
 const TitleContainer = styled.div`
   text-align: center;
-  margin-bottom: 20px;
 `;
 const Title = styled.h1`
   font-weight: 700;
-  font-size: 50px;
+  font-size: 32px;
   text-align: center;
   color: ${props => props.theme.mainColor};
   border-bottom: 1px solid #eceff1;
@@ -97,7 +98,7 @@ const Title = styled.h1`
 `;
 const SubTitle = styled.p`
   font-size: 20px;
-  margin-top: 30px;
+  margin-top: 15px;
   color: ${props => props.theme.mainColor};
 `;
 const Accent = styled.span`
@@ -114,9 +115,10 @@ const CardContainer = styled(Container)`
 
 const ReviewBtn = styled.button`
   border-radius: 5px;
-  width: 140px;
-  height: 50px;
-  font-size: 20px;
+  width: 120px;
+  height: 30px;
+  font-size: 18px;
+  margin-top: 15px;
   margin-bottom: 30px;
 `;
 const CardBox = styled(Box)`

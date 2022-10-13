@@ -69,7 +69,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
 
           <TextContainer>
             <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
-            <Description>{description}</Description>
+            <Description readOnly>{description}</Description>
           </TextContainer>
         </ReviewContainer>
         <ButtonContainer>
@@ -131,11 +131,16 @@ const TextContainer = styled(motion.div)`
   /* overflow: scroll; */
 `;
 
-const Description = styled(motion.p)`
+const Description = styled.textarea`
+  padding: 10px;
+  width: 100%;
+  height: 100px;
   letter-spacing: 1px;
   line-height: 1.3em;
   margin-top: 20px;
   font-size: 20px;
+  overflow-y: scroll;
+  resize: none;
 `;
 const InfoBox = styled(motion.div)`
   margin-left: 20px;
@@ -145,6 +150,7 @@ const InfoBox = styled(motion.div)`
 `;
 const ReviewContainer = styled(motion.div)`
   width: 100%;
+  height: 250px;
   padding: 30px;
 `;
 
@@ -163,10 +169,13 @@ const CardImg = styled(motion.img)`
 const ButtonContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
+  position: absolute;
   margin: auto;
+  left: 0;
+  bottom: 0;
 `;
 const Btn = styled(motion.button)`
-  width: 50%;
+  width: 300px;
   height: 20px;
   &:first-child {
     border-right: 1px #388e3c solid;

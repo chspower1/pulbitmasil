@@ -77,7 +77,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 
 const CardWrap = styled(motion(motion.div))`
   width: 370px;
-  height: 480px;
+  height: 430px;
   background-color: white;
   box-shadow: 3px 3px 15px #b0bec5;
   margin: 0 23px;
@@ -130,6 +130,7 @@ const CardImg = styled(motion.img)`
 const ButtonContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
+
   margin: auto;
 `;
 const Btn = styled(motion.button)`
@@ -148,6 +149,6 @@ const Description = styled(motion.p)`
   word-break: break-word;
 
   display: -webkit-box;
-  -webkit-line-clamp: 3; // 원하는 라인수
+  -webkit-line-clamp: 2; // 원하는 라인수
   -webkit-box-orient: vertical;
 `;

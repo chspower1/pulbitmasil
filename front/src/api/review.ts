@@ -8,29 +8,29 @@ const axiosInstance = axios.create({
 });
 
 //image 테스트
-// export async function createReview(contents: FormData) {
-//   console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
-
-//   return axiosInstance.post(`review/create`, contents, {
-//     headers: {
-//       "Content-Type": 'multipart/form-data',
-//       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-//     },
-//   });
-// }
-
-export async function createReview(contents: IReview) {
-  const bodyData = JSON.stringify(contents);
+export async function createReview(contents: FormData) {
   console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
-  console.log(bodyData);
 
-  return axiosInstance.post(`review/create`, bodyData, {
+  return axiosInstance.post(`review/create`, contents, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
+
+// export async function createReview(contents: IReview) {
+//   const bodyData = JSON.stringify(contents);
+//   console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
+//   console.log(bodyData);
+
+//   return axiosInstance.post(`review/create`, bodyData, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+//     },
+//   });
+// }
 
 export async function editReview(contents: IReview) {
   const bodyData = JSON.stringify(contents);

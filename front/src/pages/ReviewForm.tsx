@@ -49,27 +49,31 @@ export default function ReviewForm() {
   const handleSubmitReview = handleSubmit(data => {
     // console.log("click");
     if (!isEdit) {
-      console.log(data);
-      const newData: IReview = {
-        name: user?.name!,
-        description: data.description,
-        createAt: new Date(),
-      };
-      createReview(newData);
+      // console.log(data);
+      // const newData: IReview = {
+      //   name: user?.name!,
+      //   description: data.description,
+      //   createAt: new Date(),
+      // };
+      // createReview(newData);
 
       //form data 변경
-      //        const newData: IReview = {
-      //     name: user?.name!,
-      //     description: data.description,
-      //     createAt: new Date(),
-      //   };
+      //      const newData: IReview = {
+      //   name: user?.name!,
+      //   description: data.description,
+      //   createAt: new Date(),
+      // };
 
-      //   const formData= new FormData();
-      //   formData.append('imageUrl',imagePreview);
-      //   formData.append('review',new Blob([JSON.stringify(newData)], {
+      const formData = new FormData();
+      const date = new Date();
+      formData.append("imageUrl", imagePreview);
+      formData.append("name", user?.name!);
+      formData.append("description", data.description);
+      formData.append("createAt", date.toString());
+      //   formData.append('createAt',new Blob([JSON.stringify(newData)], {
       //     type: "application/json"
       // }))
-      // createReview(formData);
+      createReview(formData);
 
       navigate("/review");
     } else {
@@ -118,8 +122,7 @@ export default function ReviewForm() {
               <option>근교산 자락길 모임4</option>
             </SelectInput>
 
-            <ReviewInput
-              height={200}
+            <ReviewTextArea
               placeholder="내용을 입력해주세요."
               defaultValue={review?.description}
               {...register("description", {
@@ -195,9 +198,14 @@ const Input = styled.input<{ height: number }>`
 `;
 const SelectInput = styled(Input)``;
 const ImageInput = styled(Input)``;
-const ReviewInput = styled(Input)`
+const ReviewTextArea = styled.textarea`
+  width: 550px;
+  height: 300px;
   font-size: 16px;
   padding: 10px 10px;
+  border: solid 1px #a7a7a7;
+  margin-bottom: 15px;
+  resize: none;
 `;
 const ImgLabel = styled.label`
   padding: 6px 25px;
