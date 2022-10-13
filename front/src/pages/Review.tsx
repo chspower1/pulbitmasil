@@ -52,7 +52,7 @@ export default function Review() {
             <CardContainer>
               <CardBox>
                 {reviews ? (
-                  reviews.map(review => {
+                  reviews?.map(review => {
                     return <Card review={review}></Card>;
                   })
                 ) : (

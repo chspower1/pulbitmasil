@@ -29,7 +29,7 @@ export default function ReviewForm() {
   } = useForm<IReviewContent>();
 
   //img preview test
-  const [imagePreview, setImagePreview] = useState();
+  const [imagePreview, setImagePreview] = useState<any>(); // any 말고??
   const image = watch("imageUrl");
 
   useEffect(() => {
@@ -39,10 +39,13 @@ export default function ReviewForm() {
   useEffect(() => {
     if (image && image.length > 0) {
       const file = image[0];
-      //error
-      // setImagePreview(URL.createObjectURL(file));
+      console.log(image);
+      console.log(file);
+      console.log(typeof file);
+      setImagePreview(window.URL.createObjectURL(file));
     }
   }, [image]);
+
   const handleSubmitReview = handleSubmit(data => {
     // console.log("click");
     if (!isEdit) {
@@ -53,6 +56,21 @@ export default function ReviewForm() {
         createAt: new Date(),
       };
       createReview(newData);
+
+      //form data 변경
+      //        const newData: IReview = {
+      //     name: user?.name!,
+      //     description: data.description,
+      //     createAt: new Date(),
+      //   };
+
+      //   const formData= new FormData();
+      //   formData.append('imageUrl',imagePreview);
+      //   formData.append('review',new Blob([JSON.stringify(newData)], {
+      //     type: "application/json"
+      // }))
+      // createReview(formData);
+
       navigate("/review");
     } else {
       // setReview({ ...review!, title: watch("title"), description: watch("description") });
@@ -81,16 +99,27 @@ export default function ReviewForm() {
                 <Accent> 생생한 경험</Accent>를 공유해주세요!
               </SubTitle>
             </TitleContainer>
-
-            <SelectInput as="select" height={50}>
+            <ImgBox>
+              {image && <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={imagePreview} />}
+            </ImgBox>
+            <ImgLabel htmlFor="input-file">이미지 업로드</ImgLabel>
+            <input
+              id="input-file"
+              type="file"
+              style={{ display: "none" }}
+              {...register("imageUrl", {
+                required: { value: true, message: "이미지를 넣어주세요." },
+              })}
+            />
+            <SelectInput as="select" height={40}>
               <option>근교산 자락길 모임1</option>
               <option>근교산 자락길 모임2</option>
               <option>근교산 자락길 모임3</option>
               <option>근교산 자락길 모임4</option>
             </SelectInput>
-            <ImageInput type="file" height={155} {...register("imageUrl")} />
+
             <ReviewInput
-              height={280}
+              height={200}
               placeholder="내용을 입력해주세요."
               defaultValue={review?.description}
               {...register("description", {
@@ -129,7 +158,9 @@ const Form = styled.form`
   background-color: white;
 `;
 const TitleContainer = styled.div`
-  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
 `;
 const Title = styled.h1`
   font-weight: 700;
@@ -138,10 +169,10 @@ const Title = styled.h1`
   color: ${props => props.theme.mainColor};
   text-decoration: underline;
   text-underline-position: under;
+  margin-right: 10px;
 `;
 const SubTitle = styled.p`
   font-size: 18px;
-  margin-top: 30px;
   color: ${props => props.theme.mainColor};
 `;
 const Accent = styled.span`
@@ -168,10 +199,33 @@ const ReviewInput = styled(Input)`
   font-size: 16px;
   padding: 10px 10px;
 `;
+const ImgLabel = styled.label`
+  padding: 6px 25px;
+  background-color: ${props => props.theme.mainColor};
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  margin: 10px 0;
+`;
 
 const ButtonContainer = styled.div`
   display: flex;
   width: 420px;
   height: 45px;
   justify-content: space-between;
+`;
+const ImgBox = styled.div`
+  width: 400px;
+  height: 260px;
+  background-color: gray;
+  overflow: hidden;
+  margin: 0 auto;
+`;
+const ErrorMessage = styled.div`
+  position: absolute;
+  font-size: 12px;
+  color: ${props => props.theme.dangerColor};
+  height: 14px;
+  right: 0px;
+  bottom: -20px;
 `;
