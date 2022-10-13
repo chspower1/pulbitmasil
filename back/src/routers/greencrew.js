@@ -49,8 +49,19 @@ router.post("/:crewId", login_required, async function (req, res, next) {
   const userId = req.currentUserId;
   const crewId = req.params.crewId;
   try {
-    const member = await maria.query(`SELECT * FROM GREENCREW WHERE crewId = ?`, [crewId]);
-    console.log(member);
+    await maria.query(
+      `UPDATE GREENCREW
+      SET member = IF(INSTR((SELECT member FROM GREENCREW WHERE crewId = ?),CONCAT(",",?)), 
+                        "(SELECT member FROM GREENCREW WHERE crewId = ?)+','+ ?",
+                        REPLACE((SELECT member FROM GREENCREW WHERE crewId = ?),',' + ?,''))
+      WHERE crewId = ?`,
+      [crewId, userId, crewId, userId, crewId, userId, crewId],
+      async function (err, rows, fields) {
+        console.log(err);
+        res.status(200).json(rows);
+      },
+    );
+
     // maria.query(
     //   `INSERT INTO REVIEW(userId, description, createAt, userName) VALUES(?,?,?,?)`,
     //   [userId, description, createAt, userName],
