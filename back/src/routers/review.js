@@ -15,7 +15,7 @@ const maria = require("../db/connect/maria");
 
 router.get("/", function (req, res) {
   maria.query(
-    "SELECT userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
+    "SELECT reviewId, userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
     function (err, rows, fields) {
       if (!err) {
         res.send(rows);
