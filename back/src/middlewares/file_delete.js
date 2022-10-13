@@ -1,9 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const maria = require("../db/connect/maria");
-require("dotenv").config();
-
-global.hostURL = process.env.Upload;
 
 const fileDelete = reviewId => {
   maria.query(`SELECT reviewImg FROM REVIEW WHERE reviewId = ?`, [reviewId], async function (err, rows, fields) {
