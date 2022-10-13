@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import testPoints from "../../test_data/풀빛마실후보데이터/독립공원안산 나들길.json";
+import testPoints from "../../test_data/풀빛마실후보데이터/성공/개웅산 숲 산책길o.json";
 import { IDodream } from "@type/dodream";
 
 const { kakao }: any = window;
