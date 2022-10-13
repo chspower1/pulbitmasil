@@ -129,7 +129,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
 
 router.delete("/:reviewId", login_required, async function (req, res, next) {
   try {
-    const reviewer = req.body.userId;
+    const reviewer = parseInt(req.body.userId);
     const userId = req.currentUserId;
     const reviewId = req.params.reviewId;
 
