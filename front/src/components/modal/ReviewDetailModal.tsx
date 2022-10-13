@@ -11,7 +11,7 @@ import styled from "styled-components";
 //   setIsReviewSelect: Dispatch<SetStateAction<boolean>>;
 // }
 export default function ReviewDetailModal({ review }: { review: IReview }) {
-  const { reviewId, userName, createAt, description } = review;
+  const { reviewId, name, createAt, description } = review;
   const navigate = useNavigate();
   const reviewMatch = useMatch(`/review/${reviewId}`);
   const onOverlayClick = () => {
@@ -46,7 +46,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
           <InfoContainer>
             <InfoBox>
               <p style={{ fontSize: "25px" }}>
-                <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
+                <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
               </p>
               <p style={{ fontSize: "20px", marginTop: "5px" }}>{day} </p>
             </InfoBox>

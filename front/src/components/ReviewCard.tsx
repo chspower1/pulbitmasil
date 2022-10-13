@@ -19,7 +19,7 @@ export const changeDayForm = (createAt: Date): string => {
 };
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
-  const { userId, reviewId, description, createAt, userName } = review;
+  const { userId, reviewId, description, createAt, name } = review;
   const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
@@ -27,7 +27,8 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const randomNum = Math.floor(Math.random() * 8) + 1;
 
   useEffect(() => {
-    // console.log(review);
+    console.log(review);
+    console.log(user?.id, review.userId);
   }, []);
 
   const day = changeDayForm(createAt!);
@@ -48,7 +49,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
               <CardImg src={`/assets/icon/profile0${randomNum}.png`} />
               <InfoBox>
                 <p style={{ fontSize: "18px" }}>
-                  <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
+                  <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
                 </p>
                 <p style={{ fontSize: "14px", marginTop: "5px" }}>{day} </p>
               </InfoBox>

@@ -35,7 +35,7 @@ export default function ReviewForm() {
     // console.log("click");
     if (!isEdit) {
       const newData: IReview = {
-        userName: user?.name!,
+        name: user?.name!,
         description: data.description,
         createAt: new Date(),
       };
