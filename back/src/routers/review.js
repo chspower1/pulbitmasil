@@ -4,6 +4,7 @@ const login_required = require("../middlewares/login_required");
 const maria = require("../db/connect/maria");
 
 const { upload } = require("../middlewares/file_upload");
+const { fileDelete } = require("../middlewares/file_delete");
 const uploadSingle = upload.single("file");
 require("dotenv").config();
 
@@ -105,6 +106,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
 
     const description = req.body.description ?? null;
     const reviewId = req.params.reviewId;
+    fileDelete(reviewId);
 
     maria.query(
       `UPDATE REVIEW SET  description = ?, reviewImg = ?  WHERE reviewId = ?`,
@@ -134,6 +136,8 @@ router.delete("/:reviewId", login_required, async function (req, res, next) {
     if (reviewer !== userId) {
       return res.sendStatus(432);
     }
+
+    fileDelete(reviewId);
 
     maria.query(`DELETE FROM REVIEW WHERE reviewId = ?`, [reviewId], async function (err, rows, fields) {
       if (!err) {
