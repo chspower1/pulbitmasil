@@ -24,10 +24,11 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
-  const randomNum = Math.floor(Math.random() * 8) + 1;
 
   useEffect(() => {
     // console.log(review);
+    console.log(user);
+    console.log(reviewId, userId);
   }, []);
 
   const day = changeDayForm(createAt!);
@@ -45,7 +46,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           </ImgContainer>
           <ReviewContainer>
             <InfoContainer>
-              <CardImg src={`/assets/icon/profile0${randomNum}.png`} />
+              <CardImg src={`/assets/icon/profile01.png`} />
               <InfoBox>
                 <p style={{ fontSize: "18px" }}>
                   <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
