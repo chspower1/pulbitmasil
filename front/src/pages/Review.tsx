@@ -11,6 +11,7 @@ import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { userAtom } from "@atom/user";
 import { Box, Container, Wrapper } from "@style/Container";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
+import { AnimatePresence } from "framer-motion";
 
 export default function Review() {
   const user = useRecoilValue(userAtom);
@@ -54,12 +55,13 @@ export default function Review() {
                 )}
               </CardBox>
             </CardContainer>
-
-            {reviewMatch ? (
-              <ReviewDetailModal
-                review={reviews?.filter(review => review.reviewId === parseInt(reviewMatch?.params.reviewId!))[0]!}
-              />
-            ) : null}
+            <AnimatePresence>
+              {reviewMatch ? (
+                <ReviewDetailModal
+                  review={reviews?.filter(review => review.reviewId === parseInt(reviewMatch?.params.reviewId!))[0]!}
+                />
+              ) : null}
+            </AnimatePresence>
           </ReviewWrap>
         </>
       )}

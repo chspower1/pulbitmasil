@@ -26,41 +26,39 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
 
   return (
     <>
-      <AnimatePresence>
-        <Overlay
-          onClick={onOverlayClick}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-        />
-        <ReviewWrap layoutId={`${reviewId}wrap`} transition={{ type: "spring", duration: 1 }}>
-          <ImgContainer>
-            <ReviewImg
-              src="/assets/images/review_test.jpg"
-              alt="review image"
-              // layoutId={`${reviewId}image`}
-              transition={{ type: "tween", duration: 1 }}
-            ></ReviewImg>
-          </ImgContainer>
-          <ReviewContainer>
-            <InfoContainer>
-              <InfoBox>
-                <p style={{ fontSize: "25px" }}>
-                  <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
-                </p>
-                <p style={{ fontSize: "20px", marginTop: "5px" }}>{day} </p>
-              </InfoBox>
-              <p style={{ position: "absolute", right: "25px" }}>지역</p>
-            </InfoContainer>
+      <Overlay
+        onClick={onOverlayClick}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      />
+      <ReviewWrap layoutId={`${reviewId}wrap`} transition={{ type: "spring", duration: 1 }}>
+        <ImgContainer>
+          <ReviewImg
+            src="/assets/images/review_test.jpg"
+            alt="review image"
+            // layoutId={`${reviewId}image`}
+            transition={{ type: "tween", duration: 1 }}
+          ></ReviewImg>
+        </ImgContainer>
+        <ReviewContainer>
+          <InfoContainer>
+            <InfoBox>
+              <p style={{ fontSize: "25px" }}>
+                <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
+              </p>
+              <p style={{ fontSize: "20px", marginTop: "5px" }}>{day} </p>
+            </InfoBox>
+            <p style={{ position: "absolute", right: "25px" }}>지역</p>
+          </InfoContainer>
 
-            <TextContainer>
-              <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
-              <Description>{description}</Description>
-            </TextContainer>
-          </ReviewContainer>
-        </ReviewWrap>
-      </AnimatePresence>
+          <TextContainer>
+            <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
+            <Description>{description}</Description>
+          </TextContainer>
+        </ReviewContainer>
+      </ReviewWrap>
     </>
   );
 }

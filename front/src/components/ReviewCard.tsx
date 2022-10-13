@@ -41,11 +41,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           }}
         >
           <ImgContainer>
-            <ReviewImg
-              src="/assets/images/review_test.jpg"
-              alt="review image"
-              layoutId={`${reviewId}image`}
-            ></ReviewImg>
+            <ReviewImg src="/assets/images/review_test.jpg" alt="review image"></ReviewImg>
           </ImgContainer>
           <ReviewContainer>
             <InfoContainer>
