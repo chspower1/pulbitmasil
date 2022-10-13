@@ -125,6 +125,7 @@ const CardBox = styled(Box)`
   flex-wrap: wrap;
   width: 100%;
   height: auto;
+  padding-bottom: 100px;
 
   /* padding-bottom: 80px; */
 `;

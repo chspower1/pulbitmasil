@@ -40,7 +40,7 @@ export async function createReview(contents: FormData) {
 export async function editReview(contents: FormData, reviewId: number) {
   console.log(`%cPUT 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
 
-  return axiosInstance.post(`review/${reviewId}`, contents, {
+  return axiosInstance.put(`review/${reviewId}`, contents, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

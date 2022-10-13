@@ -61,13 +61,14 @@ export default function ReviewForm() {
       // formData.append("description", data.description);
 
       createReview(formData);
+      navigate("/review");
     } else {
       // formData.append("description",watch("description"));
       formData.append("file", uploadImg);
+      formData.append("userId", user?.id?.toString()!);
       editReview(formData, review?.reviewId!);
+      navigate("/review");
     }
-
-    navigate("/review");
   });
   const handleClickCancel = () => {
     console.log("handleclickcancel");
