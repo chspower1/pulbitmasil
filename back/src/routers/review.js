@@ -14,38 +14,45 @@ const maria = require("../db/connect/maria");
 // });
 
 router.get("/", function (req, res) {
-  maria.query("SELECT * FROM REVIEW", function (err, rows, fields) {
-    if (!err) {
-      res.send(rows);
-      // console.log(rows);
-    } else {
-      // console.log("err : " + err);
-      res.send(err);
-    }
-  });
+  maria.query(
+    "SELECT userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
+    function (err, rows, fields) {
+      if (!err) {
+        res.send(rows);
+        // console.log(rows);
+      } else {
+        // console.log("err : " + err);
+        res.send(err);
+      }
+    },
+  );
 });
 
 router.get("/:reviewId", function (req, res) {
   const reviewId = req.params.reviewId;
-  maria.query("SELECT * FROM REVIEW WhERE reviewId = ?", [reviewId], function (err, rows, fields) {
-    if (!err) {
-      res.send(rows);
-    } else {
-      // console.log("err : " + err);
-      res.send(err);
-    }
-  });
+  maria.query(
+    "SELECT userId, description,createAt, name FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId where reviewId = ?",
+    [reviewId],
+    function (err, rows, fields) {
+      if (!err) {
+        res.send(rows);
+      } else {
+        // console.log("err : " + err);
+        res.send(err);
+      }
+    },
+  );
 });
 
 // 리뷰 작성
 router.post("/create", login_required, async function (req, res, next) {
   const userId = req.currentUserId;
   try {
-    const { description, createAt, userName } = req.body;
+    const { description, createAt } = req.body;
 
     maria.query(
-      `INSERT INTO REVIEW(userId, description, createAt, userName) VALUES(?,?,?,?)`,
-      [userId, description, createAt, userName],
+      `INSERT INTO REVIEW(userId, description, createAt) VALUES(?,?,?)`,
+      [userId, description, createAt],
       function (err, rows, fields) {
         if (!err) {
           res.status(200).json({
@@ -53,7 +60,6 @@ router.post("/create", login_required, async function (req, res, next) {
             description: description,
             createAt: createAt,
             userId: userId,
-            userName: userName,
             reviewId: rows.insertId,
           });
         } else {
