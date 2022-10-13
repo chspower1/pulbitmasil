@@ -1,11 +1,6 @@
 import axios from "axios";
 import { IReview } from "@type/review";
-
-const BASE_URL = `http://${window.location.hostname}:5001`;
-
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-});
+import { axiosInstance } from "./user";
 
 export async function createReview(contents: IReview) {
   const bodyData = JSON.stringify(contents);

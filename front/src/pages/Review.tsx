@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { isReviewDeleteAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { isLoginSelector, userAtom } from "@atom/user";
-import { Box, Container, Wrapper } from "@style/Container";
+import { Box, Container, Wrapper } from "@style/Layout";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
 

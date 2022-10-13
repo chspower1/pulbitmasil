@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Container, Box } from "../style/Container";
+import { Container, Box } from "../style/Layout";
 import { reset } from "styled-reset";
 import { DoughnutChart } from "@components/chart/LineChart";
 import RoadBarChart from "@components/chart/RoadBarChart";

@@ -1,4 +1,4 @@
-import { naverLogin } from "@api/api";
+import { naverLogin } from "@api/user";
 import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { userAtom } from "@atom/user";

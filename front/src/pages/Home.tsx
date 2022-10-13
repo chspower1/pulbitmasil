@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
-import { Wrapper as HomeWrapper } from "@style/Container";
+import { Wrapper as HomeWrapper } from "@style/Layout";
 //Variants
 const HomeImgVariants = {
   initial: (next: boolean) => {

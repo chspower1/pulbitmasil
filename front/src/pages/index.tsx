@@ -39,6 +39,7 @@ export default function Router() {
         <Route path="/review/edit/:reviewId" element={<ReviewForm />} />
         <Route path="/userInfo" element={<UserInfo />} />
         <Route path="/GreenCrew" element={<GreenCrew />} />
+        <Route path="/GreenCrew/:area" element={<GreenCrew />} />
         <Route path="/auth/naver/callback" element={<NaverAuth />} />
         <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
       </Routes>

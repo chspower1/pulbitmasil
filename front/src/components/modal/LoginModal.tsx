@@ -6,7 +6,7 @@ import { isLoginModalAtom, isWelcomeModalAtom } from "@atom/atom";
 import { isLoginSelector } from "@atom/user";
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 
-import { kakaoLogin, requestLogin } from "@api/api";
+import { kakaoLogin, requestLogin } from "@api/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";

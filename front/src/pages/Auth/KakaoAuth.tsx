@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import qs from "qs";
-import { kakaoLogin } from "@api/api";
+import { kakaoLogin } from "@api/user";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { data } from "@components/chart/LineChart";
 import { userAtom } from "@atom/user";

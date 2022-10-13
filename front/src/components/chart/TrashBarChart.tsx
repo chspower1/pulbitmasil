@@ -3,7 +3,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Bar } from "react-chartjs-2";
 import json from "../../test_data/new_trash_count.json";
 import styled from "styled-components";
-import { Container } from "../../style/Container";
+import { Container } from "../../style/Layout";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 type Trash = "담배꽁초" | "일반담배꽁초" | "일반쓰레기" | "재활용쓰레기" | "항아리형";

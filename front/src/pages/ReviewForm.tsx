@@ -10,7 +10,7 @@ import { userAtom } from "@atom/user";
 import { useNavigate, useLocation } from "react-router-dom";
 import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
-import { Wrapper } from "@style/Container";
+import { Wrapper } from "@style/Layout";
 
 export default function ReviewForm() {
   const user = useRecoilValue(userAtom);

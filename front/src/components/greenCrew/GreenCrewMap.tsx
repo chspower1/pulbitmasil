@@ -7,7 +7,7 @@ import { IDodream } from "@type/dodream";
 
 const { kakao }: any = window;
 
-export default function GreenCrewMap({ dodream }: { dodream: IDodream[] }) {
+export default function GreenCrewMap({ dodream }: { dodream?: IDodream[] }) {
   const courseName = [
     "독정천",
     "고덕산 자락길",
