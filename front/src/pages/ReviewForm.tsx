@@ -20,7 +20,6 @@ export default function ReviewForm() {
   const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.review.userId : true;
   const [review, setReview] = useState<IReview>(state?.review!);
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
-
   const {
     register,
     handleSubmit,
@@ -30,10 +29,13 @@ export default function ReviewForm() {
 
   //img preview test
   const [imagePreview, setImagePreview] = useState<any>(); // any 말고??
-  const image = watch("imageUrl");
+  const [uploadImg, setUploadImg] = useState<any>(); // any 말고??
+  const image = watch("reviewImg");
 
   useEffect(() => {
     setIsReviewCancelModal(false);
+    isEdit && setImagePreview(review.reviewImg);
+    // isEdit && setUploadImg(review.reviewImg);
   }, []);
 
   useEffect(() => {
@@ -43,48 +45,29 @@ export default function ReviewForm() {
       console.log(file);
       console.log(typeof file);
       setImagePreview(window.URL.createObjectURL(file));
+      setUploadImg(file);
     }
   }, [image]);
 
   const handleSubmitReview = handleSubmit(data => {
     // console.log("click");
+    const formData = new FormData();
+    formData.append("description", watch("description"));
     if (!isEdit) {
-      // console.log(data);
-      // const newData: IReview = {
-      //   name: user?.name!,
-      //   description: data.description,
-      //   createAt: new Date(),
-      // };
-      // createReview(newData);
-
-      //form data 변경
-      //      const newData: IReview = {
-      //   name: user?.name!,
-      //   description: data.description,
-      //   createAt: new Date(),
-      // };
-
-      const formData = new FormData();
       const date = new Date();
-      formData.append("imageUrl", imagePreview);
-      formData.append("name", user?.name!);
-      formData.append("description", data.description);
       formData.append("createAt", date.toString());
-      //   formData.append('createAt',new Blob([JSON.stringify(newData)], {
-      //     type: "application/json"
-      // }))
-      createReview(formData);
+      formData.append("file", uploadImg);
+      formData.append("name", user?.name!);
+      // formData.append("description", data.description);
 
-      navigate("/review");
+      createReview(formData);
     } else {
-      // setReview({ ...review!, title: watch("title"), description: watch("description") });
-      const newData: IReview = {
-        ...review!,
-        description: watch("description"),
-      };
-      editReview(newData);
-      navigate("/review");
+      // formData.append("description",watch("description"));
+      formData.append("file", uploadImg);
+      editReview(formData, review?.reviewId!);
     }
+
+    navigate("/review");
   });
   const handleClickCancel = () => {
     console.log("handleclickcancel");
@@ -107,14 +90,7 @@ export default function ReviewForm() {
               {image && <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={imagePreview} />}
             </ImgBox>
             <ImgLabel htmlFor="input-file">이미지 업로드</ImgLabel>
-            <input
-              id="input-file"
-              type="file"
-              style={{ display: "none" }}
-              {...register("imageUrl", {
-                required: { value: true, message: "이미지를 넣어주세요." },
-              })}
-            />
+            <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
             <SelectInput as="select" height={40}>
               <option>근교산 자락길 모임1</option>
               <option>근교산 자락길 모임2</option>

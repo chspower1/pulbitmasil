@@ -14,7 +14,7 @@ import styled from "styled-components";
 //   setIsReviewSelect: Dispatch<SetStateAction<boolean>>;
 // }
 export default function ReviewDetailModal({ review }: { review: IReview }) {
-  const { reviewId, name, createAt, description, userId } = review;
+  const { reviewId, name, createAt, description, userId, reviewImg } = review;
   const isEdit = true;
 
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
       <ReviewWrap layoutId={`${reviewId}wrap`} transition={{ type: "spring", duration: 1 }}>
         <ImgContainer>
           <ReviewImg
-            src="/assets/images/review_test.jpg"
+            src={reviewImg}
             alt="review image"
             // layoutId={`${reviewId}image`}
             transition={{ type: "tween", duration: 1 }}

@@ -19,7 +19,7 @@ export const changeDayForm = (createAt: Date): string => {
 };
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
-  const { userId, reviewId, description, createAt, name } = review;
+  const { userId, reviewId, description, createAt, name, reviewImg } = review;
   const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           }}
         >
           <ImgContainer>
-            <ReviewImg src="/assets/images/review_test.jpg" alt="review image"></ReviewImg>
+            <ReviewImg src={reviewImg} alt="review image"></ReviewImg>
           </ImgContainer>
           <ReviewContainer>
             <InfoContainer>

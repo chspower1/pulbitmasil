@@ -4,7 +4,7 @@ export interface IReview {
   reviewId?: number;
   description: string;
   createAt?: Date;
-  imageUrl?: any;
+  reviewImg?: any;
 }
 
 export interface IReviewContent extends Omit<IReview, "createAt"> {}
