@@ -11,5 +11,5 @@ export interface IGreenCrew {
   curMember: number;
   content: string;
   trafficInfo: string;
-  Cpi: Cpi[];
+  cpi: Cpi[];
 }

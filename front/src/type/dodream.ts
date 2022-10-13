@@ -14,7 +14,7 @@ export interface IDodream {
   cpi: Cpi[];
 }
 export interface Cpi {
-  cpi: string;
+  cpi: number;
   x: number;
   y: number;
 }

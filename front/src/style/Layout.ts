@@ -22,6 +22,7 @@ export const Box = styled.div`
   align-items: center;
 `;
 export const Title = styled.h1`
+  height: 16%; 
   font-size: 32px;
   color: ${props => props.theme.mainColor};
 `;

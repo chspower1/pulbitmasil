@@ -45,7 +45,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           </ImgContainer>
           <ReviewContainer>
             <InfoContainer>
-              <CardImg src={`/assets/icon/profile0${randomNum}.png`} />
+              <CardImg src={`/assets/icon/user/profile0${randomNum}.png`} />
               <InfoBox>
                 <p style={{ fontSize: "18px" }}>
                   <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님

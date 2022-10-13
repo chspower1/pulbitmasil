@@ -95,8 +95,8 @@ export default function GreenCrewMap({ dodream }: { dodream?: IDodream[] }) {
   );
 }
 const MapBox = styled.div`
-  width: 350px;
-  height: 350px;
+  width: 50%;
+  height: 100%;
   border: 5px solid #88caae;
   border-radius: 10px;
 `;
