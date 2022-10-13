@@ -58,8 +58,8 @@ export default function ReviewForm() {
   return (
     <>
       {checkUser ? (
-        <FormWrap as="form" onSubmit={handleSubmitReview}>
-          <Form>
+        <FormWrap>
+          <Form as="form" onSubmit={handleSubmitReview}>
             <TitleContainer>
               <Title>플로깅</Title>
               <SubTitle>

@@ -1,8 +1,11 @@
+import { isReviewDeleteAtom } from "@atom/atom";
+import { userAtom } from "@atom/user";
 import { changeDayForm } from "@components/ReviewCard";
 import { IReview } from "@type/review";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, SetStateAction, Dispatch, useEffect } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 // interface ReviewDetailProps {
@@ -11,9 +14,13 @@ import styled from "styled-components";
 //   setIsReviewSelect: Dispatch<SetStateAction<boolean>>;
 // }
 export default function ReviewDetailModal({ review }: { review: IReview }) {
-  const { reviewId, name, createAt, description } = review;
+  const { reviewId, name, createAt, description, userId } = review;
+
   const navigate = useNavigate();
   const reviewMatch = useMatch(`/review/${reviewId}`);
+  const user = useRecoilValue(userAtom);
+  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
+
   const onOverlayClick = () => {
     navigate("/review"); // 이렇게되면 또 리랜더링되는데 이게맞나 ?
   };
@@ -44,6 +51,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         </ImgContainer>
         <ReviewContainer>
           <InfoContainer>
+            <CardImg src={`/assets/icon/profile01.png`} />
             <InfoBox>
               <p style={{ fontSize: "25px" }}>
                 <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
@@ -58,6 +66,19 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             <Description>{description}</Description>
           </TextContainer>
         </ReviewContainer>
+        <ButtonContainer>
+          {user?.id === userId ? <Btn>수정</Btn> : null}
+
+          {user?.id === userId ? (
+            <Btn
+              onClick={() => {
+                setIsReviewDeleteModal(reviewId!);
+              }}
+            >
+              삭제
+            </Btn>
+          ) : null}
+        </ButtonContainer>
       </ReviewWrap>
     </>
   );
@@ -111,6 +132,7 @@ const Description = styled(motion.p)`
   font-size: 20px;
 `;
 const InfoBox = styled(motion.div)`
+  margin-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -127,4 +149,20 @@ const InfoContainer = styled(motion.div)`
   align-items: center;
   height: 35px;
   margin: auto;
+`;
+const CardImg = styled(motion.img)`
+  width: 30px;
+  height: 30px;
+`;
+const ButtonContainer = styled(motion.div)`
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+`;
+const Btn = styled(motion.button)`
+  width: 50%;
+  height: 20px;
+  &:first-child {
+    border-right: 1px #388e3c solid;
+  }
 `;
