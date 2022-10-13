@@ -7,6 +7,18 @@ const axiosInstance = axios.create({
   baseURL: BASE_URL,
 });
 
+//image 테스트
+// export async function createReview(contents: FormData) {
+//   console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
+
+//   return axiosInstance.post(`review/create`, contents, {
+//     headers: {
+//       "Content-Type": 'multipart/form-data',
+//       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+//     },
+//   });
+// }
+
 export async function createReview(contents: IReview) {
   const bodyData = JSON.stringify(contents);
   console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");

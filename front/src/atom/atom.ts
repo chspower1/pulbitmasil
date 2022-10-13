@@ -4,7 +4,6 @@ import { userAtom } from "./user";
 
 const { persistAtom } = recoilPersist();
 
-
 export const isLoginModalAtom = atom({
   key: "isLoginModal",
   default: false,

@@ -15,6 +15,7 @@ import styled from "styled-components";
 // }
 export default function ReviewDetailModal({ review }: { review: IReview }) {
   const { reviewId, name, createAt, description, userId } = review;
+  const isEdit = true;
 
   const navigate = useNavigate();
   const reviewMatch = useMatch(`/review/${reviewId}`);
@@ -22,7 +23,12 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
 
   const onOverlayClick = () => {
+    // setIsReviewDetailModal(false);
     navigate("/review"); // 이렇게되면 또 리랜더링되는데 이게맞나 ?
+  };
+
+  const handleClickEdit = () => {
+    navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } });
   };
   const day = changeDayForm(createAt!);
 
@@ -67,7 +73,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
           </TextContainer>
         </ReviewContainer>
         <ButtonContainer>
-          {user?.id === userId ? <Btn>수정</Btn> : null}
+          {user?.id === userId ? <Btn onClick={handleClickEdit}>수정</Btn> : null}
 
           {user?.id === userId ? (
             <Btn
@@ -86,7 +92,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
 
 const Overlay = styled(motion.div)`
   position: fixed;
-  z-index: 100;
+  z-index: 1000;
   top: 0;
   width: 100%;
   height: 100%;
@@ -94,7 +100,7 @@ const Overlay = styled(motion.div)`
 `;
 
 const ReviewWrap = styled(motion.div)`
-  z-index: 1000;
+  z-index: 2000;
   position: absolute;
   width: 600px;
   height: 700px;

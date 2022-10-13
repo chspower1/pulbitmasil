@@ -1,6 +1,6 @@
 import { useForm, useWatch } from "react-hook-form";
 // import DatePicker from "react-datepicker";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { editReview, getOneReview, getReviews, createReview } from "@api/review";
@@ -20,6 +20,7 @@ export default function ReviewForm() {
   const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.review.userId : true;
   const [review, setReview] = useState<IReview>(state?.review!);
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
+
   const {
     register,
     handleSubmit,
@@ -27,10 +28,21 @@ export default function ReviewForm() {
     watch,
   } = useForm<IReviewContent>();
 
+  //img preview test
+  const [imagePreview, setImagePreview] = useState();
+  const image = watch("imageUrl");
+
   useEffect(() => {
     setIsReviewCancelModal(false);
   }, []);
 
+  useEffect(() => {
+    if (image && image.length > 0) {
+      const file = image[0];
+      //error
+      // setImagePreview(URL.createObjectURL(file));
+    }
+  }, [image]);
   const handleSubmitReview = handleSubmit(data => {
     // console.log("click");
     if (!isEdit) {
@@ -56,6 +68,7 @@ export default function ReviewForm() {
     console.log("handleclickcancel");
     setIsReviewCancelModal(true);
   };
+
   return (
     <>
       {checkUser ? (
@@ -75,7 +88,7 @@ export default function ReviewForm() {
               <option>근교산 자락길 모임3</option>
               <option>근교산 자락길 모임4</option>
             </SelectInput>
-            <ImageInput type="file" height={155} />
+            <ImageInput type="file" height={155} {...register("imageUrl")} />
             <ReviewInput
               height={280}
               placeholder="내용을 입력해주세요."

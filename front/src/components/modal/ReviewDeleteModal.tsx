@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { Overlay, OverlayVariant } from "./LoginModal";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap, ModalWrap } from "@style/ModalStyle";
 import { IReview } from "@type/review";
 import { deleteReview } from "@api/review";
@@ -17,14 +17,15 @@ interface ReviewDeleteModalProps {
 
 export default function ReviewDeleteModal({ reviewId, userId, setRevies }: ReviewDeleteModalProps) {
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
+  const navigate = useNavigate();
   const handleClickConfirm = async (e: React.MouseEvent) => {
     e.preventDefault();
-    const data = await deleteReview({ reviewId, userId });
+    await deleteReview({ reviewId, userId });
     setRevies(reviews => {
       return reviews?.filter(review => review.reviewId !== isReviewDeleteModal);
     });
     setIsReviewDeleteModal(null);
-    // console.log(data);
+    navigate("/review");
   };
   const handleClickCancel = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -67,7 +68,7 @@ const ReviewModalWrap = styled(ModalWrap)`
   height: 100vh;
   display: flex;
   position: fixed;
-  z-index: 1000;
+  z-index: 10000;
 `;
 const ReviewModalContainer = styled(ModalContainer)`
   display: flex;
