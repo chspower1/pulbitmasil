@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
+import testPoints from "../../test_data/풀빛마실후보데이터/독립공원안산 나들길.json";
 import { IDodream } from "@type/dodream";
 
 const { kakao }: any = window;
@@ -30,43 +30,41 @@ export default function GreenCrewMap({ dodream }: { dodream: IDodream[] }) {
     "숭례문구간",
   ];
   useEffect(() => {
-    console.log(dodream);
+    console.log(testPoints);
+    // const points = dodream[0].cpi.map(cpi => new kakao.maps.LatLng(cpi.x, cpi.y));
+    // const targetPoint = new kakao.maps.LatLng(dodream[0].cpi[0].x, dodream[0].cpi[0].y);
+    const samplePoints = testPoints.test.map(i => new kakao.maps.LatLng(i.x, i.y));
     let mapContainer = document.getElementById("greenCrewMap"), // 지도를 표시할 div
       mapOption = {
-        center: new kakao.maps.LatLng(dodream[0].cpi[0].x, dodream[0].cpi[0].y), // 지도의 중심좌표
-        level: 10, // 지도의 확대 레벨
+        center: samplePoints[samplePoints.length / 2], // 지도의 중심좌표
+        level: 6, // 지도의 확대 레벨
       };
 
     // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
     let greenCrewMap = new kakao.maps.Map(mapContainer, mapOption);
 
-    const points = dodream[0].cpi.map(cpi => new kakao.maps.LatLng(cpi.x, cpi.y));
-    const targetPoint = new kakao.maps.LatLng(dodream[0].cpi[0].x, dodream[0].cpi[0].y);
-    let samplePoints = [];
-    for (let i = 0; i < courseName.length - 1; i++) {
-      const sampleTarget = dodream.filter(road => road.course_name === courseName[i]);
-      console.log(sampleTarget);
-      const sampleTargetPoint = new kakao.maps.LatLng(sampleTarget[0].cpi[0].x, sampleTarget[0].cpi[0].y);
-      samplePoints.push(sampleTarget[0].cpi.map(cor => new kakao.maps.LatLng(cor.x, cor.y)));
-      var distanceOverlay: any;
-      let clickLine = new kakao.maps.Polyline({
-        map: greenCrewMap, // 선을 표시할 지도입니다
-        path: samplePoints, // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
-        strokeWeight: 10, // 선의 두께입니다
-        strokeColor: "#ff0000", // 선의 색깔입니다
-        strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
-        strokeStyle: "dash", // 선의 스타일입니다
-      });
-      var path = clickLine.getPath();
-      let distance = Math.round(clickLine.getLength());
-      let content =
-        '<div class="dotOverlay distanceInfo"> <span class="number">' + sampleTarget[0].course_name + "</span></div>";
-      let defaultInfowindow = new kakao.maps.InfoWindow({
-        map: greenCrewMap, // 인포윈도우가 표시될 지도
-        position: sampleTargetPoint,
-        content: `<div style="width:150px;text-align:center;padding:8px;background-color:#2A9C6B;color:white;">${sampleTarget[0].course_name}</div>`,
-      });
-    }
+    console.log(testPoints);
+    let clickLine = new kakao.maps.Polyline({
+      map: greenCrewMap, // 선을 표시할 지도입니다
+      path: samplePoints, // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+      strokeWeight: 3, // 선의 두께입니다
+      strokeColor: "#ff0000", // 선의 색깔입니다
+      strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+      strokeStyle: "dash", // 선의 스타일입니다
+    });
+    let distance = Math.round(clickLine.getLength());
+
+    var distanceOverlay: any;
+    let startwindow = new kakao.maps.InfoWindow({
+      map: greenCrewMap, // 인포윈도우가 표시될 지도
+      position: samplePoints[0],
+      content: `<div style="width:150px;text-align:center;padding:8px;background-color:#2A9C6B;color:white;">시작</div>`,
+    });
+    let endowindow = new kakao.maps.InfoWindow({
+      map: greenCrewMap, // 인포윈도우가 표시될 지도
+      position: samplePoints[samplePoints.length - 1],
+      content: `<div style="width:150px;text-align:center;padding:8px;background-color:#2A9C6B;color:white;">끝</div>`,
+    });
 
     function showDistance(content: any, targetPoint: any) {
       if (distanceOverlay) {

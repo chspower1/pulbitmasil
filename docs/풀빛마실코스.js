@@ -30,3 +30,5 @@ const route = {
   },
 };
 console.log(Object.keys(route));
+// 1. 자기 경로 길 만들기
+// 2. 알아서 가까운 쓰레기통을 찾기, 후보 3개
