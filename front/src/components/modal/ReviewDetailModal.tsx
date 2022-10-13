@@ -1,4 +1,4 @@
-import { changeDayForm } from "@components/ReviewCard";
+import { changeDayForm } from "@components/review/ReviewCard";
 import { IReview } from "@type/review";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, SetStateAction, Dispatch, useEffect } from "react";

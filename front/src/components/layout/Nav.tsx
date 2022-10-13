@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import LoginModal from "../modal/LoginModal";
 import LogoutModal from "@components/modal/LogoutModal";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isLoginModalAtom, isLoginSelector, isLogoutModalAtom } from "@atom/atom";
+import { isLoginModalAtom, isLogoutModalAtom } from "@atom/atom";
+import { isLoginSelector } from "@atom/user";
 import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
@@ -64,7 +65,7 @@ export default function Nav() {
   const [curState, setCurState] = useState(pathname === "/" ? "home" : pathname.slice(1));
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
-  const navMenus = ["home", "about", "dodream", "plogging", "review"];
+  const navMenus = ["home", "about", "dodream", "greencrew", "review"];
   const navKorMenus = ["홈", "소개", "산책로", "풀빛마실 모임", "후기"];
   const [isUserNav, setIsUserNav] = useState(false);
 

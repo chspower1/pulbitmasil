@@ -1,6 +1,6 @@
 import axios from "axios";
 import { UserLoginForm, UserRegisterForm } from "@type/user";
-import { IDodream } from "@type/dodream";
+import { Cpi, IDodream } from "@type/dodream";
 
 const BASE_URL = `http://${window.location.hostname}:5001`;
 
@@ -62,6 +62,7 @@ export async function WalkingData(params: any) {
 export async function getDodream() {
   try {
     const { data } = await axiosInstance.get(`dodream`);
+    console.log(data);
     const dodream: IDodream[] = [];
     data.map((road: any) => {
       const nameArr = Object.keys(road.course_name) as string[];
@@ -79,8 +80,7 @@ export async function getDodream() {
         const reg_date = road.course_name[name][0].reg_date as number;
         const relate_subway = road.course_name[name][0].relate_subway as string;
         const traffic_info = road.course_name[name][0].traffic_info as string;
-        const x = road.course_name[name][0].CPI[0].x as number;
-        const y = road.course_name[name][0].CPI[0].y as number;
+        const cpi = road.course_name[name][0].CPI as Cpi[];
         const newRoad = {
           index,
           course_category_nm,
@@ -94,8 +94,7 @@ export async function getDodream() {
           reg_date,
           relate_subway,
           traffic_info,
-          x,
-          y,
+          cpi,
         };
         dodream.push(newRoad);
       });

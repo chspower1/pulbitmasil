@@ -34,6 +34,7 @@ export default function ReviewForm() {
   const handleSubmitReview = handleSubmit(data => {
     // console.log("click");
     if (!isEdit) {
+      console.log(data);
       const newData: IReview = {
         userName: user?.name!,
         description: data.description,
@@ -58,8 +59,8 @@ export default function ReviewForm() {
   return (
     <>
       {checkUser ? (
-        <FormWrap as="form" onSubmit={handleSubmitReview}>
-          <Form>
+        <FormWrap>
+          <Form onSubmit={handleSubmitReview}>
             <TitleContainer>
               <Title>플로깅</Title>
               <SubTitle>

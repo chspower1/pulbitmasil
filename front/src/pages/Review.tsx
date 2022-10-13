@@ -1,5 +1,5 @@
 import { getReviews } from "@api/review";
-import Card from "@components/ReviewCard";
+import Card from "@components/review/ReviewCard";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isReviewDeleteAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
-import { userAtom } from "@atom/user";
+import { isLoginSelector, userAtom } from "@atom/user";
 import { Box, Container, Wrapper } from "@style/Container";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
@@ -20,12 +20,17 @@ export default function Review() {
   const reviewMatch = useMatch("/review/:reviewId");
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
   const [reviews, setRevies] = useState<IReview[] | undefined>();
-
+  const isLogin = useRecoilValue(isLoginSelector);
   const { isLoading } = useQuery<IReview[]>(["reviews"], getReviews, {
     onSuccess(data) {
       setRevies(data);
     },
   });
+
+  const handleClickCreateReview = () => {
+    isLogin ? navigate("/review/write", { state: { isEdit } }) : alert("회원가입을 해주세요!");
+  };
+
   useEffect(() => {
     // console.log(reviews);
   }, [reviews]);
@@ -43,7 +48,7 @@ export default function Review() {
             {isReviewDeleteModal && (
               <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
             )}
-            <ReviewBtn onClick={() => navigate("/review/write", { state: { isEdit } })}>이야기 작성</ReviewBtn>
+            <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
             <CardContainer>
               <CardBox>
                 {reviews ? (
@@ -56,11 +61,11 @@ export default function Review() {
               </CardBox>
             </CardContainer>
             <AnimatePresence>
-              {reviewMatch ? (
+              {reviewMatch && (
                 <ReviewDetailModal
                   review={reviews?.filter(review => review.reviewId === parseInt(reviewMatch?.params.reviewId!))[0]!}
                 />
-              ) : null}
+              )}
             </AnimatePresence>
           </ReviewWrap>
         </>
