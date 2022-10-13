@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate, useLocation } from "react-router-dom";
 import { isReviewCancelAtom } from "@atom/atom";
-import ReviewModal from "@components/modal/ReviewModal";
+import ReviewModal from "@components/modal/ReviewCancelModal";
 import { Wrapper } from "@style/Container";
 
 export default function ReviewForm() {
@@ -19,7 +19,6 @@ export default function ReviewForm() {
   const isEdit = state?.isEdit! as boolean;
   const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.review.userId : true;
   const [review, setReview] = useState<IReview>(state?.review!);
-
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const {
     register,
@@ -27,6 +26,7 @@ export default function ReviewForm() {
     formState: { errors },
     watch,
   } = useForm<IReviewContent>();
+
   useEffect(() => {
     setIsReviewCancelModal(false);
   }, []);
@@ -52,6 +52,7 @@ export default function ReviewForm() {
     }
   });
   const handleClickCancel = () => {
+    console.log("handleclickcancel");
     setIsReviewCancelModal(true);
   };
   return (
