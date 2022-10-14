@@ -76,6 +76,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 }
 
 const CardWrap = styled(motion(motion.div))`
+  position: relative;
   width: 370px;
   height: 430px;
   background-color: white;
@@ -130,7 +131,9 @@ const CardImg = styled(motion.img)`
 const ButtonContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
-
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
   margin: auto;
 `;
 const Btn = styled(motion.button)`
