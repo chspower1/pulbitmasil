@@ -27,7 +27,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   };
 
   const handleClickEdit = () => {
-    navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } });
+    navigate(`/review/edit/${reviewId}`, { state: { isEdit, reviewId, userId } });
   };
   const day = changeDayForm(createAt!);
 
@@ -48,6 +48,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
       <ReviewWrap layoutId={`${reviewId}wrap`} transition={{ type: "tween", duration: 0.4 }}>
         <ImgContainer>
           <ReviewImg
+            layoutId={`${reviewId}img`}
             src={reviewImg as string}
             alt="review image"
             // layoutId={`${reviewId}image`}
@@ -56,8 +57,8 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         </ImgContainer>
         <ReviewContainer>
           <InfoContainer>
-            <CardImg src={`/assets/icon/profile01.png`} />
-            <InfoBox>
+            <CardImg src={`/assets/icon/profile01.png`} layoutId={`${reviewId}cardImg`} />
+            <InfoBox layoutId={`${reviewId}imfoBox`}>
               <p style={{ fontSize: "25px" }}>
                 <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
               </p>
@@ -66,7 +67,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             <p style={{ position: "absolute", right: "25px" }}>지역</p>
           </InfoContainer>
 
-          <TextContainer>
+          <TextContainer layoutId={`${reviewId}textContainer`}>
             <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
             <Description readOnly>{description}</Description>
           </TextContainer>
