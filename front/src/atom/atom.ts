@@ -1,9 +1,5 @@
 import { IReview } from "@type/review";
 import { atom, selector } from "recoil";
-import { recoilPersist } from "recoil-persist";
-import { userAtom } from "./user";
-
-const { persistAtom } = recoilPersist();
 
 export const isLoginModalAtom = atom({
   key: "isLoginModal",
