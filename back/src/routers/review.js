@@ -4,7 +4,7 @@ const login_required = require("../middlewares/login_required");
 const maria = require("../db/connect/maria");
 
 const { upload } = require("../middlewares/file_upload");
-const { fileDelete } = require("../middlewares/file_delete");
+const { fileDelete, fileReserve } = require("../middlewares/file_delete");
 const uploadSingle = upload.single("file");
 require("dotenv").config();
 
@@ -60,9 +60,6 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
       imgName = hostURL + "default.jpg";
     }
 
-    console.log(req.file);
-    console.log(imgName);
-
     maria.query(
       `INSERT INTO REVIEW(userId, description, createAt, reviewImg) VALUES(?,?,?,?)`,
       [userId, description, createAt, imgName],
@@ -87,26 +84,22 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
   }
 });
 
-// 빈 값이 들어오면 에러가 아니라 수정만 안 하도록 바꾸기
 router.put("/:reviewId", login_required, uploadSingle, async function (req, res, next) {
   try {
     const reviewer = parseInt(req.body.userId);
     const userId = req.currentUserId;
+    const description = req.body.description ?? null;
+    const reviewId = req.params.reviewId;
+    let imgName = req.body.imageUrl ?? null;
 
     if (reviewer !== userId) {
       return res.sendStatus(432);
     }
 
-    let imgName;
-    if (req.file) {
+    if (!imgName) {
       imgName = hostURL + req.file.filename;
-    } else {
-      imgName = imgName = hostURL + "default.jpg";
+      fileDelete(reviewId);
     }
-
-    const description = req.body.description ?? null;
-    const reviewId = req.params.reviewId;
-    fileDelete(reviewId);
 
     maria.query(
       `UPDATE REVIEW SET  description = ?, reviewImg = ?  WHERE reviewId = ?`,
@@ -117,7 +110,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
             success: true,
           });
         } else {
-          // console.log("err : " + err);
+          console.error("review update error");
           res.send(err);
         }
       },
