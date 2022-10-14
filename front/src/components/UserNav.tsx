@@ -1,6 +1,6 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { isLogoutModalAtom } from "@atom/atom";
 import { UserNavProps } from "./layout/Nav";
@@ -10,7 +10,7 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
   const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
   const userNavKorMenus = ["계정 정보", "나의 풀빛마실", "로그아웃"];
   const setIsLogoutModal = useSetRecoilState(isLogoutModalAtom);
-
+  const { pathname } = useLocation();
   const handleClickLogout = async () => {
     setIsLogoutModal(true);
     setIsUserNav(false);
@@ -28,7 +28,7 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
     <AnimatePresence>
       <UserNavWrapper variants={variants} initial="hidden" animate="visible">
         {userNavMenus.map((menu, index) => (
-          <Link key={index} to={menu === "logout" ? "" : menu}>
+          <Link key={index} to={menu === "logout" ? { pathname } : menu}>
             {menu === "logout" ? (
               <Button onClick={handleClickLogout}>
                 <BtnText variants={item}>{userNavKorMenus[index]}</BtnText>

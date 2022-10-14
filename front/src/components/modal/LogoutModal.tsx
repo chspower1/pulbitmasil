@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
 import { createPortal } from "react-dom";
@@ -13,12 +13,13 @@ import { createPortal } from "react-dom";
 export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
   const [user, setUser] = useRecoilState(userAtom);
-
+  const navigate = useNavigate();
   const handleClickLogout = () => {
     sessionStorage.removeItem("userToken");
     setIsUserNav(false);
     setIsLogoutModal(false);
     setUser(null);
+    navigate("/");
   };
 
   return (
