@@ -4,7 +4,7 @@ const login_required = require("../middlewares/login_required");
 const maria = require("../db/connect/maria");
 
 const { upload } = require("../middlewares/file_upload");
-const { fileDelete } = require("../middlewares/file_delete");
+const { fileDelete, fileReserve } = require("../middlewares/file_delete");
 const uploadSingle = upload.single("file");
 require("dotenv").config();
 
@@ -60,9 +60,6 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
       imgName = hostURL + "default.jpg";
     }
 
-    console.log(req.file);
-    console.log(imgName);
-
     maria.query(
       `INSERT INTO REVIEW(userId, description, createAt, reviewImg) VALUES(?,?,?,?)`,
       [userId, description, createAt, imgName],
@@ -103,11 +100,11 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
 
     if (req.file) {
       imgName = hostURL + req.file.filename;
-      fileDelete(reviewId, req.file.filename);
     } else {
-      imgName = hostURL + "default.jpg";
-      fileDelete(reviewId, null);
+      imgName = imgName = hostURL + "default.jpg";
     }
+    // 값 안 들어오면 수정 안되도록 바꾼 후, 아래 코드는 위 if문(req.file인경우)으로 이동
+    fileDelete(reviewId);
 
     maria.query(
       `UPDATE REVIEW SET  description = ?, reviewImg = ?  WHERE reviewId = ?`,
