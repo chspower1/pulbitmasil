@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { isLogoutModalAtom } from "@atom/atom";
 import { UserNavProps } from "./layout/Nav";
+import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
 
 export default function UserNav({ setIsUserNav }: UserNavProps) {
   const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
@@ -14,23 +15,37 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
     setIsLogoutModal(true);
     setIsUserNav(false);
   };
+  const variants = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 },
+  };
+  const item = {
+    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: -50 },
+  };
 
   return (
-    <UserNavWrapper>
-      {userNavMenus.map((menu, index) => (
-        <Link key={index} to={menu === "logout" ? "" : menu}>
-          {menu === "logout" ? (
-            <Button onClick={handleClickLogout}>{userNavKorMenus[index]}</Button>
-          ) : (
-            <Button>{userNavKorMenus[index]}</Button>
-          )}
-        </Link>
-      ))}
-    </UserNavWrapper>
+    <AnimatePresence>
+      <UserNavWrapper variants={variants} initial="hidden" animate="visible">
+        {userNavMenus.map((menu, index) => (
+          <Link key={index} to={menu === "logout" ? "" : menu}>
+            {menu === "logout" ? (
+              <Button onClick={handleClickLogout}>
+                <BtnText variants={item}>{userNavKorMenus[index]}</BtnText>
+              </Button>
+            ) : (
+              <Button>
+                <BtnText variants={item}>{userNavKorMenus[index]}</BtnText>
+              </Button>
+            )}
+          </Link>
+        ))}
+      </UserNavWrapper>
+    </AnimatePresence>
   );
 }
 
-const UserNavWrapper = styled.div`
+const UserNavWrapper = styled(motion.div)`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -43,4 +58,8 @@ const UserNavWrapper = styled.div`
 
 const Button = styled.button`
   min-width: 180px;
+  &:not(last-child) {
+    border-bottom: solid 1px ${props => props.theme.accentColor};
+  }
 `;
+const BtnText = styled(motion.p)``;
