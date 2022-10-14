@@ -35,12 +35,12 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
             navigate(`${reviewId}`);
           }}
         >
-          <ImgContainer >
+          <ImgContainer>
             <ReviewImg src={reviewImg as string} alt="review image"></ReviewImg>
           </ImgContainer>
           <ReviewContainer>
             <InfoContainer>
-              <CardImg src={`/assets/icon/profile01.png`} />
+              <CardImg src={`/assets/icon/user/profile01.png`} />
               <InfoBox>
                 <p style={{ fontSize: "18px" }}>
                   <span style={{ color: "green" }}>{name ? name : "***"}</span> 님

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { IReview } from "@type/review";
-import { axiosInstance } from "./user";
+import { axiosInstance, BASE_URL } from "./user";
 
 //image 테스트
 export async function createReview(contents: FormData) {
