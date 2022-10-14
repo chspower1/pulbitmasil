@@ -10,95 +10,102 @@ import testData from "../test_data/greenCrewTest.json";
 type Area = "강남" | "강서" | "강북" | "강동";
 export default function GreenCrew() {
   const areas: Area[] = ["강동", "강서", "강남", "강북"];
-  const { isLoading } = useQuery<IGreenCrew>(["greenCrew"], getGreenCrews, {
+  const { isLoading } = useQuery<IGreenCrew[]>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
-      setGreenCrew(data);
+      console.log("getGreenCrew", data[0]);
+      setSelectedGreenCrew(data[0]!);
+      setGreenCrews(data);
     },
   });
-  const [greenCrew, setGreenCrew] = useState<IGreenCrew>(testData);
+  const [greenCrews, setGreenCrews] = useState<IGreenCrew[]>();
+  const [selectedGreenCrew, setSelectedGreenCrew] = useState<IGreenCrew>();
   const [selectedArea, setSelectedArea] = useState<Area>("강동");
-  if (isLoading) return <>로딩중</>;
   return (
-    <GreenCrewWrapper>
-      <AreaNav>
-        {areas.map(area => (
-          <AreaBtn className={selectedArea === area ? "active" : "normal"} onClick={() => setSelectedArea(area)}>
-            {area}
-          </AreaBtn>
-        ))}
-      </AreaNav>
-      <RootContainer>
-        <Title style={{ marginTop: "60px" }}>풀빛마실 참여하기</Title>
-        <FirstContainer>
-          <DescBox>
-            <Title>{greenCrew?.title!}</Title>
-            <Date>{greenCrew?.date!}</Date>
-            <CourseBox>
-              <DetailTitle>
-                <img src="/assets/icon/greenCrew/course_icon.svg" alt="#" />
-                코스
-              </DetailTitle>
-              <DetailDescription>{greenCrew?.course}</DetailDescription>
-            </CourseBox>
-            <CourseBox>
-              <DetailTitle>
-                <img src="/assets/icon/greenCrew/distance_icon.svg" alt="#" />
-                거리
-              </DetailTitle>
-              <DetailDescription>{greenCrew?.distance}</DetailDescription>
-            </CourseBox>
-            <CourseBox>
-              <DetailTitle>
-                <img src="/assets/icon/greenCrew/lead_time_icon.svg" alt="#" />
-                소요시간
-              </DetailTitle>
-              <DetailTitle>{greenCrew?.leadTime}</DetailTitle>
-            </CourseBox>
-            <CourseBox>
-              <DetailTitle>
-                <img src="/assets/icon/greenCrew/max_member_icon.svg" alt="#" />
-                모집인원
-              </DetailTitle>
-              <DetailDescription>{greenCrew?.maxMember}</DetailDescription>
-            </CourseBox>
-            <CourseBox>
-              <DetailTitle>
-                <img src="/assets/icon/greenCrew/level_icon.svg" alt="#" />
-                난이도
-              </DetailTitle>
-              <DetailDescription>{greenCrew?.level}</DetailDescription>
-            </CourseBox>
-          </DescBox>
-          <GreenCrewMap />
-        </FirstContainer>
-        <SecondContainer>
-          <Row>
-            <Col>
-              <div>현재까지 {greenCrew?.curMember}명이 참여하고 있어요!</div>
-              <div> 남은시간</div>
-            </Col>
-            <EnterBtn>참여하기</EnterBtn>
-          </Row>
-          <ContentBox>
-            <ContentTitle>
-              <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
-              <Accent>"{greenCrew?.course}"</Accent>은?
-            </ContentTitle>
-            <ContentDescription>{greenCrew?.content}</ContentDescription>
-          </ContentBox>
-          <ContentBox>
-            <ContentTitle>
-              <img src="/assets/icon/greenCrew/traffic_info_icon.svg" alt="" />
-              교통편
-            </ContentTitle>
-            <ContentDescription>{greenCrew?.trafficInfo}</ContentDescription>
-          </ContentBox>
-          <Link to="/">
-            <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
-          </Link>
-        </SecondContainer>
-      </RootContainer>
-    </GreenCrewWrapper>
+    <>
+      {selectedGreenCrew && (
+        <GreenCrewWrapper>
+          <AreaNav>
+            {areas.map(area => (
+              <AreaBtn className={selectedArea === area ? "active" : "normal"} onClick={() => setSelectedArea(area)}>
+                {area}
+              </AreaBtn>
+            ))}
+          </AreaNav>
+          <RootContainer>
+            <Title style={{ marginTop: "60px" }}>풀빛마실 참여하기</Title>
+            <FirstContainer>
+              <DescBox>
+                <Title>{selectedGreenCrew?.title!}</Title>
+                <Date>{selectedGreenCrew?.startAt!}</Date>
+                <CourseBox>
+                  <DetailTitle>
+                    <img src="/assets/icon/greenCrew/course_icon.svg" alt="#" />
+                    코스
+                  </DetailTitle>
+                  <DetailDescription>{selectedGreenCrew?.course}</DetailDescription>
+                </CourseBox>
+                <CourseBox>
+                  <DetailTitle>
+                    <img src="/assets/icon/greenCrew/distance_icon.svg" alt="#" />
+                    거리
+                  </DetailTitle>
+                  <DetailDescription>{selectedGreenCrew?.distance}</DetailDescription>
+                </CourseBox>
+                <CourseBox>
+                  <DetailTitle>
+                    <img src="/assets/icon/greenCrew/lead_time_icon.svg" alt="#" />
+                    소요시간
+                  </DetailTitle>
+                  <DetailTitle>{selectedGreenCrew?.leadTime}</DetailTitle>
+                </CourseBox>
+                <CourseBox>
+                  <DetailTitle>
+                    <img src="/assets/icon/greenCrew/max_member_icon.svg" alt="#" />
+                    모집인원
+                  </DetailTitle>
+                  <DetailDescription>{selectedGreenCrew?.maxMember}</DetailDescription>
+                </CourseBox>
+                <CourseBox>
+                  <DetailTitle>
+                    <img src="/assets/icon/greenCrew/level_icon.svg" alt="#" />
+                    난이도
+                  </DetailTitle>
+                  <DetailDescription>{selectedGreenCrew?.level}</DetailDescription>
+                </CourseBox>
+              </DescBox>
+              <GreenCrewMap greenCrew={selectedGreenCrew!} />
+              {/* <GreenCrewMap /> */}
+            </FirstContainer>
+            <SecondContainer>
+              <Row>
+                <Col>
+                  <div>현재까지 {selectedGreenCrew?.curMember}명이 참여하고 있어요!</div>
+                  <div> 남은시간</div>
+                </Col>
+                <EnterBtn>참여하기</EnterBtn>
+              </Row>
+              <ContentBox>
+                <ContentTitle>
+                  <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
+                  <Accent>"{selectedGreenCrew?.course}"</Accent>은?
+                </ContentTitle>
+                <ContentDescription>{selectedGreenCrew?.content}</ContentDescription>
+              </ContentBox>
+              <ContentBox>
+                <ContentTitle>
+                  <img src="/assets/icon/greenCrew/traffic_info_icon.svg" alt="" />
+                  교통편
+                </ContentTitle>
+                <ContentDescription>{selectedGreenCrew?.trafficInfo}</ContentDescription>
+              </ContentBox>
+              <Link to="/">
+                <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
+              </Link>
+            </SecondContainer>
+          </RootContainer>
+        </GreenCrewWrapper>
+      )}
+    </>
   );
 }
 const GreenCrewWrapper = styled(Wrapper)`

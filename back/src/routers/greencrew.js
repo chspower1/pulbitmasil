@@ -7,13 +7,11 @@ const maria = require("../db/connect/maria");
 
 router.get("/", async function (req, res, next) {
   await maria.query(
-    `SELECT A.title, A.startAt, C.course, C.distance, C.leadTime, A.maxMember, C.level, COUNT(DISTINCT B.userid) AS curMember, C.content, C.trafficInfo, JSON_ARRAYAGG(JSON_ARRAY(x,y)) as cpi
-  FROM GREENCREW AS A
-  INNER JOIN USERTOGREENCREW AS B
-  ON A.id = B.crewId
-  INNER JOIN (SELECT * FROM ROUTE INNER JOIN CPI ON ROUTE.id = CPI.routeId) AS C
-  ON A.routeId = C.routeId
-  GROUP BY A.id`,
+    `SELECT A.title, A.startAt, C.course, C.distance, C.leadTime, A.maxMember, C.level, (SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.id) AS curMember, C.content, C.trafficInfo, JSON_ARRAYAGG(JSON_ARRAY(x,y)) as cpi
+    FROM GREENCREW AS A
+    INNER JOIN (SELECT * FROM ROUTE INNER JOIN CPI ON ROUTE.id = CPI.routeId) AS C
+    ON A.routeId = C.routeId
+    GROUP BY A.id`,
     function (err, rows, fields) {
       res.status(200).json(rows);
     },
