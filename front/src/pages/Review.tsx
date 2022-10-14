@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { IReview } from "@type/review";
 import { useQuery } from "@tanstack/react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isReviewDeleteAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom, ReviewsAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { isLoginSelector, userAtom } from "@atom/user";
 import { Box, Container, Wrapper } from "@style/Container";
@@ -14,16 +14,17 @@ import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
 
 export default function Review() {
-  const user = useRecoilValue(userAtom);
   const isEdit = false;
   const navigate = useNavigate();
   const reviewMatch = useMatch("/review/:reviewId");
-  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
-  const [reviews, setRevies] = useState<IReview[] | undefined>();
+  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+
+  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const isLogin = useRecoilValue(isLoginSelector);
+
   const { isLoading, data, refetch } = useQuery<IReview[]>(["reviews"], getReviews, {
     onSuccess(data) {
-      setRevies(data);
+      setReviews(data);
     },
   });
 
@@ -31,9 +32,6 @@ export default function Review() {
     isLogin ? navigate("/review/write", { state: { isEdit } }) : alert("회원가입을 해주세요!");
   };
 
-  // useEffect(() => {
-  //   console.log(reviews);
-  // }, [reviews]);
   return (
     <>
       {isLoading || (
@@ -46,14 +44,12 @@ export default function Review() {
               <SubTitle>
                 <Accent>풀빛마실</Accent> 후기를 공유해주세요!
               </SubTitle>
-              {isReviewDeleteModal && (
-                <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
-              )}
+              {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
               <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
 
               <CardBox>
                 {!isLoading ? (
-                  data?.map(review => {
+                  reviews?.map(review => {
                     return <Card review={review}></Card>;
                   })
                 ) : (

@@ -7,8 +7,8 @@ import { editReview, getOneReview, getReviews, createReview } from "@api/review"
 import { IReview, IReviewContent } from "@type/review";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
-import { useNavigate, useLocation } from "react-router-dom";
-import { isReviewCancelAtom } from "@atom/atom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { isReviewCancelAtom, ReviewsAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
 import { Wrapper } from "@style/Container";
 
@@ -17,9 +17,12 @@ export default function ReviewForm() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const isEdit = state?.isEdit! as boolean;
-  const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.review.userId : true;
-  const [review, setReview] = useState<IReview>(state?.review!);
+  const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.userId : true;
+  // const [review, setReview] = useState<IReview>(state?.review!);
+  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
+  const [review, setReview] = useState<IReview>();
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
+  const location = useLocation();
   const {
     register,
     handleSubmit,
@@ -33,10 +36,18 @@ export default function ReviewForm() {
   const image = watch("reviewImg");
 
   useEffect(() => {
+    console.log("state", state);
     setIsReviewCancelModal(false);
-    isEdit && setImagePreview(review.reviewImg);
-    // isEdit && setUploadImg(review.reviewImg);
+    setReview(reviews.find(review => review.reviewId === state.reviewId));
+    // console.log(reviews.find(review => review.reviewId === state.reviewId));
   }, []);
+
+  useEffect(() => {
+    if (isEdit) {
+      setImagePreview(review?.reviewImg);
+      setUploadImg(review?.reviewImg);
+    }
+  }, [review]);
 
   useEffect(() => {
     if (image && image.length > 0) {
@@ -59,14 +70,23 @@ export default function ReviewForm() {
       formData.append("file", uploadImg);
       formData.append("name", user?.name!);
       // formData.append("description", data.description);
-
       createReview(formData);
+
       navigate("/review");
     } else {
       // formData.append("description",watch("description"));
       formData.append("file", uploadImg);
       formData.append("userId", user?.id?.toString()!);
       editReview(formData, review?.reviewId!);
+      const filtered = reviews?.filter(review => review.reviewId !== state.reviewId);
+      setReviews([
+        ...filtered,
+        { ...review, reviewImg: window.URL.createObjectURL(uploadImg), description: watch("description") },
+      ]);
+      console.log([
+        ...filtered,
+        { ...review, reviewImg: window.URL.createObjectURL(uploadImg), description: watch("description") },
+      ]);
       navigate("/review");
     }
   });

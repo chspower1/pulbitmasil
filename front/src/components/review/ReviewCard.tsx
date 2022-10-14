@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { IReview } from "@type/review";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { isReviewDeleteAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom } from "@atom/atom";
 import ReviewDeleteModal from "../modal/ReviewDeleteModal";
 import { Accent } from "@style/ModalStyle";
 
@@ -23,7 +23,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
-  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
+  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
 
   const day = changeDayForm(createAt!);
 
@@ -57,13 +57,15 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
         </motion.div>
         <ButtonContainer>
           {user?.id === userId ? (
-            <Btn onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } })}>수정</Btn>
+            <Btn onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, reviewId, userId } })}>
+              수정
+            </Btn>
           ) : null}
 
           {user?.id === userId ? (
             <Btn
               onClick={() => {
-                setIsReviewDeleteModal(reviewId!);
+                setReviewDelId(reviewId!);
               }}
             >
               삭제

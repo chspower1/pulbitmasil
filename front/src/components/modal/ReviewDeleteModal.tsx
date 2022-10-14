@@ -1,40 +1,37 @@
-import { isReviewDeleteAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom, ReviewsAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { Overlay, OverlayVariant } from "./LoginModal";
 import { Navigate, useNavigate } from "react-router-dom";
 import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap, ModalWrap } from "@style/ModalStyle";
-import { IReview } from "@type/review";
 import { deleteReview } from "@api/review";
+import { userAtom } from "@atom/user";
 
-interface ReviewDeleteModalProps {
-  reviewId: number;
-  userId: number;
-  setRevies: React.Dispatch<React.SetStateAction<IReview[] | undefined>>;
-}
-
-export default function ReviewDeleteModal({ reviewId, userId, setRevies }: ReviewDeleteModalProps) {
-  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
+export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
+  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const user = useRecoilValue(userAtom);
+  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const navigate = useNavigate();
   const handleClickConfirm = async (e: React.MouseEvent) => {
     e.preventDefault();
-    await deleteReview({ reviewId, userId });
-    setRevies(reviews => {
-      return reviews?.filter(review => review.reviewId !== isReviewDeleteModal);
+
+    await deleteReview({ reviewId, userId: user?.id! });
+    setReviews(reviews => {
+      return reviews?.filter(review => review.reviewId !== reviewDelId);
     });
-    setIsReviewDeleteModal(null);
+    setReviewDelId(null);
     navigate("/review");
   };
   const handleClickCancel = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsReviewDeleteModal(null);
+    setReviewDelId(null);
   };
 
   return (
     <AnimatePresence>
-      {isReviewDeleteModal && (
+      {reviewDelId && (
         <ReviewModalWrap>
           <ReviewModalContainer>
             <DeleteDesc>

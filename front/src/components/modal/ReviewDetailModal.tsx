@@ -1,4 +1,4 @@
-import { isReviewDeleteAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom } from "@atom/atom";
 import { userAtom } from "@atom/user";
 import { changeDayForm } from "@components/review/ReviewCard";
 import { IReview } from "@type/review";
@@ -20,11 +20,10 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   const navigate = useNavigate();
   const reviewMatch = useMatch(`/review/${reviewId}`);
   const user = useRecoilValue(userAtom);
-  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
+  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
 
   const onOverlayClick = () => {
-    // setIsReviewDetailModal(false);
-    navigate("/review"); // 이렇게되면 또 리랜더링되는데 이게맞나 ?
+    navigate("/review");
   };
 
   const handleClickEdit = () => {
@@ -78,7 +77,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
           {user?.id === userId ? (
             <Btn
               onClick={() => {
-                setIsReviewDeleteModal(reviewId!);
+                setReviewDelId(reviewId!);
               }}
             >
               삭제
