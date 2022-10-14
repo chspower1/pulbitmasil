@@ -35,13 +35,13 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
             navigate(`${reviewId}`);
           }}
         >
-          <ImgContainer>
-            <ReviewImg layoutId={`${reviewId}img`} src={reviewImg as string} alt="review image"></ReviewImg>
+          <ImgContainer >
+            <ReviewImg src={reviewImg as string} alt="review image"></ReviewImg>
           </ImgContainer>
           <ReviewContainer>
             <InfoContainer>
-              <CardImg src={`/assets/icon/profile01.png`} layoutId={`${reviewId}cardImg`} />
-              <InfoBox layoutId={`${reviewId}imfoBox`}>
+              <CardImg src={`/assets/icon/profile01.png`} />
+              <InfoBox>
                 <p style={{ fontSize: "18px" }}>
                   <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
                 </p>
@@ -49,13 +49,13 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
               </InfoBox>
               <p style={{ position: "absolute", right: "10px" }}>지역</p>
             </InfoContainer>
-            <TextContainer layoutId={`${reviewId}textContainer`}>
+            <TextContainer>
               <p style={{ color: "#636E72", fontSize: "18px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
               <Description>{description}</Description>
             </TextContainer>
           </ReviewContainer>
         </motion.div>
-        <ButtonContainer>
+        <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId ? (
             <Btn onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, reviewId, userId } })}>
               수정

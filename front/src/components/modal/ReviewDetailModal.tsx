@@ -45,20 +45,18 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
       />
-      <ReviewWrap layoutId={`${reviewId}wrap`} transition={{ type: "tween", duration: 0.4 }}>
-        <ImgContainer>
+      <ReviewWrap layoutId={`${reviewId}wrap`}>
+        <ImgContainer >
           <ReviewImg
-            layoutId={`${reviewId}img`}
             src={reviewImg as string}
             alt="review image"
-            // layoutId={`${reviewId}image`}
-            transition={{ type: "tween", duration: 1 }}
+            //
           ></ReviewImg>
         </ImgContainer>
         <ReviewContainer>
           <InfoContainer>
-            <CardImg src={`/assets/icon/profile01.png`} layoutId={`${reviewId}cardImg`} />
-            <InfoBox layoutId={`${reviewId}imfoBox`}>
+            <CardImg src={`/assets/icon/profile01.png`} />
+            <InfoBox>
               <p style={{ fontSize: "25px" }}>
                 <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
               </p>
@@ -67,12 +65,12 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             <p style={{ position: "absolute", right: "25px" }}>지역</p>
           </InfoContainer>
 
-          <TextContainer layoutId={`${reviewId}textContainer`}>
+          <TextContainer>
             <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
-            <Description readOnly>{description}</Description>
+            <Description>{description}</Description>
           </TextContainer>
         </ReviewContainer>
-        <ButtonContainer>
+        <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId ? <Btn onClick={handleClickEdit}>수정</Btn> : null}
 
           {user?.id === userId ? (
@@ -131,7 +129,7 @@ const TextContainer = styled(motion.div)`
   /* overflow: scroll; */
 `;
 
-const Description = styled.textarea`
+const Description = styled.p`
   padding: 10px;
   width: 100%;
   height: 100px;
