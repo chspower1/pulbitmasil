@@ -22,7 +22,20 @@ export const Box = styled.div`
   align-items: center;
 `;
 export const Title = styled.h1`
-  height: 16%; 
   font-size: 32px;
   color: ${props => props.theme.mainColor};
+`;
+export const SubTitle = styled.h3`
+  font-family: "SebangBold";
+  font-size: 18px;
+`;
+export const Desc = styled.p`
+  font-size: 16px;
+  color: ${props => props.theme.textColor};
+`;
+export const GreenAccent = styled.h1`
+  color: ${props => props.theme.mainColor};
+`;
+export const DangerAccent = styled(GreenAccent)`
+  color: ${props => props.theme.dangerColor};
 `;

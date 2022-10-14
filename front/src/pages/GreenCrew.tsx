@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Wrapper, Container, Box, Title } from "@style/Layout";
+import { Wrapper, Container, Box, Title, Desc, SubTitle } from "@style/Layout";
 import { useQuery } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState } from "react";
@@ -39,35 +39,35 @@ export default function GreenCrew() {
                 <Date>{selectedGreenCrew?.startAt!}</Date>
                 <CourseBox>
                   <DetailTitle>
-                    <img src="/assets/icon/greenCrew/course_icon.svg" alt="#" />
+                    <IconImg src="/assets/icon/greenCrew/course_icon.svg" alt="#" />
                     코스
                   </DetailTitle>
                   <DetailDescription>{selectedGreenCrew?.course}</DetailDescription>
                 </CourseBox>
                 <CourseBox>
                   <DetailTitle>
-                    <img src="/assets/icon/greenCrew/distance_icon.svg" alt="#" />
+                    <IconImg src="/assets/icon/greenCrew/distance_icon.svg" alt="#" />
                     거리
                   </DetailTitle>
                   <DetailDescription>{selectedGreenCrew?.distance}</DetailDescription>
                 </CourseBox>
                 <CourseBox>
                   <DetailTitle>
-                    <img src="/assets/icon/greenCrew/lead_time_icon.svg" alt="#" />
+                    <IconImg src="/assets/icon/greenCrew/lead_time_icon.svg" alt="#" />
                     소요시간
                   </DetailTitle>
-                  <DetailTitle>{selectedGreenCrew?.leadTime}</DetailTitle>
+                  <DetailDescription>{selectedGreenCrew?.leadTime}</DetailDescription>
                 </CourseBox>
                 <CourseBox>
                   <DetailTitle>
-                    <img src="/assets/icon/greenCrew/max_member_icon.svg" alt="#" />
+                    <IconImg src="/assets/icon/greenCrew/max_member_icon.svg" alt="#" />
                     모집인원
                   </DetailTitle>
                   <DetailDescription>{selectedGreenCrew?.maxMember}</DetailDescription>
                 </CourseBox>
                 <CourseBox>
                   <DetailTitle>
-                    <img src="/assets/icon/greenCrew/level_icon.svg" alt="#" />
+                    <IconImg src="/assets/icon/greenCrew/level_icon.svg" alt="#" />
                     난이도
                   </DetailTitle>
                   <DetailDescription>{selectedGreenCrew?.level}</DetailDescription>
@@ -163,6 +163,9 @@ const DescBox = styled(Box)`
   align-items: flex-start;
   justify-content: space-between;
 `;
+const IconImg = styled.img`
+  margin-right: 10px;
+`;
 const CourseBox = styled(Box)`
   width: 70%;
   justify-content: space-between;
@@ -175,12 +178,14 @@ const EnterBtn = styled.button`
   font-size: 32px;
 `;
 const Date = styled.div``;
-const DetailTitle = styled.h5`
+const DetailTitle = styled(Desc)`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
-const DetailDescription = styled.p``;
+const DetailDescription = styled(SubTitle)`
+  color: ${props => props.theme.mainColor};
+`;
 const ContentBox = styled(Box)`
   flex-direction: column;
   align-items: flex-start;
