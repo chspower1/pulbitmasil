@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { IReview } from "@type/review";
 import { useQuery } from "@tanstack/react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { isReviewDeleteAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom, ReviewsAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { isLoginSelector, userAtom } from "@atom/user";
 import { Box, Container, Wrapper } from "@style/Layout";
@@ -14,26 +14,27 @@ import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
 
 export default function Review() {
-  const user = useRecoilValue(userAtom);
   const isEdit = false;
   const navigate = useNavigate();
   const reviewMatch = useMatch("/review/:reviewId");
-  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
-  const [reviews, setRevies] = useState<IReview[] | undefined>();
+  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const [leavingDetailModal, setLeavingDetailModal] = useState(false);
+  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const isLogin = useRecoilValue(isLoginSelector);
-  const { isLoading } = useQuery<IReview[]>(["reviews"], getReviews, {
+
+  const { isLoading, data, refetch } = useQuery<IReview[]>(["reviews"], getReviews, {
     onSuccess(data) {
-      setRevies(data);
+      setReviews(data);
     },
   });
 
   const handleClickCreateReview = () => {
     isLogin ? navigate("/review/write", { state: { isEdit } }) : alert("회원가입을 해주세요!");
   };
-
   useEffect(() => {
-    // console.log(reviews);
-  }, [reviews]);
+    console.log(reviewMatch);
+  }, [reviewMatch]);
+
   return (
     <>
       {isLoading || (
@@ -41,26 +42,25 @@ export default function Review() {
           <ReviewWrap>
             <TitleContainer>
               <Title>풀빛마실 이야기</Title>
+            </TitleContainer>
+            <CardContainer>
               <SubTitle>
                 <Accent>풀빛마실</Accent> 후기를 공유해주세요!
               </SubTitle>
-            </TitleContainer>
-            {isReviewDeleteModal && (
-              <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
-            )}
-            <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
-            <CardContainer>
+              {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
+              <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
+
               <CardBox>
-                {reviews ? (
-                  reviews.map(review => {
-                    return <Card review={review}></Card>;
+                {!isLoading ? (
+                  reviews?.map(review => {
+                    return <Card key={review.reviewId} review={review}></Card>;
                   })
                 ) : (
                   <div>후기없음</div>
                 )}
               </CardBox>
             </CardContainer>
-            <AnimatePresence>
+            <AnimatePresence onExitComplete={() => setLeavingDetailModal(false)}>
               {reviewMatch && (
                 <ReviewDetailModal
                   review={reviews?.filter(review => review.reviewId === parseInt(reviewMatch?.params.reviewId!))[0]!}
@@ -83,11 +83,10 @@ const ReviewWrap = styled(Wrapper)`
 
 const TitleContainer = styled.div`
   text-align: center;
-  margin-bottom: 20px;
 `;
 const Title = styled.h1`
   font-weight: 700;
-  font-size: 50px;
+  font-size: 32px;
   text-align: center;
   color: ${props => props.theme.mainColor};
   border-bottom: 1px solid #eceff1;
@@ -97,7 +96,7 @@ const Title = styled.h1`
 `;
 const SubTitle = styled.p`
   font-size: 20px;
-  margin-top: 30px;
+  margin-top: 15px;
   color: ${props => props.theme.mainColor};
 `;
 const Accent = styled.span`
@@ -114,15 +113,17 @@ const CardContainer = styled(Container)`
 
 const ReviewBtn = styled.button`
   border-radius: 5px;
-  width: 140px;
-  height: 50px;
-  font-size: 20px;
+  width: 120px;
+  height: 30px;
+  font-size: 18px;
+  margin-top: 15px;
   margin-bottom: 30px;
 `;
 const CardBox = styled(Box)`
   flex-wrap: wrap;
   width: 100%;
   height: auto;
+  padding-bottom: 100px;
 
   /* padding-bottom: 80px; */
 `;

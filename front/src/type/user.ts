@@ -3,6 +3,7 @@ export interface User {
   email: string;
   name: string;
   token: string;
+  // image?:string; //프로필이미지 default
 }
 export interface UserRegisterForm extends Omit<User, "token"> {
   password: string;

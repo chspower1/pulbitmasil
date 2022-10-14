@@ -49,55 +49,19 @@ router.post("/:crewId", login_required, async function (req, res, next) {
   const userId = req.currentUserId;
   const crewId = req.params.crewId;
   try {
-    const member = await maria.query(`SELECT * FROM GREENCREW WHERE crewId = ?`, [crewId]);
-    console.log(member);
-    // maria.query(
-    //   `INSERT INTO REVIEW(userId, description, createAt, userName) VALUES(?,?,?,?)`,
-    //   [userId, description, createAt, userName],
-    //   function (err, rows, fields) {
-    //     if (!err) {
-    //       res.status(200).json({
-    //         success: true,
-    //         description: description,
-    //         createAt: createAt,
-    //         userId: userId,
-    //         userName: userName,
-    //         reviewId: rows.insertId,
-    //       });
-    //     } else {
-    //       // console.log("err : " + err);
-    //       res.send(err);
-    //     }
-    //   },
-    // );
-  } catch (error) {
-    next(error);
-  }
-});
-
-// 빈 값이 들어오면 에러가 아니라 수정만 안 하도록 바꾸기
-router.put("/:reviewId", login_required, async function (req, res, next) {
-  try {
-    const reviewer = req.body.userId;
-    const userId = req.currentUserId;
-    if (reviewer !== userId) {
-      return res.sendStatus(432);
-    }
-    // const title = req.body.title ?? null;
-    const description = req.body.description ?? null;
-    const reviewId = req.params.reviewId;
-    maria.query(
-      `UPDATE REVIEW SET  description = ? WHERE reviewId = ?`,
-      [description, reviewId],
+    await maria.query(
+      `SELECT maxMember, userId FROM GREENCREW INNER JOIN USERTOGREENCREW ON GREENCREW.crewId = USERTOGREENCREW.crewId WHERE GREENCREW.crewId = ?`,
+      [crewId],
       async function (err, rows, fields) {
-        if (!err) {
-          res.status(200).json({
-            success: true,
-          });
-        } else {
-          // console.log("err : " + err);
-          res.send(err);
-        }
+        if (rows.length < rows[0].maxMember) {
+          await maria.query(
+            `INSERT INTO USERTOGREENCREW(userId, crewId) VALUES(?, ?)`,
+            [userId, parseInt(crewId)],
+            function (err, rows, fields) {
+              res.status(200).json(rows);
+            },
+          );
+        } else res.status(400).json({ success: false, message: "모임이 가득 찼습니다" });
       },
     );
   } catch (error) {
@@ -105,24 +69,22 @@ router.put("/:reviewId", login_required, async function (req, res, next) {
   }
 });
 
-router.delete("/:reviewId", login_required, async function (req, res, next) {
+router.delete("/:crewId", login_required, async function (req, res, next) {
   try {
-    const reviewer = req.body.userId;
+    const crewId = req.params.crewId;
     const userId = req.currentUserId;
-    const reviewId = req.params.reviewId;
 
-    if (reviewer !== userId) {
-      return res.sendStatus(432);
-    }
-
-    maria.query(`DELETE FROM REVIEW WHERE reviewId = ?`, [reviewId], async function (err, rows, fields) {
-      if (!err) {
-        res.status(200).json({ success: true });
-      } else {
-        // console.log("err : " + err);
-        res.send(err);
-      }
-    });
+    await maria.query(
+      `DELETE FROM USERTOGREENCREW WHERE userId = ? AND crewId = ?`,
+      [userId, crewId],
+      function (err, rows, fields) {
+        if (!err) {
+          res.status(200).json({ success: true });
+        } else {
+          res.send(err);
+        }
+      },
+    );
   } catch (error) {
     next(error);
   }

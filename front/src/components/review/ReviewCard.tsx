@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { IReview } from "@type/review";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { isReviewDeleteAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom } from "@atom/atom";
 import ReviewDeleteModal from "../modal/ReviewDeleteModal";
 import { Accent } from "@style/ModalStyle";
 
@@ -19,36 +19,31 @@ export const changeDayForm = (createAt: Date): string => {
 };
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
-  const { userId, reviewId, description, createAt, userName } = review;
+  const { userId, reviewId, description, createAt, name, reviewImg } = review;
   const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
-  const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
-  const randomNum = Math.floor(Math.random() * 8) + 1;
-
-  useEffect(() => {
-    // console.log(review);
-  }, []);
+  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
 
   const day = changeDayForm(createAt!);
 
   return (
     <>
-      <CardWrap whileHover={{ scale: 1.1 }} layoutId={`${reviewId}wrap`}>
+      <CardWrap whileHover={{ scale: 1.03 }} layoutId={`${reviewId}wrap`}>
         <motion.div
           onClick={() => {
             navigate(`${reviewId}`);
           }}
         >
-          <ImgContainer>
-            <ReviewImg src="/assets/images/review_test.jpg" alt="review image"></ReviewImg>
+          <ImgContainer >
+            <ReviewImg src={reviewImg as string} alt="review image"></ReviewImg>
           </ImgContainer>
           <ReviewContainer>
             <InfoContainer>
-              <CardImg src={`/assets/icon/user/profile0${randomNum}.png`} />
+              <CardImg src={`/assets/icon/profile01.png`} />
               <InfoBox>
                 <p style={{ fontSize: "18px" }}>
-                  <span style={{ color: "green" }}>{userName ? userName : "***"}</span> 님
+                  <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
                 </p>
                 <p style={{ fontSize: "14px", marginTop: "5px" }}>{day} </p>
               </InfoBox>
@@ -60,15 +55,17 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
             </TextContainer>
           </ReviewContainer>
         </motion.div>
-        <ButtonContainer>
+        <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId ? (
-            <Btn onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, review } })}>수정</Btn>
+            <Btn onClick={() => navigate(`/review/edit/${reviewId}`, { state: { isEdit, reviewId, userId } })}>
+              수정
+            </Btn>
           ) : null}
 
           {user?.id === userId ? (
             <Btn
               onClick={() => {
-                setIsReviewDeleteModal(reviewId!);
+                setReviewDelId(reviewId!);
               }}
             >
               삭제
@@ -81,8 +78,9 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 }
 
 const CardWrap = styled(motion(motion.div))`
+  position: relative;
   width: 370px;
-  height: 480px;
+  height: 430px;
   background-color: white;
   box-shadow: 3px 3px 15px #b0bec5;
   margin: 0 23px;
@@ -135,6 +133,9 @@ const CardImg = styled(motion.img)`
 const ButtonContainer = styled(motion.div)`
   display: flex;
   flex-direction: row;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
   margin: auto;
 `;
 const Btn = styled(motion.button)`
@@ -153,6 +154,6 @@ const Description = styled(motion.p)`
   word-break: break-word;
 
   display: -webkit-box;
-  -webkit-line-clamp: 3; // 원하는 라인수
+  -webkit-line-clamp: 2; // 원하는 라인수
   -webkit-box-orient: vertical;
 `;

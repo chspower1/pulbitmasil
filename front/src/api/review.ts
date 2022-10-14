@@ -2,31 +2,46 @@ import axios from "axios";
 import { IReview } from "@type/review";
 import { axiosInstance } from "./user";
 
-export async function createReview(contents: IReview) {
-  const bodyData = JSON.stringify(contents);
-  // console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
-  // console.log(bodyData);
+//image 테스트
+export async function createReview(contents: FormData) {
+  console.log(`%cPOST 요청 ${BASE_URL + "review/create"}`, "color: #a25cd1;");
+  console.log(contents);
+  // console.log(contents.get("file"));
 
-  return axiosInstance.post(`review/create`, bodyData, {
+  return await axiosInstance.post(`review/create`, contents, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
   });
 }
 
-export async function editReview(contents: IReview) {
-  const bodyData = JSON.stringify(contents);
-  // console.log(`%cPUT 요청 ${BASE_URL}/review/${contents.reviewId}`, "color: #a25cd1;");
-  // console.log(bodyData);
+// export async function editReview(contents: IReview) {
+//   const bodyData = JSON.stringify(contents);
+//   // console.log(`%cPUT 요청 ${BASE_URL}/review/${contents.reviewId}`, "color: #a25cd1;");
+//   // console.log(bodyData);
 
-  return axiosInstance.put(`review/${contents.reviewId}`, bodyData, {
+//   return axiosInstance.put(`review/${contents.reviewId}`, bodyData, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+//     },
+//     params: {
+//       reviewId: contents.reviewId,
+//     },
+//   });
+// }
+
+export async function editReview(contents: FormData, reviewId: number) {
+  console.log(`%cPUT 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
+
+  return axiosInstance.put(`review/${reviewId}`, contents, {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
     },
     params: {
-      reviewId: contents.reviewId,
+      reviewId,
     },
   });
 }
@@ -34,7 +49,7 @@ export async function editReview(contents: IReview) {
 export async function getReviews() {
   // console.log(`%cGET 요청 ${BASE_URL}/review`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review`);
-  // console.log(data);
+  console.log("get", data);
   return data;
 }
 
