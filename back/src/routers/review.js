@@ -84,27 +84,22 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
   }
 });
 
-// 빈 값이 들어오면 에러가 아니라 수정만 안 하도록 바꾸기  +
-// 기존에 디폴트가 아니었고 && 새로운 이미지도 입력이 없을 시, update X 되도록 바꾸기
 router.put("/:reviewId", login_required, uploadSingle, async function (req, res, next) {
   try {
     const reviewer = parseInt(req.body.userId);
     const userId = req.currentUserId;
     const description = req.body.description ?? null;
     const reviewId = req.params.reviewId;
-    let imgName;
+    let imgName = req.body.imageUrl ?? null;
 
     if (reviewer !== userId) {
       return res.sendStatus(432);
     }
 
-    if (req.file) {
+    if (imgName === null) {
       imgName = hostURL + req.file.filename;
-    } else {
-      imgName = imgName = hostURL + "default.jpg";
+      fileDelete(reviewId);
     }
-    // 값 안 들어오면 수정 안되도록 바꾼 후, 아래 코드는 위 if문(req.file인경우)으로 이동
-    fileDelete(reviewId);
 
     maria.query(
       `UPDATE REVIEW SET  description = ?, reviewImg = ?  WHERE reviewId = ?`,
@@ -115,7 +110,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
             success: true,
           });
         } else {
-          // console.log("err : " + err);
+          console.error("review update error");
           res.send(err);
         }
       },
