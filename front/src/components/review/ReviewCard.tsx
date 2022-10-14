@@ -29,7 +29,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 
   return (
     <>
-      <CardWrap whileHover={{ scale: 1.1 }} layoutId={`${reviewId}wrap`}>
+      <CardWrap whileHover={{ scale: 1.03 }} layoutId={`${reviewId}wrap`}>
         <motion.div
           onClick={() => {
             navigate(`${reviewId}`);

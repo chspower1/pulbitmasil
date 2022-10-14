@@ -18,7 +18,7 @@ export default function Review() {
   const navigate = useNavigate();
   const reviewMatch = useMatch("/review/:reviewId");
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
-
+  const [leavingDetailModal, setLeavingDetailModal] = useState(false);
   const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const isLogin = useRecoilValue(isLoginSelector);
 
@@ -31,6 +31,9 @@ export default function Review() {
   const handleClickCreateReview = () => {
     isLogin ? navigate("/review/write", { state: { isEdit } }) : alert("회원가입을 해주세요!");
   };
+  useEffect(() => {
+    console.log(reviewMatch);
+  }, [reviewMatch]);
 
   return (
     <>
@@ -50,14 +53,14 @@ export default function Review() {
               <CardBox>
                 {!isLoading ? (
                   reviews?.map(review => {
-                    return <Card review={review}></Card>;
+                    return <Card key={review.reviewId} review={review}></Card>;
                   })
                 ) : (
                   <div>후기없음</div>
                 )}
               </CardBox>
             </CardContainer>
-            <AnimatePresence>
+            <AnimatePresence onExitComplete={() => setLeavingDetailModal(false)}>
               {reviewMatch && (
                 <ReviewDetailModal
                   review={reviews?.filter(review => review.reviewId === parseInt(reviewMatch?.params.reviewId!))[0]!}
