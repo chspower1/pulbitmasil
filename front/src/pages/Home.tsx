@@ -8,6 +8,31 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
 import { Wrapper as HomeWrapper } from "@style/Layout";
+
+const HOMETEXT = [
+  {
+    title: `당신, 지구 모두 소중합니다`,
+    button1: `풀빛마실이란 ?`,
+    button2: `풀빛마실 시작하기 >`,
+  },
+  {
+    title: `지구를 지키는 풀빛 발결음`,
+    button1: `풀빛마실이란 ?`,
+    button2: `풀빛마실 시작하기 >`,
+  },
+  {
+    title: `어렵지 않아요 마실 나가듯이 쉽게 실천하는 풀빛마실`,
+    button1: `풀빛마실이란 ?`,
+    button2: `풀빛마실 시작하기 >`,
+  },
+  {
+    title: `우리 강산의 풀빛을 위한 마실을 떠나요`,
+    button1: `풀빛마실이란 ?`,
+    button2: `풀빛마실 시작하기 >`,
+  },
+]
+
+
 //Variants
 const HomeImgVariants = {
   initial: (next: boolean) => {
@@ -36,11 +61,13 @@ const HomeImgVariants = {
 };
 export default function Home() {
   const maxIndex = 4;
+  const textMaxIndex = 3;
   const [user, setUser] = useRecoilState(userAtom);
   const [click, setClick] = useState(false);
   const [imgIndex, setImgIndex] = useState(1);
   const [next, setNext] = useState(true);
   const [leaving, setLeaving] = useState(false);
+  const [textIndex, setTextIndex] = useState(0);
   const toggleLeaving = () => {
     setLeaving(prev => !prev);
   };
@@ -50,6 +77,7 @@ export default function Home() {
       setNext(next);
       toggleLeaving();
       setImgIndex(prev => (next ? (prev === maxIndex ? 1 : prev + 1) : prev === 1 ? maxIndex : prev - 1));
+      setTextIndex(prev => (next ? (prev === textMaxIndex ? 0 : prev + 1) : prev === 0 ? textMaxIndex : prev - 1));
       // console.log("Click! and nextState:", next);
     }
   };
@@ -85,6 +113,13 @@ export default function Home() {
           src={`/assets/images/home/home_img0${imgIndex}.jpg`}
           alt="#"
         />
+        <HomeText>
+          <h1>{HOMETEXT[textIndex].title}</h1>
+          <BtnBox>
+            <Button>{HOMETEXT[textIndex].button1}</Button>
+            <Button>{HOMETEXT[textIndex].button2}</Button>
+          </BtnBox>
+        </HomeText>
         <ImgPointerBox>
           {[1, 2, 3, 4].map(num => (
             <ImgPointer
@@ -159,3 +194,16 @@ const ImgPointer = styled(motion.div)`
     background-color: rgb(106, 202, 156, 0.7);
   }
 `;
+
+const Button = styled.button`
+`;
+
+const HomeText = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 10%;
+  color: white;
+`
+const BtnBox = styled.div`
+  display: flex;
+`
