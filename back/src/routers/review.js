@@ -96,7 +96,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
       return res.sendStatus(432);
     }
 
-    if (imgName === null) {
+    if (!imgName) {
       imgName = hostURL + req.file.filename;
       fileDelete(reviewId);
     }
