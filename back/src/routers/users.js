@@ -104,11 +104,9 @@ router.delete("/delete", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
 
-    maria.query(` USER SET name = ? WHERE id = ?`, [name, user_id], async function (err, rows, fields) {
+    maria.query(`DELETE FROM USER WHERE id = ?`, [user_id], async function (err, rows, fields) {
       if (!err) {
-        res
-          .status(200)
-          .json({ success: true, success: true, email: email, name: rows[0].name, id: rows[0].id, token: token });
+        res.status(200).json({ success: true });
       } else {
         console.log("err : " + err);
         res.send(err);
