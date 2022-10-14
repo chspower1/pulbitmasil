@@ -1,8 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
-
-const jwt = require("jsonwebtoken");
 
 const login_required = require("../middlewares/login_required");
 
@@ -22,18 +19,6 @@ router.get("/", async function (req, res, next) {
     },
   );
 });
-
-// SELECT A.startAt, C.course, C.distance, C.leadTime, A.maxMember, C.level, SUM(B.userid) AS curMember, C.content, C.trafficInfo, C.x, C.y
-//   FROM GREENCREW AS A
-//   INNER JOIN USERTOGREENCREW AS B
-//   ON A.id = B.crewId
-//   INNER JOIN (SELECT * FROM ROUTE INNER JOIN CPI ON ROUTE.id = CPI.routeId) AS C
-//   ON A.routeId = C.routeId
-
-// // 모임 생성
-// router.post("/", async function (req, res, next) {
-//   const { course, category, area, date, maxMember } = req.body
-// })
 
 // 멤버 추가
 router.post("/:crewId", login_required, async function (req, res, next) {
