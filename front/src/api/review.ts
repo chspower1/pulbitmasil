@@ -54,7 +54,7 @@ export async function editReview(contents: FormData, reviewId: number) {
 export async function getReviews() {
   // console.log(`%cGET 요청 ${BASE_URL}/review`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`review`);
-  // console.log(data);
+  console.log("get", data);
   return data;
 }
 

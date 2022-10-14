@@ -21,7 +21,7 @@ export default function Review() {
   const [isReviewDeleteModal, setIsReviewDeleteModal] = useRecoilState(isReviewDeleteAtom);
   const [reviews, setRevies] = useState<IReview[] | undefined>();
   const isLogin = useRecoilValue(isLoginSelector);
-  const { isLoading } = useQuery<IReview[]>(["reviews"], getReviews, {
+  const { isLoading, data, refetch } = useQuery<IReview[]>(["reviews"], getReviews, {
     onSuccess(data) {
       setRevies(data);
     },
@@ -31,9 +31,9 @@ export default function Review() {
     isLogin ? navigate("/review/write", { state: { isEdit } }) : alert("회원가입을 해주세요!");
   };
 
-  useEffect(() => {
-    console.log(reviews);
-  }, [reviews]);
+  // useEffect(() => {
+  //   console.log(reviews);
+  // }, [reviews]);
   return (
     <>
       {isLoading || (
@@ -46,15 +46,14 @@ export default function Review() {
               <SubTitle>
                 <Accent>풀빛마실</Accent> 후기를 공유해주세요!
               </SubTitle>
-
               {isReviewDeleteModal && (
                 <ReviewDeleteModal reviewId={isReviewDeleteModal} userId={user?.id!} setRevies={setRevies} />
               )}
               <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
 
               <CardBox>
-                {reviews ? (
-                  reviews?.map(review => {
+                {!isLoading ? (
+                  data?.map(review => {
                     return <Card review={review}></Card>;
                   })
                 ) : (

@@ -62,7 +62,7 @@ export async function WalkingData(params: any) {
 export async function getDodream() {
   try {
     const { data } = await axiosInstance.get(`dodream`);
-    console.log(data);
+    console.log("get", data);
     const dodream: IDodream[] = [];
     data.map((road: any) => {
       const nameArr = Object.keys(road.course_name) as string[];
