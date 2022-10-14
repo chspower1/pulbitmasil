@@ -36,7 +36,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           }}
         >
           <ImgContainer>
-            <ReviewImg src={reviewImg} alt="review image"></ReviewImg>
+            <ReviewImg src={reviewImg as string} alt="review image"></ReviewImg>
           </ImgContainer>
           <ReviewContainer>
             <InfoContainer>

@@ -43,12 +43,12 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 0.4 }}
       />
       <ReviewWrap layoutId={`${reviewId}wrap`} transition={{ type: "tween", duration: 0.4 }}>
         <ImgContainer>
           <ReviewImg
-            src={reviewImg}
+            src={reviewImg as string}
             alt="review image"
             // layoutId={`${reviewId}image`}
             transition={{ type: "tween", duration: 1 }}

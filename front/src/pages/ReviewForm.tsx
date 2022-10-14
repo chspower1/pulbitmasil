@@ -44,7 +44,7 @@ export default function ReviewForm() {
 
   useEffect(() => {
     if (isEdit) {
-      setImagePreview(review?.reviewImg);
+      setImagePreview(review?.reviewImg!);
     }
   }, [review]);
 
@@ -54,13 +54,13 @@ export default function ReviewForm() {
       console.log(image);
       console.log(file);
       console.log(typeof file);
-      setImagePreview(window.URL.createObjectURL(file));
+      setImagePreview(window.URL.createObjectURL(file as File));
       setUploadImg(file);
     }
   }, [image]);
 
   const handleSubmitReview = handleSubmit(data => {
-    // console.log("click");
+    console.log("--------------------------", data.reviewImg);
     const formData = new FormData();
     formData.append("description", watch("description"));
     if (!isEdit) {
@@ -86,8 +86,9 @@ export default function ReviewForm() {
         //   { ...review, reviewImg: window.URL.createObjectURL(image[0]), description: watch("description") },
         // ]);
       } else {
-        //사진파일이 그대로라면, 이미지 url 전달
-        // formData.append("imageUrl", review?.imageUrl!);
+        // 사진파일이 그대로라면, 이미지 url 전달
+        console.log("reviewImg", review?.reviewImg!);
+        formData.append("imageUrl", review?.reviewImg! as string);
       }
       editReview(formData, review?.reviewId!);
       navigate("/review");
