@@ -4,7 +4,7 @@ export interface IReview {
   reviewId?: number;
   description: string;
   createAt?: Date;
-  reviewImg?: any;
+  reviewImg?: any; //백에서 받을때 image 경로
 }
 
 export interface IReviewContent extends Omit<IReview, "createAt"> {}

@@ -9,11 +9,11 @@ const axiosInstance = axios.create({
 
 //image 테스트
 export async function createReview(contents: FormData) {
-  console.log(`%cPOST 요청 ${BASE_URL + "user/review"}`, "color: #a25cd1;");
+  console.log(`%cPOST 요청 ${BASE_URL + "review/create"}`, "color: #a25cd1;");
   console.log(contents);
-  console.log(contents.get("imageUrl"));
+  // console.log(contents.get("file"));
 
-  return axiosInstance.post(`review/create`, contents, {
+  return await axiosInstance.post(`review/create`, contents, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

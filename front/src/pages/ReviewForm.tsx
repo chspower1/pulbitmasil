@@ -31,7 +31,7 @@ export default function ReviewForm() {
   } = useForm<IReviewContent>();
 
   //img preview test
-  const [imagePreview, setImagePreview] = useState<any>(); // any 말고??
+  const [imagePreview, setImagePreview] = useState<any>(null); // any 말고??
   const [uploadImg, setUploadImg] = useState<any>(); // any 말고??
   const image = watch("reviewImg");
 
@@ -45,7 +45,6 @@ export default function ReviewForm() {
   useEffect(() => {
     if (isEdit) {
       setImagePreview(review?.reviewImg);
-      setUploadImg(review?.reviewImg);
     }
   }, [review]);
 
@@ -69,24 +68,28 @@ export default function ReviewForm() {
       formData.append("createAt", date.toString());
       formData.append("file", uploadImg);
       formData.append("name", user?.name!);
-      // formData.append("description", data.description);
+      console.log(uploadImg); //file
       createReview(formData);
+      console.log(reviews);
 
       navigate("/review");
     } else {
       // formData.append("description",watch("description"));
-      formData.append("file", uploadImg);
       formData.append("userId", user?.id?.toString()!);
-      editReview(formData, review?.reviewId!);
+
       const filtered = reviews?.filter(review => review.reviewId !== state.reviewId);
-      setReviews([
-        ...filtered,
-        { ...review, reviewImg: window.URL.createObjectURL(uploadImg), description: watch("description") },
-      ]);
-      console.log([
-        ...filtered,
-        { ...review, reviewImg: window.URL.createObjectURL(uploadImg), description: watch("description") },
-      ]);
+      if (uploadImg) {
+        // 사진파일이 변했다면 ,file 객체 전달
+        formData.append("file", uploadImg);
+        // setReviews([
+        //   ...filtered,
+        //   { ...review, reviewImg: window.URL.createObjectURL(image[0]), description: watch("description") },
+        // ]);
+      } else {
+        //사진파일이 그대로라면, 이미지 url 전달
+        // formData.append("imageUrl", review?.imageUrl!);
+      }
+      editReview(formData, review?.reviewId!);
       navigate("/review");
     }
   });
