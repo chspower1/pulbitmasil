@@ -1,0 +1,1 @@
+export const REVIEWS = "review";

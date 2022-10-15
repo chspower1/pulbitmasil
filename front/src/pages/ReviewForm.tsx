@@ -11,6 +11,8 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { isReviewCancelAtom, ReviewsAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
 import { Wrapper } from "@style/Layout";
+import { useCreateReview } from "@hooks/reviews/mutations/useCreateReview";
+import { useUpdateReview } from "@hooks/reviews/mutations/useUpdateReview";
 
 export default function ReviewForm() {
   const user = useRecoilValue(userAtom);
@@ -18,9 +20,12 @@ export default function ReviewForm() {
   const { state } = useLocation();
   const isEdit = state?.isEdit! as boolean;
   const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.userId : true;
+  const { create } = useCreateReview();
+  const { update } = useUpdateReview();
+  // Note: 불필요한 로직 제거
   // const [review, setReview] = useState<IReview>(state?.review!);
-  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
-  const [review, setReview] = useState<IReview>();
+  // const [reviews, setReviews] = useRecoilState(ReviewsAtom);
+  // const [review, setReview] = useState<IReview>();
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const location = useLocation();
   const {
@@ -38,15 +43,15 @@ export default function ReviewForm() {
   useEffect(() => {
     console.log("state", state);
     setIsReviewCancelModal(false);
-    setReview(reviews.find(review => review.reviewId === state.reviewId));
+    //setReview(reviews.find(review => review.reviewId === state.reviewId));
     // console.log(reviews.find(review => review.reviewId === state.reviewId));
   }, []);
 
-  useEffect(() => {
-    if (isEdit) {
-      setImagePreview(review?.reviewImg!);
-    }
-  }, [review]);
+  // useEffect(() => {
+  //   if (isEdit) {
+  //     setImagePreview(review?.reviewImg!);
+  //   }
+  // }, [review]);
 
   useEffect(() => {
     if (image && image.length > 0) {
@@ -69,15 +74,16 @@ export default function ReviewForm() {
       formData.append("file", uploadImg);
       formData.append("name", user?.name!);
       console.log(uploadImg); //file
-      createReview(formData);
-      console.log(reviews);
+      create(formData);
+      //createReview(formData);
+      //console.log(reviews);
 
       navigate("/review");
     } else {
       // formData.append("description",watch("description"));
       formData.append("userId", user?.id?.toString()!);
 
-      const filtered = reviews?.filter(review => review.reviewId !== state.reviewId);
+      //const filtered = reviews?.filter(review => review.reviewId !== state.reviewId);
       if (uploadImg) {
         // 사진파일이 변했다면 ,file 객체 전달
         formData.append("file", uploadImg);
@@ -87,10 +93,11 @@ export default function ReviewForm() {
         // ]);
       } else {
         // 사진파일이 그대로라면, 이미지 url 전달
-        console.log("reviewImg", review?.reviewImg!);
-        formData.append("imageUrl", review?.reviewImg! as string);
+        // console.log("reviewImg", review?.reviewImg!);
+        // formData.append("imageUrl", review?.reviewImg! as string);
       }
-      editReview(formData, review?.reviewId!);
+      update({ contents: formData, reviewId: state.reviewid });
+      //editReview({formData, state.reviewId});
       navigate("/review");
     }
   });
@@ -125,14 +132,14 @@ export default function ReviewForm() {
 
             <ReviewTextArea
               placeholder="내용을 입력해주세요."
-              defaultValue={review?.description}
+              // defaultValue={review?.description}
               {...register("description", {
                 required: { value: true, message: "내용을 입력해주세요." },
               })}
             />
 
             <ButtonContainer>
-              <Button>{review ? "수정하기" : "등록하기"}</Button>
+              <Button>{state.reviewId ? "수정하기" : "등록하기"}</Button>
               <Button className="cancle" type="button" onClick={handleClickCancel}>
                 취소
               </Button>

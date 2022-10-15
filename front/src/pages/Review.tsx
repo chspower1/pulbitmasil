@@ -1,10 +1,8 @@
-import { getReviews } from "@api/review";
 import Card from "@components/review/ReviewCard";
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link, useMatch } from "react-router-dom";
 import styled from "styled-components";
-import { IReview } from "@type/review";
-import { useQuery } from "@tanstack/react-query";
+
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ReviewDeleteIdAtom, ReviewsAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
@@ -12,21 +10,19 @@ import { isLoginSelector, userAtom } from "@atom/user";
 import { Box, Container, Wrapper } from "@style/Layout";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
+import { useGetReviews } from "@hooks/reviews/quries/useReviewQueries";
 
 export default function Review() {
   const isEdit = false;
   const navigate = useNavigate();
   const reviewMatch = useMatch("/review/:reviewId");
-  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
-  const [leavingDetailModal, setLeavingDetailModal] = useState(false);
-  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const isLogin = useRecoilValue(isLoginSelector);
+  const [leavingDetailModal, setLeavingDetailModal] = useState(false);
+  const { isLoading, reviews } = useGetReviews();
 
-  const { isLoading, data, refetch } = useQuery<IReview[]>(["reviews"], getReviews, {
-    onSuccess(data) {
-      setReviews(data);
-    },
-  });
+  // NOTE: 불필요한 로직
+  // const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  // const [reviews, setReviews] = useRecoilState(ReviewsAtom);
 
   const handleClickCreateReview = () => {
     isLogin ? navigate("/review/write", { state: { isEdit } }) : alert("회원가입을 해주세요!");
@@ -47,11 +43,14 @@ export default function Review() {
               <SubTitle>
                 <Accent>풀빛마실</Accent> 후기를 공유해주세요!
               </SubTitle>
-              {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
+              {/* NOTE: 어떤 로직인지 이해하지 못했어요. */}
+              {/* {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />} */}
               <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
 
               <CardBox>
-                {!isLoading ? (
+                {/* NOTE: isLoading은 상위에서 체크했으니 데이터의 유무만을 판단해주세요.
+                {!isLoading ? ( */}
+                {reviews ? (
                   reviews?.map(review => {
                     return <Card key={review.reviewId} review={review}></Card>;
                   })

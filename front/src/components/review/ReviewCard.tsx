@@ -23,7 +23,6 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
-  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
 
   const day = changeDayForm(createAt!);
 
@@ -64,9 +63,10 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 
           {user?.id === userId ? (
             <Btn
-              onClick={() => {
-                setReviewDelId(reviewId!);
-              }}
+              onClick={() => {}}
+              // onClick={() => {
+              //   setReviewDelId(reviewId!);
+              // }}
             >
               삭제
             </Btn>

@@ -22,6 +22,12 @@
       ],
       "@type/*": [
         "src/type/*"
+      ],
+      "@constants/*": [
+        "src/constants/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
       ]
     }
   }
