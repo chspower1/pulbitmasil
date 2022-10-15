@@ -27,7 +27,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   };
 
   const handleClickEdit = () => {
-    navigate(`/review/edit/${reviewId}`, { state: { isEdit, reviewId, userId } });
+    navigate(`/review/edit/${reviewId}`, { state: { reviewId, userId } });
   };
   const day = changeDayForm(createAt!);
 
@@ -46,7 +46,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         transition={{ duration: 0.4 }}
       />
       <ReviewWrap layoutId={`${reviewId}wrap`}>
-        <ImgContainer >
+        <ImgContainer>
           <ReviewImg
             src={reviewImg as string}
             alt="review image"

@@ -152,11 +152,6 @@ export default function Nav() {
             <div>
               <UserName style={{ color: "green" }}>{user?.name}</UserName> 님
             </div>
-            {/* <svg width="36" height="30" viewBox="0 0 36 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3 3H33" stroke="#169E5C" stroke-width="5" stroke-linecap="round" />
-              <path d="M3 15H33" stroke="#169E5C" stroke-width="5" stroke-linecap="round" />
-              <path d="M3 27H33" stroke="#169E5C" stroke-width="5" stroke-linecap="round" />
-            </svg> */}
             <MenuImg onClick={handleClickMenu} src="/assets/icon/user/menu_button.svg" />
           </UserContainer>
         )}
@@ -179,7 +174,6 @@ const Wrap = styled(motion.nav)`
   width: 100%;
   padding-left: 20px;
   overflow: hidden;
-  box-shadow: 10px 0px 5px lightgray;
 `;
 const Col = styled.div`
   display: flex;

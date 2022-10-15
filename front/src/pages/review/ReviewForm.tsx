@@ -4,24 +4,24 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { editReview, getOneReview, getReviews, createReview } from "@api/review";
-import { IReview, IReviewContent } from "@type/review";
+import { IReview, IReviewContent, IReviewUpdateData } from "@type/review";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
 import { Wrapper } from "@style/Layout";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-export default function ReviewForm() {
+export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData }) {
   const user = useRecoilValue(userAtom);
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const isEdit = state?.isEdit! as boolean;
-  const checkUser = isEdit === null ? false : isEdit ? user?.id === state.userId : false;
-  // const [review, setReview] = useState<IReview>(state?.review!);
-  const [review, setReview] = useState<IReview>();
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
+  const navigate = useNavigate();
+  const [review, setReview] = useState<IReview>();
+
+  const mode = formProps?.type;
+  // const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.userId : true;
+  // const [review, setReview] = useState<IReview>(state?.review!);
 
   const {
     register,
@@ -29,11 +29,18 @@ export default function ReviewForm() {
     formState: { errors },
     watch,
   } = useForm<IReviewContent>();
-
   //img preview test
   const [imagePreview, setImagePreview] = useState<any>(null); // any 말고??
   const [uploadImg, setUploadImg] = useState<any>(); // any 말고??
   const image = watch("reviewImg");
+
+  const { isLoading, data } = useQuery<IReview>(["review"], () => getOneReview(formProps?.reviewId!), {
+    onSuccess(data) {
+      setReview(data);
+      setImagePreview(data?.reviewImg!);
+    },
+    enabled: mode === "UPDATE",
+  });
 
   //qeury
   const queryClient = useQueryClient();
@@ -50,17 +57,14 @@ export default function ReviewForm() {
   });
 
   useEffect(() => {
-    console.log("state", state);
-    console.log(checkUser);
-    setReview(state.review);
     setIsReviewCancelModal(false);
   }, []);
 
-  useEffect(() => {
-    if (isEdit) {
-      setImagePreview(review?.reviewImg!);
-    }
-  }, [review]);
+  // useEffect(() => {
+  //   if (isEdit) {
+  //     setImagePreview(review?.reviewImg!);
+  //   }
+  // }, [review]);
 
   useEffect(() => {
     if (image && image.length > 0) {
@@ -71,37 +75,39 @@ export default function ReviewForm() {
   }, [image]);
 
   const handleSubmitReview = handleSubmit(data => {
-    // console.log("--------------------------", data.reviewImg);
     const formData = new FormData();
     formData.append("description", watch("description"));
-    if (!isEdit) {
-      const date = new Date();
-      formData.append("createAt", date.toString());
-      formData.append("file", uploadImg);
-      formData.append("name", user?.name!);
-      console.log(uploadImg); //file
-
-      crateMutation.mutate(formData);
-      // createReview(formData);
-
-      navigate("/review");
-    } else {
-      formData.append("userId", user?.id?.toString()!);
-      formData.append("reviewId", review?.reviewId?.toString()!);
-
-      if (uploadImg) {
-        // 사진파일이 변했다면 ,file 객체 전달
+    switch (mode) {
+      case "CREATE":
+        const date = new Date();
+        formData.append("createAt", date.toString());
         formData.append("file", uploadImg);
-      } else {
-        // 사진파일이 그대로라면, 이미지 url 전달
-        console.log("reviewImg", review?.reviewImg!);
-        formData.append("imageUrl", review?.reviewImg! as string);
-      }
-      // editReview(formData, review?.reviewId!);
-      editMutation.mutate(formData);
-      navigate("/review");
+        formData.append("name", user?.name!);
+
+        crateMutation.mutate(formData);
+        // createReview(formData);
+        navigate("/review");
+        break;
+
+      case "UPDATE":
+        formData.append("userId", user?.id?.toString()!);
+        formData.append("reviewId", review?.reviewId?.toString()!);
+
+        if (uploadImg) {
+          // 사진파일이 변했다면 ,file 객체 전달
+          formData.append("file", uploadImg);
+        } else {
+          // 사진파일이 그대로라면, 이미지 url 전달
+          console.log("reviewImg", review?.reviewImg!);
+          formData.append("imageUrl", review?.reviewImg! as string);
+        }
+        // editReview(formData, review?.reviewId!);
+        editMutation.mutate(formData);
+        navigate("/review");
+        break;
     }
   });
+
   const handleClickCancel = () => {
     console.log("handleclickcancel");
     setIsReviewCancelModal(true);
@@ -109,48 +115,44 @@ export default function ReviewForm() {
 
   return (
     <>
-      {checkUser ? (
-        <FormWrap>
-          <Form as="form" onSubmit={handleSubmitReview}>
-            <TitleContainer>
-              <Title>플로깅</Title>
-              <SubTitle>
-                함께한
-                <Accent> 생생한 경험</Accent>를 공유해주세요!
-              </SubTitle>
-            </TitleContainer>
-            <ImgBox>
-              {image && <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={imagePreview} />}
-            </ImgBox>
-            <ImgLabel htmlFor="input-file">이미지 업로드</ImgLabel>
-            <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
-            <SelectInput as="select" height={40}>
-              <option>근교산 자락길 모임1</option>
-              <option>근교산 자락길 모임2</option>
-              <option>근교산 자락길 모임3</option>
-              <option>근교산 자락길 모임4</option>
-            </SelectInput>
+      <FormWrap>
+        <Form as="form" onSubmit={handleSubmitReview}>
+          <TitleContainer>
+            <Title>플로깅</Title>
+            <SubTitle>
+              함께한
+              <Accent> 생생한 경험</Accent>를 공유해주세요!
+            </SubTitle>
+          </TitleContainer>
+          <ImgBox>
+            {image && <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={imagePreview} />}
+          </ImgBox>
+          <ImgLabel htmlFor="input-file">이미지 업로드</ImgLabel>
+          <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
+          <SelectInput as="select" height={40}>
+            <option>근교산 자락길 모임1</option>
+            <option>근교산 자락길 모임2</option>
+            <option>근교산 자락길 모임3</option>
+            <option>근교산 자락길 모임4</option>
+          </SelectInput>
 
-            <ReviewTextArea
-              placeholder="내용을 입력해주세요."
-              defaultValue={review?.description}
-              {...register("description", {
-                required: { value: true, message: "내용을 입력해주세요." },
-              })}
-            />
+          <ReviewTextArea
+            placeholder="내용을 입력해주세요."
+            defaultValue={review?.description}
+            {...register("description", {
+              required: { value: true, message: "내용을 입력해주세요." },
+            })}
+          />
 
-            <ButtonContainer>
-              <Button>{review ? "수정하기" : "등록하기"}</Button>
-              <Button className="cancle" type="button" onClick={handleClickCancel}>
-                취소
-              </Button>
-            </ButtonContainer>
-            <ReviewModal />
-          </Form>
-        </FormWrap>
-      ) : (
-        "권한이 없습니다."
-      )}
+          <ButtonContainer>
+            <Button>{mode === "UPDATE" ? "수정하기" : "등록하기"}</Button>
+            <Button className="cancle" type="button" onClick={handleClickCancel}>
+              취소
+            </Button>
+          </ButtonContainer>
+          <ReviewModal />
+        </Form>
+      </FormWrap>
     </>
   );
 }

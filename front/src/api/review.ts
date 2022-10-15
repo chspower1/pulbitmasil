@@ -61,7 +61,7 @@ export async function getOneReview(reviewId: number) {
       reviewId,
     },
   });
-  return data;
+  return data[0];
 }
 
 export async function deleteReview({ reviewId, userId }: { reviewId: number; userId: number }) {

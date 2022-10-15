@@ -28,7 +28,7 @@ export default function Review() {
   });
 
   const handleClickCreateReview = () => {
-    isLogin ? navigate("/review/write", { state: { isEdit,  userId } }) : alert("회원가입을 해주세요!");
+    isLogin ? navigate("/review/write") : alert("회원가입을 해주세요!");
   };
   useEffect(() => {
     console.log(reviewMatch);

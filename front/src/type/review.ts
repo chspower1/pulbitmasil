@@ -1,3 +1,8 @@
+enum FormMode {
+  CREATE = "CREATE",
+  UPDATE = "UPDATE",
+}
+
 export interface IReview {
   name?: string;
   userId?: number; // 작성자
@@ -8,3 +13,9 @@ export interface IReview {
 }
 
 export interface IReviewContent extends Omit<IReview, "createAt"> {}
+
+export interface IReviewUpdateData {
+  type: "CREATE" | "UPDATE";
+  userId?: number;
+  reviewId?: number;
+}
