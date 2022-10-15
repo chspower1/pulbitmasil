@@ -53,7 +53,7 @@ export default function Unique() {
           </Desc>
         </Row>
         <Row>
-          <Link to="/">
+          <Link to="/guide">
             <Btn>사용법 보러가기</Btn>
           </Link>
           <Link to="/greencrew">
