@@ -16,7 +16,7 @@ export default function Content() {
       anchors={anchors}
       navigation
       navigationTooltips={anchors}
-      sectionsColor={["#f7f7f7", "#C7E1D6", "#d8d8d8"]}
+      // sectionsColor={["#f7f7f7", "#C7E1D6", "#d8d8d8"]}
       scrollingSpeed={1000}
       onLeave={(origin, destination, direction) => {
         // console.log("onLeave event", { origin, destination, direction });

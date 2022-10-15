@@ -1,20 +1,25 @@
 const express = require("express");
 const router = express.Router();
+const cpi = require("../db/mongoDB/mongodb");
 
 const login_required = require("../middlewares/login_required");
 
 const maria = require("../db/connect/maria");
 
 router.get("/", async function (req, res, next) {
+  // const asd = await cpi();
+  // console.log(asd);
   await maria.query(
-    `SELECT A.title, A.startAt, C.course, C.distance, C.leadTime, A.maxMember, C.level, (SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.id) AS curMember, C.content, C.trafficInfo, JSON_ARRAYAGG(JSON_ARRAY(x,y)) as cpi
+    `SELECT C.id, A.title, A.startAt, C.course, C.distance, C.leadTime, A.maxMember, C.level, (SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.id) AS curMember, C.content, C.trafficInfo
   FROM GREENCREW AS A
-  INNER JOIN (SELECT * FROM ROUTE INNER JOIN CPI ON ROUTE.id = CPI.routeId) AS C
-  ON A.routeId = C.routeId
+  INNER JOIN ROUTE AS C
+  ON A.routeId = C.id
   GROUP BY A.id`,
-
-    function (err, rows, fields) {
-      console.log(err);
+    async function (err, rows, fields) {
+      for (i in rows) {
+        const CPI = await cpi(rows[i].id);
+        rows[i]["CPI"] = CPI[0]["test"];
+      }
       res.status(200).json(rows);
     },
   );

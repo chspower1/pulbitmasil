@@ -117,20 +117,25 @@ router.delete("/delete", login_required, async function (req, res, next) {
   }
 });
 
+// 이름과 비밀번호 변경 기능
 router.put("/modify", login_required, async function (req, res, next) {
   try {
-    const { name } = req.body;
+    const { name, password } = req.body;
     const userId = req.currentUserId;
-    maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId], async function (err, rows, fields) {
-      if (!err) {
-        res.status(200).json({
-          success: true,
-        });
-      } else {
-        console.log("err : " + err);
-        res.send(err);
-      }
-    });
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    maria.query(
+      `UPDATE USER SET name = ?,hashedPassword = ? WHERE id = ?`,
+      [name, hashedPassword, userId],
+      async function (err, rows, fields) {
+        if (!err) {
+          res.status(200).json({ success: true });
+        } else {
+          console.log("err : " + err);
+          res.status(400).send(err);
+        }
+      },
+    );
   } catch (error) {
     next(error);
   }
