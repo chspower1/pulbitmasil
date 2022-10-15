@@ -14,7 +14,7 @@ function login_required(req, res, next) {
     req.currentUserId = user_id;
     next();
   } catch (error) {
-    return res.status(400).send("비정상적인 토큰");
+    return res.sendStatus(400);
   }
 }
 

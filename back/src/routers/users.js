@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const login_required = require("../middlewares/login_required");
 
 const maria = require("../db/connect/maria");
+const random_password = require("../middlewares/random_password");
+const emailForTempPassword = require("../db/connect/email");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -134,6 +136,36 @@ router.put("/modify", login_required, async function (req, res, next) {
           console.log("err : " + err);
           res.status(400).send(err);
         }
+      },
+    );
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 임시비밀번호 발급
+// 메일 전송 기준은 changeRows 가 0이냐 1이냐
+router.put("/reset", random_password, async function (req, res, next) {
+  try {
+    const email = req.body.email;
+    const password = req.randPwd;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    maria.query(
+      `UPDATE USER SET hashedPassword = ? WHERE email = ? AND hashedPassword NOT IN ("kakao", "naver")`,
+      [hashedPassword, email],
+      async function (err, rows, fields) {
+        if (err) {
+          console.error("err : " + err);
+          return res.status(400).send(err);
+        }
+
+        if (!rows["changedRows"]) {
+          return res.status(400).send({ success: false });
+        }
+
+        await emailForTempPassword(email, password);
+        res.status(200).json({ success: true });
       },
     );
   } catch (error) {
