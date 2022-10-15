@@ -18,7 +18,7 @@ export default function ReviewForm() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const isEdit = state?.isEdit! as boolean;
-  const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.userId : true;
+  const checkUser = isEdit === null ? false : isEdit ? user?.id === state.userId : false;
   // const [review, setReview] = useState<IReview>(state?.review!);
   const [review, setReview] = useState<IReview>();
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
@@ -51,6 +51,7 @@ export default function ReviewForm() {
 
   useEffect(() => {
     console.log("state", state);
+    console.log(checkUser);
     setReview(state.review);
     setIsReviewCancelModal(false);
   }, []);

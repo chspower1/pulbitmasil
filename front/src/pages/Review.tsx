@@ -21,7 +21,6 @@ export default function Review() {
   const [leavingDetailModal, setLeavingDetailModal] = useState(false);
   const [reviews, setReviews] = useState<IReview[]>();
   const isLogin = useRecoilValue(isLoginSelector);
-
   const { isLoading, data, refetch } = useQuery<IReview[]>(["reviews"], getReviews, {
     onSuccess(data) {
       setReviews(data);
@@ -29,7 +28,7 @@ export default function Review() {
   });
 
   const handleClickCreateReview = () => {
-    isLogin ? navigate("/review/write", { state: { isEdit } }) : alert("회원가입을 해주세요!");
+    isLogin ? navigate("/review/write", { state: { isEdit,  userId } }) : alert("회원가입을 해주세요!");
   };
   useEffect(() => {
     console.log(reviewMatch);

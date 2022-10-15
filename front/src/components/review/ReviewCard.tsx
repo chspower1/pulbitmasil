@@ -57,7 +57,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
         </motion.div>
         <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId ? (
-            <Btn onClick={() => navigate(`edit/${reviewId}`, { state: { isEdit, review } })}>수정</Btn>
+            <Btn onClick={() => navigate(`edit/${reviewId}`, { state: { isEdit, reviewId, userId } })}>수정</Btn>
           ) : null}
 
           {user?.id === userId ? (
