@@ -33,7 +33,7 @@ export async function createReview(contents: FormData) {
 // }
 
 export async function editReview(contents: FormData) {
-  const reviewId = contents.get('reviewId')
+  const reviewId = contents.get("reviewId");
   console.log(`%cPUT 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
 
   return axiosInstance.put(`review/${reviewId}`, contents, {
