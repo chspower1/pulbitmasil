@@ -8,6 +8,7 @@ export const Wrapper = styled.section`
   width: 100%;
   height: 100vh;
   padding-top: 70px;
+  overflow: hidden;
 `;
 
 export const Container = styled.div`
