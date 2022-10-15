@@ -15,11 +15,11 @@ async function dodream() {
   return collection;
 }
 
-async function cpi() {
+async function cpi(id) {
   await client.connect();
 
   const db = client.db(dbName);
-  const collection = await db.collection("GreenCrew").find({ id: 1 }).toArray();
+  const collection = await db.collection("GreenCrew").find({ id: id }).toArray();
   client.close();
   return collection;
 }
