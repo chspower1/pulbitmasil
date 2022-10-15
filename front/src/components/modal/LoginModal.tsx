@@ -280,5 +280,11 @@ const SocialLoginBox = styled(UserBox)`
   justify-content: space-between;
 `;
 
-export const NaverLogin = styled.img``;
-export const KakaoLogin = styled.img``;
+export const NaverLogin = styled.img`
+  cursor: pointer;
+  transition: all 0.4s ease;
+  &:hover {
+    filter: brightness(0.9);
+  }
+`;
+export const KakaoLogin = styled(NaverLogin)``;

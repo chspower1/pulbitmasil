@@ -62,8 +62,8 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* padding-top: 70px; */
   height: 100vh;
+  
 `;
 const Title = styled.h1`
   font-size: 36px;

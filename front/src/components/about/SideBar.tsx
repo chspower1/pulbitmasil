@@ -23,6 +23,9 @@ export default function SideBar() {
   );
 }
 const SideBarWrap = styled.nav`
+  z-index: 10000;
+  position: fixed;
+  left: 0px;
   display: flex;
   flex-direction: column;
   /* padding-top: 70px; */

@@ -9,7 +9,7 @@ export default function Content() {
       anchors={anchors}
       navigation
       navigationTooltips={anchors}
-      sectionsColor={["#f7f7f7", "#C7E1D6", "#d8d8d8"]}
+      // sectionsColor={["#f7f7f7", "#C7E1D6", "#d8d8d8"]}
       scrollingSpeed={1000}
       onLeave={(origin, destination, direction) => {
         // console.log("onLeave event", { origin, destination, direction });
@@ -17,26 +17,28 @@ export default function Content() {
       render={({ state, fullpageApi }) => {
         // console.log("render prop change", state, fullpageApi);
         return (
-          <ReactFullpage.Wrapper>
-            <Section01 className="section">
-              <Box>
-                <Title>첫번째 컨테츠입니다.</Title>
-                <Description>내용입니다.</Description>
-              </Box>
-            </Section01>
-            <Section02 className="section">
-              <Box>
-                <Title>두번째 컨테츠입니다.</Title>
-                <Description>내용입니다.</Description>
-              </Box>
-            </Section02>
-            <Section03 className="section">
-              <Box>
-                <Title>세번째 컨테츠입니다.</Title>
-                <Description>내용입니다.</Description>
-              </Box>
-            </Section03>
-          </ReactFullpage.Wrapper>
+          <>
+            <ReactFullpage.Wrapper>
+              <Section01 className="section">
+                <Box>
+                  <Title>첫번째 컨테츠입니다.</Title>
+                  <Description>내용입니다.</Description>
+                </Box>
+              </Section01>
+              <Section02 className="section">
+                <Box>
+                  <Title>두번째 컨테츠입니다.</Title>
+                  <Description>내용입니다.</Description>
+                </Box>
+              </Section02>
+              <Section03 className="section">
+                <Box>
+                  <Title>세번째 컨테츠입니다.</Title>
+                  <Description>내용입니다.</Description>
+                </Box>
+              </Section03>
+            </ReactFullpage.Wrapper>
+          </>
         );
       }}
     />
@@ -52,8 +54,8 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* padding-top: 70px; */
   height: 100vh;
+  background-image: url("/assets/images/about/about_bg_img01.jpg");
 `;
 const Title = styled.h1`
   font-size: 36px;

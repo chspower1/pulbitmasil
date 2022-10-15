@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
-import { Wrapper as HomeWrapper } from "@style/Layout";
+import { Container, Wrapper as HomeWrapper } from "@style/Layout";
 import { Link } from "react-router-dom";
 
 const HOMETEXT = [
@@ -35,8 +35,7 @@ const HOMETEXT = [
     button1: `풀빛마실이란 ?`,
     button2: `풀빛마실 시작하기 >`,
   },
-]
-
+];
 
 //Variants
 const HomeImgVariants = {
@@ -107,7 +106,7 @@ export default function Home() {
   return (
     <HomeWrapper>
       <AnimatePresence initial={false} custom={next} onExitComplete={toggleLeaving}>
-        <Img
+        <HomeContainer
           key={imgIndex}
           custom={next}
           variants={HomeImgVariants}
@@ -115,21 +114,21 @@ export default function Home() {
           animate="animate"
           exit="exit"
           transition={{ duration: 1 }}
-          src={`/assets/images/home/home_img0${imgIndex}.jpg`}
-          alt="#"
-        />
-        <HomeText>
-          <Title>{HOMETEXT[textIndex].title1}</Title>
-          <Title>{HOMETEXT[textIndex].title2}</Title>
-          <BtnBox>
-            <Link to="About">
-              <Button>{HOMETEXT[textIndex].button1}</Button>
-            </Link>
-            <Link to="GreenCrew">
-              <Button>{HOMETEXT[textIndex].button2}</Button>
-            </Link>
-          </BtnBox>
-        </HomeText>
+        >
+          <Img src={`/assets/images/home/home_img0${imgIndex}.jpg`} alt="#" />
+          <HomeText>
+            <Title>{HOMETEXT[textIndex].title1}</Title>
+            <Title>{HOMETEXT[textIndex].title2}</Title>
+            <BtnBox>
+              <Link to="About">
+                <Button>{HOMETEXT[textIndex].button1}</Button>
+              </Link>
+              <Link to="GreenCrew">
+                <Button>{HOMETEXT[textIndex].button2}</Button>
+              </Link>
+            </BtnBox>
+          </HomeText>
+        </HomeContainer>
         <ImgPointerBox>
           {[1, 2, 3, 4].map(num => (
             <ImgPointer
@@ -154,11 +153,17 @@ export default function Home() {
     </HomeWrapper>
   );
 }
-
-const Img = styled(motion.img)`
+const HomeContainer = styled(motion.div)`
   position: absolute;
   width: 100vw;
   height: 100vh;
+`;
+const SlideContainer = styled.div`
+  width: 100vw;
+`;
+const Img = styled(motion.img)`
+  width: 100%;
+  height: 100%;
   filter: brightness(0.7);
   object-fit: cover;
 `;
@@ -222,12 +227,11 @@ const Button = styled.button`
   width: 200px;
   height: 60px;
   margin-right: 12px;
-  background: #169E5C;
+  background: #169e5c;
   border-radius: 10px;
   font-weight: 400;
   font-size: 19px;
   line-height: 24px;
-
 `;
 const Title = styled.div`
   font-size: 52px;
