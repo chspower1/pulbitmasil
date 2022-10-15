@@ -16,6 +16,7 @@ import Review from "./review/Review";
 import CreateReview from "./review/CreateReview";
 import UpdateReview from "./review/UpdateReview";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
+import Guide from "./Guide";
 
 export default function Router() {
   return (
@@ -35,6 +36,7 @@ export default function Router() {
         <Route path="/review/edit/:reviewId" element={<ReviewForm />} /> */}
         <Route path="/review/write" element={<CreateReview />} />
         <Route path="/review/edit/:reviewId" element={<UpdateReview />} />
+        <Route path="/guide" element={<Guide />} />
 
         <Route path="/userInfo" element={<UserInfo />} />
         <Route path="/GreenCrew" element={<GreenCrew />} />
