@@ -29,3 +29,5 @@ function random_password(req, res, next) {
     return res.sendStatus(400);
   }
 }
+
+module.exports = random_password;
