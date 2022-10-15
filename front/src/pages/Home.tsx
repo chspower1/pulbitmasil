@@ -8,6 +8,36 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
 import { Wrapper as HomeWrapper } from "@style/Layout";
+import { Link } from "react-router-dom";
+
+const HOMETEXT = [
+  {
+    title1: `당신, 지구`,
+    title2: `모두 소중합니다`,
+    button1: `풀빛마실이란 ?`,
+    button2: `풀빛마실 시작하기 >`,
+  },
+  {
+    title1: `지구를 지키는`,
+    title2: `풀빛 발걸음`,
+    button1: `풀빛마실이란 ?`,
+    button2: `풀빛마실 시작하기 >`,
+  },
+  {
+    title1: `당신의 발걸음`,
+    title2: `지구의 푸르름을 지켜요`,
+    button1: `풀빛마실이란 ?`,
+    button2: `풀빛마실 시작하기 >`,
+  },
+  {
+    title1: `우리 강산의`,
+    title2: `풀빛을 위한 마실을 떠나요`,
+    button1: `풀빛마실이란 ?`,
+    button2: `풀빛마실 시작하기 >`,
+  },
+]
+
+
 //Variants
 const HomeImgVariants = {
   initial: (next: boolean) => {
@@ -35,12 +65,14 @@ const HomeImgVariants = {
   },
 };
 export default function Home() {
-  const maxIndex = 4;
+  const imgMaxIndex = 4;
+  const textMaxIndex = 3;
   const [user, setUser] = useRecoilState(userAtom);
   const [click, setClick] = useState(false);
   const [imgIndex, setImgIndex] = useState(1);
   const [next, setNext] = useState(true);
   const [leaving, setLeaving] = useState(false);
+  const [textIndex, setTextIndex] = useState(0);
   const toggleLeaving = () => {
     setLeaving(prev => !prev);
   };
@@ -49,11 +81,12 @@ export default function Home() {
     else {
       setNext(next);
       toggleLeaving();
-      setImgIndex(prev => (next ? (prev === maxIndex ? 1 : prev + 1) : prev === 1 ? maxIndex : prev - 1));
+      setImgIndex(prev => (next ? (prev === imgMaxIndex ? 1 : prev + 1) : prev === 1 ? imgMaxIndex : prev - 1));
+      setTextIndex(prev => (next ? (prev === textMaxIndex ? 0 : prev + 1) : prev === 0 ? textMaxIndex : prev - 1));
       // console.log("Click! and nextState:", next);
     }
   };
-  const handleClickImgPoint = (imgIndex: number, num: number) => {
+  const handleClickPoint = (imgIndex: number, num: number) => {
     if (leaving) return console.log(leaving);
     toggleLeaving();
     setImgIndex(num);
@@ -85,12 +118,24 @@ export default function Home() {
           src={`/assets/images/home/home_img0${imgIndex}.jpg`}
           alt="#"
         />
+        <HomeText>
+          <Title>{HOMETEXT[textIndex].title1}</Title>
+          <Title>{HOMETEXT[textIndex].title2}</Title>
+          <BtnBox>
+            <Link to="About">
+              <Button>{HOMETEXT[textIndex].button1}</Button>
+            </Link>
+            <Link to="GreenCrew">
+              <Button>{HOMETEXT[textIndex].button2}</Button>
+            </Link>
+          </BtnBox>
+        </HomeText>
         <ImgPointerBox>
           {[1, 2, 3, 4].map(num => (
             <ImgPointer
               key={num}
               className={imgIndex === num ? "active" : "normal"}
-              onClick={() => handleClickImgPoint(imgIndex, num)}
+              onClick={() => handleClickPoint(imgIndex, num)}
             />
           ))}
         </ImgPointerBox>
@@ -158,4 +203,34 @@ const ImgPointer = styled(motion.div)`
   &:hover {
     background-color: rgb(106, 202, 156, 0.7);
   }
+`;
+
+const HomeText = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 40%;
+  left: 10%;
+  color: white;
+`;
+const BtnBox = styled.div`
+  display: flex;
+  margin-top: 20px;
+  padding: 0;
+`;
+const Button = styled.button`
+  width: 200px;
+  height: 60px;
+  margin-right: 12px;
+  background: #169E5C;
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 24px;
+
+`;
+const Title = styled.div`
+  font-size: 52px;
+  line-height: 83px;
+  font-weight: 400;
 `;
