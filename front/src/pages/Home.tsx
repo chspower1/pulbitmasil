@@ -91,17 +91,23 @@ export default function Home() {
     setImgIndex(num);
     imgIndex < num ? setNext(true) : setNext(false);
   };
+  const convertIndex = (index: number) => {
+    if (index === 0) {
+      return imgMaxIndex;
+    } else if (index > 4) {
+      return 1;
+    }
+  };
   // const timer = setInterval(() => {
   //   handleClickArrowBtn(true);
   // }, 7000);
   useEffect(() => {
-    // console.log("turn");
-    const timer = setInterval(() => {
-      handleClickArrowBtn(true);
-    }, 7000);
-    return () => {
-      if (timer) clearInterval(timer);
-    };
+    // const timer = setInterval(() => {
+    //   handleClickArrowBtn(true);
+    // }, 7000);
+    // return () => {
+    //   if (timer) clearInterval(timer);
+    // };
   }, [click]);
   return (
     <HomeWrapper>
@@ -115,19 +121,51 @@ export default function Home() {
           exit="exit"
           transition={{ duration: 1 }}
         >
-          <Img src={`/assets/images/home/home_img0${imgIndex}.jpg`} alt="#" />
-          <HomeText>
-            <Title>{HOMETEXT[textIndex].title1}</Title>
-            <Title>{HOMETEXT[textIndex].title2}</Title>
-            <BtnBox>
-              <Link to="About">
-                <Button>{HOMETEXT[textIndex].button1}</Button>
-              </Link>
-              <Link to="GreenCrew">
-                <Button>{HOMETEXT[textIndex].button2}</Button>
-              </Link>
-            </BtnBox>
-          </HomeText>
+          <SlideContainer>
+            <Img src={`/assets/images/home/home_img0${convertIndex(imgIndex - 1)}.jpg`} alt="#" />
+            <HomeText>
+              <Title>{HOMETEXT[textIndex].title1}</Title>
+              <Title>{HOMETEXT[textIndex].title2}</Title>
+              <BtnBox>
+                <Link to="About">
+                  <Button>{HOMETEXT[textIndex].button1}</Button>
+                </Link>
+                <Link to="GreenCrew">
+                  <Button>{HOMETEXT[textIndex].button2}</Button>
+                </Link>
+              </BtnBox>
+            </HomeText>
+          </SlideContainer>
+          <SlideContainer>
+            <Img src={`/assets/images/home/home_img0${convertIndex(imgIndex)}.jpg`} alt="#" />
+            <HomeText>
+              <Title>{HOMETEXT[textIndex].title1}</Title>
+              <Title>{HOMETEXT[textIndex].title2}</Title>
+              <BtnBox>
+                <Link to="About">
+                  <Button>{HOMETEXT[textIndex].button1}</Button>
+                </Link>
+                <Link to="GreenCrew">
+                  <Button>{HOMETEXT[textIndex].button2}</Button>
+                </Link>
+              </BtnBox>
+            </HomeText>
+          </SlideContainer>
+          <SlideContainer>
+            <Img src={`/assets/images/home/home_img0${convertIndex(imgIndex + 1)}.jpg`} alt="#" />
+            <HomeText>
+              <Title>{HOMETEXT[textIndex].title1}</Title>
+              <Title>{HOMETEXT[textIndex].title2}</Title>
+              <BtnBox>
+                <Link to="About">
+                  <Button>{HOMETEXT[textIndex].button1}</Button>
+                </Link>
+                <Link to="GreenCrew">
+                  <Button>{HOMETEXT[textIndex].button2}</Button>
+                </Link>
+              </BtnBox>
+            </HomeText>
+          </SlideContainer>
         </HomeContainer>
         <ImgPointerBox>
           {[1, 2, 3, 4].map(num => (
@@ -155,13 +193,20 @@ export default function Home() {
 }
 const HomeContainer = styled(motion.div)`
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 300vw;
+  height: 100vh;
+  overflow: hidden;
+`;
+const SlideContainer = styled(motion.div)`
+  position: relative;
   width: 100vw;
   height: 100vh;
 `;
-const SlideContainer = styled.div`
-  width: 100vw;
-`;
 const Img = styled(motion.img)`
+  position: absolute;
   width: 100%;
   height: 100%;
   filter: brightness(0.7);
