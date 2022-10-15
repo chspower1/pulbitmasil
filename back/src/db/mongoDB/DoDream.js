@@ -15,4 +15,14 @@ async function dodream() {
   return collection;
 }
 
+async function cpi() {
+  await client.connect();
+
+  const db = client.db(dbName);
+  const collection = await db.collection("GreenCrew").find({ id: 1 }).toArray();
+  client.close();
+  return collection;
+}
+
 module.exports = dodream;
+module.exports = cpi;
