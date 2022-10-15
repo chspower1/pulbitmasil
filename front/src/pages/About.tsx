@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ReactFullpage from "@fullpage/react-fullpage";
 import SideBar from "@components/about/SideBar";
+import Pulbitmasil from "@components/about/Pulbitmasil";
 const anchors = ["firstPage", "secondPage", "thirdPage"];
 export default function Content() {
   return (
@@ -20,8 +21,7 @@ export default function Content() {
           <ReactFullpage.Wrapper>
             <Section01 className="section">
               <Box>
-                <Title>첫번째 컨테츠입니다.</Title>
-                <Description>내용입니다.</Description>
+                <Pulbitmasil />
               </Box>
             </Section01>
             <Section02 className="section">
@@ -54,6 +54,8 @@ const Box = styled.div`
   flex-direction: column;
   /* padding-top: 70px; */
   height: 100vh;
+  background-image: url('/assets/images/about/about_bg_img01.jpg');
+  padding: 0;
 `;
 const Title = styled.h1`
   font-size: 36px;
