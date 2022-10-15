@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ReactFullpage from "@fullpage/react-fullpage";
 import SideBar from "@components/about/SideBar";
+
 import Benefit from "@components/about/Benefit";
 import Unique from "@components/about/Unique";
 import Problem from "@components/about/Problem";
+
+import Pulbitmasil from "@components/about/Pulbitmasil";
 const anchors = ["firstPage", "secondPage", "benefit", "unique"];
+
 export default function Content() {
   return (
     <ReactFullpage
@@ -23,8 +27,7 @@ export default function Content() {
           <ReactFullpage.Wrapper>
             <Section className="section">
               <Box>
-                <Title>첫번째 컨테츠입니다.</Title>
-                <Description>내용입니다.</Description>
+                <Pulbitmasil />
               </Box>
             </Section>
             <Section className="section">
@@ -58,6 +61,8 @@ const Box = styled.div`
   align-items: center;
   flex-direction: column;
   height: 100vh;
+  background-image: url("/assets/images/about/about_bg_img01.jpg");
+  padding: 0;
 `;
 const Title = styled.h1`
   font-size: 36px;
