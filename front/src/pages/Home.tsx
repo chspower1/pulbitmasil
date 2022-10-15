@@ -11,22 +11,26 @@ import { Wrapper as HomeWrapper } from "@style/Layout";
 
 const HOMETEXT = [
   {
-    title: `당신, 지구 모두 소중합니다`,
+    title1: `당신, 지구`,
+    title2: `모두 소중합니다`,
     button1: `풀빛마실이란 ?`,
     button2: `풀빛마실 시작하기 >`,
   },
   {
-    title: `지구를 지키는 풀빛 발결음`,
+    title1: `지구를 지키는`,
+    title2: `풀빛 발걸음`,
     button1: `풀빛마실이란 ?`,
     button2: `풀빛마실 시작하기 >`,
   },
   {
-    title: `어렵지 않아요 마실 나가듯이 쉽게 실천하는 풀빛마실`,
+    title1: `마실 나가듯이`,
+    title2: `쉽게 실천하는 풀빛마실`,
     button1: `풀빛마실이란 ?`,
     button2: `풀빛마실 시작하기 >`,
   },
   {
-    title: `우리 강산의 풀빛을 위한 마실을 떠나요`,
+    title1: `우리 강산의`,
+    title2: `풀빛을 위한 마실을 떠나요`,
     button1: `풀빛마실이란 ?`,
     button2: `풀빛마실 시작하기 >`,
   },
@@ -114,7 +118,8 @@ export default function Home() {
           alt="#"
         />
         <HomeText>
-          <h1>{HOMETEXT[textIndex].title}</h1>
+          <Title>{HOMETEXT[textIndex].title1}</Title>
+          <Title>{HOMETEXT[textIndex].title2}</Title>
           <BtnBox>
             <Button>{HOMETEXT[textIndex].button1}</Button>
             <Button>{HOMETEXT[textIndex].button2}</Button>
@@ -195,15 +200,32 @@ const ImgPointer = styled(motion.div)`
   }
 `;
 
-const Button = styled.button`
-`;
-
 const HomeText = styled.div`
-  position: fixed;
-  top: 50%;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 40%;
   left: 10%;
   color: white;
-`
+`;
 const BtnBox = styled.div`
   display: flex;
-`
+  margin-top: 20px;
+  padding: 0;
+`;
+const Button = styled.button`
+  width: 200px;
+  height: 60px;
+  margin-right: 12px;
+  background: #169E5C;
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 24px;
+
+`;
+const Title = styled.div`
+  font-size: 52px;
+  line-height: 83px;
+  font-weight: 400;
+`;
