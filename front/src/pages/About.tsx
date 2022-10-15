@@ -8,7 +8,7 @@ import Unique from "@components/about/Unique";
 import Problem from "@components/about/Problem";
 
 import Pulbitmasil from "@components/about/Pulbitmasil";
-const anchors = ["firstPage", "secondPage", "benefit", "unique"];
+const anchors = ["pulbitmasil", "problem", "benefit", "unique"];
 
 export default function Content() {
   return (
