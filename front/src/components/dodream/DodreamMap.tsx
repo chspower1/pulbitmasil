@@ -3,9 +3,9 @@ import LogoutModal from "@components/modal/LogoutModal";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DodreamDetail from "@components/modal/DodreamDetail";
-import { useRecoilState } from "recoil";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import { IDodream } from "@type/dodream";
+import { useRecoilState } from "recoil";
 
 const { kakao }: any = window;
 
