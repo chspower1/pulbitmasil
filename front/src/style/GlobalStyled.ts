@@ -14,19 +14,25 @@ export const GlobalStyled = createGlobalStyle`
         ::-webkit-scrollbar {
         display: none;
   }
+  
     }
     a{
         text-decoration: none; 
         color:${props => props.theme.textColor};
     }
  
-    input,select{
+    input,select,textarea{
         color:${props => props.theme.textColor};
+        outline:none;
         border:solid 1px ${props => props.theme.weekColor};
-        &:focus{
-            outline: solid 2px ${props => props.theme.mainColor};
+        transition:all 0.4s ease;
+        &:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px ${props => props.theme.mainColor};
+}
         }
-    }
+
+    
     input[type=password]{
         font-family:"Arial Black";
         letter-spacing :1.5px;

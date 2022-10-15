@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { editReview, getOneReview, getReviews, createReview } from "@api/review";
-import { IReview, IReviewContent, IReviewUpdateData } from "@type/review";
+import { FormMode, IReview, IReviewContent, IReviewUpdateData } from "@type/review";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
-import { Wrapper } from "@style/Layout";
+import { Title, Wrapper, Box, Container, SubTitle, DangerAccent } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData }) {
@@ -26,17 +26,18 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<IReviewContent>();
+    setValue,
+  } = useForm<IReviewContent>({ mode: "all" });
   //img preview test
   const [imagePreview, setImagePreview] = useState<any>(null); // any 말고??
   const [uploadImg, setUploadImg] = useState<any>(); // any 말고??
   const image = watch("reviewImg");
-
   const { isLoading, data } = useQuery<IReview>(["review"], () => getOneReview(formProps?.reviewId!), {
     onSuccess(data) {
       console.log(data);
       setReview(data);
       setImagePreview(data?.reviewImg!);
+      setValue("description", data.description);
     },
     enabled: mode === "UPDATE",
   });
@@ -57,13 +58,9 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
 
   useEffect(() => {
     setIsReviewCancelModal(false);
+    console.log(watch());
+    console.log("isLoading", isLoading);
   }, []);
-
-  // useEffect(() => {
-  //   if (isEdit) {
-  //     setImagePreview(review?.reviewImg!);
-  //   }
-  // }, [review]);
 
   useEffect(() => {
     if (image && image.length > 0) {
@@ -71,6 +68,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
       setImagePreview(window.URL.createObjectURL(file as File));
       setUploadImg(file);
     }
+    console.log(image);
   }, [image]);
 
   const handleSubmitReview = handleSubmit(data => {
@@ -78,17 +76,18 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     formData.append("description", watch("description"));
     switch (mode) {
       case "CREATE":
+        console.log(data);
         const date = new Date();
         formData.append("createAt", date.toString());
         formData.append("file", uploadImg);
         formData.append("name", user?.name!);
         console.log("Create formData", formData);
         crateMutation.mutate(formData);
-        // createReview(formData);
         navigate("/review");
         break;
 
       case "UPDATE":
+        console.log(data);
         formData.append("userId", user?.id!.toString()!);
         formData.append("reviewId", formProps?.reviewId!.toString());
 
@@ -112,56 +111,53 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     console.log("handleclickcancel");
     setIsReviewCancelModal(true);
   };
-
   return (
     <>
-      <FormWrap>
-        <Form as="form" onSubmit={handleSubmitReview}>
-          <TitleContainer>
-            <Title>플로깅</Title>
-            <SubTitle>
-              함께한
-              <Accent> 생생한 경험</Accent>를 공유해주세요!
-            </SubTitle>
-          </TitleContainer>
-          <ImgBox>
-            {image && <img style={{ width: "100%", height: "100%", objectFit: "cover" }} src={imagePreview} />}
-          </ImgBox>
-          <ImgLabel htmlFor="input-file">이미지 업로드</ImgLabel>
-          <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
-          <SelectInput as="select" height={40}>
-            <option>근교산 자락길 모임1</option>
-            <option>근교산 자락길 모임2</option>
-            <option>근교산 자락길 모임3</option>
-            <option>근교산 자락길 모임4</option>
-          </SelectInput>
+      {isLoading || (
+        <FormWrap>
+          <Form as="form" onSubmit={handleSubmitReview}>
+            <TitleBox>
+              <Title>풀빛마실 이야기</Title>
+              <SubTitle>
+                함께한
+                <DangerAccent> 생생한 경험</DangerAccent>를 공유해주세요!
+              </SubTitle>
+            </TitleBox>
+            <SelectInput as="select" height={40}>
+              <Option>근교산 자락길 모임1</Option>
+              <Option>근교산 자락길 모임2</Option>
+              <Option>근교산 자락길 모임3</Option>
+              <Option>근교산 자락길 모임4</Option>
+            </SelectInput>
 
-          <ReviewTextArea
-            placeholder="내용을 입력해주세요."
-            defaultValue={review?.description}
-            {...register("description", {
-              required: { value: true, message: "내용을 입력해주세요." },
-            })}
-          />
+            <ImgBox as="label" htmlFor="input-file">
+              {image?.length ? <Img src={imagePreview} /> : <ImgIcon src="/assets/icon/image.png" />}
+            </ImgBox>
+            <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
 
-          <ButtonContainer>
-            <Button>{mode === "UPDATE" ? "수정하기" : "등록하기"}</Button>
-            <Button className="cancle" type="button" onClick={handleClickCancel}>
-              취소
-            </Button>
-          </ButtonContainer>
-          <ReviewModal />
-        </Form>
-      </FormWrap>
+            <ReviewTextArea
+              placeholder="내용을 입력해주세요."
+              {...register("description", {
+                required: { value: true, message: "내용을 입력해주세요." },
+              })}
+            />
+
+            <ButtonContainer>
+              <Button>{mode === "UPDATE" ? "수정하기" : "등록하기"}</Button>
+              <Button className="cancle" type="button" onClick={handleClickCancel}>
+                취소
+              </Button>
+            </ButtonContainer>
+            <ReviewModal />
+          </Form>
+        </FormWrap>
+      )}
     </>
   );
 }
 
 const FormWrap = styled(Wrapper)`
-  flex-direction: column;
-  background-image: url("/assets/images/walk.jpg");
-  margin-top: 50px;
-  padding: 50px 250px;
+  background-image: url("/assets/images/register_img.jpg");
 `;
 const Form = styled.form`
   width: 700px;
@@ -169,28 +165,13 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-evenly;
   background-color: white;
+  border-radius: 10px;
 `;
-const TitleContainer = styled.div`
-  display: flex;
-  align-items: center;
+const TitleBox = styled(Box)`
+  flex-direction: column;
   margin: 20px 0;
-`;
-const Title = styled.h1`
-  font-weight: 700;
-  font-size: 32px;
-  text-align: center;
-  color: ${props => props.theme.mainColor};
-  text-decoration: underline;
-  text-underline-position: under;
-  margin-right: 10px;
-`;
-const SubTitle = styled.p`
-  font-size: 18px;
-  color: ${props => props.theme.mainColor};
-`;
-const Accent = styled.span`
-  color: ${props => props.theme.dangerColor};
 `;
 
 const Button = styled.button`
@@ -208,9 +189,21 @@ const Input = styled.input<{ height: number }>`
   margin-bottom: 15px;
 `;
 const SelectInput = styled(Input)`
-  /* font-size: ; */
+  font-size: 18px;
+  color: ${props => props.theme.accentColor};
+  padding: 0px 10px;
 `;
-const ImageInput = styled(Input)``;
+const Option = styled.option`
+  font-size: 16px;
+  color: ${props => props.theme.textColor};
+`;
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: "cover";
+  border: none;
+`;
+const ImgIcon = styled.img``;
 const ReviewTextArea = styled.textarea`
   width: 550px;
   height: 300px;
@@ -235,12 +228,17 @@ const ButtonContainer = styled.div`
   height: 45px;
   justify-content: space-between;
 `;
-const ImgBox = styled.div`
-  width: 400px;
-  height: 260px;
-  background-color: gray;
+const ImgBox = styled(Box)`
+  width: 550px;
+  height: 155px;
   overflow: hidden;
   margin: 0 auto;
+  cursor: pointer;
+  transition: background-color 0.4s ease;
+  border: dashed 2px ${props => props.theme.weekColor};
+  &:hover {
+    background-color: #f5fffa;
+  }
 `;
 const ErrorMessage = styled.div`
   position: absolute;

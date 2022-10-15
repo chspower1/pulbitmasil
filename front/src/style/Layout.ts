@@ -26,8 +26,9 @@ export const Title = styled.h1`
   color: ${props => props.theme.mainColor};
 `;
 export const SubTitle = styled.h3`
-  font-family: "SebangBold";
+  /* font-family: "SebangBold"; */
   font-size: 18px;
+  color: ${props => props.theme.mainColor};
 `;
 export const Desc = styled.p`
   font-family: "Sebang";
