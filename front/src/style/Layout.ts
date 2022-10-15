@@ -39,3 +39,8 @@ export const GreenAccent = styled.h1`
 export const DangerAccent = styled(GreenAccent)`
   color: ${props => props.theme.dangerColor};
 `;
+
+export const AboutContent = styled.div`
+  width: 1024px;
+  height: 670px;
+`;
