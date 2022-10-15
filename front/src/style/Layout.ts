@@ -30,10 +30,12 @@ export const SubTitle = styled.h3`
   font-size: 18px;
 `;
 export const Desc = styled.p`
+  font-family: "Sebang";
   font-size: 16px;
   color: ${props => props.theme.textColor};
 `;
-export const GreenAccent = styled.h1`
+export const GreenAccent = styled.span`
+  font-family: "SebangBold";
   color: ${props => props.theme.mainColor};
 `;
 export const DangerAccent = styled(GreenAccent)`
@@ -41,6 +43,13 @@ export const DangerAccent = styled(GreenAccent)`
 `;
 
 export const AboutContent = styled.div`
+  display: flex;
   width: 1024px;
   height: 670px;
+`;
+export const Row = styled.div<{ height?: string }>`
+  display: flex;
+  width: 100%;
+  height: ${props => (props.height ? props.height : "auto")};
+  align-items: center;
 `;

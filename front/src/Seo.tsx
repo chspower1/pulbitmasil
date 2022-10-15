@@ -5,7 +5,7 @@ export default function Seo() {
     <Helmet>
       <title>풀빛마실</title>
       <meta name="description" content="Home Description" />
-      <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+      <link rel="icon" href="/favicon.ico" />
     </Helmet>
   );
 }

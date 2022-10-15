@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ReactFullpage from "@fullpage/react-fullpage";
 import SideBar from "@components/about/SideBar";
-const anchors = ["firstPage", "secondPage", "thirdPage"];
+import Benefit from "@components/about/Benefit";
+import Unique from "@components/about/Unique";
+import Problem from "@components/about/Problem";
+const anchors = ["firstPage", "secondPage", "benefit", "unique"];
 export default function Content() {
   return (
     <ReactFullpage
@@ -18,41 +21,42 @@ export default function Content() {
         // console.log("render prop change", state, fullpageApi);
         return (
           <ReactFullpage.Wrapper>
-            <Section01 className="section">
+            <Section className="section">
               <Box>
                 <Title>첫번째 컨테츠입니다.</Title>
                 <Description>내용입니다.</Description>
               </Box>
-            </Section01>
-            <Section02 className="section">
-              <Box>
-                <Title>두번째 컨테츠입니다.</Title>
-                <Description>내용입니다.</Description>
-              </Box>
-            </Section02>
-            <Section03 className="section">
-              <Box>
-                <Title>세번째 컨테츠입니다.</Title>
-                <Description>내용입니다.</Description>
-              </Box>
-            </Section03>
+            </Section>
+            <Section className="section">
+              <ProblemBox>
+                <Problem />
+              </ProblemBox>
+            </Section>
+            <Section className="section">
+              <BenefitBox>
+                <Benefit />
+              </BenefitBox>
+            </Section>
+            <Section className="section">
+              <UniqueBox>
+                <Unique />
+              </UniqueBox>
+            </Section>
           </ReactFullpage.Wrapper>
         );
       }}
     />
   );
 }
-const Section01 = styled.div`
+const Section = styled.div`
   height: 100vh;
 `;
-const Section02 = styled(Section01)``;
-const Section03 = styled(Section01)``;
+
 const Box = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* padding-top: 70px; */
   height: 100vh;
 `;
 const Title = styled.h1`
@@ -65,4 +69,13 @@ const Description = styled.p`
 `;
 const MoveUpBtn = styled.div`
   top: 20px;
+`;
+const BenefitBox = styled(Box)`
+  background-image: url("/assets/images/about/benefit_bg.jpg");
+`;
+const UniqueBox = styled(Box)`
+  background-image: url("/assets/images/about/unique_bg.jpg");
+`;
+const ProblemBox = styled(Box)`
+  background-image: url("/assets/images/about/problem_bg.jpg");
 `;
