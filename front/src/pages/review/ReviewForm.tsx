@@ -20,8 +20,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   const [review, setReview] = useState<IReview>();
 
   const mode = formProps?.type;
-  // const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.userId : true;
-  // const [review, setReview] = useState<IReview>(state?.review!);
 
   const {
     register,
@@ -36,6 +34,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
 
   const { isLoading, data } = useQuery<IReview>(["review"], () => getOneReview(formProps?.reviewId!), {
     onSuccess(data) {
+      console.log(data);
       setReview(data);
       setImagePreview(data?.reviewImg!);
     },
@@ -83,15 +82,15 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         formData.append("createAt", date.toString());
         formData.append("file", uploadImg);
         formData.append("name", user?.name!);
-
+        console.log("Create formData", formData);
         crateMutation.mutate(formData);
         // createReview(formData);
         navigate("/review");
         break;
 
       case "UPDATE":
-        formData.append("userId", user?.id?.toString()!);
-        formData.append("reviewId", review?.reviewId?.toString()!);
+        formData.append("userId", user?.id!.toString()!);
+        formData.append("reviewId", formProps?.reviewId!.toString());
 
         if (uploadImg) {
           // 사진파일이 변했다면 ,file 객체 전달
@@ -102,6 +101,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           formData.append("imageUrl", review?.reviewImg! as string);
         }
         // editReview(formData, review?.reviewId!);
+        console.log("Update formData", formData.get("reviewId"));
         editMutation.mutate(formData);
         navigate("/review");
         break;
