@@ -8,6 +8,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
 import { Wrapper as HomeWrapper } from "@style/Layout";
+import { Link } from "react-router-dom";
 
 const HOMETEXT = [
   {
@@ -23,8 +24,8 @@ const HOMETEXT = [
     button2: `풀빛마실 시작하기 >`,
   },
   {
-    title1: `마실 나가듯이`,
-    title2: `쉽게 실천하는 풀빛마실`,
+    title1: `당신의 발걸음`,
+    title2: `지구의 푸르름을 지켜요`,
     button1: `풀빛마실이란 ?`,
     button2: `풀빛마실 시작하기 >`,
   },
@@ -64,7 +65,7 @@ const HomeImgVariants = {
   },
 };
 export default function Home() {
-  const maxIndex = 4;
+  const imgMaxIndex = 4;
   const textMaxIndex = 3;
   const [user, setUser] = useRecoilState(userAtom);
   const [click, setClick] = useState(false);
@@ -80,12 +81,12 @@ export default function Home() {
     else {
       setNext(next);
       toggleLeaving();
-      setImgIndex(prev => (next ? (prev === maxIndex ? 1 : prev + 1) : prev === 1 ? maxIndex : prev - 1));
+      setImgIndex(prev => (next ? (prev === imgMaxIndex ? 1 : prev + 1) : prev === 1 ? imgMaxIndex : prev - 1));
       setTextIndex(prev => (next ? (prev === textMaxIndex ? 0 : prev + 1) : prev === 0 ? textMaxIndex : prev - 1));
       // console.log("Click! and nextState:", next);
     }
   };
-  const handleClickImgPoint = (imgIndex: number, num: number) => {
+  const handleClickPoint = (imgIndex: number, num: number) => {
     if (leaving) return console.log(leaving);
     toggleLeaving();
     setImgIndex(num);
@@ -121,8 +122,12 @@ export default function Home() {
           <Title>{HOMETEXT[textIndex].title1}</Title>
           <Title>{HOMETEXT[textIndex].title2}</Title>
           <BtnBox>
-            <Button>{HOMETEXT[textIndex].button1}</Button>
-            <Button>{HOMETEXT[textIndex].button2}</Button>
+            <Link to="About">
+              <Button>{HOMETEXT[textIndex].button1}</Button>
+            </Link>
+            <Link to="GreenCrew">
+              <Button>{HOMETEXT[textIndex].button2}</Button>
+            </Link>
           </BtnBox>
         </HomeText>
         <ImgPointerBox>
@@ -130,7 +135,7 @@ export default function Home() {
             <ImgPointer
               key={num}
               className={imgIndex === num ? "active" : "normal"}
-              onClick={() => handleClickImgPoint(imgIndex, num)}
+              onClick={() => handleClickPoint(imgIndex, num)}
             />
           ))}
         </ImgPointerBox>
