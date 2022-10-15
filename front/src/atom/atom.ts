@@ -24,8 +24,3 @@ export const isReviewCancelAtom = atom({
   key: "isReviewCancelModal",
   default: false,
 });
-
-export const ReviewsAtom = atom<IReview[]>({
-  key: "reviews",
-  default: [],
-});

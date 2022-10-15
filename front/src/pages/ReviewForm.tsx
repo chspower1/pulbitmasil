@@ -8,9 +8,10 @@ import { IReview, IReviewContent } from "@type/review";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { isReviewCancelAtom, ReviewsAtom } from "@atom/atom";
+import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
 import { Wrapper } from "@style/Layout";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function ReviewForm() {
   const user = useRecoilValue(userAtom);
@@ -19,10 +20,9 @@ export default function ReviewForm() {
   const isEdit = state?.isEdit! as boolean;
   const checkUser = isEdit === undefined ? false : isEdit ? user?.id === state.userId : true;
   // const [review, setReview] = useState<IReview>(state?.review!);
-  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const [review, setReview] = useState<IReview>();
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
-  const location = useLocation();
+
   const {
     register,
     handleSubmit,
@@ -35,11 +35,24 @@ export default function ReviewForm() {
   const [uploadImg, setUploadImg] = useState<any>(); // any 말고??
   const image = watch("reviewImg");
 
+  //qeury
+  const queryClient = useQueryClient();
+  const crateMutation = useMutation(createReview, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["reviews"]);
+    },
+  });
+
+  const editMutation = useMutation(editReview, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["reviews"]);
+    },
+  });
+
   useEffect(() => {
     console.log("state", state);
+    setReview(state.review);
     setIsReviewCancelModal(false);
-    setReview(reviews.find(review => review.reviewId === state.reviewId));
-    // console.log(reviews.find(review => review.reviewId === state.reviewId));
   }, []);
 
   useEffect(() => {
@@ -51,16 +64,13 @@ export default function ReviewForm() {
   useEffect(() => {
     if (image && image.length > 0) {
       const file = image[0];
-      console.log(image);
-      console.log(file);
-      console.log(typeof file);
       setImagePreview(window.URL.createObjectURL(file as File));
       setUploadImg(file);
     }
   }, [image]);
 
   const handleSubmitReview = handleSubmit(data => {
-    console.log("--------------------------", data.reviewImg);
+    // console.log("--------------------------", data.reviewImg);
     const formData = new FormData();
     formData.append("description", watch("description"));
     if (!isEdit) {
@@ -69,28 +79,25 @@ export default function ReviewForm() {
       formData.append("file", uploadImg);
       formData.append("name", user?.name!);
       console.log(uploadImg); //file
-      createReview(formData);
-      console.log(reviews);
+
+      crateMutation.mutate(formData);
+      // createReview(formData);
 
       navigate("/review");
     } else {
-      // formData.append("description",watch("description"));
       formData.append("userId", user?.id?.toString()!);
+      formData.append("reviewId", review?.reviewId?.toString()!);
 
-      const filtered = reviews?.filter(review => review.reviewId !== state.reviewId);
       if (uploadImg) {
         // 사진파일이 변했다면 ,file 객체 전달
         formData.append("file", uploadImg);
-        // setReviews([
-        //   ...filtered,
-        //   { ...review, reviewImg: window.URL.createObjectURL(image[0]), description: watch("description") },
-        // ]);
       } else {
         // 사진파일이 그대로라면, 이미지 url 전달
         console.log("reviewImg", review?.reviewImg!);
         formData.append("imageUrl", review?.reviewImg! as string);
       }
-      editReview(formData, review?.reviewId!);
+      // editReview(formData, review?.reviewId!);
+      editMutation.mutate(formData);
       navigate("/review");
     }
   });

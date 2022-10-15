@@ -1,4 +1,4 @@
-import { ReviewDeleteIdAtom, ReviewsAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -8,19 +8,31 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap, ModalWrap } from "@style/ModalStyle";
 import { deleteReview } from "@api/review";
 import { userAtom } from "@atom/user";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   const user = useRecoilValue(userAtom);
-  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
+  // const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const navigate = useNavigate();
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(deleteReview, {
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(["reviews"]);
+    },
+  });
+
   const handleClickConfirm = async (e: React.MouseEvent) => {
     e.preventDefault();
+    mutation.mutate({ reviewId, userId: user?.id! });
 
-    await deleteReview({ reviewId, userId: user?.id! });
-    setReviews(reviews => {
-      return reviews?.filter(review => review.reviewId !== reviewDelId);
-    });
+    //useNu
+    // await deleteReview({ reviewId, userId: user?.id! });
+    // setReviews(reviews => {
+    //   return reviews?.filter(review => review.reviewId !== reviewDelId);
+    // });
     setReviewDelId(null);
     navigate("/review");
   };

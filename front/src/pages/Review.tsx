@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { IReview } from "@type/review";
 import { useQuery } from "@tanstack/react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { ReviewDeleteIdAtom, ReviewsAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { isLoginSelector, userAtom } from "@atom/user";
 import { Box, Container, Wrapper } from "@style/Layout";
@@ -19,7 +19,7 @@ export default function Review() {
   const reviewMatch = useMatch("/review/:reviewId");
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   const [leavingDetailModal, setLeavingDetailModal] = useState(false);
-  const [reviews, setReviews] = useRecoilState(ReviewsAtom);
+  const [reviews, setReviews] = useState<IReview[]>();
   const isLogin = useRecoilValue(isLoginSelector);
 
   const { isLoading, data, refetch } = useQuery<IReview[]>(["reviews"], getReviews, {
