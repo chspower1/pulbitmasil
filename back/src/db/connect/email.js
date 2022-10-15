@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const Handlebars = require("handlebars");
 
-const emailForTempPassword = async (userEmail, name, tempPassword) => {
+const emailForTempPassword = async (userEmail, tempPassword) => {
   const template = fs.readFileSync(path.join(__dirname, "./index.handlebars"), { encoding: "utf-8" });
   const compiledTemplate = Handlebars.compile(template);
 
@@ -23,7 +23,7 @@ const emailForTempPassword = async (userEmail, name, tempPassword) => {
     from: `"풀빛마실" <grassdrink09@gmail.com>`,
     to: userEmail,
     subject: "비밀번호 초기화",
-    html: compiledTemplate({ name: name, tempPassword: tempPassword }),
+    html: compiledTemplate({ tempPassword: tempPassword }),
   });
 };
 

@@ -8,6 +8,7 @@ const login_required = require("../middlewares/login_required");
 
 const maria = require("../db/connect/maria");
 const random_password = require("../middlewares/random_password");
+const emailForTempPassword = require("../db/connect/email");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -148,17 +149,23 @@ router.put("/reset", random_password, async function (req, res, next) {
   try {
     const email = req.body.email;
     const password = req.randPwd;
+
     const hashedPassword = await bcrypt.hash(password, 10);
     maria.query(
       `UPDATE USER SET hashedPassword = ? WHERE email = ? AND hashedPassword NOT IN ("kakao", "naver")`,
       [hashedPassword, email],
       async function (err, rows, fields) {
-        if (!err) {
-          res.status(200).json(rows);
-        } else {
-          console.log("err : " + err);
-          res.status(400).send(err);
+        if (err) {
+          console.error("err : " + err);
+          return res.status(400).send(err);
         }
+
+        if (!rows["changedRows"]) {
+          return res.status(400).send({ success: false });
+        }
+
+        await emailForTempPassword(email, password);
+        res.status(200).json({ success: true });
       },
     );
   } catch (error) {
