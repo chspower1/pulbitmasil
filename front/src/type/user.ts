@@ -3,6 +3,7 @@ export interface User {
   email: string;
   name: string;
   token: string;
+  social?: number; // 카카오,네이버는 1,풀빛마실은 0
   // image?:string; //프로필이미지 default
 }
 export interface UserRegisterForm extends Omit<User, "token"> {

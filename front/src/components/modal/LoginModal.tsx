@@ -89,7 +89,7 @@ export default function LoginModal() {
   };
   // 로그인 버튼 클릭 시
   const onvalid = async (data: UserLoginForm) => {
-    const { id, email, name, token } = await requestLogin(data);
+    const { id, email, name, token, social } = await requestLogin(data);
     if (!email && !name && !token) {
       alert("로그인 정보가 틀렸습니다.");
       reset();
@@ -97,7 +97,7 @@ export default function LoginModal() {
       setIsWelcomeModal(true);
     }
     // console.log("풀빛마실 로그인, 넘어온 데이터\n", id, email, name, token);
-    setCurUser(prev => ({ id, email, name, token }));
+    setCurUser({ id, email, name, token, social });
     // console.log("풀빛마실 User상태\n", curUser);
   };
 

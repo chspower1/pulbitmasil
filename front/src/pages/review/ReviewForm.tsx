@@ -207,7 +207,9 @@ const Input = styled.input<{ height: number }>`
   border: solid 1px #a7a7a7;
   margin-bottom: 15px;
 `;
-const SelectInput = styled(Input)``;
+const SelectInput = styled(Input)`
+  /* font-size: ; */
+`;
 const ImageInput = styled(Input)``;
 const ReviewTextArea = styled.textarea`
   width: 550px;
