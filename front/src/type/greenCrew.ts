@@ -12,6 +12,6 @@ export interface IGreenCrew {
   curMember: number;
   content: string;
   trafficInfo: string;
-  cpi: coordinate[];
+  CPI: coordinate[];
 }
-type coordinate = [number, number];
+type coordinate = { x: number; y: number };

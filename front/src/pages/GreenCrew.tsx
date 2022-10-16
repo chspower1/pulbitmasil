@@ -9,11 +9,13 @@ import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
 import moment from "moment";
-
+import { useInterval } from "react-use";
 export default function GreenCrew() {
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
+  const [count, setCount] = useState(0);
+  const [time, setTime] = useState("");
   const { data: greenCrew } = useQuery<IGreenCrew[]>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
       console.log("GreenCrew Query성공", data);
@@ -23,11 +25,18 @@ export default function GreenCrew() {
     await createGreenCrewMember(greenCrew![selectedArea].id);
     queryClient.invalidateQueries(["greenCrew"]);
   };
-  const MomentDateChage = () => {
-    const nowTime: number = Date.now();
-    // Sun Aug 23 2020 15:43:49 GMT+0900
-    return <Moment>{nowTime}</Moment>;
-  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setCount(cur => cur + 1);
+    }, 1000);
+    const startAt = new Date(greenCrew![selectedArea].startAt);
+    const now = new Date(Date.now());
+    const hours = startAt.getHours() - now.getHours();
+    const minutes = startAt.getMinutes() - now.getMinutes();
+    const seconds = startAt.getSeconds() - now.getSeconds();
+    setTime(`${hours}시간 ${minutes}분 ${seconds}초`);
+  }, [count]);
   return (
     <GreenCrewWrapper>
       <AreaNav>
@@ -38,10 +47,10 @@ export default function GreenCrew() {
         ))}
       </AreaNav>
       <RootContainer>
-        {/* <>{MomentDateChage}</> */}
         <Title>{greenCrew![selectedArea]?.title!}</Title>
         <FirstContainer>
           <DescBox>
+            <div>{time}</div>
             <StartAt>{greenCrew![selectedArea]?.startAt!}</StartAt>
             <CourseBox>
               <DetailTitle>
@@ -86,7 +95,6 @@ export default function GreenCrew() {
           <Row>
             <Col>
               <div>현재까지 {greenCrew![selectedArea]?.curMember}명이 참여하고 있어요!</div>
-              <Moment>1976-04-19T12:59-0500</Moment>
             </Col>
             <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
           </Row>

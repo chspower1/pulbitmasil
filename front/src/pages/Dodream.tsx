@@ -8,16 +8,14 @@ import { useRecoilState } from "recoil";
 import { IDodream } from "@type/dodream";
 import { Wrapper } from "@style/Layout";
 export default function Dodream() {
-  const { isLoading, data: dodream } = useQuery<IDodream[] | undefined>(["dodream"], getDodream);
+  const { data: dodream } = useQuery<IDodream[] | undefined>(["dodream"], getDodream);
 
   return (
     <WalkWrap>
       <MapContainer>
-        {" "}
-        <DodreamMap dodream={dodream!} />{" "}
+        <DodreamMap dodream={dodream!} />
       </MapContainer>
       <RightContainer>
-        {/* <ChartBtn>차트로 보기</ChartBtn> */}
         <Title>서울시 산책로 현황</Title>
         <CourseBox>
           <WalkTable dodream={dodream!} />

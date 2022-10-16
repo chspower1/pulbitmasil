@@ -9,36 +9,10 @@ import { IGreenCrew } from "@type/greenCrew";
 const { kakao }: any = window;
 
 export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) {
-  const courseName = [
-    "독정천",
-    "고덕산 자락길",
-    "북서울꿈의숲 산책길",
-    "우장산 공원 산책길",
-    "낙성대 산책길",
-    "성동 송정둑길",
-    "개웅산 숲 산책길",
-    "월계근린공원 산책길",
-    "홍릉수목원길",
-    "보라매공원 산책길",
-    "매봉산 자락길",
-    "반포천",
-    "오동공원 산책길",
-    "석촌호수 산책길",
-    "달마을공원 산책길",
-    "남산야외식물원 산책길",
-    "진관공원 나들길",
-    "인왕산 자락길",
-    "숭례문구간",
-  ];
   useEffect(() => {
     if (greenCrew) {
-      console.log(testPoints);
-      console.log("------------", typeof greenCrew.cpi);
-      // const points2 = greenCrew!.cpi.map(i => new kakao.maps.LatLng(i[0], i[1]));
-
       // 좌표값 생성
-      const points = testPoints.test.map(i => new kakao.maps.LatLng(i.x, i.y));
-
+      const points = greenCrew.CPI.map(i => new kakao.maps.LatLng(i.x, i.y));
       // 맵 정보
       let mapContainer = document.getElementById("greenCrewMap"), // 지도를 표시할 div
         mapOption = {
