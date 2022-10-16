@@ -9,3 +9,15 @@ export async function getGreenCrews() {
     console.log(err);
   }
 }
+export async function createGreenCrewMember({ crewId }: { crewId: number }) {
+  try {
+    return await axiosInstance.post(`greencrew/${crewId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}

@@ -7,7 +7,13 @@ import "./style/fonts/fonts.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GlobalStyled } from "@style/GlobalStyled";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 10,
+    },
+  },
+});
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   // <React.StrictMode>
