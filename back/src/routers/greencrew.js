@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const cpi = require("../db/mongoDB/mongodb");
+const { cpi } = require("../db/mongoDB/mongodb");
 
 const login_required = require("../middlewares/login_required");
 
