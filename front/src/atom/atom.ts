@@ -24,3 +24,8 @@ export const isReviewCancelAtom = atom({
   key: "isReviewCancelModal",
   default: false,
 });
+
+export const isRegisterModalAtom = atom({
+  key: "isRegisterModal",
+  default: false,
+});
