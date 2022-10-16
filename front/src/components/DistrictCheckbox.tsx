@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import styled from 'styled-components';
-import { Box, Container } from '../style/Container';
+import { useState } from "react";
+import styled from "styled-components";
+import { Box, Container } from "../style/Layout";
 import json from "../test_data/new_trash_count.json";
 
 interface TrashCount {
@@ -17,9 +17,9 @@ export default function DistrictCheckbox() {
   const [trash, setTrash] = useState<TrashCount>(json);
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const labels = Object.keys(trash);
-  console.log(labels);
+  // console.log(labels);
 
-  const onCheckedElement = (checked:boolean, item:string) => {
+  const onCheckedElement = (checked: boolean, item: string) => {
     if (checked) {
       setCheckedList([...checkedList, item]);
     } else if (!checked) {
@@ -27,8 +27,8 @@ export default function DistrictCheckbox() {
     }
   };
 
-  console.log(checkedList)
-  return(
+  // console.log(checkedList)
+  return (
     <CheckBox>
       <DistrictCheckBox>
         <Form>
@@ -40,18 +40,20 @@ export default function DistrictCheckbox() {
                     key={index}
                     type="checkbox"
                     value={item}
-                    onChange={e => {onCheckedElement(e.target.checked, e.target.value)}}
+                    onChange={e => {
+                      onCheckedElement(e.target.checked, e.target.value);
+                    }}
                     checked={checkedList.includes(item) ? true : false}
                   />
                   <label>{item}</label>
                 </span>
               </div>
-            )       
+            );
           })}
         </Form>
       </DistrictCheckBox>
     </CheckBox>
-  )
+  );
 }
 
 const Form = styled.form`

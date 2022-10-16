@@ -8,7 +8,7 @@ router.get("/", function (req, res) {
     if (!err) {
       res.send(rows);
     } else {
-      console.log("err : " + err);
+      // console.log("err : " + err);
       res.send(err);
     }
   });
@@ -19,7 +19,7 @@ router.get("/count", function (req, res) {
     if (!err) {
       res.send(rows);
     } else {
-      console.log("err : " + err);
+      // console.log("err : " + err);
       res.send(err);
     }
   });

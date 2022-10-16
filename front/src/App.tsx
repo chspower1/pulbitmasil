@@ -1,15 +1,19 @@
-import Router from "@router/index";
-
-import { GlobalStyled } from "./style/GlobalStyled";
+import Router from "./pages/index";
 import { ThemeProvider } from "styled-components";
 import { lightTheme } from "./style/theme/theme";
-
+import ModalPortal from "@components/modal/ModalPortal";
+import { GlobalStyled } from "@style/GlobalStyled";
+import { HelmetProvider } from "react-helmet-async";
+import Seo from "./Seo";
 function App() {
   return (
-    <ThemeProvider theme={lightTheme}>
-      <GlobalStyled />
-      <Router />
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={lightTheme}>
+        <GlobalStyled />
+        <Seo />
+        <Router />
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 

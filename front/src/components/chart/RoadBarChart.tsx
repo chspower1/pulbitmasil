@@ -3,11 +3,11 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Bar } from "react-chartjs-2";
 import json from "../../test_data/new_dodream_count.json";
 import styled from "styled-components";
-import { Container } from "../../style/Container";
+import { Container } from "../../style/Layout";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-type RoadObjectType = { [index: string]: number } ;
+type RoadObjectType = { [index: string]: number };
 
 interface RoadCount {
   [key: string]: {
@@ -20,11 +20,11 @@ interface RoadCount {
 }
 
 interface Data {
-  labels: string[]
+  labels: string[];
   datasets: [
     {
       label: string;
-      data: any[]
+      data: any[];
       backgroundColor: string;
     },
     {
@@ -54,7 +54,7 @@ export default function RoadBarChart() {
   const [roads, setRoads] = useState<RoadCount>(json);
   const [labels, setLabels] = useState(Object.keys(roads));
 
-  const changeHandler = (checked: boolean, id: string) => {
+  const handleChange = (checked: boolean, id: string) => {
     // console.log(checked, id);
     if (checked === true) {
       setLabels([...labels, id].sort());
@@ -69,10 +69,10 @@ export default function RoadBarChart() {
     plugins: {
       title: {
         display: true,
-        text: '서울시 도드람길 현황',
+        text: "서울시 도드람길 현황",
       },
       legend: {
-        position: 'top' as const,
+        position: "top" as const,
       },
     },
     responsive: false,
@@ -80,8 +80,8 @@ export default function RoadBarChart() {
       x: {
         stacked: true,
         grid: {
-          display: false
-        }
+          display: false,
+        },
       },
       y: {
         stacked: true,
@@ -121,7 +121,7 @@ export default function RoadBarChart() {
       },
     ],
   };
-    return (
+  return (
     <>
       <Bar options={options} data={data} width={800} height={500} />
       <ChartContainer>
@@ -133,7 +133,7 @@ export default function RoadBarChart() {
               name="color"
               checked={labels.includes(label) || false}
               onChange={e => {
-                changeHandler(e.currentTarget.checked, label);
+                handleChange(e.currentTarget.checked, label);
               }}
             />{" "}
             {label}

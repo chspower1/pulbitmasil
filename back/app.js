@@ -4,15 +4,21 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
-var indexRouter = require("./src/routers/index");
 var usersRouter = require("./src/routers/users");
 var trashRouter = require("./src/routers/trash");
 var authRouter = require("./src/routers/auth");
+var reviewRouter = require("./src/routers/review");
+var dodreamRouter = require("./src/routers/dodream");
+var greencrewRouter = require("./src/routers/greencrew");
+
+const maria = require("./src/db/connect/maria");
+const errorMiddleware = require("./src/middlewares/error_middleware");
+const updatecrew = require("./src/db/connect/interval");
 
 const app = express();
 
 app.use(cors());
-const maria = require("./src/db/connect/maria");
+
 maria.connect();
 
 // view engine setup
@@ -24,12 +30,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/uploads", express.static("uploads"));
 
-app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/trash", trashRouter);
 app.use("/auth", authRouter);
+app.use("/review", reviewRouter);
+app.use("/dodream", dodreamRouter);
+app.use("/greencrew", greencrewRouter);
 
+app.use(errorMiddleware);
+updatecrew();
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

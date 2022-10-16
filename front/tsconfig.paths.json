@@ -2,24 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@atom/*": [
-        "src/atom/*"
-      ],
-      "@style/*": [
-        "src/style/*"
-      ],
-      "@router/*": [
-        "src/router/*"
-      ],
-      "@api/*": [
-        "src/api/*"
-      ],
-      "@images/*": [
-        "src/style/images/*"
-      ]
+      "@components/*": ["src/components/*"],
+      "@atom/*": ["src/atom/*"],
+      "@style/*": ["src/style/*"],
+      "@data/*": ["src/data/*"],
+      "@pages/*": ["src/pages/*"],
+      "@data/*": ["src/data/*"],
+      "@api/*": ["src/api/*"],
+      "@images/*": ["src/style/images/*"],
+      "@type/*": ["src/type/*"]
     }
   }
 }
