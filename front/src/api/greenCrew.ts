@@ -1,4 +1,4 @@
-import { axiosInstance } from "./user";
+import { axiosInstance } from "./axiosInstance";
 
 export async function getGreenCrews() {
   try {

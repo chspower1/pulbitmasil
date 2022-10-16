@@ -1,12 +1,7 @@
 import axios from "axios";
 import { UserLoginForm, UserRegisterForm } from "@type/user";
 import { Cpi, IDodream } from "@type/dodream";
-
-export const BASE_URL = `http://${window.location.hostname}:5001`;
-
-export const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-});
+import { axiosInstance, BASE_URL } from "./axiosInstance";
 
 export async function requestLogin(loginInfo: UserLoginForm) {
   const bodyData = JSON.stringify(loginInfo);
@@ -15,7 +10,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
     const { data } = await axiosInstance.post(`user/login`, bodyData, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`, // 왜넣어줬지?
       },
     });
     if (!data) return false;

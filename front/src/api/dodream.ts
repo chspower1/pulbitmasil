@@ -1,5 +1,5 @@
 import { Cpi, IDodream } from "@type/dodream";
-import { axiosInstance } from "./user";
+import { axiosInstance } from "./axiosInstance";
 
 export async function getDodream() {
   try {

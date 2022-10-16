@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useAsyncDebounce } from "react-table";
 import styled from "styled-components";
 
@@ -8,17 +8,13 @@ export default function DodreamFilter({ preGlobalFilteredRows, globalFilter, set
   const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value || undefined);
   }, 300);
-
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+    onChange(e.target.value);
+  };
   return (
     <Input>
-      <input
-        placeholder="산책로를 검색해보세요!"
-        value={value || ""}
-        onChange={e => {
-          setValue(e.target.value);
-          onChange(e.target.value);
-        }}
-      />
+      <input placeholder="산책로를 검색해보세요!" value={value || ""} onChange={handleChange} />
       <button>
         <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
