@@ -1,6 +1,6 @@
 import { useForm, useWatch } from "react-hook-form";
 // import DatePicker from "react-datepicker";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { editReview, getOneReview, getReviews, createReview } from "@api/review";
@@ -14,13 +14,12 @@ import { Title, Wrapper, Box, Container, SubTitle, DangerAccent } from "@style/L
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData }) {
+  const { type, userId, reviewId } = formProps;
+  console.log(formProps);
   const user = useRecoilValue(userAtom);
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const navigate = useNavigate();
-  const [review, setReview] = useState<IReview>();
-
-  const mode = formProps?.type;
-
+  const mode = type;
   const {
     register,
     handleSubmit,
@@ -31,11 +30,11 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   //img preview test
   const [imagePreview, setImagePreview] = useState<any>(null); // any 말고??
   const [uploadImg, setUploadImg] = useState<any>(); // any 말고??
+  const queryClient = useQueryClient();
   const image = watch("reviewImg");
-  const { isLoading, data } = useQuery<IReview>(["review"], () => getOneReview(formProps?.reviewId!), {
+  const { data: review } = useQuery<IReview>(["review", reviewId], () => getOneReview(reviewId!), {
     onSuccess(data) {
-      console.log(data);
-      setReview(data);
+      console.log("ReviewForm query 동작", data);
       setImagePreview(data?.reviewImg!);
       setValue("description", data.description);
     },
@@ -43,34 +42,26 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   });
 
   //qeury
-  const queryClient = useQueryClient();
-  const crateMutation = useMutation(createReview, {
+  const reviewMutation = useMutation(mode === "CREATE" ? createReview : editReview, {
     onSuccess: () => {
       queryClient.invalidateQueries(["reviews"]);
-    },
-  });
-
-  const editMutation = useMutation(editReview, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["reviews"]);
+      queryClient.invalidateQueries(["review", reviewId]);
     },
   });
 
   useEffect(() => {
     setIsReviewCancelModal(false);
-    console.log(watch());
-    console.log("isLoading", isLoading);
   }, []);
 
   useEffect(() => {
     if (image && image.length > 0) {
       const file = image[0];
       setImagePreview(window.URL.createObjectURL(file as File));
+      console.log("이미지", imagePreview);
       setUploadImg(file);
     }
     console.log(image);
   }, [image]);
-
   const handleSubmitReview = handleSubmit(data => {
     const formData = new FormData();
     formData.append("description", watch("description"));
@@ -82,14 +73,14 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         formData.append("file", uploadImg);
         formData.append("name", user?.name!);
         console.log("Create formData", formData);
-        crateMutation.mutate(formData);
+        reviewMutation.mutate(formData);
         navigate("/review");
         break;
 
       case "UPDATE":
         console.log(data);
         formData.append("userId", user?.id!.toString()!);
-        formData.append("reviewId", formProps?.reviewId!.toString());
+        formData.append("reviewId", reviewId!.toString());
 
         if (uploadImg) {
           // 사진파일이 변했다면 ,file 객체 전달
@@ -101,7 +92,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         }
         // editReview(formData, review?.reviewId!);
         console.log("Update formData", formData.get("reviewId"));
-        editMutation.mutate(formData);
+        reviewMutation.mutate(formData);
         navigate("/review");
         break;
     }
@@ -129,12 +120,13 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         </SelectInput>
 
         <ImgBox as="label" htmlFor="input-file">
-          {image?.length ? <Img src={imagePreview} /> : <ImgIcon src="/assets/icon/image.png" />}
+          {mode === "UPDATE" ? <Img src={imagePreview} /> : <ImgIcon src="/assets/icon/image.png" />}
         </ImgBox>
         <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
 
         <ReviewTextArea
           placeholder="내용을 입력해주세요."
+          defaultValue={review?.description}
           {...register("description", {
             required: { value: true, message: "내용을 입력해주세요." },
           })}

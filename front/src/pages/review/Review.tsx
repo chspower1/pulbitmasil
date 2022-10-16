@@ -18,58 +18,42 @@ export default function Review() {
   const navigate = useNavigate();
   const reviewMatch = useMatch("/review/:reviewId");
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
-  const [leavingDetailModal, setLeavingDetailModal] = useState(false);
-  const [reviews, setReviews] = useState<IReview[]>();
   const isLogin = useRecoilValue(isLoginSelector);
-  const { isLoading, data, refetch } = useQuery<IReview[]>(["reviews"], getReviews, {
+  const { data: reviews } = useQuery<IReview[]>(["reviews"], getReviews, {
     onSuccess(data) {
-      setReviews(data);
+      console.log("Review query 동작", data);
     },
   });
 
   const handleClickCreateReview = () => {
-    isLogin ? navigate("/review/write") : alert("회원가입을 해주세요!");
+    isLogin ? navigate("/review/write") : alert("로그인을 해주세요!");
   };
-  useEffect(() => {
-    console.log(reviewMatch);
-  }, [reviewMatch]);
 
   return (
-    <>
-      {isLoading || (
-        <>
-          <ReviewWrap>
-            <TitleContainer>
-              <Title>풀빛마실 이야기</Title>
-            </TitleContainer>
-            <CardContainer>
-              <SubTitle>
-                <Accent>풀빛마실</Accent> 후기를 공유해주세요!
-              </SubTitle>
-              {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
-              <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
-
-              <CardBox>
-                {!isLoading ? (
-                  reviews?.map(review => {
-                    return <Card key={review.reviewId} review={review}></Card>;
-                  })
-                ) : (
-                  <div>후기없음</div>
-                )}
-              </CardBox>
-            </CardContainer>
-            <AnimatePresence onExitComplete={() => setLeavingDetailModal(false)}>
-              {reviewMatch && (
-                <ReviewDetailModal
-                  review={reviews?.filter(review => review.reviewId === parseInt(reviewMatch?.params.reviewId!))[0]!}
-                />
-              )}
-            </AnimatePresence>
-          </ReviewWrap>
-        </>
-      )}
-    </>
+    <ReviewWrap>
+      <TitleContainer>
+        <Title>풀빛마실 이야기</Title>
+      </TitleContainer>
+      <CardContainer>
+        <SubTitle>
+          <Accent>풀빛마실</Accent> 후기를 공유해주세요!
+        </SubTitle>
+        {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
+        <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
+        <CardBox>
+          {reviews?.map(review => {
+            return <Card key={review.reviewId} review={review}></Card>;
+          })}
+        </CardBox>
+      </CardContainer>
+      <AnimatePresence>
+        {reviewMatch && (
+          <ReviewDetailModal
+            review={reviews?.filter(review => review.reviewId === parseInt(reviewMatch?.params.reviewId!))[0]!}
+          />
+        )}
+      </AnimatePresence>
+    </ReviewWrap>
   );
 }
 

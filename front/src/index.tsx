@@ -6,6 +6,7 @@ import { RecoilRoot } from "recoil";
 import "./style/fonts/fonts.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GlobalStyled } from "@style/GlobalStyled";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,9 +22,8 @@ root.render(
   // <React.StrictMode>
   <RecoilRoot>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<div>로딩중</div>}>
-        <App />
-      </Suspense>
+      <App />
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   </RecoilRoot>,
 

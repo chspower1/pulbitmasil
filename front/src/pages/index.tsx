@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "@components/layout/Nav";
 import Home from "./Home";
@@ -23,27 +23,28 @@ export default function Router() {
     <BrowserRouter>
       <Nav />
       <WelcomeModal />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/chart" element={<Chart />} />
-        <Route path="/dodream" element={<Dodream />} />
-        <Route path="/review" element={<Review />} />
-        <Route path="/review/:reviewId" element={<Review />} />
-        {/* <Route path="/review/write" element={<ReviewForm />} />
+      <Suspense fallback={<div>로딩중</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/chart" element={<Chart />} />
+          <Route path="/dodream" element={<Dodream />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/review/:reviewId" element={<Review />} />
+          {/* <Route path="/review/write" element={<ReviewForm />} />
         <Route path="/review/edit/:reviewId" element={<ReviewForm />} /> */}
-        <Route path="/review/write" element={<CreateReview />} />
-        <Route path="/review/edit/:reviewId" element={<UpdateReview />} />
-        <Route path="/guide" element={<Guide />} />
-
-        <Route path="/userInfo" element={<UserInfo />} />
-        <Route path="/GreenCrew" element={<GreenCrew />} />
-        <Route path="/GreenCrew/:area" element={<GreenCrew />} />
-        <Route path="/auth/naver/callback" element={<NaverAuth />} />
-        <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
-      </Routes>
+          <Route path="/review/write" element={<CreateReview />} />
+          <Route path="/review/edit/:reviewId" element={<UpdateReview />} />
+          <Route path="/guide" element={<Guide />} />
+          <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/GreenCrew" element={<GreenCrew />} />
+          <Route path="/GreenCrew/:area" element={<GreenCrew />} />
+          <Route path="/auth/naver/callback" element={<NaverAuth />} />
+          <Route path="/auth/kakao/callback" element={<KakaoAuth />} />
+        </Routes>
+      </Suspense>
       {/* <ScrollBtn /> */}
     </BrowserRouter>
   );
