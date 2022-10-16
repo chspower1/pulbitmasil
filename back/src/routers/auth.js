@@ -85,7 +85,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
           if (!rows.length) {
             // console.log(111);
             maria.query(
-              "INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,'kakao')",
+              "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'kakao',1)",
               [result.data.kakao_account.profile.nickname, email],
               async function (err, rows2, fields) {
                 const token = jwt.sign(
@@ -99,6 +99,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
                   success: true,
                   name: result.data.kakao_account.profile.nickname,
                   email: email,
+                  social: 1,
                   token: token,
                 });
               },
@@ -110,6 +111,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
               id: rows[0].id,
               name: rows[0].name,
               email: email,
+              social: 1,
               token: token,
             });
           }
@@ -141,7 +143,7 @@ router.get("/naver", async function (req, res, next) {
         if (!err) {
           if (!rows.length) {
             maria.query(
-              "INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,'naver')",
+              "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'naver', 1)",
               [name, email],
               async function (err, rows2, fields) {
                 const token = jwt.sign({ id: rows2.insertId, access_token: access_token }, secretKey);
@@ -149,6 +151,7 @@ router.get("/naver", async function (req, res, next) {
                   success: true,
                   name: name,
                   email: email,
+                  social: 1,
                   token: token,
                 });
               },

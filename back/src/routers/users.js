@@ -63,11 +63,11 @@ router.post("/register", async function (req, res, next) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     maria.query(
-      `INSERT INTO USER(name, email, hashedPassword) VALUES(?,?,?)`,
+      `INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, 0)`,
       [name, email, hashedPassword],
       function (err, rows, fields) {
         if (!err) {
-          res.status(200).json({ success: true, message: "user register success" });
+          res.status(200).json({ success: true, message: "user register success", social: 0 });
         } else {
           // console.log("err : " + err);
           res.send(err);
@@ -94,16 +94,14 @@ router.post("/login", async function (req, res, next) {
       const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ id: rows[0].id }, secretKey);
 
-      res
-        .status(200)
-        .json({
-          success: true,
-          email: email,
-          id: rows[0].id,
-          token: token,
-          name: rows[0].name,
-          social: rows[0].social,
-        });
+      res.status(200).json({
+        success: true,
+        email: email,
+        id: rows[0].id,
+        token: token,
+        name: rows[0].name,
+        social: rows[0].social,
+      });
     } else {
       console.log("err : " + err);
       res.send(err);
@@ -128,16 +126,34 @@ router.delete("/delete", login_required, async function (req, res, next) {
   }
 });
 
-// 이름과 비밀번호 변경 기능
-router.put("/modify", login_required, async function (req, res, next) {
+router.put("/name", login_required, async function (req, res, next) {
   try {
-    const { name, password } = req.body;
+    const name = req.body?.name;
+
     const userId = req.currentUserId;
+
+    maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId], async function (err, rows, fields) {
+      if (!err) {
+        res.status(200).json({ success: true });
+      } else {
+        console.log("err : " + err);
+        res.status(400).send(err);
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/password", login_required, async function (req, res, next) {
+  try {
+    const password = req.body?.password;
     const hashedPassword = await bcrypt.hash(password, 10);
+    const userId = req.currentUserId;
 
     maria.query(
-      `UPDATE USER SET name = ?,hashedPassword = ? WHERE id = ?`,
-      [name, hashedPassword, userId],
+      `UPDATE USER SET hashedPassword = ? WHERE id = ?`,
+      [hashedPassword, userId],
       async function (err, rows, fields) {
         if (!err) {
           res.status(200).json({ success: true });
