@@ -47,13 +47,12 @@ router.post("/:crewId", login_required, async function (req, res, next) {
     const [rows] = await maria.execute(
       `SELECT maxMember, userId 
                   FROM GREENCREW
-                  INNER JOIN USERTOGREENCREW
-                  ON GREENCREW.crewId = USERTOGREENCREW.crewId
-                  WHERE GREENCREW.crewId = ?`,
+                  LEFT JOIN USERTOGREENCREW
+                  ON GREENCREW.id = USERTOGREENCREW.crewId
+                  WHERE GREENCREW.id = ?`,
       [crewId],
     );
-
-    if (!rows || rows.length < rows[0].maxMemeber) {
+    if (rows.length < rows[0].maxMember) {
       const [rows2] = await maria.execute(`INSERT INTO USERTOGREENCREW(userId, crewId) VALUES(?, ?)`, [
         userId,
         parseInt(crewId),
