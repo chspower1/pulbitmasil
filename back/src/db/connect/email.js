@@ -2,6 +2,7 @@ const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
 const Handlebars = require("handlebars");
+require("dotenv").config();
 
 const emailForTempPassword = async (userEmail, tempPassword) => {
   const template = fs.readFileSync(path.join(__dirname, "./index.handlebars"), { encoding: "utf-8" });
@@ -13,8 +14,8 @@ const emailForTempPassword = async (userEmail, tempPassword) => {
     port: 587,
     secure: false,
     auth: {
-      user: "grassdrink09@gmail.com",
-      pass: "fihpkwjeqrecxmgp",
+      user: process.env.Gmail_user,
+      pass: process.env.Gmail_pass,
     },
   });
 
