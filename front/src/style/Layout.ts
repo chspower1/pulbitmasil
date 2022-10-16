@@ -34,6 +34,7 @@ export const SubTitle = styled.h3`
 export const Desc = styled.p`
   font-family: "Sebang";
   font-size: 16px;
+  line-height: 1.3;
   color: ${props => props.theme.textColor};
 `;
 export const GreenAccent = styled.span`
