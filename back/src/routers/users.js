@@ -25,10 +25,11 @@ router.post("/register", async function (req, res, next) {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const [rows, fields] = await maria.execute(
-      `INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, 0)`,
-      [name, email, hashedPassword],
-    );
+    const [rows] = await maria.execute(`INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, 0)`, [
+      name,
+      email,
+      hashedPassword,
+    ]);
     console.log(rows);
     res.status(200).json({ success: true, id: rows.insertId, social: 0 });
   } catch (error) {
@@ -36,12 +37,11 @@ router.post("/register", async function (req, res, next) {
   }
 });
 
-// 로그인
 router.post("/login", async function (req, res, next) {
   try {
     const { email, password } = req.body;
 
-    const [rows, fields] = await maria.execute(`SELECT * FROM USER WHERE email = ?`, [email]);
+    const [rows] = await maria.execute(`SELECT * FROM USER WHERE email = ?`, [email]);
     console.log(rows);
     if (rows.length) {
       const correctPasswordHash = rows[0].hashedPassword;
@@ -72,7 +72,10 @@ router.delete("/delete", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
 
-    await maria.execute(`DELETE FROM USER WHERE id = ?`, [user_id]);
+    const [rows] = await maria.execute(`DELETE FROM USER WHERE id = ?`, [user_id]);
+    if (!rows.affectedRows) {
+      throw new Error("이미 삭제된 계정입니다");
+    }
     res.status(200).json({ success: true });
   } catch (error) {
     next(error);
@@ -81,11 +84,14 @@ router.delete("/delete", login_required, async function (req, res, next) {
 
 router.put("/name", login_required, async function (req, res, next) {
   try {
-    const name = req.body?.name;
+    const name = req.body?.name || null;
 
     const userId = req.currentUserId;
 
-    await maria.execute(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId]);
+    const [rows] = await maria.execute(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId]);
+    if (!rows.affectedRows) {
+      throw new Error("이름 수정 중 오류가 발생했습니다");
+    }
     res.status(200).json({ success: true });
   } catch (error) {
     next(error);
@@ -94,12 +100,14 @@ router.put("/name", login_required, async function (req, res, next) {
 
 router.put("/password", login_required, async function (req, res, next) {
   try {
-    const password = req.body?.password;
+    const password = req.body?.password || null;
     const hashedPassword = await bcrypt.hash(password, 10);
     const userId = req.currentUserId;
 
-    await maria.execute(`UPDATE USER SET hashedPassword = ? WHERE id = ?`, [hashedPassword, userId]);
-
+    const [rows] = await maria.execute(`UPDATE USER SET hashedPassword = ? WHERE id = ?`, [hashedPassword, userId]);
+    if (!rows.affectedRows) {
+      throw new Error("비밀번호 수정 중 오류가 발생했습니다");
+    }
     res.status(200).json({ success: true });
   } catch (error) {
     next(error);
@@ -112,13 +120,13 @@ router.put("/reset", random_password, async function (req, res, next) {
     const password = req.randPwd;
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    await maria.execute(
+    const [rows] = await maria.execute(
       `UPDATE USER SET hashedPassword = ? WHERE email = ? AND hashedPassword NOT IN ("kakao", "naver")`,
       [hashedPassword, email],
     );
 
-    if (!rows["changedRows"]) {
-      return res.status(400).send({ success: false });
+    if (!rows.affectedRows) {
+      throw new Error("임시 비밀번호 발급에 실패했습니다");
     }
 
     await emailForTempPassword(email, password);
