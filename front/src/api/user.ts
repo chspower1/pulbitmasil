@@ -30,7 +30,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
 
 export async function registerUser(newUser: UserRegisterForm) {
   const bodyData = JSON.stringify(newUser);
-  // console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
+  console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
 
   return axiosInstance.post(`user/register`, bodyData, {
     headers: {
