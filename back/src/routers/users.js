@@ -25,11 +25,12 @@ router.post("/register", async function (req, res, next) {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const [rows, fields] = await maria.execute(
-      `INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, 0)`,
-      [name, email, hashedPassword],
-    );
-    console.log(rows);
+    const result = await maria.execute(`INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, 0)`, [
+      name,
+      email,
+      hashedPassword,
+    ]);
+    console.log(result);
     res.status(200).json({ success: true, id: rows.insertId, social: 0 });
   } catch (error) {
     next(error);

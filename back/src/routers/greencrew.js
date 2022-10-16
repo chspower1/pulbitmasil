@@ -1,50 +1,68 @@
 const express = require("express");
 const router = express.Router();
 const { cpi } = require("../db/mongoDB/mongodb");
-
 const login_required = require("../middlewares/login_required");
-
 const maria = require("../db/connect/maria");
 
 router.get("/", async function (req, res, next) {
-  // const asd = await cpi();
-  // console.log(asd);
-  await maria.query(
-    `SELECT C.id, A.title, A.startAt, C.course, C.distance, C.leadTime, A.maxMember, C.level, (SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.id) AS curMember, C.content, C.trafficInfo
-  FROM GREENCREW AS A
-  INNER JOIN ROUTE AS C
-  ON A.routeId = C.id
-  GROUP BY A.id`,
-    async function (err, rows, fields) {
+  try {
+    const [rows] = await maria.execute(
+      `SELECT 
+                    A.id,
+                    A.title,
+                    A.startAt,
+                    A.maxMember,
+                    C.course,
+                    C.distance,
+                    C.leadTime,
+                    C.level,
+                    ( SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.id ) AS curMember, 
+                    C.content,
+                    C.trafficInfo
+                  FROM GREENCREW AS A
+                  INNER JOIN ROUTE AS C ON A.routeId = C.id
+                  GROUP BY A.id`,
+    );
+
+    if (rows.length) {
       for (i in rows) {
         const CPI = await cpi(rows[i].id);
-        rows[i]["CPI"] = CPI[0]["test"];
+        rows[i]["CPI"] = CPI["test"];
       }
       res.status(200).json(rows);
-    },
-  );
+    } else {
+      throw new Error("failed to select");
+    }
+  } catch (error) {
+    next(error);
+  }
 });
 
 // 멤버 추가
 router.post("/:crewId", login_required, async function (req, res, next) {
-  const userId = req.currentUserId;
-  const crewId = req.params.crewId;
   try {
-    await maria.query(
-      `SELECT maxMember, userId FROM GREENCREW INNER JOIN USERTOGREENCREW ON GREENCREW.crewId = USERTOGREENCREW.crewId WHERE GREENCREW.crewId = ?`,
+    const userId = req.currentUserId;
+    const crewId = req.params.crewId;
+
+    const [rows] = await maria.execute(
+      `SELECT maxMember, userId 
+                  FROM GREENCREW
+                  INNER JOIN USERTOGREENCREW
+                  ON GREENCREW.crewId = USERTOGREENCREW.crewId
+                  WHERE GREENCREW.crewId = ?`,
       [crewId],
-      async function (err, rows, fields) {
-        if (!rows || rows.length < rows[0].maxMember) {
-          await maria.query(
-            `INSERT INTO USERTOGREENCREW(userId, crewId) VALUES(?, ?)`,
-            [userId, parseInt(crewId)],
-            function (err, rows, fields) {
-              res.status(200).json(rows);
-            },
-          );
-        } else res.status(400).json({ success: false, message: "모임이 가득 찼습니다" });
-      },
     );
+
+    if (!rows || rows.length < rows[0].maxMemeber) {
+      const [rows2] = await maria.execute(`INSERT INTO USERTOGREENCREW(userId, crewId) VALUES(?, ?)`, [
+        userId,
+        parseInt(crewId),
+      ]);
+
+      res.status(200).json(rows2);
+    } else {
+      throw new Error("Recruitment is complete");
+    }
   } catch (error) {
     next(error);
   }
@@ -55,17 +73,13 @@ router.delete("/:crewId", login_required, async function (req, res, next) {
     const crewId = req.params.crewId;
     const userId = req.currentUserId;
 
-    await maria.query(
-      `DELETE FROM USERTOGREENCREW WHERE userId = ? AND crewId = ?`,
-      [userId, crewId],
-      function (err, rows, fields) {
-        if (!err) {
-          res.status(200).json({ success: true });
-        } else {
-          res.send(err);
-        }
-      },
-    );
+    const [rows] = await maria.execute(`DELETE FROM USERTOGREENCREW WHERE userId = ? AND crewId = ?`, [userId, crewId]);
+
+    if (rows.affectedRows) {
+      res.status(200).json({ success: true });
+    } else {
+      throw new Error("failed to delete");
+    }
   } catch (error) {
     next(error);
   }
