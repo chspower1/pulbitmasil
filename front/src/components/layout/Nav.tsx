@@ -12,6 +12,7 @@ import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
 import DodreamDetalModal from "@components/modal/DodreamDetail";
+import { SubTitle } from "@style/Layout";
 // import ModalPortal from "@components/modal/ModalPortal";
 
 // Interface
@@ -59,7 +60,7 @@ export default function Nav() {
   const [searchOpen, setSearchOpen] = useState(false);
   const isLogin = useRecoilValue(isLoginSelector);
   const [isLoginModal, setIsloginModal] = useRecoilState(isLoginModalAtom);
-  // const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
+  const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
 
   const navigate = useNavigate();
   const [user, setUser] = useRecoilState(userAtom);
@@ -71,12 +72,17 @@ export default function Nav() {
   const [isUserNav, setIsUserNav] = useState(false);
 
   //user nav 설정하는 코드
-  const handleClickMenu = () => {
-    // ModalPortal(LoginModal); 포탈적용 어떻게 해야할지 모르겠음
-    isLogin ? setIsUserNav(cur => !cur) : setIsloginModal(cur => !cur);
-  };
+  // const handleClickMenu = () => {
+  //   // ModalPortal(LoginModal); 포탈적용 어떻게 해야할지 모르겠음
+  //   isLogin ? setIsUserNav(cur => !cur) : setIsloginModal(cur => !cur);
+  // };
   const handleClickLogin = () => {
     setIsloginModal(true);
+  };
+
+  const handleClickLogout = async () => {
+    setIsLogoutModal(true);
+    setIsUserNav(false);
   };
 
   useEffect(() => {
@@ -148,11 +154,17 @@ export default function Nav() {
 
         {isLogin && (
           <UserContainer>
-            <img src="/assets/icon/user/user_img.svg" />
-            <div>
-              <UserName style={{ color: "green" }}>{user?.name}</UserName> 님
-            </div>
-            <MenuImg onClick={handleClickMenu} src="/assets/icon/user/menu_button.svg" />
+            <Link to="userInfo">
+              <UserNameBox>
+                <img src="/assets/icon/user/user_img.svg" />
+                <UserName>{user?.name}</UserName>
+              </UserNameBox> 
+            </Link>
+            <Link to="userInfo">
+              <SubTitle style={{ fontFamily: "SebangBold" }}>마이페이지</SubTitle>
+            </Link>
+            <Logout onClick={handleClickLogout}>로그아웃</Logout>
+            {/* <MenuImg onClick={handleClickMenu} src="/assets/icon/user/menu_button.svg" /> */}
           </UserContainer>
         )}
         <LoginModal></LoginModal>
@@ -288,11 +300,28 @@ const RegisterBtn = styled.button`
   border-radius: 5px;
 `;
 
-const UserContainer = styled(LoginContainer)``;
+const UserContainer = styled(LoginContainer)`
+  width: 310px;
+`;
 
 const UserName = styled.span`
-  color: ${props => props.theme.accentColor};
+  color: ${props => props.theme.textColor};
+  margin: 10px;
+  font-size: 16px;
+  font-family: "SebangBold";
 `;
-const MenuImg = styled(motion.img)`
+
+const UserNameBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+// const MenuImg = styled(motion.img)`
+//   cursor: pointer;
+// `;
+const Logout = styled.div`
   cursor: pointer;
+  color: #B1B1B1;
+  font-family: "SebangBold";
 `;

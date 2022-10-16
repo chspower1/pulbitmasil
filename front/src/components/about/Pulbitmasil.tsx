@@ -17,7 +17,7 @@ export default function Pulbitmasil() {
             <WalkDesc>이웃에 놀러 나가는 일</WalkDesc>
           </WalkCircleImg>
         </NameBox>
-        <MeaningText>마실 나가듯 즐겁고 가볍게 실천하며<br/>지구의 풀빛색을 지키자</MeaningText>
+        <MeaningText>마실 나가듯 즐겁고 가볍게 플로깅을<br/>실천하며 지구의 풀빛색을 지키자</MeaningText>
       </LeftContainer>
       <RightContainer>
         <TitleBox>
