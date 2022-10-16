@@ -5,8 +5,10 @@ import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState, useEffect } from "react";
 import { createGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
+import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
+import moment from "moment";
 
 export default function GreenCrew() {
   const areas = ["강동", "강서", "강남", "강북"];
@@ -17,18 +19,15 @@ export default function GreenCrew() {
       console.log("GreenCrew Query성공", data);
     },
   });
-  // const convertDate = () => {
-  //   const newDate: any = new Date();
-  //   console.log(newDate);
-  // };
-  // convertDate(greenCrew[0]?.startAt!);
   const handleClickEnter = async () => {
     await createGreenCrewMember(greenCrew![selectedArea].id);
     queryClient.invalidateQueries(["greenCrew"]);
   };
-  const date: Date = new Date();
-  console.log(date);
-  useEffect(() => {}, []);
+  const MomentDateChage = () => {
+    const nowTime: number = Date.now();
+    // Sun Aug 23 2020 15:43:49 GMT+0900
+    return <Moment>{nowTime}</Moment>;
+  };
   return (
     <GreenCrewWrapper>
       <AreaNav>
@@ -39,10 +38,11 @@ export default function GreenCrew() {
         ))}
       </AreaNav>
       <RootContainer>
+        {/* <>{MomentDateChage}</> */}
         <Title>{greenCrew![selectedArea]?.title!}</Title>
         <FirstContainer>
           <DescBox>
-            <Date>{greenCrew![selectedArea]?.startAt!}</Date>
+            <StartAt>{greenCrew![selectedArea]?.startAt!}</StartAt>
             <CourseBox>
               <DetailTitle>
                 <IconImg src={"assets/icon/greenCrew/course_icon.svg"} alt="#" />
@@ -86,7 +86,7 @@ export default function GreenCrew() {
           <Row>
             <Col>
               <div>현재까지 {greenCrew![selectedArea]?.curMember}명이 참여하고 있어요!</div>
-              <div> 남은시간</div>
+              <Moment>1976-04-19T12:59-0500</Moment>
             </Col>
             <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
           </Row>
@@ -181,7 +181,7 @@ const EnterBtn = styled.button`
   max-height: 70px;
   font-size: 32px;
 `;
-const Date = styled.div``;
+const StartAt = styled.div``;
 const DetailTitle = styled(Desc)`
   display: flex;
   justify-content: center;
