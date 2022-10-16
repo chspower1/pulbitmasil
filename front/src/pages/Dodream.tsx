@@ -12,7 +12,10 @@ export default function Dodream() {
 
   return (
     <WalkWrap>
-      <MapContainer>{/* <DodreamMap dodream={dodream!} /> */}</MapContainer>
+      <MapContainer>
+        {" "}
+        <DodreamMap dodream={dodream!} />{" "}
+      </MapContainer>
       <RightContainer>
         {/* <ChartBtn>차트로 보기</ChartBtn> */}
         <Title>서울시 산책로 현황</Title>

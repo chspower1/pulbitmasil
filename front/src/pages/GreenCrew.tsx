@@ -74,10 +74,8 @@ export default function GreenCrew() {
               <DetailDescription>{greenCrew[selectedArea]?.level}</DetailDescription>
             </CourseBox>
           </DescBox>
-          {/* 카카오맵 오류동안 임시 박스 */}
-          <div style={{ width: "50%", height: "100%", backgroundColor: "teal" }}>지도자리</div>
-          {/* <GreenCrewMap greenCrew={greenCrew!} /> */}
-          {/* <GreenCrewMap /> */}
+
+          <GreenCrewMap greenCrew={greenCrew[selectedArea]!} />
         </FirstContainer>
         <SecondContainer>
           <Row>
