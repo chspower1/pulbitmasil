@@ -15,33 +15,26 @@ router.get("/", function (req, res, next) {
   res.render("index", { title: "User" });
 });
 
-// router.get("/create", async function (req, res) {
-//   maria.query(
-//     `CREATE TABLE USER (
-//     id INT primary key AUTO_INCREMENT,
-//     name VARCHAR(10) NOT NULL,
-//     email VARCHAR(30) UNIQUE NOT NULL,
-//     hashedPassword VARCHAR(100) NOT NULL)`,
-//     function (err, rows, fields) {
-//       if (!err) {
-//         res.send(rows);
-//       } else {
-//         console.log("err : " + err);
-//         res.send(err);
-//       }
-//     },
-//   );
-// });
+router.get("/select", async function (req, res) {
+  try {
+    const [userList, fields] = await maria.execute("SELECT * FROM USER");
+    res.send(userList);
+  } catch (err) {
+    res.send(err);
+  }
+  // 이런 식으로 짜면?....
 
-router.get("/select", function (req, res) {
-  maria.query("SELECT * FROM USER", function (err, rows, fields) {
-    if (!err) {
-      res.send(rows);
-    } else {
-      // console.log("err : " + err);
-      res.send(err);
-    }
-  });
+  // const result = await maria("SELECT * FROM USER");
+  // res.send(result);
+
+  // maria.query("SELECT * FROM USER", function (err, rows, fields) {
+  //   if (!err) {
+  //     res.send(rows);
+  //   } else {
+  //     // console.log("err : " + err);
+  //     res.send(err);
+  //   }
+  // });
 });
 
 // 편의를 위한 초기화(롤백안됨)
