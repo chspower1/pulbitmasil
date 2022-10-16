@@ -13,3 +13,9 @@ export interface UserRegisterForm extends Omit<User, "token"> {
 export interface UserLoginForm extends Omit<User, "token"> {
   password: string;
 }
+
+export interface PasswordChangeForm {
+  currentPassword: string;
+  changePassword: string;
+  confirmPassword: string;
+}

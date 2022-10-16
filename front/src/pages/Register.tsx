@@ -8,10 +8,12 @@ import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper } from "@style/Layout";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
   const [isViewPassword, setIsViewPassword] = useState(false);
   const [isViewConfirmPassword, setIsViewConfirmPassword] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,6 +26,7 @@ export default function Register() {
     delete data.confirmPassword;
     // console.log(data);
     registerUser(data);
+    navigate("/");
   });
 
   return (
@@ -118,6 +121,7 @@ export default function Register() {
     </RegisterWrapper>
   );
 }
+
 const RegisterWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
   display: flex;

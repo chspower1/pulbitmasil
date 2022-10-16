@@ -1,4 +1,4 @@
-import { Content } from "./Guide";
+import { Content } from "@pages/Guide";
 
 export const contents1: Content[] = [
   {

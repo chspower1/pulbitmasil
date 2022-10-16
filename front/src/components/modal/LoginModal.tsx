@@ -98,6 +98,8 @@ export default function LoginModal() {
     }
     // console.log("풀빛마실 로그인, 넘어온 데이터\n", id, email, name, token);
     setCurUser({ id, email, name, token, social });
+    console.log("--------------test");
+    console.log(id, email, name, token, social);
     // console.log("풀빛마실 User상태\n", curUser);
   };
 
