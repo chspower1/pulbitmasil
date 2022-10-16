@@ -8,7 +8,8 @@ router.get("/", async function (req, res, next) {
   try {
     const [rows] = await maria.execute(
       `SELECT 
-                    A.id,
+                    A.crewId,
+                    C.id,
                     A.title,
                     A.startAt,
                     A.maxMember,
@@ -16,18 +17,19 @@ router.get("/", async function (req, res, next) {
                     C.distance,
                     C.leadTime,
                     C.level,
-                    ( SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.id ) AS curMember, 
+                    ( SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.crewId ) AS curMember, 
                     C.content,
                     C.trafficInfo
                   FROM GREENCREW AS A
-                  INNER JOIN ROUTE AS C ON A.routeId = C.id
-                  GROUP BY A.id`,
+                  INNER JOIN ROUTE AS C
+                  ON A.routeId = C.id
+                  GROUP BY A.crewId`,
     );
 
     if (rows.length) {
       for (i in rows) {
         const CPI = await cpi(rows[i].id);
-        rows[i]["CPI"] = CPI["test"];
+        rows[i]["CPI"] = CPI[0]["test"];
       }
       res.status(200).json(rows);
     } else {
