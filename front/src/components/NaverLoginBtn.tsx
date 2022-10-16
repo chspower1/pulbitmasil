@@ -17,9 +17,6 @@ interface User {
   email: string;
 }
 
-const CLIENT_ID = "PI99uUj8actDtIRQqkH0";
-const CALLBACK_URL = "http://kdt-ai5-team09.elicecoding.com/auth/naver/callback";
-
 export default function NaverLoginBtn() {
   const naverRef = useRef<any>();
   const [data, setData] = useState<User>({ name: "", email: "" });
@@ -48,14 +45,13 @@ export default function NaverLoginBtn() {
 
   function GetProfile() {
     window.location.href.includes("access_token") && GetUser();
-
     function GetUser() {
       const location = window.location.href.split("=")[1].split("&")[0];
       const header = {
         Authorization: location,
       };
       fetch(
-        `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${CLIENT_ID}&state=STATE_STRING&redirect_uri=${CALLBACK_URL}`,
+        `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&state=STATE_STRING&redirect_uri=${process.env.REACT_APP_CALLBACK_URL}`,
         {
           method: "get",
           headers: header,
