@@ -6,6 +6,7 @@
       "@atom/*": ["src/atom/*"],
       "@style/*": ["src/style/*"],
       "@pages/*": ["src/pages/*"],
+      "@data/*": ["src/data/*"],
       "@api/*": ["src/api/*"],
       "@images/*": ["src/style/images/*"],
       "@type/*": ["src/type/*"]

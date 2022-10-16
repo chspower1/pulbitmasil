@@ -1,4 +1,4 @@
-import { Content } from "./Guide";
+import { Content } from "@pages/Guide";
 
 export const contents1: Content[] = [
   {
@@ -9,6 +9,7 @@ export const contents1: Content[] = [
      원하는 코스를 선택하여 참여하기 버튼을 누르면 풀빛마실 참여 신청 완료!!`,
     type: "button",
     buttonValue: "풀빛마실 신청하러가기!",
+    buttonURL: "/GreenCrew",
   },
   {
     num: 2,
@@ -52,6 +53,7 @@ export const contents3: Content[] = [
     풀빛마실 루트의 마지막에는 쓰레기통이 있어요. 올바르게 분리배출해 쓰레기를 버리면 끝!!`,
     type: "button",
     buttonValue: "올바른 분리배출 알아보기",
+    buttonURL: "/", //이동할 경로 추가
   },
   {
     num: 7,
@@ -59,5 +61,6 @@ export const contents3: Content[] = [
     description: `풀빛마실 후 소중한 여러분의 이야기를 남겨주세요!`,
     type: "button",
     buttonValue: "후기 작성하러 가기",
+    buttonURL: "/review",
   },
 ];
