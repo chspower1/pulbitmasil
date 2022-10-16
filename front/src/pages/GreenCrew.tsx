@@ -73,7 +73,7 @@ export default function GreenCrew() {
                   <DetailDescription>{selectedGreenCrew?.level}</DetailDescription>
                 </CourseBox>
               </DescBox>
-              <GreenCrewMap greenCrew={selectedGreenCrew!} />
+              {/* <GreenCrewMap greenCrew={selectedGreenCrew!} /> */}
               {/* <GreenCrewMap /> */}
             </FirstContainer>
             <SecondContainer>
