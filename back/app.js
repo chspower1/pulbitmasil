@@ -4,7 +4,6 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
-var indexRouter = require("./src/routers/index");
 var usersRouter = require("./src/routers/users");
 var trashRouter = require("./src/routers/trash");
 var authRouter = require("./src/routers/auth");
@@ -33,7 +32,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static("uploads"));
 
-app.use("/", indexRouter);
 app.use("/user", usersRouter);
 app.use("/trash", trashRouter);
 app.use("/auth", authRouter);
