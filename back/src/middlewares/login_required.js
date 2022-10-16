@@ -2,12 +2,13 @@ const jwt = require("jsonwebtoken");
 
 function login_required(req, res, next) {
   const userToken = req.headers["authorization"]?.split(" ")[1] ?? "null";
-
+  console.log(req.headers["authorization"]);
   if (userToken === "null") {
     return res.status(400).send("로그인한 유저만 사용할 수 있는 서비스");
   }
 
   try {
+    console.log("로그인 인증 동작");
     const secretKey = process.env.JWT_SECRET_KEY;
     const jwtDecoded = jwt.verify(userToken, secretKey);
     const user_id = jwtDecoded.id;

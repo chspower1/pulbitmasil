@@ -13,9 +13,8 @@ export async function createGreenCrewMember(crewId: number) {
   try {
     console.log(crewId);
     console.log(sessionStorage.getItem("userToken"));
-    return await axiosInstance.post(`greencrew/${crewId}`, {
+    return await axiosInstance.get(`greencrew/${crewId}`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       },
     });

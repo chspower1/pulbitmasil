@@ -10,7 +10,7 @@ router.get("/", async function (req, res, next) {
   // const asd = await cpi();
   // console.log(asd);
   await maria.query(
-    `SELECT C.id, A.title, A.startAt, C.course, C.distance, C.leadTime, A.maxMember, C.level, (SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.id) AS curMember, C.content, C.trafficInfo
+    `SELECT A.id, A.title, A.startAt, C.course, C.distance, C.leadTime, A.maxMember, C.level, (SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.id) AS curMember, C.content, C.trafficInfo
   FROM GREENCREW AS A
   INNER JOIN ROUTE AS C
   ON A.routeId = C.id
@@ -18,7 +18,7 @@ router.get("/", async function (req, res, next) {
     async function (err, rows, fields) {
       for (i in rows) {
         const CPI = await cpi(rows[i].id);
-        rows[i]["CPI"] = CPI[0]["test"];
+        rows[i]["CPI"] = CPI["test"];
       }
       res.status(200).json(rows);
     },
@@ -26,7 +26,7 @@ router.get("/", async function (req, res, next) {
 });
 
 // 멤버 추가
-router.post("/:crewId", login_required, async function (req, res, next) {
+router.get("/:crewId", login_required, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
     const crewId = req.params.crewId;

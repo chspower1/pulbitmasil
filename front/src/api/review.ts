@@ -4,7 +4,7 @@ import { axiosInstance, BASE_URL } from "./axiosInstance";
 
 //image 테스트
 export async function createReview(contents: FormData) {
-  console.log(`%cPOST 요청 ${BASE_URL + "review/create"}`, "color: #a25cd1;");
+  console.log(`%cPOST 요청 ${BASE_URL + "/review/create"}`, "color: #a25cd1;");
   console.log(contents);
   // console.log(contents.get("file"));
 
