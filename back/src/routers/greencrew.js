@@ -27,9 +27,11 @@ router.get("/", async function (req, res, next) {
 
 // 멤버 추가
 router.post("/:crewId", login_required, async function (req, res, next) {
-  const userId = req.currentUserId;
-  const crewId = req.params.crewId;
   try {
+    const userId = req.currentUserId;
+    const crewId = req.params.crewId;
+    console.log("작동");
+    console.log(userId, crewId);
     await maria.query(
       `SELECT maxMember, userId FROM GREENCREW INNER JOIN USERTOGREENCREW ON GREENCREW.crewId = USERTOGREENCREW.crewId WHERE GREENCREW.crewId = ?`,
       [crewId],
@@ -47,6 +49,7 @@ router.post("/:crewId", login_required, async function (req, res, next) {
     );
   } catch (error) {
     next(error);
+    console.log(error);
   }
 });
 

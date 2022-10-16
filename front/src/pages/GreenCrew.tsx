@@ -1,21 +1,27 @@
 import styled from "styled-components";
 import { Wrapper, Container, Box, Title, Desc, SubTitle } from "@style/Layout";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState } from "react";
-import { getGreenCrews } from "@api/greenCrew";
+import { createGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
 import { Link } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
 
 export default function GreenCrew() {
+  const areas = ["강동", "강서", "강남", "강북"];
+  const [selectedArea, setSelectedArea] = useState(0);
+  const queryClient = useQueryClient();
   const { isLoading, data: greenCrew } = useQuery<IGreenCrew[]>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
       console.log("GreenCrew Query성공", data);
     },
   });
-  const [selectedArea, setSelectedArea] = useState(0);
-  const areas = ["강동", "강서", "강남", "강북"];
+  const handleClickEnter = async () => {
+    await createGreenCrewMember(greenCrew![selectedArea].id);
+    queryClient.invalidateQueries(["greenCrew"]);
+  };
+
   if (!greenCrew) return null;
   return (
     <GreenCrewWrapper>
@@ -68,6 +74,8 @@ export default function GreenCrew() {
               <DetailDescription>{greenCrew[selectedArea]?.level}</DetailDescription>
             </CourseBox>
           </DescBox>
+          {/* 카카오맵 오류동안 임시 박스 */}
+          <div style={{ width: "50%", height: "100%", backgroundColor: "teal" }}>지도자리</div>
           {/* <GreenCrewMap greenCrew={greenCrew!} /> */}
           {/* <GreenCrewMap /> */}
         </FirstContainer>
@@ -77,7 +85,7 @@ export default function GreenCrew() {
               <div>현재까지 {greenCrew[selectedArea]?.curMember}명이 참여하고 있어요!</div>
               <div> 남은시간</div>
             </Col>
-            <EnterBtn>참여하기</EnterBtn>
+            <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
           </Row>
           <ContentBox>
             <ContentTitle>

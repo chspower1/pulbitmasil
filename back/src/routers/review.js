@@ -49,6 +49,7 @@ router.get("/:reviewId", function (req, res) {
 // 리뷰 작성
 router.post("/create", login_required, uploadSingle, async function (req, res, next) {
   const userId = req.currentUserId;
+  console.log(userId);
 
   try {
     const { description, createAt } = req.body;

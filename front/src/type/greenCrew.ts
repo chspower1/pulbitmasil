@@ -1,6 +1,7 @@
 import { Cpi } from "./dodream";
 
 export interface IGreenCrew {
+  id: number;
   title: string;
   startAt: string;
   course: string;

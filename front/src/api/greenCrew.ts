@@ -9,8 +9,10 @@ export async function getGreenCrews() {
     console.log(err);
   }
 }
-export async function createGreenCrewMember({ crewId }: { crewId: number }) {
+export async function createGreenCrewMember(crewId: number) {
   try {
+    console.log(crewId);
+    console.log(sessionStorage.getItem("userToken"));
     return await axiosInstance.post(`greencrew/${crewId}`, {
       headers: {
         "Content-Type": "application/json",
