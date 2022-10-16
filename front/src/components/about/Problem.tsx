@@ -32,7 +32,17 @@ export default function Problem() {
           </Desc>
         </Row>
         <Row>
-          <div style={{ width: "400px", height: "130px", backgroundColor: "red" }}></div>
+          <NewsBox style={{ width: "400px", height: "130px", backgroundColor: "white" }}>
+            <NewsText as="a" href="https://www.mk.co.kr/news/society/view/2022/04/314838/">
+              [매일경제] 홍대거리에 쓰레기 쏟아졌다…거리…
+            </NewsText>
+            <NewsText as="a" href="https://biz.chosun.com/topics/topics_social/2022/06/05/5ERZWHB4UJHVFFZZXSRR2GDJ54/">
+              [조선일보] ‘환경의 날’에도 한강공원엔 쓰레기 한 가득…
+            </NewsText>
+            <NewsText as="a" href="https://m.mbn.co.kr/news/society/4858837">
+              [MBN뉴스] 불꽃축제 끝난 한강공원 쓰레기 몸살…
+            </NewsText>
+          </NewsBox>
         </Row>
         <Row>
           <SubTitle className="end">
@@ -67,4 +77,19 @@ const SubTitle = styled(SubTitleGuide)`
 const ChartContainer = styled(Container)`
   width: 550px;
   height: 400px;
+`;
+
+const NewsBox = styled(Box)`
+  background-color: white;
+  width: 400px;
+  height: 130px;
+  flex-direction: column;
+  align-items: baseline;
+  padding-left: 10px;
+`;
+
+const NewsText = styled(SubTitle)`
+  font-size: 17px;
+  padding: 7px 0;
+  line-height: 21px;
 `;
