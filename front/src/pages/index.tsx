@@ -33,8 +33,6 @@ export default function Router() {
           <Route path="/dodream" element={<Dodream />} />
           <Route path="/review" element={<Review />} />
           <Route path="/review/:reviewId" element={<Review />} />
-          {/* <Route path="/review/write" element={<ReviewForm />} />
-        <Route path="/review/edit/:reviewId" element={<ReviewForm />} /> */}
           <Route path="/review/write" element={<CreateReview />} />
           <Route path="/review/edit/:reviewId" element={<UpdateReview />} />
           <Route path="/guide" element={<Guide />} />

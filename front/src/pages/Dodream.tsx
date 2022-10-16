@@ -9,24 +9,18 @@ import { IDodream } from "@type/dodream";
 import { Wrapper } from "@style/Layout";
 export default function Dodream() {
   const { isLoading, data: dodream } = useQuery<IDodream[] | undefined>(["dodream"], getDodream);
-  console.log(dodream);
+
   return (
-    <>
-      {isLoading ? (
-        "로딩중입니다."
-      ) : (
-        <WalkWrap>
-          <MapContainer>{/* <DodreamMap dodream={dodream!} /> */}</MapContainer>
-          <RightContainer>
-            {/* <ChartBtn>차트로 보기</ChartBtn> */}
-            <Title>서울시 산책로 현황</Title>
-            <CourseBox>
-              <WalkTable dodream={dodream!} />
-            </CourseBox>
-          </RightContainer>
-        </WalkWrap>
-      )}
-    </>
+    <WalkWrap>
+      <MapContainer>{/* <DodreamMap dodream={dodream!} /> */}</MapContainer>
+      <RightContainer>
+        {/* <ChartBtn>차트로 보기</ChartBtn> */}
+        <Title>서울시 산책로 현황</Title>
+        <CourseBox>
+          <WalkTable dodream={dodream!} />
+        </CourseBox>
+      </RightContainer>
+    </WalkWrap>
   );
 }
 const WalkWrap = styled(Wrapper)`
