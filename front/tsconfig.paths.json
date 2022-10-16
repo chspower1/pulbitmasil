@@ -5,6 +5,7 @@
       "@components/*": ["src/components/*"],
       "@atom/*": ["src/atom/*"],
       "@style/*": ["src/style/*"],
+      "@data/*": ["src/data/*"],
       "@pages/*": ["src/pages/*"],
       "@data/*": ["src/data/*"],
       "@api/*": ["src/api/*"],

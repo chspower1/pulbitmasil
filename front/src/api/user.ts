@@ -52,3 +52,18 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   // console.log("네이버로그인", data);
   return data;
 }
+
+export async function changePassword(password: string) {
+  console.log(`%cPUT 요청 ${BASE_URL}/user/password`, "color: #a25cd1;");
+
+  return axiosInstance.put(
+    `/user/password`,
+    { password },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    },
+  );
+}
