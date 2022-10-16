@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { changePassword, registerUser } from "@api/user";
 import { PasswordChangeForm, UserRegisterForm } from "@type/user";
-import { ViewPassword } from "@components/modal/LoginModal";
+import { Overlay, ViewPassword } from "@components/modal/LoginModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
@@ -12,8 +12,10 @@ import { UserPasswordProps } from "@pages/UserInfo";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { AnimatePresence } from "framer-motion";
+import { OverlayVariant } from "./LoginModal";
 
 export default function PasswordChangeModal({ isPasswordChange, setIsPasswordChange }: UserPasswordProps) {
+  const [isViewCurPassword, setIsViewCurPassword] = useState(false);
   const [isViewPassword, setIsViewPassword] = useState(false);
   const [isViewConfirmPassword, setIsViewConfirmPassword] = useState(false);
 
@@ -27,108 +29,115 @@ export default function PasswordChangeModal({ isPasswordChange, setIsPasswordCha
 
   const onSubmitRegister = handleSubmit(data => {
     changePassword(data?.changePassword);
+    setIsPasswordChange(false);
   });
 
   return (
     <AnimatePresence>
+      <></>
       {isPasswordChange && (
-        <FormContainer>
-          <Title>회원가입</Title>
-          <Description>풀빛마실 멤버로 참여해보세요!</Description>
-          <Form onSubmit={onSubmitRegister}>
-            <InputBox>
-              <InputTitle>현재 비밀번호</InputTitle>
-              <Input
-                placeholder="숫자,특수문자,영문 포함 8자리 이상"
-                type={isViewPassword ? "text" : "password"}
-                id="currentPassword"
-                // type="password"
-                {...register("currentPassword", {
-                  required: { value: true, message: "비밀번호를 입력해주세요." },
-                  minLength: { value: 8, message: "8자 이상 입력해주세요." },
-                })}
-              />
-              <ViewPassword style={{ top: "18px" }}>
-                <FontAwesomeIcon
-                  icon={isViewPassword ? faEye : faEyeSlash}
-                  color="#2A9C6B"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setIsViewPassword(cur => !cur)}
+        <PasswordWrapper>
+          <FormContainer>
+            <Title>비밀번호 수정</Title>
+            <Form onSubmit={onSubmitRegister}>
+              <InputBox>
+                <InputTitle>현재 비밀번호</InputTitle>
+                <Input
+                  placeholder="숫자,특수문자,영문 포함 8자리 이상"
+                  type={isViewCurPassword ? "text" : "password"}
+                  id="currentPassword"
+                  // type="password"
+                  {...register("currentPassword", {
+                    required: { value: true, message: "비밀번호를 입력해주세요." },
+                    minLength: { value: 8, message: "8자 이상 입력해주세요." },
+                  })}
                 />
-              </ViewPassword>
-              <ErrorMessage>{errors.currentPassword?.message}</ErrorMessage>
-            </InputBox>
+                <ViewPassword style={{ top: "18px" }}>
+                  <FontAwesomeIcon
+                    icon={isViewCurPassword ? faEye : faEyeSlash}
+                    color="#2A9C6B"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setIsViewCurPassword(cur => !cur)}
+                  />
+                </ViewPassword>
+                <ErrorMessage>{errors.currentPassword?.message}</ErrorMessage>
+              </InputBox>
 
-            <InputBox>
-              <InputTitle>비밀번호</InputTitle>
-              <Input
-                placeholder="숫자,특수문자,영문 포함 8자리 이상"
-                type={isViewPassword ? "text" : "password"}
-                id="changePassword"
-                // type="password"
-                {...register("changePassword", {
-                  required: { value: true, message: "비밀번호를 입력해주세요." },
-                  minLength: { value: 8, message: "8자 이상 입력해주세요." },
-                })}
-              />
-              <ViewPassword style={{ top: "18px" }}>
-                <FontAwesomeIcon
-                  icon={isViewPassword ? faEye : faEyeSlash}
-                  color="#2A9C6B"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setIsViewPassword(cur => !cur)}
+              <InputBox>
+                <InputTitle>비밀번호</InputTitle>
+                <Input
+                  placeholder="숫자,특수문자,영문 포함 8자리 이상"
+                  type={isViewPassword ? "text" : "password"}
+                  id="changePassword"
+                  // type="password"
+                  {...register("changePassword", {
+                    required: { value: true, message: "비밀번호를 입력해주세요." },
+                    minLength: { value: 8, message: "8자 이상 입력해주세요." },
+                  })}
                 />
-              </ViewPassword>
-              <ErrorMessage>{errors.changePassword?.message}</ErrorMessage>
-            </InputBox>
+                <ViewPassword style={{ top: "18px" }}>
+                  <FontAwesomeIcon
+                    icon={isViewPassword ? faEye : faEyeSlash}
+                    color="#2A9C6B"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setIsViewPassword(cur => !cur)}
+                  />
+                </ViewPassword>
+                <ErrorMessage>{errors.changePassword?.message}</ErrorMessage>
+              </InputBox>
 
-            <InputBox>
-              <InputTitle>비밀번호 확인</InputTitle>
-              <Input
-                placeholder="동일한 비밀번호를 입력해주세요."
-                type={isViewConfirmPassword ? "text" : "password"}
-                id="confirmPassword"
-                {...register("confirmPassword", {
-                  required: "비밀번호를 한번 더 입력해 주세요",
-                  validate: {
-                    mathchesPreviousPassword: value => {
-                      const { changePassword } = getValues();
-                      return changePassword === value || "비밀번호가 일치하지 않습니다.";
+              <InputBox>
+                <InputTitle>비밀번호 확인</InputTitle>
+                <Input
+                  placeholder="동일한 비밀번호를 입력해주세요."
+                  type={isViewConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  {...register("confirmPassword", {
+                    required: "비밀번호를 한번 더 입력해 주세요",
+                    validate: {
+                      mathchesPreviousPassword: value => {
+                        const { changePassword } = getValues();
+                        return changePassword === value || "비밀번호가 일치하지 않습니다.";
+                      },
                     },
-                  },
-                })}
-              />
-              <ViewPassword style={{ top: "18px" }}>
-                <FontAwesomeIcon
-                  icon={isViewConfirmPassword ? faEye : faEyeSlash}
-                  color="#2A9C6B"
-                  style={{ cursor: "pointer" }}
-                  onClick={() => setIsViewConfirmPassword(cur => !cur)}
+                  })}
                 />
-              </ViewPassword>
+                <ViewPassword style={{ top: "18px" }}>
+                  <FontAwesomeIcon
+                    icon={isViewConfirmPassword ? faEye : faEyeSlash}
+                    color="#2A9C6B"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setIsViewConfirmPassword(cur => !cur)}
+                  />
+                </ViewPassword>
 
-              <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
-            </InputBox>
+                <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+              </InputBox>
 
-            <Button>수정하기</Button>
-            <Button>취소하기</Button>
-          </Form>
-        </FormContainer>
+              <Button>수정하기</Button>
+              <Button type="button" onClick={() => setIsPasswordChange(false)}>
+                취소하기
+              </Button>
+            </Form>
+          </FormContainer>
+          <Overlay
+            onClick={() => setIsPasswordChange(false)}
+            variants={OverlayVariant}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          />
+        </PasswordWrapper>
       )}
     </AnimatePresence>
   );
 }
 
-const RegisterWrapper = styled(Wrapper)`
-  background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
+const PasswordWrapper = styled(Wrapper)`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* opacity: 0.5; */
 `;
 const FormContainer = styled.div`
   background-color: white;
@@ -142,6 +151,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1000;
 `;
 
 const Title = styled.h1`

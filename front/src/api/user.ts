@@ -61,7 +61,7 @@ export async function changePassword(password: string) {
     { password },
     {
       headers: {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       },
     },
