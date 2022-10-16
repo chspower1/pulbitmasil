@@ -15,96 +15,69 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
-export default function GuideForm({ pos, content }: { pos: POS; content: Content }) {
+export default function GuideForm({ content }: { content: Content }) {
   const navigate = useNavigate();
   const handleClickNavigate = () => {
     navigate(content?.buttonURL!);
   };
+  const isRight = content.num % 2 === 0;
+
   return (
-    <TabContainer pos={pos}>
-      {pos === POS.left ? (
-        <>
-          <div>
-            <img src={`assets/images/guide/guide1.png`}></img>
-          </div>
-          <NumberBox pos={pos} style={{ backgroundColor: "red" }}>
-            <Number>{"0" + content.num}</Number>
-          </NumberBox>
-          <ImageBox pos={pos} style={{ backgroundColor: "red" }}>
-            <img src={`assets/images/guide/tab_${pos}.png`}></img>
-          </ImageBox>
-          <TextBox style={{ backgroundColor: "red" }}>
-            <GuideTitle>{content.title}</GuideTitle>
-            <GuideDescription>{content?.description}</GuideDescription>
-            {content.type === "button" && <Btn onClick={handleClickNavigate}>{content?.buttonValue}</Btn>}
-          </TextBox>
-        </>
-      ) : (
-        <>
-          <TextBox style={{ backgroundColor: "yellow" }}>
-            <GuideTitle>{content.title}</GuideTitle>
-            <GuideDescription>{content.description}</GuideDescription>
-            {content.type === "button" && <Btn onClick={handleClickNavigate}>{content?.buttonValue}</Btn>}
-          </TextBox>
-          <ImageBox pos={pos} style={{ backgroundColor: "yellow" }}>
-            <img src={`assets/images/guide/tab_${pos}.png`}></img>
-          </ImageBox>
-          <NumberBox pos={pos} style={{ backgroundColor: "yellow" }}>
-            <Number>{"0" + content.num}</Number>
-          </NumberBox>
-          <img src={`assets/images/guide/guide1.png`}></img>
-        </>
-      )}
-    </TabContainer>
+    <Container isRight={isRight}>
+      <Number>{`0${content.num}`}</Number>
+      <LineBox isRight={isRight}>
+        <Line src={`/assets/images/guide/tab_${isRight ? "right" : "left"}.png`} />
+      </LineBox>
+      <TextBox>
+        <Title>{content.title}</Title>
+        <Desc>{content.description}</Desc>
+      </TextBox>
+      <Img
+        src="https://images.unsplash.com/photo-1665884304501-a65e6ff95b35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=670&q=80"
+        alt=""
+      />
+    </Container>
   );
 }
 
-const TabContainer = styled.div<{ pos: string }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  flex-direction: row;
-  position: relative;
-  margin-left: ${props => (props.pos === POS.right ? "172px" : "0px")};
-`;
-
-const ImgContainer = styled.div`
-  /* width:400px */
-  background-color: beige;
-`;
-const Number = styled.p`
-  font-size: 64px;
-  font-weight: bold;
-  color: ${props => props.theme.accentColor};
+const Number = styled(Title)`
+  position: absolute;
+  font-size: 40px;
 `;
 const TextBox = styled(Box)`
+  justify-content: flex-start;
+  width: 300px;
   flex-direction: column;
-  width: 250px;
-  height: 190px;
 `;
-const NumberBox = styled(Box)<{ pos: string }>`
+const Img = styled.img`
+  position: absolute;
   width: 100px;
-  height: 190px;
-  justify-content: ${props => (props.pos === POS.left ? "end" : "start")};
-  align-items: center;
 `;
-
-const ImageBox = styled(Box)<{ pos: string }>`
-  margin: 0 30px;
-  justify-content: ${props => (props.pos === POS.left ? "start" : "end")};
-  width: 80px;
+const Container = styled(ContainerGuide)<{ isRight: boolean }>`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  ${Number} {
+    margin-right: ${props => (props.isRight ? "-200px" : "200px")};
+  }
+  ${TextBox} {
+    margin-right: ${props => (props.isRight ? "500px" : "-500px")};
+    align-items: ${props => (props.isRight ? "flex-end" : "flex-start")};
+    ${Desc} {
+      text-align: ${props => (props.isRight ? "right" : "left")};
+    }
+  }
+  ${Img} {
+    margin-right: ${props => (props.isRight ? "1000px" : "-1000px")};
+  }
 `;
-
-const GuideTitle = styled(Title)``;
-const GuideDescription = styled(Desc)`
-  margin-top: 10px;
+const Line = styled.img`
+  width: 50%;
+  height: 100%;
 `;
-
-const Btn = styled.button`
-  padding: 0 10px;
-  height: 50px;
-
-  margin-top: 50px;
+const LineBox = styled(Box)<{ isRight: boolean }>`
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  justify-content: ${props => (props.isRight ? "flex-end" : "flex-start")};
 `;

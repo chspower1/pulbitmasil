@@ -32,65 +32,49 @@ export interface Content {
 export default function Guide() {
   return (
     <Wrap>
-      <Container bgColor="#bdaaaa">
-        {/* {contents1.map(content => {
-          content.num % 2 === 0 ? (
-            <GuideContainer>
-            <GuideForm pos={POS.left} content={content}/>
-            </GuideContainer>
-          ) : (
-            <GuideContainer>
-            <GuideForm pos={POS.right} content={content}/>
-            </GuideContainer>
-          );
-        })} */}
-        <GuideContainer>
-          <GuideForm pos={POS.left} content={contents1[0]}></GuideForm>
-        </GuideContainer>
-        <GuideContainer>
-          <GuideForm pos={POS.right} content={contents1[1]}></GuideForm>
-        </GuideContainer>
-      </Container>
-      <Container bgColor="#060707">
-        <GuideContainer>
-          <GuideForm pos={POS.left} content={contents2[0]}></GuideForm>
-        </GuideContainer>
-        <GuideContainer>
-          <GuideForm pos={POS.right} content={contents2[1]}></GuideForm>
-        </GuideContainer>
-        <GuideContainer>
-          <GuideForm pos={POS.left} content={contents2[2]}></GuideForm>
-        </GuideContainer>
-      </Container>
-      <Container bgColor="#f7eaea">
-        <GuideForm pos={POS.right} content={contents3[0]}></GuideForm>
-        <GuideForm pos={POS.left} content={contents3[1]}></GuideForm>
-      </Container>
+      <PageContainer bgColor="#E6E6E6">
+        <SectionContainer>
+          <Title>풀빛마실을 시작해볼까요?</Title>
+        </SectionContainer>
+        {contents1.map(content => (
+          <SectionContainer>
+            <GuideForm content={content} />
+          </SectionContainer>
+        ))}
+      </PageContainer>
+      <PageContainer bgColor="#F4F4F4">
+        {contents2.map(content => (
+          <SectionContainer>
+            <GuideForm content={content} />
+          </SectionContainer>
+        ))}
+      </PageContainer>
+      <PageContainer bgColor="#FFFFFF">
+        {contents3.map(content => (
+          <SectionContainer>
+            <GuideForm content={content} />
+          </SectionContainer>
+        ))}
+        <SectionContainer />
+      </PageContainer>
     </Wrap>
   );
 }
 
-const Wrap = styled.div`
-  display: flex;
+const Wrap = styled(WrapGuide)`
   position: relative;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  /* padding-top: 70px; */
   overflow: hidden;
-
   flex-direction: column;
   height: 300vh;
   overflow: scroll;
 `;
-const Container = styled(ContainerGuide)<{ bgColor: string }>`
+const PageContainer = styled(ContainerGuide)<{ bgColor: string }>`
   flex-direction: column;
   width: 100%;
   height: 100vh;
   background-color: ${props => props.bgColor};
-  /* padding-top: 200px; */
 `;
-const GuideContainer = styled.div`
-  width: 1620px;
-  height: 374px;
+const SectionContainer = styled(ContainerGuide)`
+  width: 100%;
+  height: 33.3%;
 `;

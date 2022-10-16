@@ -23,14 +23,13 @@ export const GlobalStyled = createGlobalStyle`
  
     input,select,textarea{
         color:${props => props.theme.textColor};
-        outline:none;
         border:solid 1px ${props => props.theme.weekColor};
         transition:all 0.4s ease;
         &:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px ${props => props.theme.mainColor};
-}
+            outline: none; 
+            box-shadow: 0 0 0 2px ${props => props.theme.mainColor};
         }
+    }
 
     
     input[type=password]{

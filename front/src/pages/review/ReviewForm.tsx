@@ -112,47 +112,43 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     setIsReviewCancelModal(true);
   };
   return (
-    <>
-      {isLoading || (
-        <FormWrap>
-          <Form as="form" onSubmit={handleSubmitReview}>
-            <TitleBox>
-              <Title>풀빛마실 이야기</Title>
-              <SubTitle>
-                함께한
-                <DangerAccent> 생생한 경험</DangerAccent>를 공유해주세요!
-              </SubTitle>
-            </TitleBox>
-            <SelectInput as="select" height={40}>
-              <Option>근교산 자락길 모임1</Option>
-              <Option>근교산 자락길 모임2</Option>
-              <Option>근교산 자락길 모임3</Option>
-              <Option>근교산 자락길 모임4</Option>
-            </SelectInput>
+    <FormWrap>
+      <Form as="form" onSubmit={handleSubmitReview}>
+        <TitleBox>
+          <Title>풀빛마실 이야기</Title>
+          <SubTitle>
+            함께한
+            <DangerAccent> 생생한 경험</DangerAccent>를 공유해주세요!
+          </SubTitle>
+        </TitleBox>
+        <SelectInput as="select" height={40}>
+          <Option>근교산 자락길 모임1</Option>
+          <Option>근교산 자락길 모임2</Option>
+          <Option>근교산 자락길 모임3</Option>
+          <Option>근교산 자락길 모임4</Option>
+        </SelectInput>
 
-            <ImgBox as="label" htmlFor="input-file">
-              {image?.length ? <Img src={imagePreview} /> : <ImgIcon src="/assets/icon/image.png" />}
-            </ImgBox>
-            <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
+        <ImgBox as="label" htmlFor="input-file">
+          {image?.length ? <Img src={imagePreview} /> : <ImgIcon src="/assets/icon/image.png" />}
+        </ImgBox>
+        <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
 
-            <ReviewTextArea
-              placeholder="내용을 입력해주세요."
-              {...register("description", {
-                required: { value: true, message: "내용을 입력해주세요." },
-              })}
-            />
+        <ReviewTextArea
+          placeholder="내용을 입력해주세요."
+          {...register("description", {
+            required: { value: true, message: "내용을 입력해주세요." },
+          })}
+        />
 
-            <ButtonContainer>
-              <Button>{mode === "UPDATE" ? "수정하기" : "등록하기"}</Button>
-              <Button className="cancle" type="button" onClick={handleClickCancel}>
-                취소
-              </Button>
-            </ButtonContainer>
-            <ReviewModal />
-          </Form>
-        </FormWrap>
-      )}
-    </>
+        <ButtonContainer>
+          <Button>{mode === "UPDATE" ? "수정하기" : "등록하기"}</Button>
+          <Button className="cancle" type="button" onClick={handleClickCancel}>
+            취소
+          </Button>
+        </ButtonContainer>
+        <ReviewModal />
+      </Form>
+    </FormWrap>
   );
 }
 
@@ -198,7 +194,6 @@ const Option = styled.option`
   color: ${props => props.theme.textColor};
 `;
 const Img = styled.img`
-  width: 100%;
   height: 100%;
   object-fit: "cover";
   border: none;
