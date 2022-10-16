@@ -93,7 +93,6 @@ router.post("/login", async function (req, res, next) {
 
       const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ id: rows[0].id }, secretKey);
-
       res.status(200).json({
         success: true,
         email: email,

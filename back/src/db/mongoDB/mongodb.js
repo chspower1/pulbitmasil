@@ -24,5 +24,5 @@ async function cpi(id) {
   return collection;
 }
 
-module.exports = dodream;
-module.exports = cpi;
+module.exports.dodream = dodream;
+module.exports.cpi = cpi;
