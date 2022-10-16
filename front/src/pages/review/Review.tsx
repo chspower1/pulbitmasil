@@ -6,18 +6,20 @@ import styled from "styled-components";
 import { IReview } from "@type/review";
 import { useQuery } from "@tanstack/react-query";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { ReviewDeleteIdAtom } from "@atom/atom";
+import { ReviewDeleteIdAtom, isRegisterModalAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { isLoginSelector, userAtom } from "@atom/user";
 import { Box, Container, Wrapper } from "@style/Layout";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
+import RegisterModal from "@components/modal/RegisterModal";
 
 export default function Review() {
   const isEdit = false;
   const navigate = useNavigate();
   const reviewMatch = useMatch("/review/:reviewId");
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
   const isLogin = useRecoilValue(isLoginSelector);
   const { data: reviews } = useQuery<IReview[]>(["reviews"], getReviews, {
     onSuccess(data) {
@@ -26,7 +28,7 @@ export default function Review() {
   });
 
   const handleClickCreateReview = () => {
-    isLogin ? navigate("/review/write") : alert("로그인을 해주세요!");
+    isLogin ? navigate("/review/write") : setIsRegisterModal(true);
   };
 
   return (
@@ -40,6 +42,7 @@ export default function Review() {
         </SubTitle>
         {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
         <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
+        <RegisterModal />
         <CardBox>
           {reviews?.map(review => {
             return <Card key={review.reviewId} review={review}></Card>;
