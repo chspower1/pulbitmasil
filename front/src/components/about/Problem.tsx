@@ -1,3 +1,4 @@
+import { PopulationChart } from "../chart/Population";
 import {
   AboutContent,
   Container,
@@ -40,7 +41,7 @@ export default function Problem() {
           </SubTitle>
         </Row>
       </ContentContainer>
-      <ChartContainer></ChartContainer>
+      <ChartContainer><PopulationChart/></ChartContainer>
     </Wrap>
   );
 }
@@ -66,5 +67,4 @@ const SubTitle = styled(SubTitleGuide)`
 const ChartContainer = styled(Container)`
   width: 550px;
   height: 400px;
-  background-color: red;
 `;
