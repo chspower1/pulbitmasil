@@ -31,7 +31,7 @@ export default function Unique() {
         <Row>
           <SubTitle>
             당신의 더 쉬운 풀빛마실을 위해
-            <br /> <GreenAccent>최적의 루트</GreenAccent>를 제공해 드려요.
+            <br /> <DangerAccent>최적의 루트</DangerAccent>를 제공해 드려요.
           </SubTitle>
         </Row>
         <Row>

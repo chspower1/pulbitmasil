@@ -1,12 +1,12 @@
 import { Content } from "@pages/Guide";
-
+import { GreenAccent } from "@style/Layout";
 export const contents1: Content[] = [
   {
     num: 1,
     title: "풀빛마실 신청",
     description: `풀빛마실 모임에서 신청 가능한
-시간과 코스를 확인해요.`+
-`참여하고 싶은 코스를 선택하여
+시간과 코스를 확인해요.
+참여하고 싶은 코스를 선택하여
 '참여하기' 버튼을 누르면 
 풀빛마실 참여 신청 완료!!`,
     type: "button",

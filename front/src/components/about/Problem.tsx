@@ -18,7 +18,7 @@ export default function Problem() {
     <Wrap>
       <ContentContainer>
         <Row>
-          <Title>유동인구증가와 증가</Title>
+          <Title>유동인구증가와 쓰레기</Title>
         </Row>
         <Row>
           <SubTitle>
