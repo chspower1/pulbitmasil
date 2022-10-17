@@ -17,6 +17,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   const { type, userId, reviewId } = formProps;
   console.log(formProps);
   const user = useRecoilValue(userAtom);
+  console.log(user?.greenCrews)
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const navigate = useNavigate();
   const mode = type;
@@ -37,6 +38,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
       console.log("ReviewForm query 동작", data);
       setImagePreview(review?.reviewImg!); // Query 일정시간동안 호출 안함 .그래서 해당부분 안찍힘?
       setValue("description", review?.description!);
+
     },
     enabled: mode === "UPDATE",
   });
@@ -106,6 +108,8 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     console.log("handleclickcancel");
     setIsReviewCancelModal(true);
   };
+  const userGreenCrews = user?.greenCrews
+
   return (
     <FormWrap>
       <Form as="form" onSubmit={handleSubmitReview}>
@@ -117,10 +121,11 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           </SubTitle>
         </TitleBox>
         <SelectInput as="select" height={40}>
-          <Option>근교산 자락길 모임1</Option>
+          {userGreenCrews?.map(userGreenCrew => <Option>{userGreenCrew?.title ? userGreenCrew?.title : "없음"}</Option>)}
+          {/* <Option>근교산 자락길 모임1</Option>
           <Option>근교산 자락길 모임2</Option>
           <Option>근교산 자락길 모임3</Option>
-          <Option>근교산 자락길 모임4</Option>
+          <Option>근교산 자락길 모임4</Option> */}
         </SelectInput>
 
         <ImgBox as="label" htmlFor="input-file">
