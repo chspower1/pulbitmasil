@@ -68,7 +68,8 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   }, [image]);
   const handleSubmitReview = handleSubmit(data => {
     const formData = new FormData();
-    formData.append("description", watch("description"));
+    formData.append("description", data.description);
+    formData.append("title", data.title);
     switch (mode) {
       case "CREATE":
         console.log(data);
@@ -118,17 +119,12 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
             <DangerAccent> 생생한 경험</DangerAccent>를 공유해주세요!
           </SubTitle>
         </TitleBox>
-        <SelectInput as="select" height={40}>
+        <SelectInput as="select" height={40} {...register("title")}>
           {userGreenCrews?.length === 0 ? (
             <Option> 없음</Option>
           ) : (
             userGreenCrews?.map(userGreenCrew => <Option>{userGreenCrew?.title}</Option>)
           )}
-
-          {/* <Option>근교산 자락길 모임1</Option>
-          <Option>근교산 자락길 모임2</Option>
-          <Option>근교산 자락길 모임3</Option>
-          <Option>근교산 자락길 모임4</Option> */}
         </SelectInput>
 
         <ImgBox as="label" htmlFor="input-file">

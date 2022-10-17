@@ -14,7 +14,7 @@ import styled from "styled-components";
 //   setIsReviewSelect: Dispatch<SetStateAction<boolean>>;
 // }
 export default function ReviewDetailModal({ review }: { review: IReview }) {
-  const { reviewId, name, createAt, description, userId, reviewImg } = review;
+  const { reviewId, name, createAt, description, userId, reviewImg, title } = review;
   const isEdit = true;
 
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
           </InfoContainer>
 
           <TextContainer>
-            <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
+            <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>{title}</p>
             <Description>{description}</Description>
           </TextContainer>
         </ReviewContainer>
