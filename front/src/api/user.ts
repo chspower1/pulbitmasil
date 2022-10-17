@@ -13,6 +13,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`, // 왜넣어줬지?
       },
     });
+    console.log("test------------", data);
     if (!data) return false;
     sessionStorage.setItem("userToken", data.token);
     // console.log("풀빛마실로그인", data);

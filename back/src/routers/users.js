@@ -81,8 +81,8 @@ router.post("/login", async function (req, res, next) {
         token: token,
         name: rows[0].name,
         social: rows[0].social,
-        review: review,
-        greenCrew: greenCrew,
+        reviews: review,
+        greenCrews: greenCrew,
       });
     } else {
       throw new Error("가입되지 않은 이메일입니다.");
