@@ -3,7 +3,7 @@ import { Wrapper, Container, Box, Title, Desc, SubTitle } from "@style/Layout";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState, useEffect } from "react";
-import { createGreenCrewMember, getGreenCrews } from "@api/greenCrew";
+import { createGreenCrewMember, deleteGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
@@ -14,12 +14,12 @@ import { data } from "@components/chart/LineChart";
 import { Node } from "react-markdown/lib/rehype-filter";
 import { GreenAccent } from "./../style/Layout";
 import { timeEnd, timeLog } from "console";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { getJSDocReturnTag } from "typescript";
 
 export default function GreenCrew() {
-  const user = useRecoilValue(userAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
@@ -38,10 +38,15 @@ export default function GreenCrew() {
   const handleClickEnter = async () => {
     console.log("handleclickenter", isParticipate);
     if (isParticipate) {
-      // 참여상태 / 딜리트 (취소)
-      alert("이미 참여했습니다.");
+      // 참여상태
+      if (window.confirm("정말 취소하시겠어요?")) {
+        deleteGreenCrewMember(greenCrews![selectedArea].crewId);
+        //setUser ????
+        setIsParticipate(false);
+      }
     } else {
       await createGreenCrewMember(greenCrews![selectedArea].crewId);
+      // setUser ????
       queryClient.invalidateQueries(["greenCrew"]);
     }
   };
@@ -62,7 +67,6 @@ export default function GreenCrew() {
   };
   const DTime = (arr: number[]) => {
     const [hours, minutes, seconds] = arr;
-    // const hours = Math.abs(hours < 10 ? `0${hours}` : hours)
 
     return (
       <Title style={{ fontSize: "40px" }}>
@@ -90,21 +94,16 @@ export default function GreenCrew() {
     let timer = setInterval(getTime, 1000);
 
     //참여 유저
-    console.log("user", user);
     setParticipateList(user?.greenCrews?.map(data => data.title));
-    console.log(user?.greenCrews?.map(data => data.title));
-    const crewTitles = greenCrews?.map(greenCrew => greenCrew.title);
-    console.log(user?.greenCrews?.map(data => data.title)?.filter(title => crewTitles?.includes(title)));
 
     //타이머 reset
     return () => clearInterval(timer);
   }, []);
-  useEffect(() => {
-    setIsParticipate(participateList?.includes(greenCrews![selectedArea].title));
-    console.log("==========================", selectedArea);
-    console.log("isParticipate", participateList?.includes(greenCrews![selectedArea].title));
-  }, [selectedArea]);
 
+  useEffect(() => {
+    console.log(participateList);
+    setIsParticipate(participateList?.includes(greenCrews![selectedArea].title));
+  }, [selectedArea, participateList]);
 
   return (
     <GreenCrewWrapper>
