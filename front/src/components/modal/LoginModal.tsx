@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { isLoginModalAtom, isWelcomeModalAtom } from "@atom/atom";
-import { isLoginSelector } from "@atom/user";
+import { isLoginSelector, isPasswordFindModalAtom } from "@atom/user";
 import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
 
 import { kakaoLogin, requestLogin } from "@api/user";
@@ -16,6 +16,7 @@ import NaverLoginBtn from "../NaverLoginBtn";
 import { UserLoginForm } from "@type/user";
 import { createPortal } from "react-dom";
 import { ModalWrap as LoginModalWrap, ModalContainer as LoginForm, ModalTitle as LoginTitle } from "@style/ModalStyle";
+import FindPasswordModal from "./FindPasswordModal";
 
 export const ModalVariant = {
   initial: {
@@ -62,6 +63,7 @@ export default function LoginModal() {
   } = useForm<UserLoginForm>({ mode: "onChange" });
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
   const isLogin = useRecoilValue(isLoginSelector);
+  const [isFindPassword, setIsFindPassword] = useRecoilState(isPasswordFindModalAtom);
   const [isViewPassword, setIsViewPassword] = useState(false);
   const navigator = useNavigate();
   const match = useMatch("/register");
@@ -83,9 +85,14 @@ export default function LoginModal() {
     // console.log(code);
   };
 
-  const closeLoginModal = () => {
+  const closeLoginModal = async () => {
+    console.log("reset Login Modal");
     setIsLoginModal(false);
     reset();
+  };
+  const handleClickFind = () => {
+    setIsFindPassword(true);
+    closeLoginModal();
   };
   // 로그인 버튼 클릭 시
   const onvalid = async (data: UserLoginForm) => {
@@ -167,8 +174,8 @@ export default function LoginModal() {
                 <Link to="/register">회원가입 </Link>
               </Register>
 
-              <FindPassword onClick={() => closeLoginModal()}>
-                <Link to="/register">비밀번호 찾기</Link>
+              <FindPassword onClick={handleClickFind}>
+                {/* <Link to="/register">비밀번호 찾기</Link> */}비밀번호 찾기
               </FindPassword>
             </UserBox>
             <SocialLoginBox>
