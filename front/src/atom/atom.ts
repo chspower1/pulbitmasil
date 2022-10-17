@@ -13,7 +13,6 @@ export const isWelcomeModalAtom = atom({
   key: "isWelcomeModal",
   default: false,
 });
-
 //Review
 export const ReviewDeleteIdAtom = atom<number | null>({
   key: "reviewDeleteId",
