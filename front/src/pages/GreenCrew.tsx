@@ -38,7 +38,10 @@ export default function GreenCrew() {
     return (
       <StartAt>
         <StartDate>{newDate.slice(0, newDate.length - 1)}</StartDate>
-        <StartTime>{time}</StartTime>
+        <StartTime>
+          <Desc as="span">시작시간 : </Desc>
+          {time}
+        </StartTime>
       </StartAt>
     );
   };
@@ -46,7 +49,7 @@ export default function GreenCrew() {
     const [hours, minutes, seconds] = arr;
     return (
       <Title style={{ fontSize: "40px" }}>
-        <span style={{ color: "gray" }}>D-</span> {`${hours}:${minutes}:${seconds}`}
+        <Desc as="span">남은시간 : </Desc> {`${hours}:${minutes}:${seconds}`}
       </Title>
     );
   };
@@ -147,7 +150,7 @@ export default function GreenCrew() {
             </ContentTitle>
             <ContentDescription
               dangerouslySetInnerHTML={{
-                __html: `${greenCrew![selectedArea]?.trafficInfo.replace("\\n", "").replace("\\r", "")}`,
+                __html: `${greenCrew![selectedArea]?.trafficInfo}`,
               }}
             />
           </ContentBox>
