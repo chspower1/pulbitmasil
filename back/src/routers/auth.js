@@ -45,11 +45,20 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
 
       const email = result.data.kakao_account?.email ?? "kakao" + result.data.id;
 
-      const [rows] = await maria.execute("SELECT * FROM USER WHERE email = ?", [email]);
+      const [rows] = await maria.execute(
+        `SELECT A.id, A.email, A.name, A.social, A.hashedPassword, B.reviewId, C.crewId
+      FROM USER AS A
+      LEFT JOIN REVIEW AS B
+      ON A.id = B.userId
+      LEFT JOIN USERTOGREENCREW AS C
+      ON A.id = C.userId
+      WHERE A.email = ?`,
+        [email],
+      );
 
       if (!rows.length) {
         const [rows2] = await maria.execute(
-          "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'kakao',1)",
+          "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'kakao','kakao')",
           [result.data.kakao_account.profile.nickname, email],
         );
         const token = jwt.sign({ id: rows2[0].insertId, access_token: access_token }, secretKey);
@@ -59,17 +68,38 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
           id: rows2[0].insertId,
           name: result.data.kakao_account.profile.nickname,
           email: email,
-          social: 1,
+          social: "kakao",
+          review: null,
+          greenCrew: null,
           token: token,
         });
       } else {
+        const [review] = await maria.execute(
+          `SELECT GC.title, RV.description, RV.createAt
+          FROM REVIEW AS RV
+          LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+          WHERE RV.userId = ?`,
+          [rows[0].id],
+        );
+
+        const [greenCrew] = await maria.execute(
+          `SELECT GC.title, GC.startAt, RT.course, RT.area
+        FROM USERTOGREENCREW AS UTGC
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+        LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+        WHERE UTGC.userId = ?`,
+          [rows[0].id],
+        );
+
         const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
         res.status(200).json({
           success: true,
           id: rows[0].id,
           name: rows[0].name,
           email: email,
-          social: 1,
+          social: "kakao",
+          review: review,
+          greenCrew: greenCrew,
           token: token,
         });
       }
@@ -94,25 +124,63 @@ router.get("/naver", async function (req, res, next) {
       const name = result.data.response.name;
       const email = result.data.response.email;
 
-      const [rows] = await maria.query("SELECT * FROM USER WHERE email = ?", [email]);
+      const [rows] = await maria.query(
+        `SELECT A.id, A.email, A.name, A.social, A.hashedPassword, B.reviewId, C.crewId
+      FROM USER AS A
+      LEFT JOIN REVIEW AS B
+      ON A.id = B.userId
+      LEFT JOIN USERTOGREENCREW AS C
+      ON A.id = C.userId
+      WHERE A.email = ?`,
+        [email],
+      );
       if (!rows.length) {
         const [rows2] = await maria.query(
-          "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'naver', 1)",
+          "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'naver', 'naver')",
           [name, email],
         );
         const token = jwt.sign({ id: rows2[0].insertId, access_token: access_token }, secretKey);
+
         res.status(200).json({
           success: true,
           id: rows2[0].insertId,
           name: name,
           email: email,
-          social: 1,
+          social: "naver",
+          review: null,
+          green: null,
           token: token,
         });
       } else {
+        const [review] = await maria.execute(
+          `SELECT GC.title, RV.description, RV.createAt
+          FROM REVIEW AS RV
+          LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+          WHERE RV.userId = ?`,
+          [rows[0].id],
+        );
+
+        const [greenCrew] = await maria.execute(
+          `SELECT GC.title, GC.startAt, RT.course, RT.area
+        FROM USERTOGREENCREW AS UTGC
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+        LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+        WHERE UTGC.userId = ?`,
+          [rows[0].id],
+        );
+
         const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
 
-        res.status(200).json({ success: true, id: rows[0].id, name: rows[0].name, email: rows[0].email, token: token });
+        res.status(200).json({
+          success: true,
+          id: rows[0].id,
+          name: rows[0].name,
+          social: "naver",
+          email: rows[0].email,
+          review: review,
+          greenCrew: greenCrew,
+          token: token,
+        });
       }
     })
 

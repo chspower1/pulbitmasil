@@ -48,7 +48,7 @@ router.get("/:reviewId", async function (req, res, next) {
 router.post("/create", login_required, uploadSingle, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
-    const { description, createAt } = req.body;
+    const { description, createAt, title } = req.body;
 
     if (!description || !createAt) {
       throw new Error("필수값이 없습니다.");
@@ -64,21 +64,19 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
     } else {
       imgName = hostURL + "default.jpg";
     }
+    const [rows] = await maria.execute("SELECT crewId FROM GREENCREW WHERE title = ?", [title]);
+    const [rows2] = await maria.execute(
+      "INSERT INTO REVIEW(userId, description, createAt, reviewImg,crewId) VALUES(?,?,?,?,?)",
+      [userId, description, createAt, imgName, rows[0].crewId],
+    );
 
-    const [rows] = await maria.execute("INSERT INTO REVIEW(userId, description, createAt, reviewImg) VALUES(?,?,?,?)", [
-      userId,
-      description,
-      createAt,
-      imgName,
-    ]);
-
-    if (rows.affectedRows) {
+    if (rows2.affectedRows) {
       res.status(200).json({
         success: true,
         description: description,
         createAt: createAt,
         userId: userId,
-        reviewId: rows.insertId,
+        reviewId: rows2.insertId,
         reviewImg: imgName,
       });
     } else {
