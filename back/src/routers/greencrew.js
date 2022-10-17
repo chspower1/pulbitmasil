@@ -31,7 +31,7 @@ router.get("/", async function (req, res, next) {
         const CPI = await cpi(rows[i].id);
         rows[i]["CPI"] = CPI[0]["test"];
       }
-      res.status(200).json(rows);
+      res.status(200).json(rows.slice(-4));
     } else {
       throw new Error("failed to select");
     }
