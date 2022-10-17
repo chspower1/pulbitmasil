@@ -7,13 +7,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Wrapper, Box } from "@style/Layout";
+import { Wrapper } from "@style/Layout";
 import { UserPasswordProps } from "@pages/UserInfo";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { AnimatePresence } from "framer-motion";
 import { OverlayVariant } from "./LoginModal";
-import { ModalWrap as PasswordWrapper, ModalContainer } from "@style/ModalStyle";
 
 export default function PasswordChangeModal({ isPasswordChange, setIsPasswordChange }: UserPasswordProps) {
   const [isViewCurPassword, setIsViewCurPassword] = useState(false);
@@ -115,12 +114,10 @@ export default function PasswordChangeModal({ isPasswordChange, setIsPasswordCha
                 <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
               </InputBox>
 
-              <BtnBox>
-                <Button>수정하기</Button>
-                <Button type="button" onClick={() => setIsPasswordChange(false)}>
-                  취소하기
-                </Button>
-              </BtnBox>
+              <Button>수정하기</Button>
+              <Button type="button" onClick={() => setIsPasswordChange(false)}>
+                취소하기
+              </Button>
             </Form>
           </FormContainer>
           <Overlay
@@ -136,18 +133,25 @@ export default function PasswordChangeModal({ isPasswordChange, setIsPasswordCha
   );
 }
 
-const FormContainer = styled(ModalContainer)`
-  position: relative;
-  z-index: 1000;
-  width: 600px;
-  height: 570px;
-  background-color: white;
+const PasswordWrapper = styled(Wrapper)`
   display: flex;
-  flex-direction: column;
-  border-radius: 10px;
+  justify-content: center;
   align-items: center;
+  height: 100vh;
+`;
+const FormContainer = styled.div`
+  background-color: white;
+  position: relative;
+  width: 700px;
+  height: 750px;
   padding: 60px;
   padding-bottom: 75px;
+  color: #bdbdbd;
+  float: right;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
 `;
 
 const Title = styled.h1`
@@ -173,7 +177,7 @@ const InputTitle = styled.h3`
   color: ${props => props.theme.textColor};
 `;
 const Input = styled.input`
-  width: 450px;
+  width: 530px;
   height: 50px;
   font-size: 18px;
   padding: auto;
@@ -183,7 +187,6 @@ const Input = styled.input`
     color: ${props => props.theme.weekColor};
   }
 `;
-
 const ErrorMessage = styled.div`
   position: absolute;
   font-size: 12px;
@@ -193,17 +196,11 @@ const ErrorMessage = styled.div`
   bottom: -20px;
 `;
 
-const BtnBox = styled(Box)`
-  justify-content: space-between;
-`;
-
 const Button = styled.button`
-  width: 150px;
+  width: 200px;
+  height: 64px;
   font-size: 18px;
   margin-top: 45px;
-  &:last-child {
-    margin-left: 20px;
-  }
 `;
 
 const Form = styled.form`
