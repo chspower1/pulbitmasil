@@ -10,7 +10,7 @@ import { isPasswordFindModalAtom, userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
 import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
-import { UserPasswordProps } from "@pages/UserInfo";
+import { UserPasswordProps } from "@pages/MyPage";
 import { resetPassword } from "@api/user";
 interface EmailForm {
   email: string;

@@ -1,6 +1,6 @@
 import { changePassword } from "@api/user";
 import { userAtom } from "@atom/user";
-import { Wrapper as UserInfoWrapper } from "@style/Layout";
+import { Container, Title, Wrapper } from "@style/Layout";
 import { useRecoilState, useRecoilValue } from "recoil";
 import PasswordChangeModal from "@components/modal/PasswordChangeModal";
 import { useState } from "react";
@@ -25,12 +25,16 @@ export default function UserInfo() {
   };
 
   return (
-    <UserInfoWrapper>
-      <button onClick={handleClickChangePassword}>비밀번호 변경</button>
-      <PasswordChangeModal
-        setIsPasswordChange={setIsPasswordChange}
-        isPasswordChange={isPasswordChange}
-      ></PasswordChangeModal>
-    </UserInfoWrapper>
+    <Wrapper>
+      <Container>
+        <Title>마이 페이지</Title>
+
+        <button onClick={handleClickChangePassword}>비밀번호 변경</button>
+        <PasswordChangeModal
+          setIsPasswordChange={setIsPasswordChange}
+          isPasswordChange={isPasswordChange}
+        ></PasswordChangeModal>
+      </Container>
+    </Wrapper>
   );
 }

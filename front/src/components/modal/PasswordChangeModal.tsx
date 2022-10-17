@@ -8,7 +8,7 @@ import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper } from "@style/Layout";
-import { UserPasswordProps } from "@pages/UserInfo";
+import { UserPasswordProps } from "@pages/MyPage";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { AnimatePresence } from "framer-motion";
