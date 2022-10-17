@@ -47,14 +47,6 @@ router.post("/login", async function (req, res, next) {
                 WHERE A.email = ?`,
       [email],
     );
-    const reviewId = [];
-    const crewId = [];
-    for (i in rows) {
-      reviewId.push(rows[i].reviewId);
-      crewId.push(rows[i].crewId);
-    }
-    const set1 = new Set(reviewId);
-    const set2 = new Set(crewId);
 
     if (rows.length) {
       const correctPasswordHash = rows[0].hashedPassword;
@@ -62,6 +54,23 @@ router.post("/login", async function (req, res, next) {
       if (!isPasswordCorrect) {
         return res.status(400).json({ success: false });
       }
+
+      const [review] = await maria.execute(
+        `SELECT GC.title, RV.description, RV.createAt
+        FROM REVIEW AS RV
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+        WHERE RV.userId = ?`,
+        [rows[0].id],
+      );
+
+      const [greenCrew] = await maria.execute(
+        `SELECT GC.title, GC.startAt, RT.course, RT.area
+      FROM USERTOGREENCREW AS UTGC
+      LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+      LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+      WHERE UTGC.userId = ?`,
+        [rows[0].id],
+      );
 
       const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ id: rows[0].id }, secretKey);
@@ -72,8 +81,8 @@ router.post("/login", async function (req, res, next) {
         token: token,
         name: rows[0].name,
         social: rows[0].social,
-        reviewId: [...set1],
-        crewId: [...set2],
+        review: review,
+        greenCrew: greenCrew,
       });
     } else {
       throw new Error("가입되지 않은 이메일입니다.");
@@ -151,6 +160,33 @@ router.put("/reset", random_password, async function (req, res, next) {
   }
 });
 
+router.get("/mypage", login_required, async function (req, res, next) {
+  try {
+    const userId = req.currentUserId;
+
+    const [review] = await maria.execute(
+      `SELECT GC.title, RV.description, RV.createAt
+      FROM REVIEW AS RV
+      LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+      WHERE RV.userId = ?`,
+      [userId],
+    );
+
+    const [greenCrew] = await maria.execute(
+      `SELECT GC.title, GC.startAt, RT.course, RT.area
+    FROM USERTOGREENCREW AS UTGC
+    LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+    LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+    WHERE UTGC.userId = ?`,
+      [userId],
+    );
+
+    res.status(200).json({ review: review, greenCrew: greenCrew });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // modify 전, 비밀번호 체크
 // router.post("/verify", login_required, async function (req, res, next) {
 //   try {
@@ -173,22 +209,6 @@ router.put("/reset", random_password, async function (req, res, next) {
 //   } catch (error) {
 //     next(error);
 //   }
-// });
-
-// router.get("/mypage", login_required, function (req, res) {
-//   const userId = req.currentUserId;
-//   maria.query(
-//     `SELECT * FROM USER INNER JOIN REVIEW ON USER.id = REVIEW.userId where id = ?`,
-//     [userId],
-//     function (err, rows, fields) {
-//       if (!err) {
-//         res.send(rows);
-//       } else {
-//         console.log("err : " + err);
-//         res.send(err);
-//       }
-//     },
-//   );
 // });
 
 module.exports = router;

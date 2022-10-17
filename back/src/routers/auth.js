@@ -69,19 +69,27 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
           name: result.data.kakao_account.profile.nickname,
           email: email,
           social: "kakao",
-          reviewId: NULL,
-          crewId: NULL,
+          review: null,
+          greenCrew: null,
           token: token,
         });
       } else {
-        const reviewId = [];
-        const crewId = [];
-        for (i in rows) {
-          reviewId.push(rows[i].reviewId);
-          crewId.push(rows[i].crewId);
-        }
-        const set1 = new Set(reviewId);
-        const set2 = new Set(crewId);
+        const [review] = await maria.execute(
+          `SELECT GC.title, RV.description, RV.createAt
+          FROM REVIEW AS RV
+          LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+          WHERE RV.userId = ?`,
+          [rows[0].id],
+        );
+
+        const [greenCrew] = await maria.execute(
+          `SELECT GC.title, GC.startAt, RT.course, RT.area
+        FROM USERTOGREENCREW AS UTGC
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+        LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+        WHERE UTGC.userId = ?`,
+          [rows[0].id],
+        );
 
         const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
         res.status(200).json({
@@ -90,8 +98,8 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
           name: rows[0].name,
           email: email,
           social: "kakao",
-          reviewId: [...set1],
-          crewId: [...set2],
+          review: review,
+          greenCrew: greenCrew,
           token: token,
         });
       }
@@ -132,35 +140,45 @@ router.get("/naver", async function (req, res, next) {
           [name, email],
         );
         const token = jwt.sign({ id: rows2[0].insertId, access_token: access_token }, secretKey);
+
         res.status(200).json({
           success: true,
           id: rows2[0].insertId,
           name: name,
           email: email,
           social: "naver",
-          reviewId: NULL,
-          crewId: NULL,
+          review: null,
+          green: null,
           token: token,
         });
       } else {
-        const reviewId = [];
-        const crewId = [];
-        for (i in rows) {
-          reviewId.push(rows[i].reviewId);
-          crewId.push(rows[i].crewId);
-        }
-        const set1 = new Set(reviewId);
-        const set2 = new Set(crewId);
+        const [review] = await maria.execute(
+          `SELECT GC.title, RV.description, RV.createAt
+          FROM REVIEW AS RV
+          LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+          WHERE RV.userId = ?`,
+          [rows[0].id],
+        );
+
+        const [greenCrew] = await maria.execute(
+          `SELECT GC.title, GC.startAt, RT.course, RT.area
+        FROM USERTOGREENCREW AS UTGC
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+        LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+        WHERE UTGC.userId = ?`,
+          [rows[0].id],
+        );
 
         const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
+
         res.status(200).json({
           success: true,
           id: rows[0].id,
           name: rows[0].name,
           social: "naver",
           email: rows[0].email,
-          reviewId: [...set1],
-          crewId: [...set2],
+          review: review,
+          greenCrew: greenCrew,
           token: token,
         });
       }
