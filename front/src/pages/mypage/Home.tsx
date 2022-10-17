@@ -53,7 +53,7 @@ const HomeContainer = styled(Container)<{ height: string }>`
   align-items: center;
   height: ${props => props.height};
 `;
-const List = styled(Container)`
+export const List = styled(Container)`
   flex-direction: column;
 `;
 const GrayTitle = styled(Title)`
@@ -61,37 +61,28 @@ const GrayTitle = styled(Title)`
   color: ${props => props.theme.textColor};
 `;
 
-const Item = styled(Box)`
+export const Item = styled(Box)`
   width: 100%;
   justify-content: center;
   margin: 10px 0px;
   border-radius: 5px;
 `;
-const ContentBox = styled(Box)`
+export const ContentBox = styled(Box)`
   width: 540px;
   height: 60px;
   padding: 0px 15px;
   justify-content: space-between;
   background-color: ${props => props.theme.weekBorderColor};
 `;
-const ItemTitle = styled(SubTitle)`
+export const ItemTitle = styled(SubTitle)`
   font-size: 20px;
   color: ${props => props.theme.textColor};
 `;
-const ItemCourse = styled(SubTitle)`
+export const ItemCourse = styled(SubTitle)`
   font-size: 16px;
   color: ${props => props.theme.mainColor};
 `;
-const ItemDate = styled(ItemTitle)`
+export const ItemDate = styled(ItemTitle)`
   font-size: 16px;
   margin-right: 10px;
-`;
-const ItemArea = styled(ItemTitle)`
-  font-size: 18px;
-`;
-const DeleteBtn = styled(Box)`
-  width: 55px;
-  height: 55px;
-  border: solid 2px ${props => props.theme.dangerColor};
-  border-radius: 5px;
 `;
