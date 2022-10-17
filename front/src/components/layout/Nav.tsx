@@ -13,6 +13,7 @@ import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
 import DodreamDetalModal from "@components/modal/DodreamDetail";
 import { SubTitle } from "@style/Layout";
+import FindPasswordModal from "@components/modal/FindPasswordModal";
 // import ModalPortal from "@components/modal/ModalPortal";
 
 // Interface
@@ -158,7 +159,7 @@ export default function Nav() {
               <UserNameBox>
                 <img src="/assets/icon/user/user_img.svg" />
                 <UserName>{user?.name}</UserName>
-              </UserNameBox> 
+              </UserNameBox>
             </Link>
             <Link to="userInfo">
               <SubTitle style={{ fontFamily: "SebangBold" }}>마이페이지</SubTitle>
@@ -168,6 +169,7 @@ export default function Nav() {
           </UserContainer>
         )}
         <LoginModal></LoginModal>
+        <FindPasswordModal></FindPasswordModal>
         <DodreamDetalModal />
         {isUserNav && <UserNav setIsUserNav={setIsUserNav}></UserNav>}
         <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
@@ -322,6 +324,6 @@ const UserNameBox = styled.div`
 // `;
 const Logout = styled.div`
   cursor: pointer;
-  color: #B1B1B1;
+  color: #b1b1b1;
   font-family: "SebangBold";
 `;

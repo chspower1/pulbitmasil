@@ -19,6 +19,7 @@ export default function Register() {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
     getValues,
   } = useForm<UserRegisterForm>();
 
@@ -75,6 +76,10 @@ export default function Register() {
               {...register("password", {
                 required: { value: true, message: "비밀번호를 입력해주세요." },
                 minLength: { value: 8, message: "8자 이상 입력해주세요." },
+                // pattern: {
+                //   value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
+                //   message: "숫자,특수문자,영문 포함 8자리 이상 적어주세요.",
+                // },
               })}
             />
             <ViewPassword style={{ top: "18px" }}>

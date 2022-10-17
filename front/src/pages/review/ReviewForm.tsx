@@ -35,8 +35,8 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   const { data: review } = useQuery<IReview>(["review", reviewId], () => getOneReview(reviewId!), {
     onSuccess(data) {
       console.log("ReviewForm query 동작", data);
-      setImagePreview(data?.reviewImg!);
-      setValue("description", data.description);
+      setImagePreview(review?.reviewImg!); // Query 일정시간동안 호출 안함 .그래서 해당부분 안찍힘?
+      setValue("description", review?.description!);
     },
     enabled: mode === "UPDATE",
   });
@@ -51,6 +51,8 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
 
   useEffect(() => {
     setIsReviewCancelModal(false);
+    setImagePreview(review?.reviewImg!); // Query 일정시간동안 호출 안함 .그래서 해당부분 안찍힘?
+    setValue("description", review?.description!);
   }, []);
 
   useEffect(() => {
@@ -59,8 +61,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
       setImagePreview(window.URL.createObjectURL(file as File));
       console.log("이미지", imagePreview);
       setUploadImg(file);
+
+      console.log(image);
+      console.log(window.URL.createObjectURL(file as File));
     }
-    console.log(image);
   }, [image]);
   const handleSubmitReview = handleSubmit(data => {
     const formData = new FormData();
@@ -120,13 +124,19 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         </SelectInput>
 
         <ImgBox as="label" htmlFor="input-file">
-          {mode === "UPDATE" ? <Img src={imagePreview} /> : <ImgIcon src="/assets/icon/image.png" />}
+          {mode === "UPDATE" ? (
+            <Img src={imagePreview} />
+          ) : imagePreview ? (
+            <Img src={imagePreview} />
+          ) : (
+            <ImgIcon src="/assets/icon/image.png" />
+          )}
         </ImgBox>
         <input id="input-file" type="file" style={{ display: "none" }} {...register("reviewImg")} />
 
         <ReviewTextArea
           placeholder="내용을 입력해주세요."
-          defaultValue={review?.description}
+          defaultValue={review?.description} // 텍스트는 여기서 지정중.
           {...register("description", {
             required: { value: true, message: "내용을 입력해주세요." },
           })}

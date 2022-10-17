@@ -24,12 +24,18 @@ export default function PasswordChangeModal({ isPasswordChange, setIsPasswordCha
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
     getValues,
   } = useForm<PasswordChangeForm>();
 
-  const onSubmitRegister = handleSubmit(data => {
-    changePassword(data?.changePassword);
+  const closeRegisterModal = async () => {
     setIsPasswordChange(false);
+    reset();
+  };
+
+  const handleSubmitChange = handleSubmit(data => {
+    changePassword(data?.changePassword);
+    closeRegisterModal();
   });
 
   return (
@@ -39,7 +45,7 @@ export default function PasswordChangeModal({ isPasswordChange, setIsPasswordCha
         <PasswordWrapper>
           <FormContainer>
             <Title>비밀번호 수정</Title>
-            <Form onSubmit={onSubmitRegister}>
+            <Form onSubmit={handleSubmitChange}>
               <InputBox>
                 <InputTitle>현재 비밀번호</InputTitle>
                 <Input
@@ -50,6 +56,10 @@ export default function PasswordChangeModal({ isPasswordChange, setIsPasswordCha
                   {...register("currentPassword", {
                     required: { value: true, message: "비밀번호를 입력해주세요." },
                     minLength: { value: 8, message: "8자 이상 입력해주세요." },
+                    // pattern: {
+                    //   value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
+                    //   message: "숫자,특수문자,영문 포함 8자리 이상 적어주세요.",
+                    // },
                   })}
                 />
                 <ViewPassword style={{ top: "18px" }}>
@@ -115,7 +125,7 @@ export default function PasswordChangeModal({ isPasswordChange, setIsPasswordCha
               </InputBox>
 
               <Button>수정하기</Button>
-              <Button type="button" onClick={() => setIsPasswordChange(false)}>
+              <Button type="button" onClick={closeRegisterModal}>
                 취소하기
               </Button>
             </Form>

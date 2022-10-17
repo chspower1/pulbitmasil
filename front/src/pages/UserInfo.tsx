@@ -1,5 +1,5 @@
 import { changePassword } from "@api/user";
-import { isPasswordChangeModalAtom, userAtom } from "@atom/user";
+import { userAtom } from "@atom/user";
 import { Wrapper as UserInfoWrapper } from "@style/Layout";
 import { useRecoilState, useRecoilValue } from "recoil";
 import PasswordChangeModal from "@components/modal/PasswordChangeModal";

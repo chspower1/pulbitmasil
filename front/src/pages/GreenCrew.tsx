@@ -10,32 +10,60 @@ import { Link } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
 import moment from "moment";
 import { useInterval } from "react-use";
+import { data } from "@components/chart/LineChart";
+import { Node } from "react-markdown/lib/rehype-filter";
+import { GreenAccent } from "./../style/Layout";
 export default function GreenCrew() {
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
   const [count, setCount] = useState(0);
-  const [time, setTime] = useState("");
-  const { data: greenCrew } = useQuery<IGreenCrew[]>(["greenCrew"], getGreenCrews, {
+  const [time, setTime] = useState<number[]>([]);
+  const { data: greenCrew } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
       console.log("GreenCrew Query성공", data);
     },
+    onError(err) {
+      console.log(err);
+    },
   });
   const handleClickEnter = async () => {
-    await createGreenCrewMember(greenCrew![selectedArea].id);
+    await createGreenCrewMember(greenCrew![selectedArea].crewId);
     queryClient.invalidateQueries(["greenCrew"]);
   };
-
+  const convertDate = (startAt: Date) => {
+    const date = new Date(startAt);
+    const newDate = date.toLocaleDateString();
+    const time = date.toLocaleTimeString();
+    return (
+      <StartAt>
+        <StartDate>{newDate.slice(0, newDate.length - 1)}</StartDate>
+        <StartTime>
+          <Desc as="span">시작시간 : </Desc>
+          {time}
+        </StartTime>
+      </StartAt>
+    );
+  };
+  const DTime = (arr: number[]) => {
+    const [hours, minutes, seconds] = arr;
+    return (
+      <Title style={{ fontSize: "40px" }}>
+        <Desc as="span">남은시간 : </Desc> {`${hours}:${minutes}:${seconds}`}
+      </Title>
+    );
+  };
   useEffect(() => {
     setTimeout(() => {
       setCount(cur => cur + 1);
     }, 1000);
+
     const startAt = new Date(greenCrew![selectedArea].startAt);
     const now = new Date(Date.now());
-    const hours = startAt.getHours() - now.getHours();
-    const minutes = startAt.getMinutes() - now.getMinutes();
-    const seconds = startAt.getSeconds() - now.getSeconds();
-    setTime(`${hours}시간 ${minutes}분 ${seconds}초`);
+    const hours = startAt.getHours() - now.getHours() - 1;
+    const minutes = 60 + startAt.getMinutes() - now.getMinutes();
+    const seconds = 60 + startAt.getSeconds() - now.getSeconds();
+    setTime([hours, minutes, seconds]);
   }, [count]);
   return (
     <GreenCrewWrapper>
@@ -50,8 +78,7 @@ export default function GreenCrew() {
         <Title>{greenCrew![selectedArea]?.title!}</Title>
         <FirstContainer>
           <DescBox>
-            <div>{time}</div>
-            <StartAt>{greenCrew![selectedArea]?.startAt!}</StartAt>
+            {convertDate(greenCrew![selectedArea]?.startAt!)}
             <CourseBox>
               <DetailTitle>
                 <IconImg src={"assets/icon/greenCrew/course_icon.svg"} alt="#" />
@@ -92,12 +119,23 @@ export default function GreenCrew() {
           <GreenCrewMap greenCrew={greenCrew![selectedArea]!} />
         </FirstContainer>
         <SecondContainer>
-          <Row>
-            <Col>
-              <div>현재까지 {greenCrew![selectedArea]?.curMember}명이 참여하고 있어요!</div>
-            </Col>
-            <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
-          </Row>
+          <ContentBox>
+            <Row>
+              <Col>
+                <StatusBox>
+                  <div>{DTime(time)}</div>
+                  <Desc>
+                    현재까지{" "}
+                    <GreenAccent style={{ fontSize: "32px" }}>{greenCrew![selectedArea]?.curMember}명</GreenAccent>이
+                    참여하고 있어요!
+                  </Desc>
+                </StatusBox>
+              </Col>
+              <Col>
+                <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
+              </Col>
+            </Row>
+          </ContentBox>
           <ContentBox>
             <ContentTitle>
               <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
@@ -108,14 +146,18 @@ export default function GreenCrew() {
           <ContentBox>
             <ContentTitle>
               <img src="/assets/icon/greenCrew/traffic_info_icon.svg" alt="" />
-              교통편
+              <GreenAccent>교통편</GreenAccent>
             </ContentTitle>
-            <ContentDescription dangerouslySetInnerHTML={{ __html: `${greenCrew![selectedArea]?.trafficInfo}` }} />
+            <ContentDescription
+              dangerouslySetInnerHTML={{
+                __html: `${greenCrew![selectedArea]?.trafficInfo}`,
+              }}
+            />
           </ContentBox>
-          <Link to="/">
-            <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
-          </Link>
         </SecondContainer>
+        <Link to="/">
+          <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
+        </Link>
       </RootContainer>
     </GreenCrewWrapper>
   );
@@ -129,6 +171,21 @@ const AreaNav = styled(Box)`
   flex-direction: column;
   height: 360px;
   justify-content: space-between;
+`;
+const StatusBox = styled(Box)`
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 100px;
+  margin: 20px 0px;
+`;
+const StartDate = styled(Desc)`
+  font-family: "SebangBold";
+  margin-bottom: 10px;
+`;
+const StartTime = styled(Title)`
+  color: ${props => props.theme.textColor};
 `;
 const AreaBtn = styled.button`
   width: 150px;
@@ -154,7 +211,7 @@ const FirstContainer = styled(Container)`
   position: relative;
   width: 100%;
   height: 34%;
-  /* margin-top: 65px; */
+  margin-top: 30px;
 `;
 const SecondContainer = styled(Container)`
   position: relative;
@@ -167,7 +224,11 @@ const Row = styled(Box)`
   width: 100%;
   justify-content: space-between;
 `;
-const Col = styled(Box)``;
+const Col = styled(Box)`
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+`;
 const DescBox = styled(Box)`
   flex-direction: column;
   width: 50%;
@@ -199,8 +260,11 @@ const DetailDescription = styled(SubTitle)`
   color: ${props => props.theme.mainColor};
 `;
 const ContentBox = styled(Box)`
+  width: 100%;
+  height: 33.3%;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: flex-start;
 `;
 const ContentTitle = styled(Box)``;
 const Accent = styled.h3`
@@ -208,11 +272,17 @@ const Accent = styled.h3`
   font-size: 18px;
   color: ${props => props.theme.mainColor};
 `;
-const ContentDescription = styled(Desc)``;
+const ContentDescription = styled(Desc)`
+  overflow: scroll;
+  width: 100%;
+  height: 100%;
+  padding-top: 10px;
+  border: solid 1px #f1f1f1;
+`;
 const ReadyBtn = styled.button`
   position: absolute;
   bottom: 30px;
-  right: 0px;
+  right: 30px;
   width: 150px;
   height: 40px;
   background-color: ${props => props.theme.dangerColor};
