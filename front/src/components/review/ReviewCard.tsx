@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import ReviewDeleteModal from "../modal/ReviewDeleteModal";
-import { Accent } from "@style/ModalStyle";
+import { ModalAccent } from "@style/ModalStyle";
 
 export const changeDayForm = (createAt: Date): string => {
   const createDay = new Date(createAt);

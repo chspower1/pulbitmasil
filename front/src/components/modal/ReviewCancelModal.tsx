@@ -1,10 +1,10 @@
-import { ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import styled from "styled-components";
-import { BtnContainer, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
+import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { useRecoilState } from "recoil";
 import { isReviewCancelAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
 export default function ReviewModal() {
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const navigate = useNavigate();
@@ -27,14 +27,14 @@ export default function ReviewModal() {
             </CancelDesc>
             <CancelDesc className="second">작성한 내용이 모두 사라집니다.</CancelDesc>
 
-            <BtnContainer>
+            <ModalBtnContainer>
               <CancelBtn type="button" onClick={handleClickConfirm}>
                 네
               </CancelBtn>
               <CloseBtn type="button" onClick={handleClickCancel}>
                 아니요
               </CloseBtn>
-            </BtnContainer>
+            </ModalBtnContainer>
           </ReviewModalContainer>
           <Overlay
             onClick={handleClickCancel}
@@ -77,7 +77,7 @@ const Accent = styled.span`
   font-weight: bold;
 `;
 
-const CancelDesc = styled(Desc)`
+const CancelDesc = styled(ModalDesc)`
   &.second {
     font-size: 22px;
   }

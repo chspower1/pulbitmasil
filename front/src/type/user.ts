@@ -31,3 +31,7 @@ export interface PasswordChangeForm {
   changePassword: string;
   confirmPassword: string;
 }
+export interface NameChangeForm {
+  currentName: string;
+  newName: string;
+}

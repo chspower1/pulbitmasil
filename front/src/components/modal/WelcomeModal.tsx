@@ -3,10 +3,10 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
-import { Accent, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
+import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, ModalCloseBtn, Overlay } from "@style/ModalStyle";
+import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
 export default function WelcomeModal() {
   const [isWelcomeModal, setIsWelcomeModal] = useRecoilState(isWelcomeModalAtom);
   const user = useRecoilValue(userAtom);
@@ -18,12 +18,12 @@ export default function WelcomeModal() {
       {isWelcomeModal && (
         <WelcomeModalWrap>
           <WelcomeModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
-            <Desc>
-              환영합니다&nbsp;!&nbsp;<Accent>{user?.name}</Accent>님&nbsp;!
-            </Desc>
-            <Desc>
-              오늘&nbsp;<Accent>풀빛마실</Accent>&nbsp;어떠세요&nbsp;?
-            </Desc>
+            <ModalDesc>
+              환영합니다&nbsp;!&nbsp;<ModalAccent>{user?.name}</ModalAccent>님&nbsp;!
+            </ModalDesc>
+            <ModalDesc>
+              오늘&nbsp;<ModalAccent>풀빛마실</ModalAccent>&nbsp;어떠세요&nbsp;?
+            </ModalDesc>
             <Link to="/greencrew">
               <StartBtn onClick={closeWelcomeModal}>풀빛마실 GoGo</StartBtn>
             </Link>
@@ -62,7 +62,7 @@ const WelcomeModalContainer = styled(ModalContainer)`
   height: 200px;
 `;
 
-const WelcomeCloseBtn = styled(CloseBtn)`
+const WelcomeCloseBtn = styled(ModalCloseBtn)`
   width: 36px;
   height: 36px;
   top: 10px;
