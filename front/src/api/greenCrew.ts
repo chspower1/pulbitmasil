@@ -7,7 +7,7 @@ export async function getGreenCrews() {
     const { data }: { data: IGreenCrew[] } = await axiosInstance.get("greencrew");
     console.log("API", data);
     const result = data.map(greenCrew => {
-      const newTrafficInfo = greenCrew.trafficInfo.replace(/(?:\\r\\n|\\r|\\n)/g, "<br/>"); // 함수로 따로 빼기
+      const newTrafficInfo = greenCrew.trafficInfo.replaceAll("\\r", "").replaceAll("\\n", "");
       console.log("old : ", greenCrew.trafficInfo);
       console.log("new : ", newTrafficInfo);
       const newGreenCrew = { ...greenCrew, trafficInfo: newTrafficInfo };

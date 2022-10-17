@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import GreenCrewList from "./GreenCrewList";
 import ReviewList from "./ReviewList";
+import Home from "./Home";
 export interface UserPasswordProps {
   isPasswordChange: boolean;
   setIsPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,7 +28,7 @@ export default function UserInfo() {
       alert("비밀번호 변경 불가합니다.");
     }
   };
-  console.log(menu);
+  console.log("-------------", menu);
   return (
     <MyPageWrapper>
       <MyPageContainer>
@@ -40,6 +41,9 @@ export default function UserInfo() {
           </NameBox>
           <Email>{user?.email}</Email>
           <MenuBox>
+            <Link to="/mypage">
+              <Menu className={menu === undefined ? "active" : "normal"}>홈</Menu>
+            </Link>
             <Link to="/mypage/review">
               <Menu className={menu === "review" ? "active" : "normal"}>리뷰</Menu>
             </Link>
@@ -49,6 +53,7 @@ export default function UserInfo() {
           </MenuBox>
         </ProfileBox>
         <ContentBox>
+          {menu === undefined && <Home />}
           {menu === "greencrew" && <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>}
           {menu === "review" && <ReviewList reviews={user?.reviews}></ReviewList>}
         </ContentBox>
@@ -81,9 +86,11 @@ const Img = styled.img`
   height: 70px;
 `;
 const ContentBox = styled(Box)`
+  background-image: url("/assets/images/mypage/content_bg.jpg");
   width: 100%;
   height: 65%;
-  padding: 90px;
+  padding: 30px 90px;
+  align-items: flex-start;
 `;
 const NameBox = styled(Row)`
   margin-top: 10px;
@@ -104,13 +111,16 @@ const Email = styled(Desc)`
 `;
 const MenuBox = styled(Box)`
   position: absolute;
-
   bottom: 0px;
+  a:not(:last-of-type) {
+    border-right: solid 1px #8cb89f;
+  }
 `;
 const Menu = styled.button`
-  font-size: 18px;
-  width: 200px;
+  font-size: 24px;
+  width: 170px;
   height: 50px;
+
   &.normal {
     background-color: ${props => props.theme.weekColor};
   }

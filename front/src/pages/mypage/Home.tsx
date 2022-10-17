@@ -1,28 +1,29 @@
 import React from "react";
 import { Box, Container, Title, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
-import { UserReviews } from "@type/user";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-const sample: UserReviews[] = [
-  { title: "풀빛마실", description: "우장산", createAt: "2022/10/17 7시" },
-  { title: "풀빛마실", description: "우장산", createAt: "2022/10/17 7시" },
-];
-export default function ReviewList({ reviews }: { reviews: UserReviews[] | undefined }) {
+import { getGreenCrews } from "@api/greenCrew";
+import { useQuery } from "@tanstack/react-query";
+import { IGreenCrew } from "@type/greenCrew";
+export default function Home() {
+  const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
+    onSuccess(data) {
+      console.log("mypage query 작동", data);
+    },
+  });
   return (
     <List>
-      {sample?.map(greenCrew => (
+      {greenCrews?.map(greenCrew => (
         <Item>
           <ContentBox>
-            <ItemTitle>{greenCrew?.title}</ItemTitle>
+            <ItemTitle>
+              {greenCrew?.title}
+              <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
+            </ItemTitle>
 
             <Box>
-              <ItemDate>{greenCrew?.createAt}</ItemDate>
+              <ItemDate>{String(greenCrew?.startAt)}</ItemDate>
             </Box>
           </ContentBox>
-          <DeleteBtn>
-            <FontAwesomeIcon icon={faTrashCan} size="2xl" color="#E17055" />
-          </DeleteBtn>
         </Item>
       ))}
     </List>
