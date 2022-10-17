@@ -9,7 +9,7 @@ import ScrollBtn from "@components/ScrollBtn";
 import NaverAuth from "./Auth/NaverAuth";
 import KakaoAuth from "./Auth/KakaoAuth";
 import Dodream from "./Dodream";
-import MyPage from "./MyPage";
+import MyPage from "./mypage";
 import GreenCrew from "./GreenCrew";
 import WelcomeModal from "@components/modal/WelcomeModal";
 import Review from "./review/Review";
@@ -37,6 +37,7 @@ export default function Router() {
           <Route path="/review/edit/:reviewId" element={<UpdateReview />} />
           <Route path="/guide" element={<Guide />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/:menu" element={<MyPage />} />
           <Route path="/GreenCrew" element={<GreenCrew />} />
           <Route path="/GreenCrew/:area" element={<GreenCrew />} />
           <Route path="/auth/naver/callback" element={<NaverAuth />} />
