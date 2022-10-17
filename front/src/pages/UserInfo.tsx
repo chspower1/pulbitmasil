@@ -17,7 +17,7 @@ export default function UserInfo() {
 
   const handleClickChangePassword = () => {
     // changePassword()
-    if (user?.social === 0) {
+    if (user?.social === "origin") {
       setIsPasswordChange(true);
     } else {
       alert("비밀번호 변경 불가합니다.");
