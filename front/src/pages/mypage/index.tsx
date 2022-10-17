@@ -53,7 +53,7 @@ export default function UserInfo() {
           </MenuBox>
         </ProfileBox>
         <ContentBox>
-          {menu === undefined && <Home />}
+          {menu === undefined && <Home user={user!} />}
           {menu === "greencrew" && <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>}
           {menu === "review" && <ReviewList reviews={user?.reviews}></ReviewList>}
         </ContentBox>

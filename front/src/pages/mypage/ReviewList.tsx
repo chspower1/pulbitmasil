@@ -15,7 +15,6 @@ export default function ReviewList({ reviews }: { reviews: UserReviews[] | undef
         <Item>
           <ContentBox>
             <ItemTitle>{review?.title}</ItemTitle>
-
             <Box>
               <ItemDate>{review?.createAt}</ItemDate>
             </Box>

@@ -18,15 +18,11 @@ export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCre
               {greenCrew?.title}
               <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
             </ItemTitle>
-
             <Box>
               <ItemDate>{greenCrew?.startAt}</ItemDate>
               <ItemArea>{greenCrew?.area}</ItemArea>
             </Box>
           </ContentBox>
-          <DeleteBtn>
-            <FontAwesomeIcon icon={faTrashCan} size="2xl" color="#E17055" />
-          </DeleteBtn>
         </Item>
       ))}
     </List>
@@ -37,12 +33,12 @@ const List = styled(Container)`
 `;
 const Item = styled(Box)`
   width: 100%;
-  justify-content: space-between;
+  justify-content: center;
   margin: 10px 0px;
   border-radius: 5px;
 `;
 const ContentBox = styled(Box)`
-  width: 540px;
+  width: 600px;
   height: 60px;
   padding: 0px 15px;
   justify-content: space-between;
