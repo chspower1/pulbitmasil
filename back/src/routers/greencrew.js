@@ -41,7 +41,7 @@ router.get("/", async function (req, res, next) {
 });
 
 // 멤버 추가
-router.post("/:crewId", login_required, async function (req, res, next) {
+router.get("/:crewId", login_required, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
     const crewId = req.params.crewId;
