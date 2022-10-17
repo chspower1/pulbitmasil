@@ -11,15 +11,11 @@ var reviewRouter = require("./src/routers/review");
 var dodreamRouter = require("./src/routers/dodream");
 var greencrewRouter = require("./src/routers/greencrew");
 
-// const maria = require("./src/db/connect/maria");
 const errorMiddleware = require("./src/middlewares/error_middleware");
-// const updatecrew = require("./src/db/connect/interval");
 
 const app = express();
 
 app.use(cors());
-
-// maria.connect();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -40,7 +36,6 @@ app.use("/dodream", dodreamRouter);
 app.use("/greencrew", greencrewRouter);
 
 app.use(errorMiddleware);
-// updatecrew();
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

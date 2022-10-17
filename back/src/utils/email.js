@@ -19,9 +19,8 @@ const emailForTempPassword = async (userEmail, tempPassword) => {
     },
   });
 
-  // send mail with defined transport object
   await transporter.sendMail({
-    from: `"풀빛마실" <grassdrink09@gmail.com>`,
+    from: `"풀빛마실" ${process.env.Gmail_user}`,
     to: userEmail,
     subject: "비밀번호 초기화",
     html: compiledTemplate({ tempPassword: tempPassword }),
