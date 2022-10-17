@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const login_required = require("../middlewares/login_required");
 const maria = require("../db/connect/maria");
 const random_password = require("../middlewares/random_password");
-const emailForTempPassword = require("../db/connect/email");
+const emailForTempPassword = require("../utils/email");
 
 // router.get("/select", async function (req, res) {
 //   try {
@@ -114,9 +114,9 @@ router.put("/password", login_required, async function (req, res, next) {
 router.put("/reset", random_password, async function (req, res, next) {
   try {
     const email = req.body.email;
-    const password = req.randPwd;
+    const tempPassword = req.randPwd;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(tempPassword, 10);
     const [rows] = await maria.execute(
       `UPDATE USER SET hashedPassword = ? WHERE email = ? AND hashedPassword NOT IN ("kakao", "naver")`,
       [hashedPassword, email],
@@ -126,7 +126,7 @@ router.put("/reset", random_password, async function (req, res, next) {
       throw new Error("임시 비밀번호 발급에 실패했습니다");
     }
 
-    await emailForTempPassword(email, password);
+    await emailForTempPassword(email, tempPassword);
     res.status(200).json({ success: true });
   } catch (error) {
     next(error);

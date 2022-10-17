@@ -4,7 +4,7 @@ const login_required = require("../middlewares/login_required");
 const maria = require("../db/connect/maria");
 
 const { upload } = require("../middlewares/file_upload");
-const { fileDelete } = require("../middlewares/file_delete");
+const { fileDelete } = require("../utils/file_delete");
 const uploadSingle = upload.single("file");
 require("dotenv").config();
 
