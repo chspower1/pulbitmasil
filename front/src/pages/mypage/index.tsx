@@ -71,8 +71,16 @@ export default function UserInfo() {
         <AnimatePresence>{isEdit && <UserEditNav setIsEdit={setIsEdit} />}</AnimatePresence>
       </MyPageContainer>
       <AnimatePresence>
-        {isPasswordChange && <PasswordChangeModal setIsPasswordChange={setIsPasswordChange}></PasswordChangeModal>}
-        {isNameChange && <NameChangeModal setIsNameChange={setIsNameChange} name={user?.name!}></NameChangeModal>}
+        <PasswordChangeModal
+          isPasswordChange={isPasswordChange}
+          setIsPasswordChange={setIsPasswordChange}
+        ></PasswordChangeModal>
+
+        <NameChangeModal
+          setIsNameChange={setIsNameChange}
+          isNameChange={isNameChange}
+          name={user?.name!}
+        ></NameChangeModal>
       </AnimatePresence>
     </MyPageWrapper>
   );

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, ModalCloseBtn, Overlay } from "@style/ModalStyle";
-import { OverlayVariant } from "@style/ModalVariants";
+import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
 export default function WelcomeModal() {
   const [isWelcomeModal, setIsWelcomeModal] = useRecoilState(isWelcomeModalAtom);
   const user = useRecoilValue(userAtom);

@@ -18,7 +18,7 @@ import {
   ModalWrap as LoginModalWrap,
   ModalContainer as LoginForm,
   ModalTitle as LoginTitle,
-  CloseBtn,
+  ModalCloseBtn,
   Overlay,
 } from "@style/ModalStyle";
 import FindPasswordModal from "./FindPasswordModal";
@@ -153,7 +153,7 @@ export default function LoginModal() {
               <NaverLoginBtn />
               <KakaoLogin src="/assets/images/kakao_login_btn.png" onClick={handleClickKakao} />
             </SocialLoginBox>
-            <CloseBtn type="button" onClick={() => closeLoginModal()}>
+            <ModalCloseBtn type="button" onClick={() => closeLoginModal()}>
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
@@ -163,7 +163,7 @@ export default function LoginModal() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </CloseBtn>
+            </ModalCloseBtn>
           </LoginForm>
           <Overlay
             onClick={() => closeLoginModal()}

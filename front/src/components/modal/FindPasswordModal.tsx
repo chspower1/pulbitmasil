@@ -3,7 +3,14 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap as FindModalWrap, Overlay } from "@style/ModalStyle";
+import {
+  ModalBtnContainer,
+  ModalDesc,
+  ModalContainer,
+  ModalWrap as FindModalWrap,
+  Overlay,
+  ModalCloseBtn,
+} from "@style/ModalStyle";
 import { Link, useNavigate } from "react-router-dom";
 import { isPasswordFindModalAtom, userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";

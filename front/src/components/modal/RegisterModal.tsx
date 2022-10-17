@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
-import { CloseBtn } from "@style/ModalStyle";
+import { ModalCloseBtn } from "@style/ModalStyle";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 export default function WelcomeModal() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
@@ -32,7 +32,7 @@ export default function WelcomeModal() {
               로그인 GOGO
             </StartBtn>
 
-            <RegisterCloseBtn type="button" onClick={closeRegisterModal}>
+            <RegisterModalCloseBtn type="button" onClick={closeRegisterModal}>
               <svg width="14" height="14" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
@@ -42,7 +42,7 @@ export default function WelcomeModal() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </RegisterCloseBtn>
+            </RegisterModalCloseBtn>
           </RegisterModalContainer>
           <Overlay
             onClick={closeRegisterModal}
@@ -67,7 +67,7 @@ const RegisterModalContainer = styled(ModalContainer)`
   height: 200px;
 `;
 
-const RegisterCloseBtn = styled(CloseBtn)`
+const RegisterModalCloseBtn = styled(ModalCloseBtn)`
   width: 36px;
   height: 36px;
   top: 10px;

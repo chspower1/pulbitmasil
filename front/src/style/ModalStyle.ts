@@ -9,11 +9,11 @@ export const ModalWrap = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const ModalContainer = styled(motion.form)`
+export const ModalContainer = styled(motion.form)<{ width?: string; height?: string }>`
   position: relative;
   z-index: 1000;
-  width: 600px;
-  height: 570px;
+  width: ${props => (props.width ? props.width : "600px")};
+  height: ${props => (props.height ? props.height : "570px")};
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -49,7 +49,7 @@ export const Overlay = styled(motion.div)`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
 `;
-export const CloseBtn = styled.button`
+export const ModalCloseBtn = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;

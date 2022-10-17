@@ -6,15 +6,17 @@ import { NameChangeForm } from "@type/user";
 import { Wrapper } from "@style/Layout";
 
 import { useNavigate } from "react-router-dom";
-import { OverlayVariant } from "@style/ModalVariants";
-import { Overlay } from "@style/ModalStyle";
+import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
+import { ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
+import { AnimatePresence } from "framer-motion";
 
 interface NameChangeModalProps {
   setIsNameChange: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
+  isNameChange: boolean;
 }
 
-export default function NameChangeModal({ setIsNameChange, name }: NameChangeModalProps) {
+export default function NameChangeModal({ setIsNameChange, name, isNameChange }: NameChangeModalProps) {
   const {
     register,
     handleSubmit,
@@ -36,68 +38,76 @@ export default function NameChangeModal({ setIsNameChange, name }: NameChangeMod
   });
 
   return (
-    <PasswordWrapper>
-      <FormContainer>
-        <Title>이름 수정</Title>
-        <Form onSubmit={handleSubmitChange}>
-          <InputBox>
-            <InputTitle>현재 이름</InputTitle>
-            <Input
-              placeholder="현재 이름"
-              defaultValue={name}
-              type="text"
-              id="currentName"
-              {...register("currentName", {
-                required: { value: true, message: "이름을 입력해주세요." },
-                minLength: { value: 2, message: "2자 이상 입력해주세요." },
-              })}
-            />
-            <ErrorMessage>{errors.currentName?.message}</ErrorMessage>
-          </InputBox>
+    <AnimatePresence>
+      {isNameChange && (
+        <PasswordWrapper>
+          <FormContainer
+            onSubmit={handleSubmitChange}
+            variants={ModalVariant}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            <Title>이름 수정</Title>
 
-          <InputBox>
-            <InputTitle>새로운 이름</InputTitle>
-            <Input
-              placeholder="새로운 이름을 입력해주세요."
-              type="text"
-              id="newName"
-              {...register("newName", {
-                required: { value: true, message: "이름을 입력해주세요." },
-                minLength: { value: 2, message: "2자 이상 입력해주세요." },
-              })}
-            />
-            <ErrorMessage>{errors.newName?.message}</ErrorMessage>
-          </InputBox>
-          <Button>수정하기</Button>
-          <Button type="button" onClick={closeRegisterModal}>
-            취소하기
-          </Button>
-        </Form>
-      </FormContainer>
-      <Overlay onClick={closeRegisterModal} variants={OverlayVariant} initial="initial" animate="animate" exit="exit" />
-    </PasswordWrapper>
+            <InputBox>
+              <InputTitle>현재 이름</InputTitle>
+              <Input
+                placeholder="현재 이름"
+                defaultValue={name}
+                type="text"
+                id="currentName"
+                {...register("currentName", {
+                  required: { value: true, message: "이름을 입력해주세요." },
+                  minLength: { value: 2, message: "2자 이상 입력해주세요." },
+                })}
+              />
+              <ErrorMessage>{errors.currentName?.message}</ErrorMessage>
+            </InputBox>
+
+            <InputBox>
+              <InputTitle>새로운 이름</InputTitle>
+              <Input
+                placeholder="새로운 이름을 입력해주세요."
+                type="text"
+                id="newName"
+                {...register("newName", {
+                  required: { value: true, message: "이름을 입력해주세요." },
+                  minLength: { value: 2, message: "2자 이상 입력해주세요." },
+                })}
+              />
+              <ErrorMessage>{errors.newName?.message}</ErrorMessage>
+            </InputBox>
+            <Button>수정하기</Button>
+            <Button type="button" onClick={closeRegisterModal}>
+              취소하기
+            </Button>
+          </FormContainer>
+          <Overlay
+            onClick={closeRegisterModal}
+            variants={OverlayVariant}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          />
+        </PasswordWrapper>
+      )}
+    </AnimatePresence>
   );
 }
 
-const PasswordWrapper = styled(Wrapper)`
+const PasswordWrapper = styled(ModalWrap)`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 `;
-const FormContainer = styled.div`
-  background-color: white;
-  position: relative;
+const FormContainer = styled(ModalContainer)`
   width: 700px;
   height: 750px;
   padding: 60px;
   padding-bottom: 75px;
   color: #bdbdbd;
-  float: right;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 1000;
 `;
 
 const Title = styled.h1`
