@@ -40,7 +40,6 @@ export default function Review() {
         <SubTitle>
           <Accent>풀빛마실</Accent> 후기를 공유해주세요!
         </SubTitle>
-        {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
         <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
         <CardBox>
           {reviews?.map(review => {
@@ -48,6 +47,7 @@ export default function Review() {
           })}
         </CardBox>
       </CardContainer>
+      {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
       <RegisterModal />
       <AnimatePresence>
         {reviewMatch && (
