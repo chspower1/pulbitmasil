@@ -1,4 +1,4 @@
-import { AboutContent, Box, Container, Title, SubTitle, Desc } from "@style/Layout";
+import { AboutContent, Box, Container, Title, SubTitle, Desc, GreenAccent } from "@style/Layout";
 import styled from "styled-components";
 
 export default function Pulbitmasil() {
@@ -28,7 +28,7 @@ export default function Pulbitmasil() {
         <PulbitmasilSubTitle>플로깅 이란 단어를 들어보셨나요?</PulbitmasilSubTitle>
         <PulbitmasilDesc>
           플로깅이란 이삭줍기를 의미하는 스웨덴어 플로카 웁(plocka upp)과
-          영어 조깅(jogging)의 합성어로 달리기를 하면서 쓰레기를 줍는 운동을 말합니다.<br/>
+          영어 조깅(jogging)의 합성어로 <GreenAccent>달리기를 하면서 쓰레기를 줍는 운동</GreenAccent>을 말합니다.<br/>
           <br/>
           저희 팀은 단순히 조깅뿐만 아니라 더 넓은 차원에서<br/>
           가벼운 마음으로 이웃과 친목을 도모하며 마실 나가듯이 가볍게<br/>

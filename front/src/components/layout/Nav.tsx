@@ -155,13 +155,13 @@ export default function Nav() {
 
         {isLogin && (
           <UserContainer>
-            <Link to="userInfo">
+            <Link to="mypage">
               <UserNameBox>
                 <img src="/assets/icon/user/user_img.svg" />
                 <UserName>{user?.name}</UserName>
               </UserNameBox>
             </Link>
-            <Link to="userInfo">
+            <Link to="mypage">
               <SubTitle style={{ fontFamily: "SebangBold" }}>마이페이지</SubTitle>
             </Link>
             <Logout onClick={handleClickLogout}>로그아웃</Logout>

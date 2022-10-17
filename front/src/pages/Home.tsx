@@ -120,10 +120,10 @@ export default function Home() {
             <Title>{HOMETEXT[textIndex].title1}</Title>
             <Title>{HOMETEXT[textIndex].title2}</Title>
             <BtnBox>
-              <Link to="About">
+              <Link to="about">
                 <Button>{HOMETEXT[textIndex].button1}</Button>
               </Link>
-              <Link to="GreenCrew">
+              <Link to="greencrew">
                 <Button>{HOMETEXT[textIndex].button2}</Button>
               </Link>
             </BtnBox>

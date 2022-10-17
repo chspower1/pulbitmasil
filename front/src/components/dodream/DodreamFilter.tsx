@@ -49,6 +49,7 @@ const Input = styled.label`
     background-color: transparent;
     position: absolute;
     right: 5px;
+    bottom: -25px;
     &:hover {
       background-color: transparent;
       transform: scale(1.1);

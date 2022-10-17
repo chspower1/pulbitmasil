@@ -64,7 +64,7 @@ export default function GreenCrew() {
     const distance = now.getTime() - setDate.getTime();
     const hours = Math.abs(Math.floor((distance / (1000 * 60 * 60)) % 24));
     const minutes = Math.abs(Math.floor((distance / (1000 * 60)) % 60));
-    const seconds = Math.abs(Math.floor((distance / 1000) % 60));
+    const seconds = Math.abs(Math.floor((distance / 1000) % 60)); // date.js 사용해보기
 
     setTime([hours, minutes, seconds]);
   }
@@ -94,35 +94,35 @@ export default function GreenCrew() {
             {convertDate(greenCrew![selectedArea]?.startAt!)}
             <CourseBox>
               <DetailTitle>
-                <IconImg src={"assets/icon/greenCrew/course_icon.svg"} alt="#" />
+                <IconImg src={"assets/icon/greencrew/course_icon.svg"} alt="#" />
                 코스
               </DetailTitle>
               <DetailDescription>{greenCrew![selectedArea]!.course}</DetailDescription>
             </CourseBox>
             <CourseBox>
               <DetailTitle>
-                <IconImg src="/assets/icon/greenCrew/distance_icon.svg" alt="#" />
+                <IconImg src="/assets/icon/greencrew/distance_icon.svg" alt="#" />
                 거리
               </DetailTitle>
               <DetailDescription>{greenCrew![selectedArea]!.distance}</DetailDescription>
             </CourseBox>
             <CourseBox>
               <DetailTitle>
-                <IconImg src="/assets/icon/greenCrew/lead_time_icon.svg" alt="#" />
+                <IconImg src="/assets/icon/greencrew/lead_time_icon.svg" alt="#" />
                 소요시간
               </DetailTitle>
               <DetailDescription>{greenCrew![selectedArea]!.leadTime}</DetailDescription>
             </CourseBox>
             <CourseBox>
               <DetailTitle>
-                <IconImg src="/assets/icon/greenCrew/max_member_icon.svg" alt="#" />
+                <IconImg src="/assets/icon/greencrew/max_member_icon.svg" alt="#" />
                 모집인원
               </DetailTitle>
               <DetailDescription>{greenCrew![selectedArea]!.maxMember}</DetailDescription>
             </CourseBox>
             <CourseBox>
               <DetailTitle>
-                <IconImg src="/assets/icon/greenCrew/level_icon.svg" alt="#" />
+                <IconImg src="/assets/icon/greencrew/level_icon.svg" alt="#" />
                 난이도
               </DetailTitle>
               <DetailDescription>{greenCrew![selectedArea]!.level}</DetailDescription>
