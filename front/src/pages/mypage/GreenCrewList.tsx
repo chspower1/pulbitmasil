@@ -11,7 +11,7 @@ const sample: UserGreenCrews[] = [
 export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCrews[] | undefined }) {
   return (
     <List>
-      {sample?.map(greenCrew => (
+      {greenCrews?.map(greenCrew => (
         <Item>
           <ContentBox>
             <ItemTitle>

@@ -11,13 +11,13 @@ const sample: UserReviews[] = [
 export default function ReviewList({ reviews }: { reviews: UserReviews[] | undefined }) {
   return (
     <List>
-      {sample?.map(greenCrew => (
+      {reviews?.map(review => (
         <Item>
           <ContentBox>
-            <ItemTitle>{greenCrew?.title}</ItemTitle>
+            <ItemTitle>{review?.title}</ItemTitle>
 
             <Box>
-              <ItemDate>{greenCrew?.createAt}</ItemDate>
+              <ItemDate>{review?.createAt}</ItemDate>
             </Box>
           </ContentBox>
           <DeleteBtn>
