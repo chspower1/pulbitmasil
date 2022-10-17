@@ -69,8 +69,8 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
           name: result.data.kakao_account.profile.nickname,
           email: email,
           social: "kakao",
-          review: null,
-          greenCrew: null,
+          reviews: null,
+          greenCrews: null,
           token: token,
         });
       } else {
@@ -98,8 +98,8 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
           name: rows[0].name,
           email: email,
           social: "kakao",
-          review: review,
-          greenCrew: greenCrew,
+          reviews: review,
+          greenCrews: greenCrew,
           token: token,
         });
       }
@@ -147,8 +147,8 @@ router.get("/naver", async function (req, res, next) {
           name: name,
           email: email,
           social: "naver",
-          review: null,
-          green: null,
+          reviews: null,
+          greenCrews: null,
           token: token,
         });
       } else {
@@ -177,8 +177,8 @@ router.get("/naver", async function (req, res, next) {
           name: rows[0].name,
           social: "naver",
           email: rows[0].email,
-          review: review,
-          greenCrew: greenCrew,
+          reviews: review,
+          greenCrews: greenCrew,
           token: token,
         });
       }
