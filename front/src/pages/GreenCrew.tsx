@@ -166,7 +166,7 @@ export default function GreenCrew() {
             />
           </ContentBox>
         </SecondContainer>
-        <Link to="/">
+        <Link to="/guide">
           <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
         </Link>
       </RootContainer>

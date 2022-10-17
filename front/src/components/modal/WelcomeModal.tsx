@@ -24,7 +24,7 @@ export default function WelcomeModal() {
             <Desc>
               오늘&nbsp;<Accent>풀빛마실</Accent>&nbsp;어떠세요&nbsp;?
             </Desc>
-            <Link to="/plogging">
+            <Link to="/greencrew">
               <StartBtn onClick={closeWelcomeModal}>풀빛마실 GoGo</StartBtn>
             </Link>
             <WelcomeCloseBtn type="button" onClick={closeWelcomeModal}>
