@@ -1,5 +1,5 @@
 import React from "react";
-
-export default function ReviewList(reviews: { reveiews?: number[] }) {
-  return <div>review</div>;
+import { Box, Container, Title, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
+export default function ReviewList(reviews: { reviews?: number[] }) {
+  return <Container>review</Container>;
 }

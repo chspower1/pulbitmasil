@@ -6,5 +6,5 @@ export const lightTheme: DefaultTheme = {
   accentColor: "#008037",
   borderColor: "#A7A7A7",
   dangerColor: "#E17055",
-  weekBorderColor: "#D9D9D9",
+  weekBorderColor: "#F6F6F6",
 };

@@ -21,7 +21,7 @@ export default function UserInfo() {
 
   const handleClickChangePassword = () => {
     // changePassword()
-    if (user?.social === 0) {
+    if (user?.social === "origin") {
       setIsPasswordChange(true);
     } else {
       alert("비밀번호 변경 불가합니다.");
@@ -43,14 +43,14 @@ export default function UserInfo() {
             <Link to="/mypage/review">
               <Menu className={menu === "review" ? "active" : "normal"}>리뷰</Menu>
             </Link>
-            <Link to="/mypage/greenCrew">
-              <Menu className={menu === "greenCrew" ? "active" : "normal"}>풀빛마실</Menu>
+            <Link to="/mypage/greencrew">
+              <Menu className={menu === "greencrew" ? "active" : "normal"}>풀빛마실</Menu>
             </Link>
           </MenuBox>
         </ProfileBox>
         <ContentBox>
-          <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>
-          <ReviewList reviews={user?.reviews}></ReviewList>
+          {menu === "greencrew" && <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>}
+          {menu === "review" && <ReviewList reviews={user?.reviews}></ReviewList>}
         </ContentBox>
       </MyPageContainer>
       <PasswordChangeModal
