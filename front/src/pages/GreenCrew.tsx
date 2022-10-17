@@ -59,6 +59,7 @@ export default function GreenCrew() {
   };
 
   function getTime() {
+    console.log("getTime");
     const setDate = new Date(greenCrew![selectedArea].startAt); // 기준이 되는 시각
     const now = new Date();
     const distance = now.getTime() - setDate.getTime();
@@ -69,13 +70,10 @@ export default function GreenCrew() {
     setTime([hours, minutes, seconds]);
   }
 
-  function init() {
-    setInterval(getTime, 1000);
-  }
-
   useEffect(() => {
     setTime([0, 0, 0]);
-    init();
+    let timer = setInterval(getTime, 1000);
+    return () => clearInterval(timer);
   }, []);
 
   return (
@@ -168,7 +166,7 @@ export default function GreenCrew() {
             />
           </ContentBox>
         </SecondContainer>
-        <Link to="/">
+        <Link to="/guide">
           <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
         </Link>
       </RootContainer>
@@ -286,7 +284,8 @@ const Accent = styled.h3`
   color: ${props => props.theme.mainColor};
 `;
 const ContentDescription = styled(Desc)`
-  overflow: scroll;
+  overflow-y: auto;
+
   width: 100%;
   height: 100%;
   padding-top: 10px;
