@@ -81,6 +81,7 @@ const ContentContainer = styled(Container)`
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  width: 50%;
 `;
 const SubTitle = styled(SubTitleGuide)`
   font-family: "Sebang";
@@ -101,3 +102,4 @@ const Btn = styled.button`
   padding: 10px 5px;
   margin-right: 20px;
 `;
+

@@ -207,7 +207,15 @@ const Styles = styled.div`
     td {
       margin: 0;
       padding: 0.5rem;
-
+      :first-child {
+        width: 150px;
+      }
+      :nth-child(2) {
+        width: 280px;
+      }
+      :nth-child(n+3){
+        width: 100px;
+      }
       :last-child {
         border-right: 0;
       }
