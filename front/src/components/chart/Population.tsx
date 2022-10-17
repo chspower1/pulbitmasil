@@ -57,7 +57,8 @@ export function PopulationChart() {
         text: '전국 유동인구 연도별 주당 평균 변화량',
         padding: {bottom: 35},
         font: {
-          size: 18
+          size: 18,
+          family: "SebangBold",
         }
       },
     },
@@ -68,10 +69,20 @@ export function PopulationChart() {
         grid: {
           display: false,
         },
+        ticks: {
+          font: {
+            size: 10,
+            family: "Sebang",
+          }
+        },
         title: {
           display: true,
           text: '연도',
           color: '#636E72',
+          font: {
+            size: 12,
+            family: "Sebang",
+          }
         }
       },
       y: {
@@ -82,12 +93,19 @@ export function PopulationChart() {
         },
         ticks: {
           maxTicksLimit: 8,
-
+          font: {
+            size: 10,
+            family: "Sebang",
+          }
         },
         title: {
           display: true,
           text: '유동인구 변화량 (100만)',
           color: '#636E72',
+          font: {
+            size: 12,
+            family: "Sebang",
+          }
         }
       },
     },

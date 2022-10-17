@@ -18,6 +18,9 @@ import styled from "styled-components";
 export default function GuideForm({ content }: { content: Content }) {
   const navigate = useNavigate();
   const handleClickNavigate = () => {
+    if(content.num === 6) {
+      window.open(`${"http://news.seoul.go.kr/env/files/2018/11/601365c0483251.00291148.pdf"}`, "_blank")
+    }
     navigate(content?.buttonURL!);
   };
   const isRight = content.num % 2 === 0;
@@ -29,12 +32,13 @@ export default function GuideForm({ content }: { content: Content }) {
         <Line src={`/assets/images/guide/tab_${isRight ? "right" : "left"}.png`} />
       </LineBox>
       <TextBox>
-        <Title>{content.title}</Title>
+        <Title style={{margin:"15px 0"}}>{content.title}</Title>
         <Desc>{content.description}</Desc>
+        {content.type === "button" ? <Button onClick={handleClickNavigate}>{content.buttonValue!}</Button>:""}
       </TextBox>
       <Img
-        src="https://images.unsplash.com/photo-1665884304501-a65e6ff95b35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=670&q=80"
-        alt=""
+        src={`assets/images/guide/guide${content.num}.png`}
+        alt="guide photo"
       />
     </Container>
   );
@@ -51,7 +55,7 @@ const TextBox = styled(Box)`
 `;
 const Img = styled.img`
   position: absolute;
-  width: 100px;
+  width: 230px;
 `;
 const Container = styled(ContainerGuide)<{ isRight: boolean }>`
   position: relative;
@@ -63,12 +67,17 @@ const Container = styled(ContainerGuide)<{ isRight: boolean }>`
   ${TextBox} {
     margin-right: ${props => (props.isRight ? "500px" : "-500px")};
     align-items: ${props => (props.isRight ? "flex-end" : "flex-start")};
+    width: 250px;
     ${Desc} {
       text-align: ${props => (props.isRight ? "right" : "left")};
+      width: 230px;
+      line-height: 22px;
+      letter-spacing: 0.05em;
+      white-space: pre-line;
     }
   }
   ${Img} {
-    margin-right: ${props => (props.isRight ? "1000px" : "-1000px")};
+    margin-right: ${props => (props.isRight ? "1100px" : "-1100px")};
   }
 `;
 const Line = styled.img`
@@ -80,4 +89,8 @@ const LineBox = styled(Box)<{ isRight: boolean }>`
   width: 100px;
   height: 100%;
   justify-content: ${props => (props.isRight ? "flex-end" : "flex-start")};
+`;
+const Button = styled.button`
+  padding: 10px;
+  margin: 10px 0;
 `;

@@ -10,10 +10,13 @@ import { Accent, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
 export default function WelcomeModal() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
+  const openLoginModal = () => {
+    setIsRegisterModal(false);
+    setIsLoginModal(true);    
+  }
 
   const closeRegisterModal = () => {
     setIsRegisterModal(false);
-    setIsLoginModal(true);
   };
   return (
     <AnimatePresence>
@@ -24,7 +27,7 @@ export default function WelcomeModal() {
               <Accent>로그인</Accent>&nbsp;이 필요해요.
             </Desc>
 
-            <StartBtn type="button" onClick={closeRegisterModal}>
+            <StartBtn type="button" onClick={openLoginModal}>
               로그인 GOGO
             </StartBtn>
 
