@@ -4,12 +4,16 @@ import { axiosInstance } from "./axiosInstance";
 
 export async function getGreenCrews() {
   try {
-    const { data } = await axiosInstance.get("greencrew");
-    console.log(data);
-    // data.map(greenCrew => {
-    //   return { ...greenCrew };
-    // });
-    return data;
+    const { data }: { data: IGreenCrew[] } = await axiosInstance.get("greencrew");
+    console.log("API", data);
+    const result = data.map(greenCrew => {
+      const newTrafficInfo = greenCrew.trafficInfo.replace("\\r", "").replace("\\n", "");
+      console.log("old : ", greenCrew.trafficInfo);
+      console.log("new : ", newTrafficInfo);
+      const newGreenCrew = { ...greenCrew, trafficInfo: newTrafficInfo };
+      return newGreenCrew;
+    });
+    return result;
   } catch (err) {
     console.log(err);
   }

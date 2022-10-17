@@ -10,26 +10,42 @@ import { Link } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
 import moment from "moment";
 import { useInterval } from "react-use";
+import { data } from "@components/chart/LineChart";
 export default function GreenCrew() {
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
   const [count, setCount] = useState(0);
   const [time, setTime] = useState("");
-  const { data: greenCrew } = useQuery<IGreenCrew[]>(["greenCrew"], getGreenCrews, {
+  const { data: greenCrew } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
       console.log("GreenCrew Query성공", data);
     },
+    onError(err) {
+      console.log(err);
+    },
   });
   const handleClickEnter = async () => {
-    await createGreenCrewMember(greenCrew![selectedArea].id);
+    await createGreenCrewMember(greenCrew![selectedArea].crewId);
     queryClient.invalidateQueries(["greenCrew"]);
+  };
+  const convertDate = (startAt: Date) => {
+    const date = new Date(startAt);
+    const time = date.toLocaleDateString();
+    const a = date.toLocaleTimeString();
+    return (
+      <StartAt>
+        {time}
+        {a}
+      </StartAt>
+    );
   };
 
   useEffect(() => {
     setTimeout(() => {
       setCount(cur => cur + 1);
     }, 1000);
+
     const startAt = new Date(greenCrew![selectedArea].startAt);
     const now = new Date(Date.now());
     const hours = startAt.getHours() - now.getHours();
@@ -51,7 +67,7 @@ export default function GreenCrew() {
         <FirstContainer>
           <DescBox>
             <div>{time}</div>
-            <StartAt>{greenCrew![selectedArea]?.startAt!}</StartAt>
+            {convertDate(greenCrew![selectedArea]?.startAt!)}
             <CourseBox>
               <DetailTitle>
                 <IconImg src={"assets/icon/greenCrew/course_icon.svg"} alt="#" />
@@ -110,7 +126,11 @@ export default function GreenCrew() {
               <img src="/assets/icon/greenCrew/traffic_info_icon.svg" alt="" />
               교통편
             </ContentTitle>
-            <ContentDescription dangerouslySetInnerHTML={{ __html: `${greenCrew![selectedArea]?.trafficInfo}` }} />
+            <ContentDescription
+              dangerouslySetInnerHTML={{
+                __html: `${greenCrew![selectedArea]?.trafficInfo.replace("\\n", "").replace("\\r", "")}`,
+              }}
+            />
           </ContentBox>
           <Link to="/">
             <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
