@@ -62,3 +62,11 @@ export async function changePassword(password: string) {
     },
   );
 }
+export async function resetPassword(email: string) {
+  console.log(`%cPUT 요청 ${BASE_URL}/user/reset`, "color: #a25cd1;");
+
+  return axiosInstance.put(
+    `/user/reset`,
+    { email },
+  );
+}

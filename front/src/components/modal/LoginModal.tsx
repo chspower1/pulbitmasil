@@ -168,7 +168,7 @@ export default function LoginModal() {
               </Register>
 
               <FindPassword onClick={() => closeLoginModal()}>
-                <Link to="/register">아이디,비밀번호 찾기</Link>
+                <Link to="/register">비밀번호 찾기</Link>
               </FindPassword>
             </UserBox>
             <SocialLoginBox>
@@ -247,7 +247,7 @@ const ErrorMessage = styled.div`
 export const ViewPassword = styled.div`
   position: absolute;
   height: 60px;
-  right: 10px;
+  right: 90px;
   display: flex;
   align-items: center;
 `;
