@@ -22,13 +22,12 @@ router.post("/register", async function (req, res, next) {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const [rows] = await maria.execute(`INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, 0)`, [
-      name,
-      email,
-      hashedPassword,
-    ]);
+    const [rows] = await maria.execute(
+      `INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, "origin")`,
+      [name, email, hashedPassword],
+    );
 
-    res.status(200).json({ success: true, id: rows.insertId, social: 0 });
+    res.status(200).json({ success: true, id: rows.insertId, social: "origin" });
   } catch (error) {
     next(error);
   }
@@ -38,8 +37,25 @@ router.post("/login", async function (req, res, next) {
   try {
     const { email, password } = req.body;
 
-    const [rows] = await maria.execute(`SELECT * FROM USER WHERE email = ?`, [email]);
-    console.log(rows);
+    const [rows] = await maria.execute(
+      `SELECT A.id, A.email, A.name, A.social, A.hashedPassword, B.reviewId, C.crewId
+                FROM USER AS A
+                LEFT JOIN REVIEW AS B
+                ON A.id = B.userId
+                LEFT JOIN USERTOGREENCREW AS C
+                ON A.id = C.userId
+                WHERE A.email = ?`,
+      [email],
+    );
+    const reviewId = [];
+    const crewId = [];
+    for (i in rows) {
+      reviewId.push(rows[i].reviewId);
+      crewId.push(rows[i].crewId);
+    }
+    const set1 = new Set(reviewId);
+    const set2 = new Set(crewId);
+
     if (rows.length) {
       const correctPasswordHash = rows[0].hashedPassword;
       const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
@@ -56,6 +72,8 @@ router.post("/login", async function (req, res, next) {
         token: token,
         name: rows[0].name,
         social: rows[0].social,
+        reviewId: [...set1],
+        crewId: [...set2],
       });
     } else {
       throw new Error("가입되지 않은 이메일입니다.");

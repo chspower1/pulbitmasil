@@ -9,20 +9,20 @@ router.get("/", async function (req, res, next) {
     const [rows] = await maria.execute(
       `SELECT 
                     A.crewId,
-                    C.id,
                     A.title,
                     A.startAt,
                     A.maxMember,
-                    C.course,
-                    C.distance,
-                    C.leadTime,
-                    C.level,
-                    ( SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.crewId ) AS curMember, 
-                    C.content,
-                    C.trafficInfo
+                    ( SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.crewId ) AS curMember,
+                    B.id,
+                    B.course,
+                    B.distance,
+                    B.leadTime,
+                    B.level, 
+                    B.content,
+                    B.trafficInfo
                   FROM GREENCREW AS A
-                  INNER JOIN ROUTE AS C
-                  ON A.routeId = C.id
+                  INNER JOIN ROUTE AS B
+                  ON A.routeId = B.id
                   GROUP BY A.crewId`,
     );
 

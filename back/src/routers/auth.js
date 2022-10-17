@@ -45,11 +45,20 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
 
       const email = result.data.kakao_account?.email ?? "kakao" + result.data.id;
 
-      const [rows] = await maria.execute("SELECT * FROM USER WHERE email = ?", [email]);
+      const [rows] = await maria.execute(
+        `SELECT A.id, A.email, A.name, A.social, A.hashedPassword, B.reviewId, C.crewId
+      FROM USER AS A
+      LEFT JOIN REVIEW AS B
+      ON A.id = B.userId
+      LEFT JOIN USERTOGREENCREW AS C
+      ON A.id = C.userId
+      WHERE A.email = ?`,
+        [email],
+      );
 
       if (!rows.length) {
         const [rows2] = await maria.execute(
-          "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'kakao',1)",
+          "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'kakao','kakao')",
           [result.data.kakao_account.profile.nickname, email],
         );
         const token = jwt.sign({ id: rows2[0].insertId, access_token: access_token }, secretKey);
@@ -59,17 +68,30 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
           id: rows2[0].insertId,
           name: result.data.kakao_account.profile.nickname,
           email: email,
-          social: 1,
+          social: "kakao",
+          reviewId: NULL,
+          crewId: NULL,
           token: token,
         });
       } else {
+        const reviewId = [];
+        const crewId = [];
+        for (i in rows) {
+          reviewId.push(rows[i].reviewId);
+          crewId.push(rows[i].crewId);
+        }
+        const set1 = new Set(reviewId);
+        const set2 = new Set(crewId);
+
         const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
         res.status(200).json({
           success: true,
           id: rows[0].id,
           name: rows[0].name,
           email: email,
-          social: 1,
+          social: "kakao",
+          reviewId: [...set1],
+          crewId: [...set2],
           token: token,
         });
       }
@@ -94,10 +116,19 @@ router.get("/naver", async function (req, res, next) {
       const name = result.data.response.name;
       const email = result.data.response.email;
 
-      const [rows] = await maria.query("SELECT * FROM USER WHERE email = ?", [email]);
+      const [rows] = await maria.query(
+        `SELECT A.id, A.email, A.name, A.social, A.hashedPassword, B.reviewId, C.crewId
+      FROM USER AS A
+      LEFT JOIN REVIEW AS B
+      ON A.id = B.userId
+      LEFT JOIN USERTOGREENCREW AS C
+      ON A.id = C.userId
+      WHERE A.email = ?`,
+        [email],
+      );
       if (!rows.length) {
         const [rows2] = await maria.query(
-          "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'naver', 1)",
+          "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'naver', 'naver')",
           [name, email],
         );
         const token = jwt.sign({ id: rows2[0].insertId, access_token: access_token }, secretKey);
@@ -106,13 +137,32 @@ router.get("/naver", async function (req, res, next) {
           id: rows2[0].insertId,
           name: name,
           email: email,
-          social: 1,
+          social: "naver",
+          reviewId: NULL,
+          crewId: NULL,
           token: token,
         });
       } else {
-        const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
+        const reviewId = [];
+        const crewId = [];
+        for (i in rows) {
+          reviewId.push(rows[i].reviewId);
+          crewId.push(rows[i].crewId);
+        }
+        const set1 = new Set(reviewId);
+        const set2 = new Set(crewId);
 
-        res.status(200).json({ success: true, id: rows[0].id, name: rows[0].name, email: rows[0].email, token: token });
+        const token = jwt.sign({ id: rows[0].id, access_token: access_token }, secretKey);
+        res.status(200).json({
+          success: true,
+          id: rows[0].id,
+          name: rows[0].name,
+          social: "naver",
+          email: rows[0].email,
+          reviewId: [...set1],
+          crewId: [...set2],
+          token: token,
+        });
       }
     })
 
