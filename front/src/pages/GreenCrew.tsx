@@ -13,6 +13,7 @@ import { useInterval } from "react-use";
 import { data } from "@components/chart/LineChart";
 import { Node } from "react-markdown/lib/rehype-filter";
 import { GreenAccent } from "./../style/Layout";
+import { timeEnd, timeLog } from "console";
 export default function GreenCrew() {
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
@@ -47,24 +48,36 @@ export default function GreenCrew() {
   };
   const DTime = (arr: number[]) => {
     const [hours, minutes, seconds] = arr;
+    // const hours = Math.abs(hours < 10 ? `0${hours}` : hours)
+
     return (
       <Title style={{ fontSize: "40px" }}>
-        <Desc as="span">남은시간 : </Desc> {`${hours}:${minutes}:${seconds}`}
+        <Desc as="span">남은시간 : </Desc>{" "}
+        {`${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`}
       </Title>
     );
   };
-  useEffect(() => {
-    setTimeout(() => {
-      setCount(cur => cur + 1);
-    }, 1000);
 
-    const startAt = new Date(greenCrew![selectedArea].startAt);
-    const now = new Date(Date.now());
-    const hours = startAt.getHours() - now.getHours() - 1;
-    const minutes = 60 + startAt.getMinutes() - now.getMinutes();
-    const seconds = 60 + startAt.getSeconds() - now.getSeconds();
+  function getTime() {
+    const setDate = new Date(greenCrew![selectedArea].startAt); // 기준이 되는 시각
+    const now = new Date();
+    const distance = now.getTime() - setDate.getTime();
+    const hours = Math.abs(Math.floor((distance / (1000 * 60 * 60)) % 24));
+    const minutes = Math.abs(Math.floor((distance / (1000 * 60)) % 60));
+    const seconds = Math.abs(Math.floor((distance / 1000) % 60));
+
     setTime([hours, minutes, seconds]);
-  }, [count]);
+  }
+
+  function init() {
+    setInterval(getTime, 1000);
+  }
+
+  useEffect(() => {
+    setTime([0, 0, 0]);
+    init();
+  }, []);
+
   return (
     <GreenCrewWrapper>
       <AreaNav>
