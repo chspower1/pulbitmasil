@@ -19,7 +19,7 @@ export const userAtom = atom<User | null>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const isPasswordChangeModalAtom = atom({
-  key: "isReviewCancelModal",
+export const isPasswordFindModalAtom = atom({
+  key: "isPasswordFindModal",
   default: false,
 });
