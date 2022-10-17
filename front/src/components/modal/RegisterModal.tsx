@@ -1,4 +1,4 @@
-import { isRegisterModalAtom } from "@atom/atom";
+import { isLoginModalAtom, isRegisterModalAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -9,20 +9,25 @@ import { userAtom } from "@atom/user";
 import { Accent, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
 export default function WelcomeModal() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
+  const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
+
   const closeRegisterModal = () => {
     setIsRegisterModal(false);
+    setIsLoginModal(true);
   };
   return (
     <AnimatePresence>
-      {isRegisterModal&& (
+      {isRegisterModal && (
         <RegisterModalWrap>
           <RegisterModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <Desc>
-              <Accent>회원가입</Accent>&nbsp;이 필요해요.
+              <Accent>로그인</Accent>&nbsp;이 필요해요.
             </Desc>
-            <Link to="../register">
-              <StartBtn onClick={closeRegisterModal}>회원가입 GOGO</StartBtn>
-            </Link>
+
+            <StartBtn type="button" onClick={closeRegisterModal}>
+              로그인 GOGO
+            </StartBtn>
+
             <RegisterCloseBtn type="button" onClick={closeRegisterModal}>
               <svg width="14" height="14" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path

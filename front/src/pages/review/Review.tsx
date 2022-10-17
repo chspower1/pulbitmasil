@@ -42,13 +42,13 @@ export default function Review() {
         </SubTitle>
         {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
         <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
-        <RegisterModal />
         <CardBox>
           {reviews?.map(review => {
             return <Card key={review.reviewId} review={review}></Card>;
           })}
         </CardBox>
       </CardContainer>
+      <RegisterModal />
       <AnimatePresence>
         {reviewMatch && (
           <ReviewDetailModal
