@@ -3,17 +3,18 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { Accent, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
+import { CloseBtn } from "@style/Modal";
+import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 export default function WelcomeModal() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
   const openLoginModal = () => {
     setIsRegisterModal(false);
-    setIsLoginModal(true);    
-  }
+    setIsLoginModal(true);
+  };
 
   const closeRegisterModal = () => {
     setIsRegisterModal(false);

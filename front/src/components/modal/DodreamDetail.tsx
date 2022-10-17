@@ -2,10 +2,12 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
+import { CloseBtn, Overlay } from "@style/ModalStyle";
 import { ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import ReactMarkdown from "react-markdown";
+import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
+
 const { kakao }: any = window;
 
 export function convertTime(time: number) {

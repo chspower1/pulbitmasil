@@ -3,8 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
-import { BtnContainer, Desc, ModalContainer, ModalWrap as FindModalWrap } from "@style/ModalStyle";
+import { BtnContainer, Desc, ModalContainer, ModalWrap as FindModalWrap, Overlay } from "@style/ModalStyle";
 import { Link, useNavigate } from "react-router-dom";
 import { isPasswordFindModalAtom, userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
@@ -12,6 +11,8 @@ import { createPortal } from "react-dom";
 import { useForm } from "react-hook-form";
 import { UserPasswordProps } from "@pages/mypage";
 import { resetPassword } from "@api/user";
+import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
+
 interface EmailForm {
   email: string;
 }

@@ -11,6 +11,7 @@ import ReviewList from "./ReviewList";
 import Home from "./Home";
 import { AnimatePresence } from "framer-motion";
 import UserEditNav from "@components/UserEditNav";
+import NameChangeModal from "@components/modal/NameChangeModal";
 export interface UserPasswordProps {
   setIsPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -71,7 +72,7 @@ export default function UserInfo() {
       </MyPageContainer>
       <AnimatePresence>
         {isPasswordChange && <PasswordChangeModal setIsPasswordChange={setIsPasswordChange}></PasswordChangeModal>}
-        {isNameChange && <PasswordChangeModal setIsPasswordChange={setIsPasswordChange}></PasswordChangeModal>}
+        {isNameChange && <NameChangeModal setIsNameChange={setIsNameChange} name={user?.name!}></NameChangeModal>}
       </AnimatePresence>
     </MyPageWrapper>
   );

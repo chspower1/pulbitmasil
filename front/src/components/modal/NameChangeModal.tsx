@@ -1,24 +1,20 @@
 import styled from "styled-components";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { changePassword, registerUser } from "@api/user";
-import { PasswordChangeForm, UserRegisterForm } from "@type/user";
-import { Overlay, ViewPassword } from "@components/modal/LoginModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { faEye } from "@fortawesome/free-regular-svg-icons";
-import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useForm } from "react-hook-form";
+import { changeName } from "@api/user";
+import { NameChangeForm } from "@type/user";
+
 import { Wrapper } from "@style/Layout";
-import { UserPasswordProps } from "@pages/mypage";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { userAtom } from "@atom/user";
-import { AnimatePresence } from "framer-motion";
-import { OverlayVariant } from "./LoginModal";
 
-export default function NameChangeModal({ setIsNameChange }: {setIsNameChange:React.Dispatch<React.SetStateAction<boolean>>}) {
-  const [isViewCurPassword, setIsViewCurPassword] = useState(false);
-  const [isViewPassword, setIsViewPassword] = useState(false);
-  const [isViewConfirmPassword, setIsViewConfirmPassword] = useState(false);
+import { useNavigate } from "react-router-dom";
+import { OverlayVariant } from "@style/ModalVariants";
+import { Overlay } from "@style/ModalStyle";
 
+interface NameChangeModalProps {
+  setIsNameChange: React.Dispatch<React.SetStateAction<boolean>>;
+  name: string;
+}
+
+export default function NameChangeModal({ setIsNameChange, name }: NameChangeModalProps) {
   const {
     register,
     handleSubmit,
@@ -26,114 +22,59 @@ export default function NameChangeModal({ setIsNameChange }: {setIsNameChange:Re
     watch,
     reset,
     getValues,
-  } = useForm<PasswordChangeForm>();
-
+  } = useForm<NameChangeForm>();
+  const navigate = useNavigate();
   const closeRegisterModal = async () => {
-    setIsPasswordChange(false);
+    setIsNameChange(false);
     reset();
+    navigate("/mypage");
   };
 
   const handleSubmitChange = handleSubmit(data => {
-    changePassword(data?.changePassword);
+    changeName(data.newName);
     closeRegisterModal();
   });
 
   return (
     <PasswordWrapper>
       <FormContainer>
-        <Title>비밀번호 수정</Title>
+        <Title>이름 수정</Title>
         <Form onSubmit={handleSubmitChange}>
           <InputBox>
-            <InputTitle>현재 비밀번호</InputTitle>
+            <InputTitle>현재 이름</InputTitle>
             <Input
-              placeholder="숫자,특수문자,영문 포함 8자리 이상"
-              type={isViewCurPassword ? "text" : "password"}
-              id="currentPassword"
-              // type="password"
-              {...register("currentPassword", {
-                required: { value: true, message: "비밀번호를 입력해주세요." },
-                minLength: { value: 8, message: "8자 이상 입력해주세요." },
-                // pattern: {
-                //   value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
-                //   message: "숫자,특수문자,영문 포함 8자리 이상 적어주세요.",
-                // },
+              placeholder="현재 이름"
+              defaultValue={name}
+              type="text"
+              id="currentName"
+              {...register("currentName", {
+                required: { value: true, message: "이름을 입력해주세요." },
+                minLength: { value: 2, message: "2자 이상 입력해주세요." },
               })}
             />
-            <ViewPassword style={{ top: "18px" }}>
-              <FontAwesomeIcon
-                icon={isViewCurPassword ? faEye : faEyeSlash}
-                color="#2A9C6B"
-                style={{ cursor: "pointer" }}
-                onClick={() => setIsViewCurPassword(cur => !cur)}
-              />
-            </ViewPassword>
-            <ErrorMessage>{errors.currentPassword?.message}</ErrorMessage>
+            <ErrorMessage>{errors.currentName?.message}</ErrorMessage>
           </InputBox>
 
           <InputBox>
-            <InputTitle>비밀번호</InputTitle>
+            <InputTitle>새로운 이름</InputTitle>
             <Input
-              placeholder="숫자,특수문자,영문 포함 8자리 이상"
-              type={isViewPassword ? "text" : "password"}
-              id="changePassword"
-              // type="password"
-              {...register("changePassword", {
-                required: { value: true, message: "비밀번호를 입력해주세요." },
-                minLength: { value: 8, message: "8자 이상 입력해주세요." },
+              placeholder="새로운 이름을 입력해주세요."
+              type="text"
+              id="newName"
+              {...register("newName", {
+                required: { value: true, message: "이름을 입력해주세요." },
+                minLength: { value: 2, message: "2자 이상 입력해주세요." },
               })}
             />
-            <ViewPassword style={{ top: "18px" }}>
-              <FontAwesomeIcon
-                icon={isViewPassword ? faEye : faEyeSlash}
-                color="#2A9C6B"
-                style={{ cursor: "pointer" }}
-                onClick={() => setIsViewPassword(cur => !cur)}
-              />
-            </ViewPassword>
-            <ErrorMessage>{errors.changePassword?.message}</ErrorMessage>
+            <ErrorMessage>{errors.newName?.message}</ErrorMessage>
           </InputBox>
-
-          <InputBox>
-            <InputTitle>비밀번호 확인</InputTitle>
-            <Input
-              placeholder="동일한 비밀번호를 입력해주세요."
-              type={isViewConfirmPassword ? "text" : "password"}
-              id="confirmPassword"
-              {...register("confirmPassword", {
-                required: "비밀번호를 한번 더 입력해 주세요",
-                validate: {
-                  mathchesPreviousPassword: value => {
-                    const { changePassword } = getValues();
-                    return changePassword === value || "비밀번호가 일치하지 않습니다.";
-                  },
-                },
-              })}
-            />
-            <ViewPassword style={{ top: "18px" }}>
-              <FontAwesomeIcon
-                icon={isViewConfirmPassword ? faEye : faEyeSlash}
-                color="#2A9C6B"
-                style={{ cursor: "pointer" }}
-                onClick={() => setIsViewConfirmPassword(cur => !cur)}
-              />
-            </ViewPassword>
-
-            <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
-          </InputBox>
-
           <Button>수정하기</Button>
           <Button type="button" onClick={closeRegisterModal}>
             취소하기
           </Button>
         </Form>
       </FormContainer>
-      <Overlay
-        onClick={() => setIsPasswordChange(false)}
-        variants={OverlayVariant}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-      />
+      <Overlay onClick={closeRegisterModal} variants={OverlayVariant} initial="initial" animate="animate" exit="exit" />
     </PasswordWrapper>
   );
 }
@@ -216,3 +157,4 @@ const Form = styled.form`
   width: 530px;
   height: 500px;
   margin: auto;
+`;

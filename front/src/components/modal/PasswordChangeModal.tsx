@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { changePassword, registerUser } from "@api/user";
-import { PasswordChangeForm, UserRegisterForm } from "@type/user";
+import { useForm } from "react-hook-form";
+import { changePassword } from "@api/user";
+import { PasswordChangeForm } from "@type/user";
 import { Overlay, ViewPassword } from "@components/modal/LoginModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -9,10 +9,8 @@ import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Wrapper } from "@style/Layout";
 import { UserPasswordProps } from "@pages/mypage";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { userAtom } from "@atom/user";
 import { AnimatePresence } from "framer-motion";
-import { OverlayVariant } from "./LoginModal";
+import { OverlayVariant } from "@style/ModalVariants";
 
 export default function PasswordChangeModal({ setIsPasswordChange }: UserPasswordProps) {
   const [isViewCurPassword, setIsViewCurPassword] = useState(false);
