@@ -23,9 +23,10 @@ export const Box = styled.div`
   justify-content: center;
   align-items: center;
 `;
-export const Title = styled.h1`
+export const Title = styled.span`
   font-size: 32px;
   color: ${props => props.theme.mainColor};
+  font-family: "SebangBold";
 `;
 export const SubTitle = styled.h3`
   /* font-family: "SebangBold"; */
