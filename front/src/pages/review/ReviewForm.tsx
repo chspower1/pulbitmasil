@@ -106,6 +106,8 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     console.log("handleclickcancel");
     setIsReviewCancelModal(true);
   };
+  const userGreenCrews = user?.greenCrews;
+
   return (
     <FormWrap>
       <Form as="form" onSubmit={handleSubmitReview}>
@@ -117,10 +119,16 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           </SubTitle>
         </TitleBox>
         <SelectInput as="select" height={40}>
-          <Option>근교산 자락길 모임1</Option>
+          {userGreenCrews?.length === 0 ? (
+            <Option> 없음</Option>
+          ) : (
+            userGreenCrews?.map(userGreenCrew => <Option>{userGreenCrew?.title}</Option>)
+          )}
+
+          {/* <Option>근교산 자락길 모임1</Option>
           <Option>근교산 자락길 모임2</Option>
           <Option>근교산 자락길 모임3</Option>
-          <Option>근교산 자락길 모임4</Option>
+          <Option>근교산 자락길 모임4</Option> */}
         </SelectInput>
 
         <ImgBox as="label" htmlFor="input-file">
