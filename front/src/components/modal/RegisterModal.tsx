@@ -5,8 +5,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
-import { Accent, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
-import { CloseBtn } from "@style/Modal";
+import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
+import { CloseBtn } from "@style/ModalStyle";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 export default function WelcomeModal() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
@@ -24,9 +24,9 @@ export default function WelcomeModal() {
       {isRegisterModal && (
         <RegisterModalWrap>
           <RegisterModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
-            <Desc>
-              <Accent>로그인</Accent>&nbsp;이 필요해요.
-            </Desc>
+            <ModalDesc>
+              <ModalAccent>로그인</ModalAccent>&nbsp;이 필요해요.
+            </ModalDesc>
 
             <StartBtn type="button" onClick={openLoginModal}>
               로그인 GOGO

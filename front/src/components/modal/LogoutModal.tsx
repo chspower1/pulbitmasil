@@ -3,7 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap, Overlay } from "@style/ModalStyle";
+import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap as LogoutModalWrap, Overlay } from "@style/ModalStyle";
 import { Link, useNavigate } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
@@ -30,7 +30,7 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
             <LogoutDesc>
               <Accent>로그아웃&nbsp; </Accent>하시겠습니까?
             </LogoutDesc>
-            <BtnContainer>
+            <ModalBtnContainer>
               <LogoutBtn type="button" onClick={handleClickLogout}>
                 로그아웃
               </LogoutBtn>
@@ -38,7 +38,7 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
               <CloseBtn type="button" onClick={() => setIsLogoutModal(false)}>
                 취소
               </CloseBtn>
-            </BtnContainer>
+            </ModalBtnContainer>
           </LogoutModalContainer>
           <Overlay
             onClick={() => setIsLogoutModal(false)}
@@ -59,7 +59,7 @@ const LogoutModalContainer = styled(ModalContainer)`
   flex-direction: column;
   align-items: center;
 `;
-const LogoutDesc = styled(Desc)`
+const LogoutDesc = styled(ModalDesc)`
   margin-top: 60px;
   margin-bottom: 40px;
 `;

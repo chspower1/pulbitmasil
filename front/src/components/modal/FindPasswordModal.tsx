@@ -3,7 +3,7 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { BtnContainer, Desc, ModalContainer, ModalWrap as FindModalWrap, Overlay } from "@style/ModalStyle";
+import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap as FindModalWrap, Overlay } from "@style/ModalStyle";
 import { Link, useNavigate } from "react-router-dom";
 import { isPasswordFindModalAtom, userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
@@ -74,13 +74,13 @@ export default function FindPasswordModal() {
               <ErrorMessage>{errors.email?.message}</ErrorMessage>
             </InputBox>
 
-            <BtnContainer>
+            <ModalBtnContainer>
               <LogoutBtn>확인</LogoutBtn>
 
-              <CloseBtn type="button" onClick={closeFindModal}>
+              <ModalCloseBtn type="button" onClick={closeFindModal}>
                 취소
-              </CloseBtn>
-            </BtnContainer>
+              </ModalCloseBtn>
+            </ModalBtnContainer>
           </FindForm>
           <Overlay
             onClick={() => setIsFindPassword(false)}
@@ -101,7 +101,7 @@ const FindForm = styled(ModalContainer)`
   flex-direction: column;
   align-items: center;
 `;
-const LogoutDesc = styled(Desc)`
+const LogoutDesc = styled(ModalDesc)`
   &:first-child {
     margin-top: 60px;
   }
