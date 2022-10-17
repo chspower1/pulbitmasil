@@ -30,12 +30,15 @@ const ContentBox = styled(Box)`
   background-color: ${props => props.theme.weekBorderColor};
 `;
 const ItemTitle = styled(SubTitle)`
-  font-size: 22px;
+  font-size: 20px;
+  color: ${props => props.theme.textColor};
 `;
 const TrashIcon = styled.img`
   background-color: red;
 `;
-const ItemDate = styled(SubTitle)``;
+const ItemDate = styled(ItemTitle)`
+  font-size: 18px;
+`;
 const DeleteBtn = styled(Box)`
   width: 60px;
   height: 60px;

@@ -12,8 +12,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       suspense: true,
-      staleTime: 1000 * 60 * 10,
-      cacheTime: 1000 * 60 * 10,
+      staleTime: 1000 * 60 * 5,
     },
   },
 });
