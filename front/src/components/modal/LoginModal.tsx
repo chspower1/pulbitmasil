@@ -254,7 +254,7 @@ const ErrorMessage = styled.div`
 export const ViewPassword = styled.div`
   position: absolute;
   height: 60px;
-  right: 90px;
+  right: 10px;
   display: flex;
   align-items: center;
 `;
