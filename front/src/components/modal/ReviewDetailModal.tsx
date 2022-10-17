@@ -55,7 +55,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         </ImgContainer>
         <ReviewContainer>
           <InfoContainer>
-            <CardImg src={`/assets/icon/profile01.png`} />
+            <CardImg src={`/assets/icon/user/profile01.png`} />
             <InfoBox>
               <p style={{ fontSize: "25px" }}>
                 <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
@@ -137,7 +137,7 @@ const Description = styled.p`
   line-height: 1.3em;
   margin-top: 20px;
   font-size: 20px;
-  overflow-y: scroll;
+  overflow-y: auto;
   resize: none;
 `;
 const InfoBox = styled(motion.div)`

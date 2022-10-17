@@ -284,7 +284,8 @@ const Accent = styled.h3`
   color: ${props => props.theme.mainColor};
 `;
 const ContentDescription = styled(Desc)`
-  overflow: scroll;
+  overflow-y: auto;
+
   width: 100%;
   height: 100%;
   padding-top: 10px;
