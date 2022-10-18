@@ -57,7 +57,7 @@ router.post("/login", async function (req, res, next) {
       }
 
       const [review] = await maria.execute(
-        `SELECT RV.reviewId, GC.title, RV.description, RV.createAt
+        `SELECT RV.reviewId, GC.title, RV.description, RV.createAt, GC.inProgress
         FROM REVIEW AS RV
         LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
         WHERE RV.userId = ?`,
@@ -172,7 +172,7 @@ router.get("/mypage", login_required, async function (req, res, next) {
     const [rows] = await maria.execute(`SELECT id, name, email, img, social FROM USER WHERE id = ?`, [user_id]);
 
     const [review] = await maria.execute(
-      `SELECT RV.reviewId, GC.title, RV.description, RV.createAt
+      `SELECT RV.reviewId, GC.title, RV.description, RV.createAt, GC.inProgress
         FROM REVIEW AS RV
         LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
         WHERE RV.userId = ?`,
