@@ -1,13 +1,5 @@
 import multer from "multer";
-import fs from "fs";
 import path from "path";
-
-try {
-  fs.readdirSync("uploads");
-} catch (err) {
-  console.error("uploads dir not exist");
-  fs.mkdirSync("uploads");
-}
 
 const upload = multer({
   storage: multer.diskStorage({
