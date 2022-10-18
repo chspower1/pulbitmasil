@@ -5,6 +5,7 @@ import { isReviewCancelAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
+import { DangerAccent } from "@style/Layout";
 export default function ReviewModal() {
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function ReviewModal() {
         <ReviewModalWrap>
           <ReviewModalContainer>
             <CancelDesc>
-              <Accent>취소</Accent>하시겠습니까?
+              <DangerAccent>취소</DangerAccent>하시겠습니까?
             </CancelDesc>
             <CancelDesc className="second">작성한 내용이 모두 사라집니다.</CancelDesc>
 
@@ -70,11 +71,6 @@ const ReviewModalContainer = styled(ModalContainer)`
   right: 0;
   width: 500px;
   height: 200px;
-`;
-
-const Accent = styled.span`
-  color: ${props => props.theme.dangerColor};
-  font-weight: bold;
 `;
 
 const CancelDesc = styled(ModalDesc)`

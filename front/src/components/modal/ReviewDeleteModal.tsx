@@ -17,6 +17,7 @@ import { userAtom } from "@atom/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { OverlayVariant } from "@style/ModalVariants";
 import { getUser, requestLogin } from "@api/user";
+import { DangerAccent } from "@style/Layout";
 
 export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
@@ -54,7 +55,7 @@ export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
         <ReviewModalWrap>
           <ReviewModalContainer>
             <DeleteDesc>
-              <Accent>삭제</Accent> 하시겠습니까?
+              <DangerAccent>삭제</DangerAccent> 하시겠습니까?
             </DeleteDesc>
             <ModalBtnContainer>
               <DeleteBtn type="button" onClick={handleClickConfirm}>
@@ -99,11 +100,6 @@ const ReviewModalContainer = styled(ModalContainer)`
   right: 0;
   width: 500px;
   height: 200px;
-`;
-
-const Accent = styled.span`
-  color: ${props => props.theme.dangerColor};
-  font-weight: bold;
 `;
 
 const DeleteDesc = styled(ModalDesc)`

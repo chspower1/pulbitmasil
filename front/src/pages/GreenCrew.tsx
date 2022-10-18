@@ -215,14 +215,14 @@ export default function GreenCrew() {
           <ContentBox>
             <ContentTitle>
               <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
-              <Accent>"{greenCrews![selectedArea]?.course}"</Accent>은?
+              <GreenAccent style={{ fontSize: "18px" }}>"{greenCrews![selectedArea]?.course}"</GreenAccent>은?
             </ContentTitle>
             <ContentDescription dangerouslySetInnerHTML={{ __html: `${greenCrews![selectedArea]?.content}` }} />
           </ContentBox>
           <ContentBox>
             <ContentTitle>
               <img src="/assets/icon/greenCrew/traffic_info_icon.svg" alt="" />
-              <GreenAccent>교통편</GreenAccent>
+              <GreenAccent style={{ fontSize: "18px" }}>교통편</GreenAccent>
             </ContentTitle>
             <ContentDescription
               dangerouslySetInnerHTML={{
@@ -349,17 +349,13 @@ const ContentBox = styled(Box)`
   justify-content: flex-start;
 `;
 const ContentTitle = styled(Box)``;
-const Accent = styled.h3`
-  font-family: "SebangBold";
-  font-size: 18px;
-  color: ${props => props.theme.mainColor};
-`;
+
 const ContentDescription = styled(Desc)`
   overflow-y: auto;
 
   width: 100%;
   height: 100%;
-  padding-top: 10px;
+  padding: 10px;
   border: solid 1px #f1f1f1;
 `;
 const ReadyBtn = styled.button`

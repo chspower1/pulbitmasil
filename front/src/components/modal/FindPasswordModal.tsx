@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import { UserPasswordProps } from "@pages/mypage";
 import { resetPassword } from "@api/user";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
+import { Box, DangerAccent } from "@style/Layout";
 
 interface EmailForm {
   email: string;
@@ -61,7 +62,7 @@ export default function FindPasswordModal() {
         <FindModalWrap>
           <FindForm onSubmit={handleSubmitFind} variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <LogoutDesc>
-              가입한 <Accent> &nbsp;이메일&nbsp; </Accent>로 임시비밀번호가 발급됩니다.
+              가입한 <DangerAccent> &nbsp;이메일&nbsp; </DangerAccent>로 임시비밀번호가 발급됩니다.
             </LogoutDesc>
             <LogoutDesc>하단에 이메일 주소를 적어주세요.</LogoutDesc>
             <InputBox>
@@ -83,11 +84,11 @@ export default function FindPasswordModal() {
             </InputBox>
 
             <ModalBtnContainer>
-              <LogoutBtn>확인</LogoutBtn>
+              <ConfirmBtn>확인</ConfirmBtn>
 
-              <ModalCloseBtn type="button" onClick={closeFindModal}>
+              <CloseBtn type="button" onClick={closeFindModal}>
                 취소
-              </ModalCloseBtn>
+              </CloseBtn>
             </ModalBtnContainer>
           </FindForm>
           <Overlay
@@ -104,20 +105,20 @@ export default function FindPasswordModal() {
 }
 const FindForm = styled(ModalContainer)`
   width: 500px;
-  height: 350px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 const LogoutDesc = styled(ModalDesc)`
   &:first-child {
-    margin-top: 60px;
+    margin-top: 50px;
   }
 
   font-size: 22px;
 `;
 
-const LogoutBtn = styled.button`
+const ConfirmBtn = styled.button`
   width: 100px;
   height: 40px;
   display: flex;
@@ -130,26 +131,25 @@ const LogoutBtn = styled.button`
     background-color: #cc5e43;
   }
 `;
-const Accent = styled.h1`
-  color: ${props => props.theme.dangerColor};
-`;
-const CloseBtn = styled(LogoutBtn)`
+const CloseBtn = styled(ConfirmBtn)`
   background-color: ${props => props.theme.mainColor};
   &:hover {
     background-color: ${props => props.theme.accentColor};
   }
 `;
 
-const InputBox = styled.div`
+const InputBox = styled(Box)`
   position: relative;
+  flex-direction: column;
   width: 300px;
   color: #8d8d8d;
-  margin: 25px 0;
+  margin: 10px 0;
 `;
 const InputTitle = styled.h3`
   font-size: 13px;
   margin-bottom: 12px;
   color: ${props => props.theme.textColor};
+  align-self: start;
 `;
 const Input = styled.input`
   width: 100%;
