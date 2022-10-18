@@ -98,7 +98,7 @@ export default function Nav() {
   }, []);
   useEffect(() => {
     pathname === "/" ? setCurState("home") : setCurState(pathname.split("/")[1]);
-    console.log("현재 pathname", pathname);
+    console.log("현재 pathname", pathname, curState);
   }, [pathname]);
   return (
     <>

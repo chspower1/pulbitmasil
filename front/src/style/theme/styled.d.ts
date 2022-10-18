@@ -7,6 +7,7 @@ declare module "styled-components" {
     accentColor: string;
     borderColor: string;
     dangerColor: string;
+    accentDangerColor: string;
     weekBorderColor: string;
   }
 }

@@ -32,11 +32,13 @@ export default function GreenCrew() {
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
   const [time, setTime] = useState<string>();
+  const [curMember, setCurMember] = useState(0);
   const [isParticipate, setIsParticipate] = useState<boolean>();
 
   // Query
   const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
+      setCurMember(data![selectedArea].curMember);
       console.log("GreenCrew Query성공", data);
     },
     onError(err) {
@@ -59,27 +61,30 @@ export default function GreenCrew() {
       queryClient.invalidateQueries(["user"]);
     },
   });
-  const greenCrewMutation = useMutation(["greenCrew"], getGreenCrews);
+  const greenCrewMutation = useMutation(["greenCrew"], getGreenCrews, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["greenCrew"]);
+    },
+  });
 
   // Handle
   const handleClickEnter = async () => {
+    setCurMember(cur => cur + 1);
+    setIsParticipate(true);
     console.log("handleclickenter", isParticipate);
-    if (isParticipate) {
-      // 참여상태
-      if (window.confirm("정말 취소하시겠어요?")) {
-        await deleteGreenCrewMember(greenCrews![selectedArea].crewId);
-        await greenCrewMutation.mutate();
-        await userMutation.mutate();
-        setIsParticipate(false);
-        queryClient.invalidateQueries(["greenCrew"]);
-        queryClient.invalidateQueries(["user"]);
-      }
-    } else {
-      await createGreenCrewMember(greenCrews![selectedArea].crewId);
-      await greenCrewMutation.mutate();
-      await userMutation.mutate();
-      queryClient.invalidateQueries(["greenCrew"]);
-      queryClient.invalidateQueries(["user"]);
+    await createGreenCrewMember(greenCrews![selectedArea].crewId);
+    greenCrewMutation.mutate();
+    userMutation.mutate();
+  };
+  const handleClickDelete = async () => {
+    setCurMember(cur => cur - 1);
+    console.log("handleClickDelete", isParticipate);
+    if (window.confirm("정말 취소하시겠어요?")) {
+      setIsParticipate(false);
+      await deleteGreenCrewMember(greenCrews![selectedArea].crewId);
+      greenCrewMutation.mutate();
+      userMutation.mutate();
+      setIsParticipate(false);
     }
   };
 
@@ -129,6 +134,7 @@ export default function GreenCrew() {
   }, []);
 
   useEffect(() => {
+    setCurMember(greenCrews![selectedArea].curMember);
     if (user) {
       searchCrew(user?.greenCrews!, greenCrews![selectedArea]);
     }
@@ -193,16 +199,16 @@ export default function GreenCrew() {
                 <StatusBox>
                   <div>{DTime(time!)}</div>
                   <Desc>
-                    현재까지{" "}
-                    <GreenAccent style={{ fontSize: "32px" }}>{greenCrews![selectedArea]?.curMember}명</GreenAccent>이
-                    참여하고 있어요!
+                    현재까지 <GreenAccent style={{ fontSize: "32px" }}>{curMember}명</GreenAccent>이 참여하고 있어요!
                   </Desc>
                 </StatusBox>
               </Col>
               <Col>
-                <EnterBtn className={isParticipate ? "delete" : "enter"} onClick={handleClickEnter}>
-                  {isParticipate ? "취소" : "참여"}
-                </EnterBtn>
+                {!isParticipate ? (
+                  <EnterBtn onClick={handleClickEnter}>참여</EnterBtn>
+                ) : (
+                  <DeleteBtn onClick={handleClickDelete}>취소</DeleteBtn>
+                )}
               </Col>
             </Row>
           </ContentBox>
@@ -319,8 +325,11 @@ const EnterBtn = styled.button`
   height: 80px;
   max-height: 70px;
   font-size: 32px;
-  &.delete {
-    background-color: ${props => props.theme.dangerColor};
+`;
+const DeleteBtn = styled(EnterBtn)`
+  background-color: ${props => props.theme.dangerColor};
+  &:hover {
+    background-color: ${props => props.theme.accentDangerColor};
   }
 `;
 const StartAt = styled.div``;

@@ -14,9 +14,7 @@ export default function Content() {
   return (
     <ReactFullpage
       navigation
-      anchors={about}
       navigationTooltips={about}
-      recordHistory={true}
       scrollingSpeed={1000}
       onLeave={(origin, destination, direction) => {
         // console.log("onLeave event", { origin, destination, direction });
