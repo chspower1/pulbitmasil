@@ -1,6 +1,6 @@
 import { Router } from "express";
 const greencrewRouter = Router();
-import { cpi } from "../db/mongoDB/mongodb";
+import { getCpi } from "../db/mongoDB/mongodb";
 import login_required from "../middlewares/login_required";
 import maria from "../db/connect/maria";
 
@@ -29,7 +29,7 @@ greencrewRouter.get("/", async function (req, res, next) {
 
     if (rows.length) {
       for (let i in rows) {
-        const CPI = await cpi(rows[i].id);
+        const CPI = await getCpi(rows[i].id);
         rows[i]["CPI"] = CPI[0]["test"];
       }
       res.status(200).json(rows);

@@ -7,16 +7,6 @@ import { emailForTempPassword } from "../utils/email";
 import { Router } from "express";
 const userRouter = Router();
 
-// router.get("/select", async function (req, res) {
-//   try {
-//     const [rows, fields] = await maria.execute("SELECT * FROM USER");
-//     res.send(rows);
-//   } catch (err) {
-//     res.send(err);
-//   }
-// });
-
-// 회원가입
 userRouter.post("/register", async function (req, res, next) {
   try {
     const { name, email, password } = req.body;
@@ -96,7 +86,7 @@ userRouter.delete("/delete", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
 
-    const [rows] = await maria.execute(`DELETE FROM USER WHERE id = ?`, [user_id]);
+    await maria.execute(`DELETE FROM USER WHERE id = ?`, [user_id]);
     res.status(200).json({ success: true });
   } catch (error) {
     next(error);
@@ -199,29 +189,5 @@ userRouter.get("/mypage", login_required, async function (req, res, next) {
     next(error);
   }
 });
-
-// modify 전, 비밀번호 체크
-// router.post("/verify", login_required, async function (req, res, next) {
-//   try {
-//     const user_id = req.currentUserId;
-//     const { password } = req.body;
-
-//     maria.query(`SELECT hashedPassword FROM USER WHERE id = ?`, [user_id], async function (err, rows, fields) {
-//       if (!err) {
-//         const correctPasswordHash = rows[0].hashedPassword;
-//         const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
-//         if (!isPasswordCorrect) {
-//           return res.json({ success: false });
-//         }
-//         res.json({ success: true });
-//       } else {
-//         console.log("err : " + err);
-//         res.send(err);
-//       }
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// });
 
 export { userRouter };
