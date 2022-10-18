@@ -121,7 +121,6 @@ export default function GreenCrew() {
   // 타이머
   useEffect(() => {
     //타이머 설정
-    setTime([0, 0, 0]);
     let timer = setInterval(getTime, 1000);
 
     //타이머 reset

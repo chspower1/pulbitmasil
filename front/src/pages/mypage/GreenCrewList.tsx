@@ -3,10 +3,10 @@ import { Box, Container, Title, Wrapper, SubTitle, Desc, Row } from "@style/Layo
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { UserGreenCrews } from "@type/user";
+import { UserGreenCrew } from "@type/user";
 import { List, Item, ContentBox, ItemTitle, ItemDate, ItemCourse, changeDayForm } from "./Home";
 import dayjs from "dayjs";
-export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCrews[] | undefined }) {
+export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCrew[] | undefined }) {
   return (
     <List>
       {greenCrews?.map(greenCrew => (
