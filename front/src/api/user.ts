@@ -30,15 +30,16 @@ export async function registerUser(newUser: UserRegisterForm) {
   try {
     const bodyData = JSON.stringify(newUser);
     console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
-    return await axiosInstance.post(`user/register`, bodyData, {
+    const { status } = await axiosInstance.post(`user/register`, bodyData, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+    return status;
   } catch (err) {
     console.log(err);
     if (axios.isAxiosError(err) && err.response?.status === 400) {
-      alert("이미 가입된 이메일 입니다. 다른 이메일로 가입해 주세요.");
+      return err.response.status;
     }
   }
 }
@@ -57,12 +58,12 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   return data;
 }
 
-export async function changePassword(password: string) {
+export async function changePassword(newPassword: string, password: string) {
   console.log(`%cPUT 요청 ${BASE_URL}/user/password`, "color: #a25cd1;");
 
   return axiosInstance.put(
     `/user/password`,
-    { password },
+    { newPassword, password },
     {
       headers: {
         "Content-Type": "application/json",

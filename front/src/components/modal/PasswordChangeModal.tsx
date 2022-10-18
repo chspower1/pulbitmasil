@@ -38,7 +38,7 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
   };
 
   const handleSubmitChange = handleSubmit(data => {
-    changePassword(data?.changePassword);
+    changePassword(data?.changePassword, data?.currentPassword);
     closeRegisterModal();
   });
 
