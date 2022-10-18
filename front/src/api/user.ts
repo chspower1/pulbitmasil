@@ -19,7 +19,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
     // console.log("풀빛마실로그인", data);
     return data;
   } catch (err) {
-    console.log(err)
+    console.log(err);
     if (axios.isAxiosError(err) && err?.response?.status === 401) {
       alert("이메일 또는 비밀번호가 일치하지 않습니다.");
     }
@@ -72,15 +72,15 @@ export async function changePassword(password: string) {
   );
 }
 export async function resetPassword(email: string) {
+  console.log(`%cPUT 요청 ${BASE_URL}/user/reset`, "color: #a25cd1;");
+
   try {
-    console.log(`%cPUT 요청 ${BASE_URL}/user/reset`, "color: #a25cd1;");
-
-    const { data } = await axiosInstance.put(`/user/reset`, { email });
-    alert("이메일이 발송되었습니다.")
-    return data.success;
-
+    const { status } = await axiosInstance.put(`/user/reset`, { email });
+    return status;
   } catch (err) {
-    console.log(err);
+    if (axios.isAxiosError(err) && err?.response?.status === 402) {
+      return err?.response?.status;
+    }
   }
 }
 
