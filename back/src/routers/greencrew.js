@@ -1,10 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const { cpi } = require("../db/mongoDB/mongodb");
-const login_required = require("../middlewares/login_required");
-const maria = require("../db/connect/maria");
+import { Router } from "express";
+const greencrewRouter = Router();
+import { cpi } from "../db/mongoDB/mongodb";
+import login_required from "../middlewares/login_required";
+import maria from "../db/connect/maria";
 
-router.get("/", async function (req, res, next) {
+greencrewRouter.get("/", async function (req, res, next) {
   try {
     const [rows] = await maria.execute(
       `SELECT 
@@ -41,7 +41,7 @@ router.get("/", async function (req, res, next) {
   }
 });
 
-router.get("/summary", async function (req, res, next) {
+greencrewRouter.get("/summary", async function (req, res, next) {
   try {
     const [rows] = await maria.execute(
       `SELECT 
@@ -66,7 +66,7 @@ router.get("/summary", async function (req, res, next) {
   }
 });
 
-router.get("/:crewId", login_required, async function (req, res, next) {
+greencrewRouter.get("/:crewId", login_required, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
     const crewId = req.params.crewId;
@@ -95,7 +95,7 @@ router.get("/:crewId", login_required, async function (req, res, next) {
   }
 });
 
-router.delete("/:crewId", login_required, async function (req, res, next) {
+greencrewRouter.delete("/:crewId", login_required, async function (req, res, next) {
   try {
     const crewId = req.params.crewId;
     const userId = req.currentUserId;
@@ -111,4 +111,4 @@ router.delete("/:crewId", login_required, async function (req, res, next) {
   }
 });
 
-module.exports = router;
+export { greencrewRouter };

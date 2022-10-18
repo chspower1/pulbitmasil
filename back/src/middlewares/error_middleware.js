@@ -4,4 +4,4 @@ function errorMiddleware(error, req, res, next) {
   res.status(404).send(error.message);
 }
 
-module.exports = errorMiddleware;
+export { errorMiddleware };

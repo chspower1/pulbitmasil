@@ -1,12 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const login_required = require("../middlewares/login_required");
-const maria = require("../db/connect/maria");
-const random_password = require("../middlewares/random_password");
-const emailForTempPassword = require("../utils/email");
-const Mail = require("nodemailer/lib/mailer");
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import login_required from "../middlewares/login_required";
+import maria from "../db/connect/maria";
+import random_password from "../middlewares/random_password";
+import { emailForTempPassword } from "../utils/email";
+import { Router } from "express";
+const userRouter = Router();
 
 // router.get("/select", async function (req, res) {
 //   try {
@@ -18,7 +17,7 @@ const Mail = require("nodemailer/lib/mailer");
 // });
 
 // 회원가입
-router.post("/register", async function (req, res, next) {
+userRouter.post("/register", async function (req, res, next) {
   try {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,7 +33,7 @@ router.post("/register", async function (req, res, next) {
   }
 });
 
-router.post("/login", async function (req, res, next) {
+userRouter.post("/login", async function (req, res, next) {
   try {
     const { email, password } = req.body;
 
@@ -57,7 +56,7 @@ router.post("/login", async function (req, res, next) {
       }
 
       const [review] = await maria.execute(
-        `SELECT RV.reviewId, GC.title, RV.description, RV.createAt
+        `SELECT RV.reviewId, GC.title, RV.description, RV.createAt, GC.inProgress
         FROM REVIEW AS RV
         LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
         WHERE RV.userId = ?`,
@@ -93,7 +92,7 @@ router.post("/login", async function (req, res, next) {
   }
 });
 
-router.delete("/delete", login_required, async function (req, res, next) {
+userRouter.delete("/delete", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
 
@@ -104,7 +103,7 @@ router.delete("/delete", login_required, async function (req, res, next) {
   }
 });
 
-router.put("/name", login_required, async function (req, res, next) {
+userRouter.put("/name", login_required, async function (req, res, next) {
   try {
     const name = req.body?.name || null;
 
@@ -120,7 +119,7 @@ router.put("/name", login_required, async function (req, res, next) {
   }
 });
 
-router.put("/password", login_required, async function (req, res, next) {
+userRouter.put("/password", login_required, async function (req, res, next) {
   try {
     const { password, newPassword } = req.body;
     const userId = req.currentUserId;
@@ -143,7 +142,7 @@ router.put("/password", login_required, async function (req, res, next) {
   }
 });
 
-router.put("/reset", random_password, async function (req, res, next) {
+userRouter.put("/reset", random_password, async function (req, res, next) {
   try {
     const email = req.body.email;
     const tempPassword = req.randPwd;
@@ -165,14 +164,14 @@ router.put("/reset", random_password, async function (req, res, next) {
   }
 });
 
-router.get("/mypage", login_required, async function (req, res, next) {
+userRouter.get("/mypage", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
 
     const [rows] = await maria.execute(`SELECT id, name, email, img, social FROM USER WHERE id = ?`, [user_id]);
 
     const [review] = await maria.execute(
-      `SELECT RV.reviewId, GC.title, RV.description, RV.createAt
+      `SELECT RV.reviewId, GC.title, RV.description, RV.createAt, GC.inProgress
         FROM REVIEW AS RV
         LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
         WHERE RV.userId = ?`,
@@ -225,4 +224,4 @@ router.get("/mypage", login_required, async function (req, res, next) {
 //   }
 // });
 
-module.exports = router;
+export { userRouter };

@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 require("dotenv").config();
 
 const url = process.env.MONGODB_URL;
@@ -24,5 +24,4 @@ async function cpi(id) {
   return collection;
 }
 
-module.exports.dodream = dodream;
-module.exports.cpi = cpi;
+export { dodream, cpi };
