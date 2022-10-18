@@ -48,21 +48,6 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             alt="review image"
             //
           ></ReviewImg>
-          <ModalCloseBtn
-            onClick={() => {
-              navigate("/review");
-            }}
-          >
-            <svg width="14" height="14" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M19 3L11 11L3 19M3 3L19 19"
-                stroke="white"
-                stroke-width="5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </ModalCloseBtn>
         </ImgContainer>
         <ContentsContainer>
           <InfoContainer>
