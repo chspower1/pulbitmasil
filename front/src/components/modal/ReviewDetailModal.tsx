@@ -10,9 +10,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 export default function ReviewDetailModal({ review }: { review: IReview }) {
-  const { reviewId, name, createAt, description, userId, reviewImg, title } = review;
-  const isEdit = true;
-
+  const { reviewId, name, createAt, description, userId, reviewImg, title, area } = review;
+  console.log("디테일모달", review);
   const navigate = useNavigate();
   const reviewMatch = useMatch(`/review/${reviewId}`);
   const user = useRecoilValue(userAtom);
@@ -23,6 +22,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   };
 
   const handleClickEdit = () => {
+    console.log(review);
     navigate(`/review/edit/${reviewId}`, { state: { reviewId, userId } });
   };
   const createDay = dayjs(createAt!).format("YYYY-MM-DD");
@@ -73,7 +73,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
               </p>
               <p style={{ fontSize: "20px", marginTop: "5px" }}>{createDay} </p>
             </InfoBox>
-            <p style={{ position: "absolute", right: "25px" }}>지역</p>
+            <p style={{ position: "absolute", right: "25px" }}>{area}</p>
           </InfoContainer>
 
           <TextContainer>
@@ -82,17 +82,21 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
           </TextContainer>
         </ContentsContainer>
         <ButtonContainer layoutId={`${reviewId}btn`}>
-          {user?.id === userId ? <Btn onClick={handleClickEdit}>수정</Btn> : null}
-
-          {user?.id === userId ? (
-            <Btn
-              onClick={() => {
-                setReviewDelId(reviewId!);
-              }}
-            >
-              삭제
-            </Btn>
-          ) : null}
+          {user?.id === userId && (
+            <>
+              <Btn type="button" onClick={handleClickEdit}>
+                수정
+              </Btn>
+              <Btn
+                type="button"
+                onClick={() => {
+                  setReviewDelId(reviewId!);
+                }}
+              >
+                삭제
+              </Btn>
+            </>
+          )}
         </ButtonContainer>
       </ReviewContainer>
     </ModalWrap>

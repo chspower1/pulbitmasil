@@ -8,7 +8,6 @@ export default function UpdateReview() {
 
   const updateData: IReviewUpdateData = {
     type: "UPDATE",
-    userId: state.userId,
     reviewId: state.reviewId,
   };
 

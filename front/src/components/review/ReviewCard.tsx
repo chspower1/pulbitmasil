@@ -11,8 +11,8 @@ import { ModalAccent } from "@style/ModalStyle";
 import dayjs from "dayjs";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
-  const { userId, reviewId, description, createAt, name, reviewImg, title } = review;
-  const isEdit = true;
+  const { userId, reviewId, description, createAt, name, reviewImg, title, area } = review;
+  console.log(review);
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
@@ -39,7 +39,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
                 </p>
                 <p style={{ fontSize: "14px", marginTop: "5px" }}>{createDay} </p>
               </InfoBox>
-              <p style={{ position: "absolute", right: "10px" }}>지역</p>
+              <p style={{ position: "absolute", right: "10px" }}>{area}</p>
             </InfoContainer>
             <TextContainer>
               <p style={{ color: "#636E72", fontSize: "16px", fontWeight: "bold" }}>{title}</p>
