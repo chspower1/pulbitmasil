@@ -54,15 +54,16 @@ export default function GreenCrew() {
   };
 
   const convertDate = (startAt: Date) => {
-    const date = new Date(startAt);
-    const newDate = date.toLocaleDateString();
-    const time = date.toLocaleTimeString();
+    const day = dayjs(new Date(startAt));
+    const startDay = day.format("YYYY/MM/DD");
+    const startTime = day.format("HH:mm:ss A");
+
     return (
       <StartAt>
-        <StartDate>{newDate.slice(0, newDate.length - 1)}</StartDate>
+        <StartDate>{startDay}</StartDate>
         <StartTime>
           <Desc as="span">시작시간 : </Desc>
-          {time}
+          {startTime}
         </StartTime>
       </StartAt>
     );
@@ -76,10 +77,10 @@ export default function GreenCrew() {
   };
 
   function getTime() {
-    let greenTime = dayjs(greenCrews![selectedArea].startAt); // 기준이 되는 시각
-    let currentTime = dayjs(new Date());
-    let diffTime = greenTime.unix() - currentTime.unix();
-    let duration = dayjs.duration(diffTime * 1000, "milliseconds");
+    const greenTime = dayjs(greenCrews![selectedArea].startAt); // 기준이 되는 시각
+    const currentTime = dayjs(new Date());
+    const diffTime = greenTime.unix() - currentTime.unix();
+    const duration = dayjs.duration(diffTime * 1000, "milliseconds");
     setTime(duration.format("HH:mm:ss"));
   }
 

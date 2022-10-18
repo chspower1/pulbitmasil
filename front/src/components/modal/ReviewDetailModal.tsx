@@ -1,18 +1,13 @@
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { userAtom } from "@atom/user";
-import { changeDayForm } from "@components/review/ReviewCard";
 import { IReview } from "@type/review";
+import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, SetStateAction, Dispatch, useEffect } from "react";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-// interface ReviewDetailProps {
-//   review: IReview;
-//   isReviewSelect: boolean;
-//   setIsReviewSelect: Dispatch<SetStateAction<boolean>>;
-// }
 export default function ReviewDetailModal({ review }: { review: IReview }) {
   const { reviewId, name, createAt, description, userId, reviewImg } = review;
   const isEdit = true;
@@ -29,7 +24,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   const handleClickEdit = () => {
     navigate(`/review/edit/${reviewId}`, { state: { reviewId, userId } });
   };
-  const day = changeDayForm(createAt!);
+  const createDay = dayjs(createAt!).format("YYYY-MM-DD");
 
   useEffect(() => {
     console.log(reviewMatch);
@@ -60,7 +55,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
               <p style={{ fontSize: "25px" }}>
                 <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
               </p>
-              <p style={{ fontSize: "20px", marginTop: "5px" }}>{day} </p>
+              <p style={{ fontSize: "20px", marginTop: "5px" }}>{createDay} </p>
             </InfoBox>
             <p style={{ position: "absolute", right: "25px" }}>지역</p>
           </InfoContainer>

@@ -8,15 +8,7 @@ import { motion } from "framer-motion";
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import ReviewDeleteModal from "../modal/ReviewDeleteModal";
 import { ModalAccent } from "@style/ModalStyle";
-
-export const changeDayForm = (createAt: Date): string => {
-  const createDay = new Date(createAt);
-  const year = createDay.getFullYear();
-  const month = createDay.getMonth() + 1;
-  const date = createDay.getDate();
-
-  return `${year}-${month >= 10 ? month : "0" + month}-${date >= 10 ? date : "0" + date}`;
-};
+import dayjs from "dayjs";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, description, createAt, name, reviewImg } = review;
@@ -25,7 +17,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   const navigate = useNavigate();
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
 
-  const day = changeDayForm(createAt!);
+  const createDay = dayjs(createAt).format("YYYY-MM-DD");
 
   return (
     <>
@@ -45,7 +37,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
                 <p style={{ fontSize: "18px" }}>
                   <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
                 </p>
-                <p style={{ fontSize: "14px", marginTop: "5px" }}>{day} </p>
+                <p style={{ fontSize: "14px", marginTop: "5px" }}>{createDay} </p>
               </InfoBox>
               <p style={{ position: "absolute", right: "10px" }}>지역</p>
             </InfoContainer>
