@@ -40,10 +40,14 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   const [doneGreenCrews, setDoneGreenCrew] = useState<UserGreenCrew[] | undefined>();
 
   // Query
-  const { data: user } = useQuery<User | undefined>(["user"], getUser);
+  const { data: user } = useQuery<User | undefined>(["user"], getUser, {
+    onSuccess(data) {
+      console.log("리뷰폼 유저 패치", data);
+    },
+  });
   const { data: review } = useQuery<IReview>(["review", reviewId], () => getOneReview(reviewId!), {
     onSuccess(data) {
-      console.log("ReviewForm query 동작", data);
+      console.log("ReviewForm query review 동작", data);
       setImagePreview(review?.reviewImg!); // Query 일정시간동안 호출 안함 .그래서 해당부분 안찍힘?
       setValue("description", review?.description!);
     },
@@ -144,7 +148,18 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
             <DangerAccent> 생생한 경험</DangerAccent>를 공유해주세요!
           </ReviewSubTitle>
         </TitleBox>
-        {doneGreenCrews && review && (
+        {mode === "CREATE" && doneGreenCrews && (
+          <SelectInput as="select" height={40} {...register("title")}>
+            {doneGreenCrews?.map(doneGreenCrew =>
+              review?.title === doneGreenCrew.title ? (
+                <Option selected>{doneGreenCrew?.title}</Option>
+              ) : (
+                <Option>{doneGreenCrew?.title}</Option>
+              ),
+            )}
+          </SelectInput>
+        )}
+        {mode === "UPDATE" && review && doneGreenCrews && (
           <SelectInput as="select" height={40} {...register("title")}>
             {doneGreenCrews?.map(doneGreenCrew =>
               review?.title === doneGreenCrew.title ? (
