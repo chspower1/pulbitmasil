@@ -146,10 +146,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           </ReviewSubTitle>
         </TitleBox>
         <SelectInput as="select" height={40} {...register("title")}>
-          {Boolean(userGreenCrews?.find(userGreenCrew => userGreenCrew.inProgress === 1)) ? (
-            <Option> 없음</Option>
+          {doneGreenCrew ? (
+            doneGreenCrew?.map(userGreenCrews => <Option>{userGreenCrews?.title}</Option>)
           ) : (
-            userGreenCrews?.map(userGreenCrews => <Option>{userGreenCrews?.title}</Option>)
+            <Option>없음</Option>
           )}
         </SelectInput>
 
