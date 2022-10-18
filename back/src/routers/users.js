@@ -6,6 +6,7 @@ const login_required = require("../middlewares/login_required");
 const maria = require("../db/connect/maria");
 const random_password = require("../middlewares/random_password");
 const emailForTempPassword = require("../utils/email");
+const Mail = require("nodemailer/lib/mailer");
 
 // router.get("/select", async function (req, res) {
 //   try {
@@ -111,7 +112,7 @@ router.put("/name", login_required, async function (req, res, next) {
 
     const [rows] = await maria.execute(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId]);
     if (!rows.affectedRows) {
-      res.sendStatus(404);
+      return res.sendStatus(404);
     }
     res.status(200).json({ success: true });
   } catch (error) {
@@ -121,13 +122,20 @@ router.put("/name", login_required, async function (req, res, next) {
 
 router.put("/password", login_required, async function (req, res, next) {
   try {
-    const password = req.body?.password || null;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { password, newPassword } = req.body;
     const userId = req.currentUserId;
 
-    const [rows] = await maria.execute(`UPDATE USER SET hashedPassword = ? WHERE id = ?`, [hashedPassword, userId]);
-    if (!rows.affectedRows) {
-      res.sendStatus(404);
+    const [rows] = await maria.execute("SELECT hashedPassword FROM USER WHERE id = ?", [userId]);
+    const isPasswordCorrect = await bcrypt.compare(password, rows[0].hashedPassword);
+    if (!isPasswordCorrect) {
+      return res.sendStatus(406);
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const [rows2] = await maria.execute(`UPDATE USER SET hashedPassword = ? WHERE id = ?`, [hashedPassword, userId]);
+    if (!rows2.affectedRows) {
+      return res.sendStatus(404);
     }
     res.status(200).json({ success: true });
   } catch (error) {
@@ -147,7 +155,7 @@ router.put("/reset", random_password, async function (req, res, next) {
     );
 
     if (!rows.affectedRows) {
-      res.sendStatus(402);
+      return res.sendStatus(402);
     }
 
     await emailForTempPassword(email, tempPassword);

@@ -54,7 +54,6 @@ router.get("/summary", async function (req, res, next) {
       GROUP BY A.crewId`,
     );
 
-    console.log(rows);
     if (rows.length) {
       res.status(200).json(rows.slice(-4));
     } else {

@@ -19,9 +19,7 @@ router.get("/", async function (req, res, next) {
       LEFT JOIN GREENCREW AS GC ON GC.crewId = REVIEW.crewId`,
     );
 
-    if (rows.length) {
-      res.status(200).json(rows);
-    }
+    res.status(200).json(rows);
   } catch (error) {
     next(error);
   }
@@ -57,7 +55,7 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
     const { description, createAt, title } = req.body;
 
     if (!description || !createAt || !title) {
-      res.sendStatus(405);
+      return res.sendStatus(405);
     }
 
     let imgName;
@@ -104,7 +102,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
     }
 
     if (!description) {
-      res.sendStatus(405);
+      return res.sendStatus(405);
     }
 
     if (!imgName) {
