@@ -28,7 +28,7 @@ greencrewRouter.get("/", async function (req, res, next) {
     );
 
     if (rows.length) {
-      for (i in rows) {
+      for (let i in rows) {
         const CPI = await cpi(rows[i].id);
         rows[i]["CPI"] = CPI[0]["test"];
       }

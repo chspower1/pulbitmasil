@@ -12,10 +12,11 @@ global.hostURL = process.env.Upload;
 reviewRouter.get("/", async function (req, res, next) {
   try {
     const [rows] = await maria.execute(
-      `SELECT reviewId, userId, description,createAt, name, reviewImg, GC.title
+      `SELECT reviewId, userId, description,createAt, name, reviewImg, GC.title, RT.area
       FROM REVIEW
       LEFT JOIN USER ON USER.id = REVIEW.userId
-      LEFT JOIN GREENCREW AS GC ON GC.crewId = REVIEW.crewId`,
+      LEFT JOIN GREENCREW AS GC ON GC.crewId = REVIEW.crewId
+      LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId`,
     );
 
     res.status(200).json(rows);
