@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { UserPasswordProps } from "@pages/mypage";
 import { resetPassword } from "@api/user";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
-import { Box } from "@style/Layout";
+import { Box, DangerAccent } from "@style/Layout";
 
 interface EmailForm {
   email: string;
@@ -62,7 +62,7 @@ export default function FindPasswordModal() {
         <FindModalWrap>
           <FindForm onSubmit={handleSubmitFind} variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <LogoutDesc>
-              가입한 <Accent> &nbsp;이메일&nbsp; </Accent>로 임시비밀번호가 발급됩니다.
+              가입한 <DangerAccent> &nbsp;이메일&nbsp; </DangerAccent>로 임시비밀번호가 발급됩니다.
             </LogoutDesc>
             <LogoutDesc>하단에 이메일 주소를 적어주세요.</LogoutDesc>
             <InputBox>
@@ -130,9 +130,6 @@ const ConfirmBtn = styled.button`
   &:hover {
     background-color: #cc5e43;
   }
-`;
-const Accent = styled.h1`
-  color: ${props => props.theme.dangerColor};
 `;
 const CloseBtn = styled(ConfirmBtn)`
   background-color: ${props => props.theme.mainColor};

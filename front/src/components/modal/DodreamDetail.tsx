@@ -200,6 +200,3 @@ const LogoutBtn = styled.button`
     background-color: #cc5e43;
   }
 `;
-const Accent = styled.h1`
-  color: ${props => props.theme.dangerColor};
-`;

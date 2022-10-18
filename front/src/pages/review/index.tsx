@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { ReviewDeleteIdAtom, isRegisterModalAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { isLoginSelector, userAtom } from "@atom/user";
-import { Box, Container, Wrapper } from "@style/Layout";
+import { Box, Container, DangerAccent, Wrapper } from "@style/Layout";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
 import RegisterModal from "@components/modal/RegisterModal";
@@ -39,7 +39,7 @@ export default function Review() {
       </TitleContainer>
       <CardContainer>
         <SubTitle>
-          <Accent>풀빛마실</Accent> 후기를 공유해주세요!
+          풀빛마실<DangerAccent> 후기</DangerAccent>를 공유해주세요!
         </SubTitle>
         <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
         <CardBox>
@@ -86,10 +86,6 @@ const SubTitle = styled.p`
   margin-top: 15px;
   color: ${props => props.theme.mainColor};
 `;
-const Accent = styled.span`
-  color: ${props => props.theme.dangerColor};
-`;
-
 const CardContainer = styled(Container)`
   flex-direction: column;
   justify-content: flex-start;

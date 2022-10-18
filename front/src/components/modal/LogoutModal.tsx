@@ -9,6 +9,7 @@ import { userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
 import { createPortal } from "react-dom";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
+import { DangerAccent } from "@style/Layout";
 
 export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
@@ -28,7 +29,7 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
         <LogoutModalWrap>
           <LogoutModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <LogoutDesc>
-              <Accent>로그아웃&nbsp; </Accent>하시겠습니까?
+              <DangerAccent>로그아웃&nbsp; </DangerAccent>하시겠습니까?
             </LogoutDesc>
             <ModalBtnContainer>
               <LogoutBtn type="button" onClick={handleClickLogout}>
@@ -76,9 +77,6 @@ const LogoutBtn = styled.button`
   &:hover {
     background-color: #cc5e43;
   }
-`;
-const Accent = styled.h1`
-  color: ${props => props.theme.dangerColor};
 `;
 const CloseBtn = styled(LogoutBtn)`
   background-color: ${props => props.theme.mainColor};
