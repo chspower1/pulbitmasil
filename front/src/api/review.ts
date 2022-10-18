@@ -34,15 +34,12 @@ export async function createReview(contents: FormData) {
 
 export async function editReview(contents: FormData) {
   const reviewId = contents.get("reviewId");
-  console.log(`%cPUT 요청 ${BASE_URL}/review/${reviewId}`, "color: #a25cd1;");
-
+  console.log(`%cPUT 요청 ${BASE_URL}/review/${reviewId} || ${contents.get("title")}`, "color: #a25cd1;");
+  console.log("------------------------", contents);
   return axiosInstance.put(`review/${reviewId}`, contents, {
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
-    params: {
-      reviewId,
     },
   });
 }

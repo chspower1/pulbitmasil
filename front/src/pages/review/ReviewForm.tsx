@@ -37,7 +37,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   const queryClient = useQueryClient();
   const image = watch("reviewImg");
   const [inProgressGreenCrew, setInProgressGreenCrew] = useState<UserGreenCrew[] | undefined>();
-  const [doneGreenCrew, setDoneProgressGreenCrew] = useState<UserGreenCrew[] | undefined>();
+  const [doneGreenCrews, setDoneGreenCrew] = useState<UserGreenCrew[] | undefined>();
 
   // Query
   const { data: user } = useQuery<User | undefined>(["user"], getUser);
@@ -67,7 +67,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   // Util
   const checkInProgress = (greenCrews: UserGreenCrew[]) => {
     setInProgressGreenCrew(greenCrews?.filter(greenCrew => greenCrew.inProgress! === 1));
-    setDoneProgressGreenCrew(greenCrews?.filter(greenCrew => greenCrew.inProgress! === 0));
+    setDoneGreenCrew(greenCrews?.filter(greenCrew => greenCrew.inProgress! === 0));
   };
 
   // useEffect
@@ -85,6 +85,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     setIsReviewCancelModal(true);
   };
   const handleSubmitReview = handleSubmit(data => {
+    console.log("------------------", data);
     const formData = new FormData();
     formData.append("description", data.description);
     formData.append("title", data.title);
@@ -94,7 +95,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         const createDay = dayjs(new Date());
         formData.append("createAt", createDay.toString());
         formData.append("file", uploadImg);
-        formData.append("name", user?.name!);
         console.log("Create formData", formData);
         reviewMutation.mutate(formData);
         userMutation.mutate();
@@ -130,7 +130,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
       setImagePreview(window.URL.createObjectURL(file as File));
       console.log("이미지", imagePreview);
       setUploadImg(file);
-
       console.log(image);
       console.log(window.URL.createObjectURL(file as File));
     }
@@ -145,13 +144,17 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
             <DangerAccent> 생생한 경험</DangerAccent>를 공유해주세요!
           </ReviewSubTitle>
         </TitleBox>
-        <SelectInput as="select" height={40} {...register("title")}>
-          {doneGreenCrew ? (
-            doneGreenCrew?.map(userGreenCrews => <Option>{userGreenCrews?.title}</Option>)
-          ) : (
-            <Option>없음</Option>
-          )}
-        </SelectInput>
+        {doneGreenCrews && review && (
+          <SelectInput as="select" height={40} {...register("title")}>
+            {doneGreenCrews?.map(doneGreenCrew =>
+              review?.title === doneGreenCrew.title ? (
+                <Option selected>{doneGreenCrew?.title}</Option>
+              ) : (
+                <Option>{doneGreenCrew?.title}</Option>
+              ),
+            )}
+          </SelectInput>
+        )}
 
         <ImgBox as="label" htmlFor="input-file">
           {mode === "UPDATE" ? (
@@ -166,7 +169,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
 
         <ReviewTextArea
           placeholder="내용을 입력해주세요."
-          defaultValue={review?.description} // 텍스트는 여기서 지정중.
           {...register("description", {
             required: { value: true, message: "내용을 입력해주세요." },
           })}

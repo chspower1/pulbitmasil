@@ -90,6 +90,7 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
 
 router.put("/:reviewId", login_required, uploadSingle, async function (req, res, next) {
   try {
+    console.log(req.body);
     const reviewer = parseInt(req.body.userId);
     const userId = req.currentUserId;
     const description = req.body.description ?? null;
