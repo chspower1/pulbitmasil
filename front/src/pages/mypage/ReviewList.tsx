@@ -1,13 +1,13 @@
 import React from "react";
 import { Box, Container, Title, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
-import { UserReviews } from "@type/user";
+import { UserReview } from "@type/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { ContentBox, ItemDate, ItemTitle, List, Item as ItemGuide } from "./Home";
 import { useRecoilState } from "recoil";
 import { ReviewDeleteIdAtom } from "@atom/atom";
-export default function ReviewList({ reviews }: { reviews: UserReviews[] | undefined }) {
+export default function ReviewList({ reviews }: { reviews: UserReview[] | undefined }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   return (
     <List>

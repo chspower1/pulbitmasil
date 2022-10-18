@@ -117,7 +117,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     console.log("handleclickcancel");
     setIsReviewCancelModal(true);
   };
-  const userGreenCrews = user?.greenCrews;
+  const UserGreenCrew = user?.greenCrews;
 
   return (
     <FormWrap>
@@ -130,10 +130,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           </SubTitle>
         </TitleBox>
         <SelectInput as="select" height={40} {...register("title")}>
-          {userGreenCrews?.length === 0 ? (
+          {UserGreenCrew?.length === 0 ? (
             <Option> 없음</Option>
           ) : (
-            userGreenCrews?.map(userGreenCrew => <Option>{userGreenCrew?.title}</Option>)
+            UserGreenCrew?.map(userGreenCrew => <Option>{userGreenCrew?.title}</Option>)
           )}
         </SelectInput>
 

@@ -18,15 +18,17 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { getJSDocReturnTag } from "typescript";
 import { getUser } from "@api/user";
-import { User } from "@type/user";
+import { User, UserGreenCrew } from "@type/user";
 
 export default function GreenCrew() {
+  // Variable
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
   const [time, setTime] = useState<number[]>([]);
   const [isParticipate, setIsParticipate] = useState<boolean>();
-  const [participateList, setParticipateList] = useState<string[]>();
+
+  // Query
   const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
       console.log("GreenCrew Query성공", data);
@@ -44,12 +46,15 @@ export default function GreenCrew() {
     },
   });
 
+  // Mutation
   const userMutation = useMutation(getUser, {
     onSuccess: () => {
       queryClient.invalidateQueries(["user"]);
     },
   });
   const greenCrewMutation = useMutation(["greenCrew"], getGreenCrews);
+
+  // Handle
   const handleClickEnter = async () => {
     console.log("handleclickenter", isParticipate);
     if (isParticipate) {
@@ -71,6 +76,11 @@ export default function GreenCrew() {
     }
   };
 
+  const isPartici = (userGreenCrew: UserGreenCrew[], greenCrew: IGreenCrew) => {
+    const isParticipated = Boolean(userGreenCrew.find(userGreenCrew => userGreenCrew.crewId === greenCrew.crewId));
+    console.log("=======================================", isParticipated);
+    setIsParticipate(isParticipated);
+  };
   const convertDate = (startAt: Date) => {
     const date = new Date(startAt);
     const newDate = date.toLocaleDateString();
@@ -97,7 +107,6 @@ export default function GreenCrew() {
   };
 
   function getTime() {
-    console.log("getTime");
     const setDate = new Date(greenCrews![selectedArea].startAt); // 기준이 되는 시각
     const now = new Date();
     const distance = now.getTime() - setDate.getTime();
@@ -108,23 +117,19 @@ export default function GreenCrew() {
     setTime([hours, minutes, seconds]);
   }
 
+  // 타이머
   useEffect(() => {
     //타이머 설정
     setTime([0, 0, 0]);
     let timer = setInterval(getTime, 1000);
-
-    //참여 유저
-    setParticipateList(user?.greenCrews?.map(data => data.title));
 
     //타이머 reset
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    console.log(participateList);
-    setIsParticipate(participateList?.includes(greenCrews![selectedArea].title));
-  }, [selectedArea, participateList]);
-
+    isPartici(user?.greenCrews!, greenCrews![selectedArea]);
+  }, [greenCrews, selectedArea]);
   return (
     <GreenCrewWrapper>
       <AreaNav>
@@ -192,7 +197,9 @@ export default function GreenCrew() {
                 </StatusBox>
               </Col>
               <Col>
-                <EnterBtn onClick={handleClickEnter}>{isParticipate ? "취소" : "참여"}</EnterBtn>
+                <EnterBtn className={isParticipate ? "delete" : "enter"} onClick={handleClickEnter}>
+                  {isParticipate ? "취소" : "참여"}
+                </EnterBtn>
               </Col>
             </Row>
           </ContentBox>
@@ -309,6 +316,9 @@ const EnterBtn = styled.button`
   height: 80px;
   max-height: 70px;
   font-size: 32px;
+  &.delete {
+    background-color: ${props => props.theme.dangerColor};
+  }
 `;
 const StartAt = styled.div``;
 const DetailTitle = styled(Desc)`

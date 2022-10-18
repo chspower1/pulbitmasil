@@ -3,17 +3,17 @@ export interface User {
   email: string;
   name: string;
   token: string;
-  reviews?: UserReviews[]; // 작성한 review 배열
-  greenCrews?: UserGreenCrews[]; // 참여한 greenCrew  배열
+  reviews?: UserReview[]; // 작성한 review 배열
+  greenCrews?: UserGreenCrew[]; // 참여한 greenCrew  배열
   social: "origin" | "kakao" | "naver";
 }
-export interface UserReviews {
+export interface UserReview {
   reviewId?: number;
   title: string;
   description: string;
   createAt: string;
 }
-export interface UserGreenCrews {
+export interface UserGreenCrew {
   crewId?: number;
   title: string;
   course: string;
