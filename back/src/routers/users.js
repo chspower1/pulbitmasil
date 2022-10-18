@@ -157,6 +157,42 @@ router.put("/reset", random_password, async function (req, res, next) {
   }
 });
 
+router.get("/mypage", login_required, async function (req, res, next) {
+  try {
+    const user_id = req.currentUserId;
+
+    const [rows] = await maria.execute(`SELECT id, name, email, img, social FROM USER WHERE id = ?`, [user_id]);
+
+    const [review] = await maria.execute(
+      `SELECT RV.reviewId, GC.title, RV.description, RV.createAt
+        FROM REVIEW AS RV
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+        WHERE RV.userId = ?`,
+      [user_id],
+    );
+
+    const [greenCrew] = await maria.execute(
+      `SELECT GC.crewId, GC.title, GC.startAt, RT.course, RT.area
+        FROM USERTOGREENCREW AS UTGC
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+        LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+        WHERE UTGC.userId = ?`,
+      [user_id],
+    );
+
+    res.status(200).json({
+      email: rows[0].email,
+      id: rows[0].id,
+      name: rows[0].name,
+      social: rows[0].social,
+      reviews: review,
+      greenCrews: greenCrew,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // modify 전, 비밀번호 체크
 // router.post("/verify", login_required, async function (req, res, next) {
 //   try {
