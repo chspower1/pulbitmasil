@@ -12,17 +12,19 @@ import Home from "./Home";
 import { AnimatePresence } from "framer-motion";
 import UserEditNav from "@components/UserEditNav";
 import NameChangeModal from "@components/modal/NameChangeModal";
+import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
+import { ReviewDeleteIdAtom } from "@atom/atom";
 export interface UserPasswordProps {
   setIsPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function UserInfo() {
+export default function MyPage() {
   const user = useRecoilValue(userAtom);
   const [isEdit, setIsEdit] = useState(false);
   const { menu, target } = useParams();
   const [isPasswordChange, setIsPasswordChange] = useState(false);
   const [isNameChange, setIsNameChange] = useState(false);
-
+  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   const handleClickChangePassword = () => {
     // changePassword()
     if (user?.social === "origin") {
@@ -81,6 +83,7 @@ export default function UserInfo() {
           isNameChange={isNameChange}
           name={user?.name!}
         ></NameChangeModal>
+        {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
       </AnimatePresence>
     </MyPageWrapper>
   );
@@ -150,7 +153,7 @@ const Menu = styled.button`
 const MyPageContainer = styled(Container)`
   position: relative;
   flex-direction: column;
-  width: 800px;
+  width: 700px;
   height: 100%;
   background-color: white;
 `;

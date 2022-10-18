@@ -42,5 +42,6 @@ export async function deleteGreenCrewMember(crewId: number) {
     });
   } catch (err) {
     console.log(err);
+    return err;
   }
 }

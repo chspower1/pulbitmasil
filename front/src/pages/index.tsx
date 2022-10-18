@@ -12,7 +12,7 @@ import Dodream from "./Dodream";
 import MyPage from "./mypage";
 import GreenCrew from "./GreenCrew";
 import WelcomeModal from "@components/modal/WelcomeModal";
-import Review from "./review/Review";
+import Review from "./review";
 import CreateReview from "./review/CreateReview";
 import UpdateReview from "./review/UpdateReview";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";

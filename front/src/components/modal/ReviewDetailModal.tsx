@@ -22,7 +22,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   const user = useRecoilValue(userAtom);
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
 
-  const onOverlayClick = () => {
+  const handleClickOverlay = () => {
     navigate("/review");
   };
 
@@ -39,7 +39,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   return (
     <>
       <Overlay
-        onClick={onOverlayClick}
+        onClick={handleClickOverlay}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}

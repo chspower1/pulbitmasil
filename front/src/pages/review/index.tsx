@@ -20,6 +20,7 @@ export default function Review() {
   const reviewMatch = useMatch("/review/:reviewId");
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
+
   const isLogin = useRecoilValue(isLoginSelector);
   const { data: reviews } = useQuery<IReview[]>(["reviews"], getReviews, {
     onSuccess(data) {
