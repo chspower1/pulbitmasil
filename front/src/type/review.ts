@@ -10,6 +10,7 @@ export interface IReview {
   description: string;
   title: string;
   createAt?: Date;
+  area?: string;
   reviewImg?: File[] | string; //백에서 받을때 image 경로
 }
 
