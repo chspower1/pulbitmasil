@@ -65,7 +65,7 @@ router.post("/login", async function (req, res, next) {
       );
 
       const [greenCrew] = await maria.execute(
-        `SELECT GC.crewId, GC.title, GC.startAt, RT.course, RT.area
+        `SELECT GC.crewId, GC.title, GC.startAt, RT.course, RT.area, GC.inProgress
         FROM USERTOGREENCREW AS UTGC
         LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
         LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
@@ -180,7 +180,7 @@ router.get("/mypage", login_required, async function (req, res, next) {
     );
 
     const [greenCrew] = await maria.execute(
-      `SELECT GC.crewId, GC.title, GC.startAt, RT.course, RT.area
+      `SELECT GC.crewId, GC.title, GC.startAt, RT.course, RT.area, GC.inProgress
         FROM USERTOGREENCREW AS UTGC
         LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
         LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId

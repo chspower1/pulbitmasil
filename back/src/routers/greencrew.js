@@ -23,6 +23,7 @@ router.get("/", async function (req, res, next) {
       FROM GREENCREW AS A
       INNER JOIN ROUTE AS B
       ON A.routeId = B.id
+      WHERE A.inProgress = 1
       GROUP BY A.crewId`,
     );
 
@@ -31,7 +32,7 @@ router.get("/", async function (req, res, next) {
         const CPI = await cpi(rows[i].id);
         rows[i]["CPI"] = CPI[0]["test"];
       }
-      res.status(200).json(rows.slice(-4));
+      res.status(200).json(rows);
     } else {
       res.sendStatus(404);
     }
@@ -51,11 +52,12 @@ router.get("/summary", async function (req, res, next) {
       FROM GREENCREW AS A
       INNER JOIN ROUTE AS B
       ON A.routeId = B.id
+      WHERE A.inProgress = 1
       GROUP BY A.crewId`,
     );
 
     if (rows.length) {
-      res.status(200).json(rows.slice(-4));
+      res.status(200).json(rows);
     } else {
       res.sendStatus(404);
     }
