@@ -16,8 +16,10 @@ export async function requestLogin(loginInfo: UserLoginForm) {
     console.log("풀빛마실로그인", data);
     return data;
   } catch (err) {
-    // alert("로그인 정보가 옳지 않습니다!");
     console.log(err);
+    if (axios.isAxiosError(err) && err?.response?.status === 401) {
+      alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+    }
   }
 }
 export async function getUser() {
@@ -36,14 +38,21 @@ export async function getUser() {
 }
 
 export async function registerUser(newUser: UserRegisterForm) {
-  const bodyData = JSON.stringify(newUser);
-  console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
-
-  return axiosInstance.post(`user/register`, bodyData, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  try {
+    const bodyData = JSON.stringify(newUser);
+    console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
+    const { status } = await axiosInstance.post(`user/register`, bodyData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return status;
+  } catch (err) {
+    console.log(err);
+    if (axios.isAxiosError(err) && err.response?.status === 400) {
+      return err.response.status;
+    }
+  }
 }
 
 export async function kakaoLogin(code: string) {
@@ -60,12 +69,12 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   return data;
 }
 
-export async function changePassword(password: string) {
+export async function changePassword(newPassword: string, password: string) {
   console.log(`%cPUT 요청 ${BASE_URL}/user/password`, "color: #a25cd1;");
 
   return axiosInstance.put(
     `/user/password`,
-    { password },
+    { newPassword, password },
     {
       headers: {
         "Content-Type": "application/json",
@@ -77,8 +86,14 @@ export async function changePassword(password: string) {
 export async function resetPassword(email: string) {
   console.log(`%cPUT 요청 ${BASE_URL}/user/reset`, "color: #a25cd1;");
 
-  const { data } = await axiosInstance.put(`/user/reset`, { email });
-  return data.success;
+  try {
+    const { status } = await axiosInstance.put(`/user/reset`, { email });
+    return status;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err?.response?.status === 402) {
+      return err?.response?.status;
+    }
+  }
 }
 
 export async function changeName(name: string) {

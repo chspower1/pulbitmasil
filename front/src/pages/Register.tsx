@@ -25,9 +25,14 @@ export default function Register() {
 
   const onSubmitRegister = handleSubmit(data => {
     delete data.confirmPassword;
-    // console.log(data);
-    registerUser(data);
-    navigate("/");
+    registerUser(data).then(status => {
+      if (status === 201) {
+        alert("회원가입이 완료되었습니다.");
+        navigate("/");
+      } else if (status === 400) {
+        alert("이미 가입된 이메일 입니다. 다른 이메일로 가입해 주세요.");
+      }
+    });
   });
 
   return (

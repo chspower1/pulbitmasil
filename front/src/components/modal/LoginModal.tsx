@@ -145,9 +145,7 @@ export default function LoginModal() {
                 <Link to="/register">회원가입 </Link>
               </Register>
 
-              <FindPassword onClick={handleClickFind}>
-                {/* <Link to="/register">비밀번호 찾기</Link> */}비밀번호 찾기
-              </FindPassword>
+              <FindPassword onClick={handleClickFind}>비밀번호 찾기</FindPassword>
             </UserBox>
             <SocialLoginBox>
               <NaverLoginBtn />
@@ -198,6 +196,7 @@ const Register = styled.div`
 `;
 const FindPassword = styled(Register)`
   border-left: solid 3px ${props => props.theme.weekColor};
+  cursor: pointer;
 `;
 const Input = styled.input`
   width: 440px;

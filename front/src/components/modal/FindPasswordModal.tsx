@@ -44,12 +44,13 @@ export default function FindPasswordModal() {
   };
 
   const handleSubmitFind = handleSubmit(data => {
-    resetPassword(watch("email")).then(isSuccess => {
-      if (isSuccess) {
+    resetPassword(watch("email")).then(status => {
+      console.log(status);
+      if (status === 205) {
         closeFindModal();
-        alert("임시비밀번호 발급이 완료되었습니다.");
+        alert("임시비밀번호가 발급되었습니다.");
       } else {
-        alert("아이디를 다시 확인해주세요.");
+        alert("이메일을 다시 확인해주세요.");
       }
     });
   });
