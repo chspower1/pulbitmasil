@@ -8,22 +8,22 @@ router.get("/", async function (req, res, next) {
   try {
     const [rows] = await maria.execute(
       `SELECT 
-                    A.crewId,
-                    A.title,
-                    A.startAt,
-                    A.maxMember,
-                    ( SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.crewId ) AS curMember,
-                    B.id,
-                    B.course,
-                    B.distance,
-                    B.leadTime,
-                    B.level, 
-                    B.content,
-                    B.trafficInfo
-                  FROM GREENCREW AS A
-                  INNER JOIN ROUTE AS B
-                  ON A.routeId = B.id
-                  GROUP BY A.crewId`,
+      A.crewId,
+      A.title,
+      A.startAt,
+      A.maxMember,
+      ( SELECT COUNT(*) FROM USERTOGREENCREW WHERE crewId = A.crewId ) AS curMember,
+      B.id,
+      B.course,
+      B.distance,
+      B.leadTime,
+      B.level, 
+      B.content,
+      B.trafficInfo
+      FROM GREENCREW AS A
+      INNER JOIN ROUTE AS B
+      ON A.routeId = B.id
+      GROUP BY A.crewId`,
     );
 
     if (rows.length) {
@@ -33,14 +33,13 @@ router.get("/", async function (req, res, next) {
       }
       res.status(200).json(rows.slice(-4));
     } else {
-      throw new Error("failed to select");
+      res.sendStatus(404);
     }
   } catch (error) {
     next(error);
   }
 });
 
-// 멤버 추가
 router.get("/:crewId", login_required, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
@@ -62,7 +61,7 @@ router.get("/:crewId", login_required, async function (req, res, next) {
 
       res.status(200).json(rows2);
     } else {
-      throw new Error("Recruitment is complete");
+      res.sendStatus(404);
     }
   } catch (error) {
     next(error);
@@ -80,7 +79,7 @@ router.delete("/:crewId", login_required, async function (req, res, next) {
     if (rows.affectedRows) {
       res.status(200).json({ success: true });
     } else {
-      throw new Error("failed to delete");
+      res.sendStatus(404);
     }
   } catch (error) {
     next(error);

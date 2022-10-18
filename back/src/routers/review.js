@@ -15,11 +15,8 @@ router.get("/", async function (req, res, next) {
     const [rows] = await maria.execute(
       "SELECT reviewId, userId, description,createAt, name, reviewImg FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
     );
-
     if (rows.length) {
-      res.send(rows);
-    } else {
-      throw new Error("failed to select");
+      res.status(200).json(rows);
     }
   } catch (error) {
     next(error);
@@ -35,9 +32,9 @@ router.get("/:reviewId", async function (req, res, next) {
     );
 
     if (rows.length) {
-      res.send(rows);
+      res.status(200).json(rows);
     } else {
-      throw new Error("failed to select");
+      res.sendStatus(404);
     }
   } catch (error) {
     next(error);
@@ -50,12 +47,8 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
     const userId = req.currentUserId;
     const { description, createAt, title } = req.body;
 
-    if (!description || !createAt) {
-      throw new Error("필수값이 없습니다.");
-    }
-
-    if (!description || !createAt) {
-      throw new Error("필수값이 없습니다.");
+    if (!description || !createAt || !title) {
+      res.sendStatus(406);
     }
 
     let imgName;
@@ -80,7 +73,7 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
         reviewImg: imgName,
       });
     } else {
-      throw new Error("failed to Insert");
+      res.sendStatus(404);
     }
   } catch (error) {
     next(error);
@@ -96,7 +89,11 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
     let imgName = req.body.imageUrl ?? null;
 
     if (reviewer !== userId) {
-      return res.sendStatus(432);
+      return res.sendStatus(407);
+    }
+
+    if (!description) {
+      res.sendStatus(406);
     }
 
     if (!imgName) {
@@ -113,7 +110,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
     if (rows.changedRows) {
       res.status(200).json({ success: true });
     } else {
-      throw new Error("failed to update");
+      res.sendStatus(404);
     }
   } catch (error) {
     next(error);
@@ -127,7 +124,7 @@ router.delete("/:reviewId", login_required, async function (req, res, next) {
     const reviewId = req.params.reviewId;
 
     if (reviewer !== userId) {
-      return res.sendStatus(432);
+      return res.sendStatus(407);
     }
 
     fileDelete(reviewId);
@@ -137,7 +134,7 @@ router.delete("/:reviewId", login_required, async function (req, res, next) {
     if (rows.affectedRows) {
       res.status(200).json({ success: true });
     } else {
-      throw new Error("failed to delete");
+      res.sendStatus(404);
     }
   } catch (error) {
     next(error);

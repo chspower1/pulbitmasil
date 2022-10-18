@@ -4,7 +4,7 @@ function login_required(req, res, next) {
   const userToken = req.headers["authorization"]?.split(" ")[1] ?? "null";
   console.log(req.headers["authorization"]);
   if (userToken === "null") {
-    return res.status(400).send("로그인한 유저만 사용할 수 있는 서비스");
+    return res.sendStatus(408);
   }
 
   try {
@@ -15,7 +15,7 @@ function login_required(req, res, next) {
     req.currentUserId = user_id;
     next();
   } catch (error) {
-    return res.sendStatus(400);
+    return res.sendStatus(408);
   }
 }
 

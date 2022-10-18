@@ -27,9 +27,9 @@ router.post("/register", async function (req, res, next) {
       [name, email, hashedPassword],
     );
 
-    res.status(200).json({ success: true, id: rows.insertId, social: "origin" });
+    res.status(201).json({ success: true, id: rows.insertId, social: "origin" });
   } catch (error) {
-    next(error);
+    res.sendStatus(400);
   }
 });
 
@@ -52,7 +52,7 @@ router.post("/login", async function (req, res, next) {
       const correctPasswordHash = rows[0].hashedPassword;
       const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
       if (!isPasswordCorrect) {
-        return res.status(400).json({ success: false });
+        return res.sendStatus(401);
       }
 
       const [review] = await maria.execute(
@@ -85,7 +85,7 @@ router.post("/login", async function (req, res, next) {
         greenCrews: greenCrew,
       });
     } else {
-      throw new Error("가입되지 않은 이메일입니다.");
+      return res.sendStatus(401);
     }
   } catch (err) {
     next(err);
@@ -97,9 +97,6 @@ router.delete("/delete", login_required, async function (req, res, next) {
     const user_id = req.currentUserId;
 
     const [rows] = await maria.execute(`DELETE FROM USER WHERE id = ?`, [user_id]);
-    if (!rows.affectedRows) {
-      throw new Error("이미 삭제된 계정입니다");
-    }
     res.status(200).json({ success: true });
   } catch (error) {
     next(error);
@@ -114,7 +111,7 @@ router.put("/name", login_required, async function (req, res, next) {
 
     const [rows] = await maria.execute(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId]);
     if (!rows.affectedRows) {
-      throw new Error("이름 수정 중 오류가 발생했습니다");
+      res.sendStatus(404);
     }
     res.status(200).json({ success: true });
   } catch (error) {
@@ -130,7 +127,7 @@ router.put("/password", login_required, async function (req, res, next) {
 
     const [rows] = await maria.execute(`UPDATE USER SET hashedPassword = ? WHERE id = ?`, [hashedPassword, userId]);
     if (!rows.affectedRows) {
-      throw new Error("비밀번호 수정 중 오류가 발생했습니다");
+      res.sendStatus(404);
     }
     res.status(200).json({ success: true });
   } catch (error) {
@@ -150,38 +147,11 @@ router.put("/reset", random_password, async function (req, res, next) {
     );
 
     if (!rows.affectedRows) {
-      throw new Error("임시 비밀번호 발급에 실패했습니다");
+      res.sendStatus(405);
     }
 
     await emailForTempPassword(email, tempPassword);
-    res.status(200).json({ success: true });
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get("/mypage", login_required, async function (req, res, next) {
-  try {
-    const userId = req.currentUserId;
-
-    const [review] = await maria.execute(
-      `SELECT GC.title, RV.description, RV.createAt
-      FROM REVIEW AS RV
-      LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
-      WHERE RV.userId = ?`,
-      [userId],
-    );
-
-    const [greenCrew] = await maria.execute(
-      `SELECT GC.title, GC.startAt, RT.course, RT.area
-    FROM USERTOGREENCREW AS UTGC
-    LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
-    LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
-    WHERE UTGC.userId = ?`,
-      [userId],
-    );
-
-    res.status(200).json({ review: review, greenCrew: greenCrew });
+    res.status(205).json({ success: true });
   } catch (error) {
     next(error);
   }
