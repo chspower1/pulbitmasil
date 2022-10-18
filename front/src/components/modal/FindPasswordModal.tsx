@@ -48,9 +48,10 @@ export default function FindPasswordModal() {
       if (isSuccess) {
         closeFindModal();
         alert("임시비밀번호 발급이 완료되었습니다.");
-      } else {
-        alert("아이디를 다시 확인해주세요.");
-      }
+      } 
+      // else {
+      //   alert("이메일를 다시 확인해주세요.");
+      // }
     });
   });
 
