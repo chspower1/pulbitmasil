@@ -9,6 +9,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
 import { Container, Wrapper as HomeWrapper } from "@style/Layout";
 import { Link } from "react-router-dom";
+import Loading from "@components/Loading";
 
 const HOMETEXT = [
   {

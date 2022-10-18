@@ -17,13 +17,14 @@ import CreateReview from "./review/CreateReview";
 import UpdateReview from "./review/UpdateReview";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import Guide from "./Guide";
+import Loading from "@components/Loading";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Nav />
       <WelcomeModal />
-      <Suspense fallback={<div>로딩중</div>}>
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Home />} />
