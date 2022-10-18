@@ -13,8 +13,12 @@ global.hostURL = process.env.Upload;
 router.get("/", async function (req, res, next) {
   try {
     const [rows] = await maria.execute(
-      "SELECT reviewId, userId, description,createAt, name, reviewImg FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId",
+      `SELECT reviewId, userId, description,createAt, name, reviewImg, GC.title
+      FROM REVIEW
+      LEFT JOIN USER ON USER.id = REVIEW.userId
+      LEFT JOIN GREENCREW AS GC ON GC.crewId = REVIEW.crewId`,
     );
+
     if (rows.length) {
       res.status(200).json(rows);
     }
@@ -26,8 +30,13 @@ router.get("/", async function (req, res, next) {
 router.get("/:reviewId", async function (req, res, next) {
   try {
     const reviewId = req.params.reviewId;
+
     const [rows] = await maria.execute(
-      "SELECT userId, description,createAt, name, reviewImg FROM REVIEW INNER JOIN USER ON USER.id = REVIEW.userId where reviewId = ?",
+      `SELECT userId, description,createAt, name, reviewImg, GC.title
+      FROM REVIEW
+      LEFT JOIN USER ON USER.id = REVIEW.userId
+      LEFT JOIN GREENCREW AS GC ON GC.crewId = REVIEW.crewId
+      WHERE reviewId = ?`,
       [reviewId],
     );
 
@@ -68,6 +77,7 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
         success: true,
         description: description,
         createAt: createAt,
+        title: title,
         userId: userId,
         reviewId: rows2.insertId,
         reviewImg: imgName,
@@ -86,6 +96,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
     const userId = req.currentUserId;
     const description = req.body.description ?? null;
     const reviewId = req.params.reviewId;
+    const title = req.body.title ?? null;
     let imgName = req.body.imageUrl ?? null;
 
     if (reviewer !== userId) {
@@ -101,11 +112,12 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
       fileDelete(reviewId);
     }
 
-    const [rows] = await maria.execute("UPDATE REVIEW SET  description = ?, reviewImg = ?  WHERE reviewId = ?", [
-      description,
-      imgName,
-      reviewId,
-    ]);
+    const [crewId] = await maria.execute("SELECT crewId FROM GREENCREW WHERE title = ?", [title]);
+
+    const [rows] = await maria.execute(
+      "UPDATE REVIEW SET  description = ?, reviewImg = ?, crewId = ?  WHERE reviewId = ?",
+      [description, imgName, crewId[0].crewId, reviewId],
+    );
 
     if (rows.changedRows) {
       res.status(200).json({ success: true });

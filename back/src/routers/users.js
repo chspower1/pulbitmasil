@@ -56,7 +56,7 @@ router.post("/login", async function (req, res, next) {
       }
 
       const [review] = await maria.execute(
-        `SELECT GC.title, RV.description, RV.createAt
+        `SELECT RV.reviewId, GC.title, RV.description, RV.createAt
         FROM REVIEW AS RV
         LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
         WHERE RV.userId = ?`,
@@ -64,11 +64,11 @@ router.post("/login", async function (req, res, next) {
       );
 
       const [greenCrew] = await maria.execute(
-        `SELECT GC.title, GC.startAt, RT.course, RT.area
-      FROM USERTOGREENCREW AS UTGC
-      LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
-      LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
-      WHERE UTGC.userId = ?`,
+        `SELECT GC.crewId, GC.title, GC.startAt, RT.course, RT.area
+        FROM USERTOGREENCREW AS UTGC
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+        LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+        WHERE UTGC.userId = ?`,
         [rows[0].id],
       );
 
