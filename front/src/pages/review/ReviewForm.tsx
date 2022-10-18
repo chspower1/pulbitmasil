@@ -12,6 +12,7 @@ import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
 import { Title, Wrapper, Box, Container, SubTitle, DangerAccent } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import { User } from "@type/user";
 import { getUser } from "@api/user";
 
@@ -80,8 +81,8 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     switch (mode) {
       case "CREATE":
         console.log(data);
-        const date = new Date();
-        formData.append("createAt", date.toString());
+        const createDay = dayjs(new Date());
+        formData.append("createAt", createDay.toString());
         formData.append("file", uploadImg);
         formData.append("name", user?.name!);
         console.log("Create formData", formData);

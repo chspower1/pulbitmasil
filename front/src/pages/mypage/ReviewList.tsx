@@ -4,9 +4,11 @@ import { UserReview } from "@type/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import { ContentBox, ItemDate, ItemTitle, List, Item as ItemGuide } from "./Home";
+import { ContentBox, ItemDate, ItemTitle, List, Item as ItemGuide, changeDayForm } from "./Home";
 import { useRecoilState } from "recoil";
 import { ReviewDeleteIdAtom } from "@atom/atom";
+import dayjs from "dayjs";
+
 export default function ReviewList({ reviews }: { reviews: UserReview[] | undefined }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   return (
@@ -16,7 +18,7 @@ export default function ReviewList({ reviews }: { reviews: UserReview[] | undefi
           <ContentBox>
             <ItemTitle>{review?.title}</ItemTitle>
             <Box>
-              <ItemDate>{review?.createAt}</ItemDate>
+              <ItemDate>{changeDayForm(review?.createAt)}</ItemDate>
             </Box>
           </ContentBox>
           <DeleteBtn onClick={() => setReviewDelId(13)}>
