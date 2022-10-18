@@ -3,17 +3,18 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { CloseBtn, ModalVariant, Overlay, OverlayVariant } from "./LoginModal";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
-import { Accent, Desc, ModalContainer, ModalWrap } from "@style/ModalStyle";
+import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
+import { ModalCloseBtn } from "@style/ModalStyle";
+import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 export default function WelcomeModal() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
   const openLoginModal = () => {
     setIsRegisterModal(false);
-    setIsLoginModal(true);    
-  }
+    setIsLoginModal(true);
+  };
 
   const closeRegisterModal = () => {
     setIsRegisterModal(false);
@@ -23,15 +24,15 @@ export default function WelcomeModal() {
       {isRegisterModal && (
         <RegisterModalWrap>
           <RegisterModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
-            <Desc>
-              <Accent>로그인</Accent>&nbsp;이 필요해요.
-            </Desc>
+            <ModalDesc>
+              <ModalAccent>로그인</ModalAccent>&nbsp;이 필요해요.
+            </ModalDesc>
 
             <StartBtn type="button" onClick={openLoginModal}>
               로그인 GOGO
             </StartBtn>
 
-            <RegisterCloseBtn type="button" onClick={closeRegisterModal}>
+            <RegisterModalCloseBtn type="button" onClick={closeRegisterModal}>
               <svg width="14" height="14" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
@@ -41,7 +42,7 @@ export default function WelcomeModal() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </RegisterCloseBtn>
+            </RegisterModalCloseBtn>
           </RegisterModalContainer>
           <Overlay
             onClick={closeRegisterModal}
@@ -66,7 +67,7 @@ const RegisterModalContainer = styled(ModalContainer)`
   height: 200px;
 `;
 
-const RegisterCloseBtn = styled(CloseBtn)`
+const RegisterModalCloseBtn = styled(ModalCloseBtn)`
   width: 36px;
   height: 36px;
   top: 10px;

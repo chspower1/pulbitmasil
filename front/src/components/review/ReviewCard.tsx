@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import ReviewDeleteModal from "../modal/ReviewDeleteModal";
-import { Accent } from "@style/ModalStyle";
+import { ModalAccent } from "@style/ModalStyle";
 
 export const changeDayForm = (createAt: Date): string => {
   const createDay = new Date(createAt);
@@ -19,7 +19,7 @@ export const changeDayForm = (createAt: Date): string => {
 };
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
-  const { userId, reviewId, description, createAt, name, reviewImg } = review;
+  const { userId, reviewId, description, createAt, name, reviewImg, title } = review;
   const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
               <p style={{ position: "absolute", right: "10px" }}>지역</p>
             </InfoContainer>
             <TextContainer>
-              <p style={{ color: "#636E72", fontSize: "18px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
+              <p style={{ color: "#636E72", fontSize: "18px", fontWeight: "bold" }}>{title}</p>
               <Description>{description}</Description>
             </TextContainer>
           </ReviewContainer>

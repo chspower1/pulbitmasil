@@ -8,15 +8,13 @@ import Unique from "@components/about/Unique";
 import Problem from "@components/about/Problem";
 
 import Pulbitmasil from "@components/about/Pulbitmasil";
-const anchors = ["pulbitmasil", "problem", "benefit", "unique"];
+const about = ["pulbitmasil", "problem", "benefit", "unique"];
 
 export default function Content() {
   return (
     <ReactFullpage
-      anchors={anchors}
       navigation
-      navigationTooltips={anchors}
-      // sectionsColor={["#f7f7f7", "#C7E1D6", "#d8d8d8"]}
+      navigationTooltips={about}
       scrollingSpeed={1000}
       onLeave={(origin, destination, direction) => {
         // console.log("onLeave event", { origin, destination, direction });

@@ -14,7 +14,7 @@ import styled from "styled-components";
 //   setIsReviewSelect: Dispatch<SetStateAction<boolean>>;
 // }
 export default function ReviewDetailModal({ review }: { review: IReview }) {
-  const { reviewId, name, createAt, description, userId, reviewImg } = review;
+  const { reviewId, name, createAt, description, userId, reviewImg, title } = review;
   const isEdit = true;
 
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         </ImgContainer>
         <ReviewContainer>
           <InfoContainer>
-            <CardImg src={`/assets/icon/profile01.png`} />
+            <CardImg src={`/assets/icon/user/profile01.png`} />
             <InfoBox>
               <p style={{ fontSize: "25px" }}>
                 <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
@@ -66,7 +66,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
           </InfoContainer>
 
           <TextContainer>
-            <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
+            <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>{title}</p>
             <Description>{description}</Description>
           </TextContainer>
         </ReviewContainer>
@@ -137,7 +137,7 @@ const Description = styled.p`
   line-height: 1.3em;
   margin-top: 20px;
   font-size: 20px;
-  overflow-y: scroll;
+  overflow-y: auto;
   resize: none;
 `;
 const InfoBox = styled(motion.div)`

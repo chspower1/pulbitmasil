@@ -3,22 +3,25 @@ import { userAtom } from "@atom/user";
 import { Box, Container, Title, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
 import { useRecoilState, useRecoilValue } from "recoil";
 import PasswordChangeModal from "@components/modal/PasswordChangeModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams, useMatch } from "react-router-dom";
 import GreenCrewList from "./GreenCrewList";
 import ReviewList from "./ReviewList";
 import Home from "./Home";
+import { AnimatePresence } from "framer-motion";
+import UserEditNav from "@components/UserEditNav";
+import NameChangeModal from "@components/modal/NameChangeModal";
 export interface UserPasswordProps {
-  isPasswordChange: boolean;
   setIsPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function UserInfo() {
   const user = useRecoilValue(userAtom);
-  console.log(user);
-  const { menu } = useParams();
+  const [isEdit, setIsEdit] = useState(false);
+  const { menu, target } = useParams();
   const [isPasswordChange, setIsPasswordChange] = useState(false);
+  const [isNameChange, setIsNameChange] = useState(false);
 
   const handleClickChangePassword = () => {
     // changePassword()
@@ -28,6 +31,13 @@ export default function UserInfo() {
       alert("비밀번호 변경 불가합니다.");
     }
   };
+  useEffect(() => {
+    if (target === "password") {
+      setIsPasswordChange(true);
+    } else if (target === "name") {
+      setIsNameChange(true);
+    }
+  }, [target]);
   console.log("-------------", menu);
   return (
     <MyPageWrapper>
@@ -53,16 +63,25 @@ export default function UserInfo() {
           </MenuBox>
         </ProfileBox>
         <ContentBox>
-          {menu === undefined && <Home />}
+          {menu === undefined && <Home user={user!} />}
           {menu === "greencrew" && <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>}
           {menu === "review" && <ReviewList reviews={user?.reviews}></ReviewList>}
         </ContentBox>
+        <EditInfoBtn onClick={() => setIsEdit(cur => !cur)}>정보 수정</EditInfoBtn>
+        <AnimatePresence>{isEdit && <UserEditNav setIsEdit={setIsEdit} />}</AnimatePresence>
       </MyPageContainer>
-      <PasswordChangeModal
-        setIsPasswordChange={setIsPasswordChange}
-        isPasswordChange={isPasswordChange}
-      ></PasswordChangeModal>
-      <button onClick={handleClickChangePassword}>비밀번호 변경</button>
+      <AnimatePresence>
+        <PasswordChangeModal
+          isPasswordChange={isPasswordChange}
+          setIsPasswordChange={setIsPasswordChange}
+        ></PasswordChangeModal>
+
+        <NameChangeModal
+          setIsNameChange={setIsNameChange}
+          isNameChange={isNameChange}
+          name={user?.name!}
+        ></NameChangeModal>
+      </AnimatePresence>
     </MyPageWrapper>
   );
 }
@@ -129,8 +148,17 @@ const Menu = styled.button`
   }
 `;
 const MyPageContainer = styled(Container)`
+  position: relative;
   flex-direction: column;
   width: 800px;
   height: 100%;
   background-color: white;
+`;
+
+const EditInfoBtn = styled.button`
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  top: 20px;
+  right: 20px;
 `;

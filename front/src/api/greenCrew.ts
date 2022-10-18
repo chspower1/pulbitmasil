@@ -31,3 +31,16 @@ export async function createGreenCrewMember(crewId: number) {
     console.log(err);
   }
 }
+export async function deleteGreenCrewMember(crewId: number) {
+  try {
+    console.log(crewId);
+    console.log(sessionStorage.getItem("userToken"));
+    return await axiosInstance.delete(`greencrew/${crewId}`, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}

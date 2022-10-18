@@ -75,7 +75,6 @@ router.delete("/:crewId", login_required, async function (req, res, next) {
     const userId = req.currentUserId;
 
     const [rows] = await maria.execute(`DELETE FROM USERTOGREENCREW WHERE userId = ? AND crewId = ?`, [userId, crewId]);
-
     if (rows.affectedRows) {
       res.status(200).json({ success: true });
     } else {

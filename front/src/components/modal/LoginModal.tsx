@@ -14,44 +14,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
 import { UserLoginForm } from "@type/user";
-import { createPortal } from "react-dom";
-import { ModalWrap as LoginModalWrap, ModalContainer as LoginForm, ModalTitle as LoginTitle } from "@style/ModalStyle";
+import {
+  ModalWrap as LoginModalWrap,
+  ModalContainer as LoginForm,
+  ModalTitle as LoginTitle,
+  ModalCloseBtn,
+  Overlay,
+} from "@style/ModalStyle";
 import FindPasswordModal from "./FindPasswordModal";
-
-export const ModalVariant = {
-  initial: {
-    y: 30,
-    opacity: 0,
-  },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-    },
-  },
-  exit: {
-    y: 30,
-    opacity: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
-export const OverlayVariant = {
-  initial: {
-    opacity: 0,
-  },
-  animate: {
-    opacity: 1,
-    transition: {
-      duration: 0.6,
-    },
-  },
-  exit: {
-    opacity: 0,
-  },
-};
+import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 
 export default function LoginModal() {
   const { pathname } = useLocation();
@@ -96,7 +67,7 @@ export default function LoginModal() {
   };
   // 로그인 버튼 클릭 시
   const onvalid = async (data: UserLoginForm) => {
-    const { id, email, name, token, social } = await requestLogin(data);
+    const { id, email, name, token, social, greenCrews, reviews } = await requestLogin(data);
     if (!email && !name && !token) {
       alert("로그인 정보가 틀렸습니다.");
       reset();
@@ -104,7 +75,7 @@ export default function LoginModal() {
       setIsWelcomeModal(true);
     }
     // console.log("풀빛마실 로그인, 넘어온 데이터\n", id, email, name, token);
-    setCurUser({ id, email, name, token, social });
+    setCurUser({ id, email, name, token, social, greenCrews, reviews });
     console.log("--------------test");
     console.log(id, email, name, token, social);
     // console.log("풀빛마실 User상태\n", curUser);
@@ -182,7 +153,7 @@ export default function LoginModal() {
               <NaverLoginBtn />
               <KakaoLogin src="/assets/images/kakao_login_btn.png" onClick={handleClickKakao} />
             </SocialLoginBox>
-            <CloseBtn type="button" onClick={() => closeLoginModal()}>
+            <ModalCloseBtn type="button" onClick={() => closeLoginModal()}>
               <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
@@ -192,7 +163,7 @@ export default function LoginModal() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </CloseBtn>
+            </ModalCloseBtn>
           </LoginForm>
           <Overlay
             onClick={() => closeLoginModal()}
@@ -258,27 +229,7 @@ export const ViewPassword = styled.div`
   display: flex;
   align-items: center;
 `;
-export const Overlay = styled(motion.div)`
-  z-index: 100;
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.3);
-`;
-export const CloseBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  width: 44px;
-  height: 44px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  border-radius: 10px;
-`;
+
 const LoginBtn = styled.button`
   width: 440px;
   height: 60px;

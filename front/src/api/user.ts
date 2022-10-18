@@ -69,3 +69,18 @@ export async function resetPassword(email: string) {
   const { data } = await axiosInstance.put(`/user/reset`, { email });
   return data.success;
 }
+
+export async function changeName(name: string) {
+  console.log(`%cPUT 요청 ${BASE_URL}/user/name`, "color: #a25cd1;");
+
+  return axiosInstance.put(
+    `user/name`,
+    { name },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    },
+  );
+}

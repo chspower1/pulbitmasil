@@ -3,12 +3,19 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { Overlay, OverlayVariant } from "./LoginModal";
 import { Navigate, useNavigate } from "react-router-dom";
-import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap, ModalWrap } from "@style/ModalStyle";
+import {
+  ModalBtnContainer,
+  ModalDesc,
+  ModalContainer,
+  ModalWrap as LogoutModalWrap,
+  ModalWrap,
+  Overlay,
+} from "@style/ModalStyle";
 import { deleteReview } from "@api/review";
 import { userAtom } from "@atom/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { OverlayVariant } from "@style/ModalVariants";
 
 export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
@@ -49,14 +56,14 @@ export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
             <DeleteDesc>
               <Accent>삭제</Accent> 하시겠습니까?
             </DeleteDesc>
-            <BtnContainer>
+            <ModalBtnContainer>
               <DeleteBtn type="button" onClick={handleClickConfirm}>
                 네
               </DeleteBtn>
               <CloseBtn type="button" onClick={handleClickCancel}>
                 아니요
               </CloseBtn>
-            </BtnContainer>
+            </ModalBtnContainer>
           </ReviewModalContainer>
           <Overlay
             onClick={handleClickCancel}
@@ -99,7 +106,7 @@ const Accent = styled.span`
   font-weight: bold;
 `;
 
-const DeleteDesc = styled(Desc)`
+const DeleteDesc = styled(ModalDesc)`
   margin-top: 40px;
   margin-bottom: 40px;
 `;

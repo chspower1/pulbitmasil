@@ -3,7 +3,7 @@ import { Wrapper, Container, Box, Title, Desc, SubTitle } from "@style/Layout";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState, useEffect } from "react";
-import { createGreenCrewMember, getGreenCrews } from "@api/greenCrew";
+import { createGreenCrewMember, deleteGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
@@ -14,13 +14,19 @@ import { data } from "@components/chart/LineChart";
 import { Node } from "react-markdown/lib/rehype-filter";
 import { GreenAccent } from "./../style/Layout";
 import { timeEnd, timeLog } from "console";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userAtom } from "@atom/user";
+import { getJSDocReturnTag } from "typescript";
+
 export default function GreenCrew() {
+  const [user, setUser] = useRecoilState(userAtom);
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
-  const [count, setCount] = useState(0);
   const [time, setTime] = useState<number[]>([]);
-  const { data: greenCrew } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
+  const [isParticipate, setIsParticipate] = useState<boolean>();
+  const [participateList, setParticipateList] = useState<string[]>();
+  const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
       console.log("GreenCrew Query성공", data);
     },
@@ -28,10 +34,23 @@ export default function GreenCrew() {
       console.log(err);
     },
   });
+
   const handleClickEnter = async () => {
-    await createGreenCrewMember(greenCrew![selectedArea].crewId);
-    queryClient.invalidateQueries(["greenCrew"]);
+    console.log("handleclickenter", isParticipate);
+    if (isParticipate) {
+      // 참여상태
+      if (window.confirm("정말 취소하시겠어요?")) {
+        deleteGreenCrewMember(greenCrews![selectedArea].crewId);
+        //setUser ????
+        setIsParticipate(false);
+      }
+    } else {
+      await createGreenCrewMember(greenCrews![selectedArea].crewId);
+      // setUser ????
+      queryClient.invalidateQueries(["greenCrew"]);
+    }
   };
+
   const convertDate = (startAt: Date) => {
     const date = new Date(startAt);
     const newDate = date.toLocaleDateString();
@@ -48,7 +67,6 @@ export default function GreenCrew() {
   };
   const DTime = (arr: number[]) => {
     const [hours, minutes, seconds] = arr;
-    // const hours = Math.abs(hours < 10 ? `0${hours}` : hours)
 
     return (
       <Title style={{ fontSize: "40px" }}>
@@ -59,7 +77,8 @@ export default function GreenCrew() {
   };
 
   function getTime() {
-    const setDate = new Date(greenCrew![selectedArea].startAt); // 기준이 되는 시각
+    console.log("getTime");
+    const setDate = new Date(greenCrews![selectedArea].startAt); // 기준이 되는 시각
     const now = new Date();
     const distance = now.getTime() - setDate.getTime();
     const hours = Math.abs(Math.floor((distance / (1000 * 60 * 60)) % 24));
@@ -69,14 +88,22 @@ export default function GreenCrew() {
     setTime([hours, minutes, seconds]);
   }
 
-  function init() {
-    setInterval(getTime, 1000);
-  }
+  useEffect(() => {
+    //타이머 설정
+    setTime([0, 0, 0]);
+    let timer = setInterval(getTime, 1000);
+
+    //참여 유저
+    setParticipateList(user?.greenCrews?.map(data => data.title));
+
+    //타이머 reset
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
-    setTime([0, 0, 0]);
-    init();
-  }, []);
+    console.log(participateList);
+    setIsParticipate(participateList?.includes(greenCrews![selectedArea].title));
+  }, [selectedArea, participateList]);
 
   return (
     <GreenCrewWrapper>
@@ -88,48 +115,48 @@ export default function GreenCrew() {
         ))}
       </AreaNav>
       <RootContainer>
-        <Title>{greenCrew![selectedArea]?.title!}</Title>
+        <Title>{greenCrews![selectedArea]?.title!}</Title>
         <FirstContainer>
           <DescBox>
-            {convertDate(greenCrew![selectedArea]?.startAt!)}
+            {convertDate(greenCrews![selectedArea]?.startAt!)}
             <CourseBox>
               <DetailTitle>
                 <IconImg src={"assets/icon/greencrew/course_icon.svg"} alt="#" />
                 코스
               </DetailTitle>
-              <DetailDescription>{greenCrew![selectedArea]!.course}</DetailDescription>
+              <DetailDescription>{greenCrews![selectedArea]!.course}</DetailDescription>
             </CourseBox>
             <CourseBox>
               <DetailTitle>
                 <IconImg src="/assets/icon/greencrew/distance_icon.svg" alt="#" />
                 거리
               </DetailTitle>
-              <DetailDescription>{greenCrew![selectedArea]!.distance}</DetailDescription>
+              <DetailDescription>{greenCrews![selectedArea]!.distance}</DetailDescription>
             </CourseBox>
             <CourseBox>
               <DetailTitle>
                 <IconImg src="/assets/icon/greencrew/lead_time_icon.svg" alt="#" />
                 소요시간
               </DetailTitle>
-              <DetailDescription>{greenCrew![selectedArea]!.leadTime}</DetailDescription>
+              <DetailDescription>{greenCrews![selectedArea]!.leadTime}</DetailDescription>
             </CourseBox>
             <CourseBox>
               <DetailTitle>
                 <IconImg src="/assets/icon/greencrew/max_member_icon.svg" alt="#" />
                 모집인원
               </DetailTitle>
-              <DetailDescription>{greenCrew![selectedArea]!.maxMember}</DetailDescription>
+              <DetailDescription>{greenCrews![selectedArea]!.maxMember}</DetailDescription>
             </CourseBox>
             <CourseBox>
               <DetailTitle>
                 <IconImg src="/assets/icon/greencrew/level_icon.svg" alt="#" />
                 난이도
               </DetailTitle>
-              <DetailDescription>{greenCrew![selectedArea]!.level}</DetailDescription>
+              <DetailDescription>{greenCrews![selectedArea]!.level}</DetailDescription>
             </CourseBox>
           </DescBox>
 
-          <GreenCrewMap greenCrew={greenCrew![selectedArea]!} />
+          <GreenCrewMap greenCrew={greenCrews![selectedArea]!} />
         </FirstContainer>
         <SecondContainer>
           <ContentBox>
@@ -139,22 +166,22 @@ export default function GreenCrew() {
                   <div>{DTime(time)}</div>
                   <Desc>
                     현재까지{" "}
-                    <GreenAccent style={{ fontSize: "32px" }}>{greenCrew![selectedArea]?.curMember}명</GreenAccent>이
+                    <GreenAccent style={{ fontSize: "32px" }}>{greenCrews![selectedArea]?.curMember}명</GreenAccent>이
                     참여하고 있어요!
                   </Desc>
                 </StatusBox>
               </Col>
               <Col>
-                <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
+                <EnterBtn onClick={handleClickEnter}>{isParticipate ? "취소" : "참여"}</EnterBtn>
               </Col>
             </Row>
           </ContentBox>
           <ContentBox>
             <ContentTitle>
               <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
-              <Accent>"{greenCrew![selectedArea]?.course}"</Accent>은?
+              <Accent>"{greenCrews![selectedArea]?.course}"</Accent>은?
             </ContentTitle>
-            <ContentDescription dangerouslySetInnerHTML={{ __html: `${greenCrew![selectedArea]?.content}` }} />
+            <ContentDescription dangerouslySetInnerHTML={{ __html: `${greenCrews![selectedArea]?.content}` }} />
           </ContentBox>
           <ContentBox>
             <ContentTitle>
@@ -163,12 +190,12 @@ export default function GreenCrew() {
             </ContentTitle>
             <ContentDescription
               dangerouslySetInnerHTML={{
-                __html: `${greenCrew![selectedArea]?.trafficInfo}`,
+                __html: `${greenCrews![selectedArea]?.trafficInfo}`,
               }}
             />
           </ContentBox>
         </SecondContainer>
-        <Link to="/">
+        <Link to="/guide">
           <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
         </Link>
       </RootContainer>
@@ -286,7 +313,8 @@ const Accent = styled.h3`
   color: ${props => props.theme.mainColor};
 `;
 const ContentDescription = styled(Desc)`
-  overflow: scroll;
+  overflow-y: auto;
+
   width: 100%;
   height: 100%;
   padding-top: 10px;
