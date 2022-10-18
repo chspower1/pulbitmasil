@@ -16,7 +16,7 @@ import { deleteReview } from "@api/review";
 import { userAtom } from "@atom/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { OverlayVariant } from "@style/ModalVariants";
-import { requestLogin } from "@api/user";
+import { getUser, requestLogin } from "@api/user";
 
 export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
@@ -25,19 +25,21 @@ export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(deleteReview, {
+  const reviewMutation = useMutation(deleteReview, {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["reviews"]);
     },
   });
-
+  const userMutation = useMutation(getUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
   const handleClickConfirm = async (e: React.MouseEvent) => {
     e.preventDefault();
-    mutation.mutate({ reviewId, userId: user?.id! });
-    // setUser(prev=>{
-
-    // })
+    reviewMutation.mutate({ reviewId, userId: user?.id! });
+    userMutation.mutate();
     setReviewDelId(null);
     navigate("/review");
   };
