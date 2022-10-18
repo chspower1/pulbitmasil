@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, UserLoginForm, UserRegisterForm } from "@type/user";
+import { User, PasswordForm, UserLoginForm, UserRegisterForm } from "@type/user";
 import { Cpi, IDodream } from "@type/dodream";
 import { axiosInstance, BASE_URL } from "./axiosInstance";
 
@@ -69,19 +69,27 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   return data;
 }
 
-export async function changePassword(newPassword: string, password: string) {
+export async function changePassword(data: PasswordForm) {
   console.log(`%cPUT 요청 ${BASE_URL}/user/password`, "color: #a25cd1;");
+  const { newPassword, password } = data;
 
-  return axiosInstance.put(
-    `/user/password`,
-    { newPassword, password },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+  try {
+    const { status } = await axiosInstance.put(
+      `/user/password`,
+      { newPassword, password },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        },
       },
-    },
-  );
+    );
+    return status;
+  } catch (err) {
+    if (axios.isAxiosError(err) && err?.response?.status === 406) {
+      return err?.response?.status;
+    }
+  }
 }
 export async function resetPassword(email: string) {
   console.log(`%cPUT 요청 ${BASE_URL}/user/reset`, "color: #a25cd1;");

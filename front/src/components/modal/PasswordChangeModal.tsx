@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { changePassword } from "@api/user";
-import { PasswordChangeForm } from "@type/user";
 import { ViewPassword } from "@components/modal/LoginModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
@@ -13,6 +12,7 @@ import { AnimatePresence } from "framer-motion";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 import { ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { useNavigate } from "react-router-dom";
+import { PasswordForm } from "@type/user";
 interface PasswordChangeModalProps {
   setIsPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
   isPasswordChange: boolean;
@@ -26,10 +26,9 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
     register,
     handleSubmit,
     formState: { errors },
-    watch,
     reset,
     getValues,
-  } = useForm<PasswordChangeForm>();
+  } = useForm<PasswordForm>();
 
   const closeRegisterModal = async () => {
     setIsPasswordChange(false);
@@ -38,8 +37,18 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
   };
 
   const handleSubmitChange = handleSubmit(data => {
-    changePassword(data?.changePassword, data?.currentPassword);
-    closeRegisterModal();
+    console.log(data);
+
+    changePassword(data).then(status => {
+      if (status === 406) {
+        alert("현재 비밀번호가 일치하지 않습니다.");
+      } else {
+        alert("비밀번호 수정이 완료되었습니다.");
+        closeRegisterModal();
+      }
+    });
+
+    // closeRegisterModal();
   });
 
   return (
@@ -62,9 +71,9 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
               <Input
                 placeholder="숫자,특수문자,영문 포함 8자리 이상"
                 type={isViewCurPassword ? "text" : "password"}
-                id="currentPassword"
+                id="password"
                 // type="password"
-                {...register("currentPassword", {
+                {...register("password", {
                   required: { value: true, message: "비밀번호를 입력해주세요." },
                   minLength: { value: 8, message: "8자 이상 입력해주세요." },
                   // pattern: {
@@ -81,7 +90,7 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
                   onClick={() => setIsViewCurPassword(cur => !cur)}
                 />
               </ViewPassword>
-              <ErrorMessage>{errors.currentPassword?.message}</ErrorMessage>
+              <ErrorMessage>{errors.password?.message}</ErrorMessage>
             </InputBox>
 
             <InputBox>
@@ -89,9 +98,9 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
               <Input
                 placeholder="숫자,특수문자,영문 포함 8자리 이상"
                 type={isViewPassword ? "text" : "password"}
-                id="changePassword"
+                id="newPassword"
                 // type="password"
-                {...register("changePassword", {
+                {...register("newPassword", {
                   required: { value: true, message: "비밀번호를 입력해주세요." },
                   minLength: { value: 8, message: "8자 이상 입력해주세요." },
                 })}
@@ -104,7 +113,7 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
                   onClick={() => setIsViewPassword(cur => !cur)}
                 />
               </ViewPassword>
-              <ErrorMessage>{errors.changePassword?.message}</ErrorMessage>
+              <ErrorMessage>{errors.newPassword?.message}</ErrorMessage>
             </InputBox>
 
             <InputBox>
@@ -117,8 +126,8 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
                   required: "비밀번호를 한번 더 입력해 주세요",
                   validate: {
                     mathchesPreviousPassword: value => {
-                      const { changePassword } = getValues();
-                      return changePassword === value || "비밀번호가 일치하지 않습니다.";
+                      const { newPassword } = getValues();
+                      return newPassword === value || "비밀번호가 일치하지 않습니다.";
                     },
                   },
                 })}
@@ -132,7 +141,7 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
                 />
               </ViewPassword>
 
-              <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
+              <ErrorMessage>{errors?.confirmPassword?.message!}</ErrorMessage>
             </InputBox>
 
             <Button>수정하기</Button>
