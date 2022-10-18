@@ -4,7 +4,7 @@ function login_required(req, res, next) {
   const userToken = req.headers["authorization"]?.split(" ")[1] ?? "null";
 
   if (userToken === "null") {
-    return res.sendStatus(408);
+    return res.sendStatus(403);
   }
 
   try {
@@ -14,7 +14,7 @@ function login_required(req, res, next) {
     req.currentUserId = user_id;
     next();
   } catch (error) {
-    return res.sendStatus(408);
+    return res.sendStatus(403);
   }
 }
 

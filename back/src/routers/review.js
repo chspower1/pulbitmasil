@@ -57,7 +57,7 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
     const { description, createAt, title } = req.body;
 
     if (!description || !createAt || !title) {
-      res.sendStatus(406);
+      res.sendStatus(405);
     }
 
     let imgName;
@@ -100,11 +100,11 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
     let imgName = req.body.imageUrl ?? null;
 
     if (reviewer !== userId) {
-      return res.sendStatus(407);
+      return res.sendStatus(405);
     }
 
     if (!description) {
-      res.sendStatus(406);
+      res.sendStatus(405);
     }
 
     if (!imgName) {
@@ -136,7 +136,7 @@ router.delete("/:reviewId", login_required, async function (req, res, next) {
     const reviewId = req.params.reviewId;
 
     if (reviewer !== userId) {
-      return res.sendStatus(407);
+      return res.sendStatus(405);
     }
 
     fileDelete(reviewId);
