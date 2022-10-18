@@ -38,7 +38,15 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
 
   const handleSubmitChange = handleSubmit(data => {
     console.log(data);
-    changePassword(data);
+
+    changePassword(data).then(status => {
+      if (status === 406) {
+        alert("현재 비밀번호가 일치하지 않습니다.");
+      } else {
+        alert("비밀번호 수정이 완료되었습니다.");
+        closeRegisterModal();
+      }
+    });
 
     // closeRegisterModal();
   });
