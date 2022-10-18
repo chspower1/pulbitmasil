@@ -46,7 +46,7 @@ export default function MyPage() {
       setIsNameChange(true);
     }
   }, [target]);
-  console.log("-------------", menu);
+  console.log("-------------", menu, target);
   return (
     <MyPageWrapper>
       <MyPageContainer>
@@ -59,8 +59,8 @@ export default function MyPage() {
           </NameBox>
           <Email>{user?.email}</Email>
           <MenuBox>
-            <Link to="/mypage">
-              <Menu className={menu === undefined ? "active" : "normal"}>홈</Menu>
+            <Link to="/mypage/home">
+              <Menu className={menu === "home" ? "active" : "normal"}>홈</Menu>
             </Link>
             <Link to="/mypage/review">
               <Menu className={menu === "review" ? "active" : "normal"}>리뷰</Menu>
@@ -71,7 +71,7 @@ export default function MyPage() {
           </MenuBox>
         </ProfileBox>
         <ContentBox>
-          {menu === undefined && <Home user={user!} />}
+          {menu === "home" && <Home user={user!} />}
           {menu === "greencrew" && <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>}
           {menu === "review" && <ReviewList reviews={user?.reviews}></ReviewList>}
         </ContentBox>
@@ -82,12 +82,14 @@ export default function MyPage() {
         <PasswordChangeModal
           isPasswordChange={isPasswordChange}
           setIsPasswordChange={setIsPasswordChange}
+          menu={menu}
         ></PasswordChangeModal>
 
         <NameChangeModal
           setIsNameChange={setIsNameChange}
           isNameChange={isNameChange}
           name={user?.name!}
+          menu={menu}
         ></NameChangeModal>
         {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
       </AnimatePresence>
@@ -97,13 +99,14 @@ export default function MyPage() {
 
 const MyPageWrapper = styled(Wrapper)`
   background-image: url("/assets/images/register_img.jpg");
+  padding: 40px 0px;
+  padding-top: 70px;
 `;
 const MyPageTitle = styled(Title)`
   position: absolute;
   top: 40px;
 `;
 const ProfileBox = styled(Box)`
-  background-image: url("/assets/images/mypage/profile_bg.jpg");
   width: 100%;
   height: 35%;
   flex-direction: column;
@@ -114,11 +117,11 @@ const Img = styled.img`
   height: 70px;
 `;
 const ContentBox = styled(Box)`
-  background-image: url("/assets/images/mypage/content_bg.jpg");
+  background-color: white;
   width: 100%;
   height: 65%;
-  padding: 30px 90px;
   align-items: flex-start;
+  border-radius: 20px;
 `;
 const NameBox = styled(Row)`
   margin-top: 10px;
@@ -140,15 +143,13 @@ const Email = styled(Desc)`
 const MenuBox = styled(Box)`
   position: absolute;
   bottom: 0px;
-  a:not(:last-of-type) {
-    border-right: solid 1px #8cb89f;
-  }
 `;
 const Menu = styled.button`
   font-size: 24px;
   width: 170px;
   height: 50px;
-
+  border-radius: 20px 20px 0px 0px;
+  box-shadow: 2px 0px 7px rgba(0, 0, 0, 0.2);
   &.normal {
     background-color: ${props => props.theme.weekColor};
   }
@@ -159,9 +160,8 @@ const Menu = styled.button`
 const MyPageContainer = styled(Container)`
   position: relative;
   flex-direction: column;
-  width: 700px;
+  width: 600px;
   height: 100%;
-  background-color: white;
 `;
 
 const EditInfoBtn = styled.button`

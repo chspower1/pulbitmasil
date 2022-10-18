@@ -16,8 +16,9 @@ import { PasswordForm } from "@type/user";
 interface PasswordChangeModalProps {
   setIsPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
   isPasswordChange: boolean;
+  menu: string | undefined;
 }
-export default function PasswordChangeModal({ setIsPasswordChange, isPasswordChange }: PasswordChangeModalProps) {
+export default function PasswordChangeModal({ setIsPasswordChange, isPasswordChange, menu }: PasswordChangeModalProps) {
   const [isViewCurPassword, setIsViewCurPassword] = useState(false);
   const [isViewPassword, setIsViewPassword] = useState(false);
   const [isViewConfirmPassword, setIsViewConfirmPassword] = useState(false);
@@ -33,7 +34,7 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
   const closeRegisterModal = async () => {
     setIsPasswordChange(false);
     reset();
-    navigate("/mypage");
+    navigate(`/mypage/${menu}`);
   };
 
   const handleSubmitChange = handleSubmit(data => {

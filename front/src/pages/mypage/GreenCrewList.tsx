@@ -4,7 +4,19 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { UserGreenCrew } from "@type/user";
-import { List, Item, ContentBox, ItemTitle, ItemDate, ItemCourse, changeDayForm } from "./Home";
+import {
+  List,
+  Item,
+  ContentBox,
+  ItemTitle,
+  ItemDate,
+  ItemCourse,
+  changeDayForm,
+  HomeContainer,
+  GrayTitle,
+  HomeWrap,
+  HeaderBox,
+} from "./Home";
 import dayjs from "dayjs";
 export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCrew[] | undefined }) {
   const [inProgressGreenCrew, setInProgressGreenCrew] = useState<UserGreenCrew[] | undefined>();
@@ -20,38 +32,44 @@ export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCre
     if (greenCrews) checkInProgress(greenCrews);
   }, []);
   return (
-    <List>
-      <Title>진행중</Title>
-      {inProgressGreenCrew?.map(greenCrew => (
-        <Item>
-          <ContentBox>
-            <ItemTitle>
-              {greenCrew?.title}
-              <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
-            </ItemTitle>
-            <Box>
-              <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
-              <ItemArea>{greenCrew?.area}</ItemArea>
-            </Box>
-          </ContentBox>
-        </Item>
-      ))}
-      <Title>완료</Title>
-      {doneGreenCrew?.map(greenCrew => (
-        <Item>
-          <ContentBox>
-            <ItemTitle>
-              {greenCrew?.title}
-              <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
-            </ItemTitle>
-            <Box>
-              <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
-              <ItemArea>{greenCrew?.area}</ItemArea>
-            </Box>
-          </ContentBox>
-        </Item>
-      ))}
-    </List>
+    <HomeWrap>
+      <HomeContainer height="50%">
+        <GrayTitle>
+          <Title>완료</Title>
+        </GrayTitle>
+        <List>
+          {inProgressGreenCrew?.map(greenCrew => (
+            <Item>
+              <HeaderBox>서북</HeaderBox>
+              <ContentBox>
+                <ItemTitle>{greenCrew?.title}</ItemTitle>
+                <Box>
+                  <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
+                </Box>
+              </ContentBox>
+            </Item>
+          ))}
+        </List>
+      </HomeContainer>
+      <HomeContainer height="50%">
+        <GrayTitle>
+          <Title>진행중</Title>
+        </GrayTitle>
+        <List>
+          {doneGreenCrew?.map(greenCrew => (
+            <Item>
+              <HeaderBox>서북</HeaderBox>
+              <ContentBox>
+                <ItemTitle>{greenCrew?.title}</ItemTitle>
+                <Box>
+                  <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
+                </Box>
+              </ContentBox>
+            </Item>
+          ))}
+        </List>
+      </HomeContainer>
+    </HomeWrap>
   );
 }
 

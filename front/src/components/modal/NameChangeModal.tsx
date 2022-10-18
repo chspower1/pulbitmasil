@@ -14,9 +14,10 @@ interface NameChangeModalProps {
   setIsNameChange: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   isNameChange: boolean;
+  menu: string | undefined;
 }
 
-export default function NameChangeModal({ setIsNameChange, name, isNameChange }: NameChangeModalProps) {
+export default function NameChangeModal({ setIsNameChange, name, isNameChange, menu }: NameChangeModalProps) {
   const {
     register,
     handleSubmit,
@@ -29,7 +30,7 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange }:
   const closeRegisterModal = async () => {
     setIsNameChange(false);
     reset();
-    navigate("/mypage");
+    navigate(`/mypage/${menu}`);
   };
 
   const handleSubmitChange = handleSubmit(data => {

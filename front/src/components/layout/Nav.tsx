@@ -161,7 +161,7 @@ export default function Nav() {
                 <UserName>{user?.name}</UserName>
               </UserNameBox>
             </Link>
-            <Link to="mypage">
+            <Link to="mypage/home">
               <SubTitle style={{ fontFamily: "SebangBold" }}>마이페이지</SubTitle>
             </Link>
             <Logout onClick={handleClickLogout}>로그아웃</Logout>
