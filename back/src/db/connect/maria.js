@@ -1,5 +1,5 @@
-const mysql = require("mysql2");
-const logger = require("./logger");
+import mysql from "mysql2";
+import logger from "./logger";
 require("dotenv").config();
 
 const pool = mysql.createPool({
@@ -29,7 +29,7 @@ pool.on("release", function (connection) {
   logger.info(`Connection ${connection.threadId} released`);
 });
 
-module.exports = maria;
+export default maria;
 
 // const execute = async (sql, context) => {
 //   try {

@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
-const axios = require("axios");
+import { Router } from "express";
+const authRouter = Router();
+import axios from "axios";
 require("dotenv").config();
-const maria = require("../db/connect/maria");
-const jwt = require("jsonwebtoken");
+import maria from "../db/connect/maria";
+import jwt from "jsonwebtoken";
 
 const KAKAO_OAUTH_TOKEN_API_URL = "https://kauth.kakao.com/oauth/token";
 const KAKAO_GET_USER_INFO_API_URL = "https://kapi.kakao.com/v2/user/me";
@@ -12,7 +12,7 @@ const grant_type = "authorization_code";
 const kakao_client_id = process.env.KAKAO_ID;
 const kakao_redirect_uri = process.env.KakaoCallbackURL;
 
-router.get("/kakao", async function (req, res, next) {
+authRouter.get("/kakao", async function (req, res, next) {
   const code = req.query.code;
   await axios
     .post(
@@ -31,7 +31,7 @@ router.get("/kakao", async function (req, res, next) {
     });
 });
 
-router.get("/kakao/info/:access_token", async function (req, res, next) {
+authRouter.get("/kakao/info/:access_token", async function (req, res, next) {
   const access_token = req.params.access_token;
 
   await axios
@@ -109,7 +109,7 @@ router.get("/kakao/info/:access_token", async function (req, res, next) {
     });
 });
 
-router.get("/naver", async function (req, res, next) {
+authRouter.get("/naver", async function (req, res, next) {
   const access_token = req.query.access_token;
 
   await axios
@@ -189,4 +189,4 @@ router.get("/naver", async function (req, res, next) {
     });
 });
 
-module.exports = router;
+export { authRouter };

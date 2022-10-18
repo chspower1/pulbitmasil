@@ -1,6 +1,6 @@
-const fs = require("fs");
-const path = require("path");
-const maria = require("../db/connect/maria");
+import fs from "fs";
+import path from "path";
+import maria from "../db/connect/maria";
 
 const fileDelete = async reviewId => {
   const [rows] = await maria.query("SELECT reviewImg FROM REVIEW WHERE reviewId = ?", [reviewId]);
@@ -15,4 +15,4 @@ const fileDelete = async reviewId => {
   }
 };
 
-module.exports = { fileDelete };
+export { fileDelete };

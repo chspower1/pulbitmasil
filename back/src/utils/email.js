@@ -1,7 +1,7 @@
-const nodemailer = require("nodemailer");
-const fs = require("fs");
-const path = require("path");
-const Handlebars = require("handlebars");
+import nodemailer from "nodemailer";
+import fs from "fs";
+import path from "path";
+import Handlebars from "handlebars";
 require("dotenv").config();
 
 const emailForTempPassword = async (userEmail, tempPassword) => {
@@ -27,4 +27,4 @@ const emailForTempPassword = async (userEmail, tempPassword) => {
   });
 };
 
-module.exports = emailForTempPassword;
+export { emailForTempPassword };

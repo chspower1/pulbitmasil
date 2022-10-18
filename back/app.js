@@ -1,17 +1,16 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var cors = require("cors");
-var usersRouter = require("./src/routers/users");
-var trashRouter = require("./src/routers/trash");
-var authRouter = require("./src/routers/auth");
-var reviewRouter = require("./src/routers/review");
-var dodreamRouter = require("./src/routers/dodream");
-var greencrewRouter = require("./src/routers/greencrew");
-
-const errorMiddleware = require("./src/middlewares/error_middleware");
+import createError from "http-errors";
+import express from "express";
+import path from "path";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import cors from "cors";
+import { userRouter } from "./src/routers/users";
+import { trashRouter } from "./src/routers/trash";
+import { reviewRouter } from "./src/routers/review";
+import { authRouter } from "./src/routers/auth";
+import { dodreamRouter } from "./src/routers/dodream";
+import { greencrewRouter } from "./src/routers/greencrew";
+import { errorMiddleware } from "./src/middlewares/error_middleware";
 
 const app = express();
 
@@ -28,7 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static("uploads"));
 
-app.use("/user", usersRouter);
+app.use("/user", userRouter);
 app.use("/trash", trashRouter);
 app.use("/auth", authRouter);
 app.use("/review", reviewRouter);

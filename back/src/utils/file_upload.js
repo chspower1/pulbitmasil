@@ -1,6 +1,6 @@
-const multer = require("multer");
-const fs = require("fs");
-const path = require("path");
+import multer from "multer";
+import fs from "fs";
+import path from "path";
 
 try {
   fs.readdirSync("uploads");
@@ -23,4 +23,4 @@ const upload = multer({
   }),
 });
 
-module.exports = { upload };
+export { upload };

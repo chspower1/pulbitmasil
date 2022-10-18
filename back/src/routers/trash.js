@@ -1,9 +1,8 @@
-var express = require("express");
-var router = express.Router();
+import { Router } from "express";
+const trashRouter = Router();
+import maria from "../db/connect/maria";
 
-const maria = require("../db/connect/maria");
-
-router.get("/", async function (req, res) {
+trashRouter.get("/", async function (req, res) {
   const [rows] = await maria.execute("SELECT * FROM TRASHCAN");
   if (rows.length) {
     res.status(200).json(rows);
@@ -12,7 +11,7 @@ router.get("/", async function (req, res) {
   }
 });
 
-router.get("/count", async function (req, res) {
+trashRouter.get("/count", async function (req, res) {
   const [rows] = await maria.execute("SELECT * FROM TRASHCOUNT");
   if (rows.length) {
     res.status(200).json(rows);
@@ -21,4 +20,4 @@ router.get("/count", async function (req, res) {
   }
 });
 
-module.exports = router;
+export { trashRouter };

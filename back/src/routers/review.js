@@ -1,16 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const login_required = require("../middlewares/login_required");
-const maria = require("../db/connect/maria");
-
-const { upload } = require("../utils/file_upload");
-const { fileDelete } = require("../utils/file_delete");
+import { Router } from "express";
+const reviewRouter = Router();
+import login_required from "../middlewares/login_required";
+import maria from "../db/connect/maria";
+import { upload } from "../utils/file_upload";
+import { fileDelete } from "../utils/file_delete";
 const uploadSingle = upload.single("file");
 require("dotenv").config();
 
 global.hostURL = process.env.Upload;
 
-router.get("/", async function (req, res, next) {
+reviewRouter.get("/", async function (req, res, next) {
   try {
     const [rows] = await maria.execute(
       `SELECT reviewId, userId, description,createAt, name, reviewImg, GC.title
@@ -25,7 +24,7 @@ router.get("/", async function (req, res, next) {
   }
 });
 
-router.get("/:reviewId", async function (req, res, next) {
+reviewRouter.get("/:reviewId", async function (req, res, next) {
   try {
     const reviewId = req.params.reviewId;
 
@@ -49,7 +48,7 @@ router.get("/:reviewId", async function (req, res, next) {
 });
 
 // 리뷰 작성
-router.post("/create", login_required, uploadSingle, async function (req, res, next) {
+reviewRouter.post("/create", login_required, uploadSingle, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
     const { description, createAt, title } = req.body;
@@ -88,7 +87,7 @@ router.post("/create", login_required, uploadSingle, async function (req, res, n
   }
 });
 
-router.put("/:reviewId", login_required, uploadSingle, async function (req, res, next) {
+reviewRouter.put("/:reviewId", login_required, uploadSingle, async function (req, res, next) {
   try {
     const reviewer = parseInt(req.body.userId);
     const userId = req.currentUserId;
@@ -127,7 +126,7 @@ router.put("/:reviewId", login_required, uploadSingle, async function (req, res,
   }
 });
 
-router.delete("/:reviewId", login_required, async function (req, res, next) {
+reviewRouter.delete("/:reviewId", login_required, async function (req, res, next) {
   try {
     const reviewer = parseInt(req.body.userId);
     const userId = req.currentUserId;
@@ -151,4 +150,4 @@ router.delete("/:reviewId", login_required, async function (req, res, next) {
   }
 });
 
-module.exports = router;
+export { reviewRouter };
