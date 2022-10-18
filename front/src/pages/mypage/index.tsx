@@ -15,6 +15,7 @@ import NameChangeModal from "@components/modal/NameChangeModal";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { useQuery } from "@tanstack/react-query";
+import { User } from "@type/user";
 export interface UserPasswordProps {
   setIsPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -25,7 +26,7 @@ export default function MyPage() {
   const [isPasswordChange, setIsPasswordChange] = useState(false);
   const [isNameChange, setIsNameChange] = useState(false);
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
-  const { data: user } = useQuery(["user"], getUser, {
+  const { data: user } = useQuery<User | undefined>(["user"], getUser, {
     onSuccess(data) {
       console.log("mypage query 작동 완료", data);
     },

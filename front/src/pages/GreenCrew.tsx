@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Wrapper, Container, Box, Title, Desc, SubTitle } from "@style/Layout";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState, useEffect } from "react";
 import { createGreenCrewMember, deleteGreenCrewMember, getGreenCrews } from "@api/greenCrew";
@@ -17,9 +17,10 @@ import { timeEnd, timeLog } from "console";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { getJSDocReturnTag } from "typescript";
+import { getUser } from "@api/user";
+import { User } from "@type/user";
 
 export default function GreenCrew() {
-  const [user, setUser] = useRecoilState(userAtom);
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
@@ -34,20 +35,39 @@ export default function GreenCrew() {
       console.log(err);
     },
   });
+  const { data: user } = useQuery<User | undefined>(["user"], getUser, {
+    onSuccess(data) {
+      console.log("user query 작동", data);
+    },
+    onError(err) {
+      console.log(err);
+    },
+  });
 
+  const userMutation = useMutation(getUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
+  const greenCrewMutation = useMutation(["greenCrew"], getGreenCrews);
   const handleClickEnter = async () => {
     console.log("handleclickenter", isParticipate);
     if (isParticipate) {
       // 참여상태
       if (window.confirm("정말 취소하시겠어요?")) {
-        deleteGreenCrewMember(greenCrews![selectedArea].crewId);
-        //setUser ????
+        await deleteGreenCrewMember(greenCrews![selectedArea].crewId);
+        await greenCrewMutation.mutate();
+        await userMutation.mutate();
         setIsParticipate(false);
+        queryClient.invalidateQueries(["greenCrew"]);
+        queryClient.invalidateQueries(["user"]);
       }
     } else {
       await createGreenCrewMember(greenCrews![selectedArea].crewId);
-      // setUser ????
+      await greenCrewMutation.mutate();
+      await userMutation.mutate();
       queryClient.invalidateQueries(["greenCrew"]);
+      queryClient.invalidateQueries(["user"]);
     }
   };
 

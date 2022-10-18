@@ -13,6 +13,7 @@ import ReviewModal from "@components/modal/ReviewCancelModal";
 import { Title, Wrapper, Box, Container, SubTitle, DangerAccent } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { User } from "@type/user";
+import { getUser } from "@api/user";
 
 export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData }) {
   const { type, userId, reviewId } = formProps;
@@ -49,6 +50,11 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
       queryClient.invalidateQueries(["review", reviewId]);
     },
   });
+  const userMutation = useMutation(getUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
 
   useEffect(() => {
     setIsReviewCancelModal(false);
@@ -80,15 +86,8 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         formData.append("name", user?.name!);
         console.log("Create formData", formData);
         reviewMutation.mutate(formData);
+        userMutation.mutate();
         console.log(user);
-        setUser(curUser => {
-          const newReviews = [
-            ...curUser?.reviews!,
-            { title: data.title, description: data.description, createAt: date.toString() },
-          ];
-          const newUser: User = { ...curUser!, reviews: newReviews };
-          return newUser;
-        });
         navigate("/review");
         break;
 
@@ -108,26 +107,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         // editReview(formData, review?.reviewId!);
         console.log("Update formData", formData.get("reviewId"));
         reviewMutation.mutate(formData);
-        setUser(curUser => {
-          console.log(curUser);
-          const index = curUser?.reviews?.findIndex(review => review.reviewId === reviewId);
-          console.log("index", index);
-          const createAt = curUser?.reviews![index!].createAt!;
-          console.log("createAt", createAt);
-          const newReview = {
-            reviewId: curUser?.reviews![index!].reviewId,
-            title: data.title,
-            description: data.description,
-            createAt,
-          };
-          console.log("newReview", newReview);
-          const newReviews = [...curUser?.reviews!];
-          newReviews[index!] = { ...newReviews[index!], title: data.title, description: data.description, createAt };
-          console.log(newReviews[index!]);
-          const newUser: User = { ...curUser!, reviews: newReviews };
-          console.log(newUser);
-          return newUser;
-        });
+        userMutation.mutate();
         navigate("/review");
         break;
     }
