@@ -147,7 +147,7 @@ router.put("/reset", random_password, async function (req, res, next) {
     );
 
     if (!rows.affectedRows) {
-      res.sendStatus(405);
+      res.sendStatus(402);
     }
 
     await emailForTempPassword(email, tempPassword);
