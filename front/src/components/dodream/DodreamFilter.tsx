@@ -29,7 +29,6 @@ export default function DodreamFilter({ preGlobalFilteredRows, globalFilter, set
 
 const Input = styled.label`
   position: relative;
-  margin-top: 3.5em;
 
   input {
     padding: 0 15px;

@@ -6,6 +6,7 @@ import DodreamFilter from "./DodreamFilter";
 import { convertTime } from "@components/modal/DodreamDetail";
 import { selectedDodreamAtom } from "@atom/dodream";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
+import { Box } from  "@style/Layout";
 
 interface Tableprops {
   columns: {
@@ -52,18 +53,20 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
 
   return (
     <WholeWrapper>
-      <DodreamFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        setGlobalFilter={setGlobalFilter}
-        globalFilter={state.globalFilter}
-      />
-      <BtnBox>
-        {courseCategory.map((course, index) => (
-          <Button key={index} value={course} onClick={handleCategory}>
-            {course}
-          </Button>
-        ))}
-      </BtnBox>
+      <FindBox>
+        <BtnBox>
+          {courseCategory.map((course, index) => (
+            <Button key={index} value={course} onClick={handleCategory}>
+              {course}
+            </Button>
+          ))}
+        </BtnBox>
+        <DodreamFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          setGlobalFilter={setGlobalFilter}
+          globalFilter={state.globalFilter}
+        />
+      </FindBox>
       <TableWrapper>
         <table {...getTableProps()}>
           <thead>
@@ -158,7 +161,7 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
 }
 
 const WholeWrapper = styled.div`
-  height: 500px;
+  height: 30%;
   background-color: none;
 `;
 
@@ -173,6 +176,8 @@ const TableWrapper = styled.div`
   height: 400px;
   overflow-y: scroll;
 `;
+
+const FindBox = styled(Box)``;
 
 const Styles = styled.div`
   font-weight: 400;
@@ -231,10 +236,10 @@ const BtnBox = styled.div`
 const Button = styled.button`
   margin: 0 7px;
   padding: 0.5em 0.3em;
-  width: 140px;
+  width: 100px;
   height: 50px;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 13px;
   border-radius: 5px;
   background-color: #88caae;
 
