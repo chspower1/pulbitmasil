@@ -83,7 +83,7 @@ export default function MyPage() {
           isNameChange={isNameChange}
           name={user?.name!}
         ></NameChangeModal>
-        {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
+        {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId}  />}
       </AnimatePresence>
     </MyPageWrapper>
   );

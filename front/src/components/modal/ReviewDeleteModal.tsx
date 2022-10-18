@@ -1,7 +1,7 @@
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { Navigate, useNavigate } from "react-router-dom";
 import {
@@ -20,7 +20,7 @@ import { requestLogin } from "@api/user";
 
 export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
-  const user = useRecoilValue(userAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   // const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const navigate = useNavigate();
 
@@ -31,15 +31,13 @@ export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
       queryClient.invalidateQueries(["reviews"]);
     },
   });
-const userMutation=useMutation(requestLogin,{
-  onSuccess:()=>{
-    queryClient.invalidateQueries(["reviews"]);
-  }
-})
 
   const handleClickConfirm = async (e: React.MouseEvent) => {
     e.preventDefault();
     mutation.mutate({ reviewId, userId: user?.id! });
+    // setUser(prev=>{
+
+    // })
     setReviewDelId(null);
     navigate("/review");
   };
