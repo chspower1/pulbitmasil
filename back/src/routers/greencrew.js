@@ -40,6 +40,30 @@ router.get("/", async function (req, res, next) {
   }
 });
 
+router.get("/summary", async function (req, res, next) {
+  try {
+    const [rows] = await maria.execute(
+      `SELECT 
+      A.title,
+      A.startAt,
+      B.area,
+      B.course
+      FROM GREENCREW AS A
+      INNER JOIN ROUTE AS B
+      ON A.routeId = B.id
+      GROUP BY A.crewId`,
+    );
+
+    if (rows.length) {
+      res.status(200).json(rows.slice(-4));
+    } else {
+      res.sendStatus(404);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/:crewId", login_required, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
