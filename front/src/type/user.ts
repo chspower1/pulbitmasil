@@ -28,10 +28,10 @@ export interface UserLoginForm extends Omit<User, "token"> {
   password: string;
 }
 
-export interface PasswordChangeForm {
-  currentPassword: string;
-  changePassword: string;
-  confirmPassword: string;
+export interface PasswordForm {
+  password: string;
+  newPassword: string;
+  confirmPassword?: string;
 }
 export interface NameChangeForm {
   currentName: string;

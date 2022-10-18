@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserLoginForm, UserRegisterForm } from "@type/user";
+import { PasswordForm, UserLoginForm, UserRegisterForm } from "@type/user";
 import { Cpi, IDodream } from "@type/dodream";
 import { axiosInstance, BASE_URL } from "./axiosInstance";
 
@@ -58,8 +58,9 @@ export async function naverLogin(accessToken: string, stateToken: string) {
   return data;
 }
 
-export async function changePassword(newPassword: string, password: string) {
+export async function changePassword(data: PasswordForm) {
   console.log(`%cPUT 요청 ${BASE_URL}/user/password`, "color: #a25cd1;");
+  const { newPassword, password } = data;
 
   return axiosInstance.put(
     `/user/password`,
