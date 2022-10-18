@@ -17,13 +17,16 @@ import { timeEnd, timeLog } from "console";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
 import { getJSDocReturnTag } from "typescript";
+import dayjs, { extend } from "dayjs";
+import duration from "dayjs/plugin/duration";
+dayjs.extend(duration);
 
 export default function GreenCrew() {
   const [user, setUser] = useRecoilState(userAtom);
   const areas = ["강동", "강서", "강남", "강북"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
-  const [time, setTime] = useState<number[]>([]);
+  const [time, setTime] = useState<string>();
   const [isParticipate, setIsParticipate] = useState<boolean>();
   const [participateList, setParticipateList] = useState<string[]>();
   const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
@@ -46,7 +49,6 @@ export default function GreenCrew() {
       }
     } else {
       await createGreenCrewMember(greenCrews![selectedArea].crewId);
-      // setUser ????
       queryClient.invalidateQueries(["greenCrew"]);
     }
   };
@@ -65,33 +67,25 @@ export default function GreenCrew() {
       </StartAt>
     );
   };
-  const DTime = (arr: number[]) => {
-    const [hours, minutes, seconds] = arr;
-
+  const DTime = (day: string) => {
     return (
       <Title style={{ fontSize: "40px" }}>
-        <Desc as="span">남은시간 : </Desc>{" "}
-        {`${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`}
+        <Desc as="span">남은시간 : </Desc> {day}
       </Title>
     );
   };
 
   function getTime() {
-    console.log("getTime");
-    const setDate = new Date(greenCrews![selectedArea].startAt); // 기준이 되는 시각
-    const now = new Date();
-    const distance = now.getTime() - setDate.getTime();
-    const hours = Math.abs(Math.floor((distance / (1000 * 60 * 60)) % 24));
-    const minutes = Math.abs(Math.floor((distance / (1000 * 60)) % 60));
-    const seconds = Math.abs(Math.floor((distance / 1000) % 60)); // date.js 사용해보기
-
-    setTime([hours, minutes, seconds]);
+    let greenTime = dayjs(greenCrews![selectedArea].startAt); // 기준이 되는 시각
+    let currentTime = dayjs(new Date());
+    let diffTime = greenTime.unix() - currentTime.unix();
+    let duration = dayjs.duration(diffTime * 1000, "milliseconds");
+    setTime(duration.format("HH:mm:ss"));
   }
 
   useEffect(() => {
     //타이머 설정
-    setTime([0, 0, 0]);
-    let timer = setInterval(getTime, 1000);
+    const timer = setInterval(getTime, 1000);
 
     //참여 유저
     setParticipateList(user?.greenCrews?.map(data => data.title));
@@ -163,7 +157,7 @@ export default function GreenCrew() {
             <Row>
               <Col>
                 <StatusBox>
-                  <div>{DTime(time)}</div>
+                  <div>{DTime(time!)}</div>
                   <Desc>
                     현재까지{" "}
                     <GreenAccent style={{ fontSize: "32px" }}>{greenCrews![selectedArea]?.curMember}명</GreenAccent>이
