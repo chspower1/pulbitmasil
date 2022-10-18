@@ -5,6 +5,15 @@ import { getGreenCrews } from "@api/greenCrew";
 import { useQuery } from "@tanstack/react-query";
 import { IGreenCrew } from "@type/greenCrew";
 import { User } from "@type/user";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+// dayjs.locale("ko");
+
+export function changeDayForm(date: Date) {
+  const formatDate = dayjs(date).format(`YYYY.MM.DD(dddd) A HH:MM`);
+  return formatDate.replace("요일", "");
+}
+
 export default function Home({ user }: { user: User }) {
   const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
@@ -32,7 +41,7 @@ export default function Home({ user }: { user: User }) {
                 </ItemTitle>
 
                 <Box>
-                  <ItemDate>{String(greenCrew?.startAt)}</ItemDate>
+                  <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
                 </Box>
               </ContentBox>
             </Item>

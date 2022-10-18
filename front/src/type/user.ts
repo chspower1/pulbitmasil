@@ -11,13 +11,13 @@ export interface UserReviews {
   reviewId?: number;
   title: string;
   description: string;
-  createAt: string;
+  createAt: Date;
 }
 export interface UserGreenCrews {
   crewId?: number;
   title: string;
   course: string;
-  startAt: string;
+  startAt: Date;
   area: string;
 }
 export interface UserRegisterForm extends Omit<User, "token"> {

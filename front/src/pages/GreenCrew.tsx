@@ -19,7 +19,10 @@ import { userAtom } from "@atom/user";
 import { getJSDocReturnTag } from "typescript";
 import dayjs, { extend } from "dayjs";
 import duration from "dayjs/plugin/duration";
+import "dayjs/locale/ko";
+
 dayjs.extend(duration);
+dayjs.locale("ko");
 
 export default function GreenCrew() {
   const [user, setUser] = useRecoilState(userAtom);
@@ -56,7 +59,7 @@ export default function GreenCrew() {
   const convertDate = (startAt: Date) => {
     const day = dayjs(new Date(startAt));
     const startDay = day.format("YYYY/MM/DD");
-    const startTime = day.format("HH:mm:ss A");
+    const startTime = day.format("A HH:mm:ss");
 
     return (
       <StartAt>
