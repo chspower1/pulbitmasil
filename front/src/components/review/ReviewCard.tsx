@@ -42,7 +42,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
               <p style={{ position: "absolute", right: "10px" }}>지역</p>
             </InfoContainer>
             <TextContainer>
-              <p style={{ color: "#636E72", fontSize: "18px", fontWeight: "bold" }}>{title}</p>
+              <p style={{ color: "#636E72", fontSize: "16px", fontWeight: "bold" }}>{title}</p>
               <Description>{description}</Description>
             </TextContainer>
           </ReviewContainer>
@@ -87,6 +87,7 @@ const InfoContainer = styled(motion.div)`
 const ReviewContainer = styled(motion.div)`
   width: 100%;
   padding: 20px;
+  padding-bottom: 0px;
 `;
 
 const ImgContainer = styled(motion.div)`
@@ -126,11 +127,10 @@ const ButtonContainer = styled(motion.div)`
   position: absolute;
   width: 100%;
   bottom: 0px;
-  margin: auto;
 `;
 const Btn = styled(motion.button)`
   width: 50%;
-  height: 20px;
+  height: 15px;
   &:first-child {
     border-right: 1px #388e3c solid;
   }
@@ -139,7 +139,7 @@ const Description = styled(motion.p)`
   text-overflow: ellipsis;
   letter-spacing: 1px;
   line-height: 1.3em;
-  margin-top: 20px;
+  margin-top: 10px;
   overflow: hidden;
   word-break: break-word;
 

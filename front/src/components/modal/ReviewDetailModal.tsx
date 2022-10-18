@@ -1,5 +1,6 @@
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { userAtom } from "@atom/user";
+import { ModalCloseBtn, ModalContainer, ModalWrap } from "@style/ModalStyle";
 import { IReview } from "@type/review";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
@@ -32,7 +33,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   }, []);
 
   return (
-    <>
+    <ModalWrap>
       <Overlay
         onClick={handleClickOverlay}
         initial={{ opacity: 0 }}
@@ -40,15 +41,30 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
       />
-      <ReviewWrap layoutId={`${reviewId}wrap`}>
+      <ReviewContainer layoutId={`${reviewId}wrap`}>
         <ImgContainer>
           <ReviewImg
             src={reviewImg as string}
             alt="review image"
             //
           ></ReviewImg>
+          <ModalCloseBtn
+            onClick={() => {
+              navigate("/review");
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M19 3L11 11L3 19M3 3L19 19"
+                stroke="white"
+                stroke-width="5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </ModalCloseBtn>
         </ImgContainer>
-        <ReviewContainer>
+        <ContentsContainer>
           <InfoContainer>
             <CardImg src={`/assets/icon/user/profile01.png`} />
             <InfoBox>
@@ -64,7 +80,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>{title}</p>
             <Description>{description}</Description>
           </TextContainer>
-        </ReviewContainer>
+        </ContentsContainer>
         <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId ? <Btn onClick={handleClickEdit}>수정</Btn> : null}
 
@@ -78,8 +94,8 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             </Btn>
           ) : null}
         </ButtonContainer>
-      </ReviewWrap>
-    </>
+      </ReviewContainer>
+    </ModalWrap>
   );
 }
 
@@ -92,11 +108,11 @@ const Overlay = styled(motion.div)`
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const ReviewWrap = styled(motion.div)`
+const ReviewContainer = styled(ModalContainer)`
   z-index: 2000;
   position: absolute;
-  width: 600px;
-  height: 700px;
+  width: 500px;
+  height: 600px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -106,8 +122,8 @@ const ReviewWrap = styled(motion.div)`
 `;
 
 const ImgContainer = styled(motion.div)`
-  width: 600px;
-  height: 390px;
+  width: 500px;
+  height: 350px;
   position: relative;
 `;
 const ReviewImg = styled(motion.img)`
@@ -120,18 +136,18 @@ const ReviewImg = styled(motion.img)`
 const TextContainer = styled(motion.div)`
   width: 100%;
   height: 100px;
-  margin-top: 30px;
-  /* overflow: scroll; */
+  margin-top: 20px;
 `;
 
-const Description = styled.p`
+const Description = styled(motion.div)`
   padding: 10px;
   width: 100%;
-  height: 100px;
+  height: 90px;
   letter-spacing: 1px;
   line-height: 1.3em;
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 20px;
+  overflow-x: hidden;
   overflow-y: auto;
   resize: none;
 `;
@@ -141,7 +157,7 @@ const InfoBox = styled(motion.div)`
   flex-direction: column;
   justify-content: center;
 `;
-const ReviewContainer = styled(motion.div)`
+const ContentsContainer = styled(motion.div)`
   width: 100%;
   height: 250px;
   padding: 30px;
@@ -161,6 +177,7 @@ const CardImg = styled(motion.img)`
 `;
 const ButtonContainer = styled(motion.div)`
   display: flex;
+  width: 500px;
   flex-direction: row;
   position: absolute;
   margin: auto;

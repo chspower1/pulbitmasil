@@ -15,6 +15,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { User } from "@type/user";
 import { getUser } from "@api/user";
+import { ModalContainer, ModalWrap } from "@style/ModalStyle";
 
 export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData }) {
   const { type, userId, reviewId } = formProps;
@@ -125,10 +126,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
       <Form as="form" onSubmit={handleSubmitReview}>
         <TitleBox>
           <Title>풀빛마실 이야기</Title>
-          <SubTitle>
+          <ReviewSubTitle>
             함께한
             <DangerAccent> 생생한 경험</DangerAccent>를 공유해주세요!
-          </SubTitle>
+          </ReviewSubTitle>
         </TitleBox>
         <SelectInput as="select" height={40} {...register("title")}>
           {UserGreenCrew?.length === 0 ? (
@@ -170,11 +171,13 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
 }
 
 const FormWrap = styled(Wrapper)`
+  position: relative;
+  flex-direction: column;
   background-image: url("/assets/images/register_img.jpg");
 `;
-const Form = styled.form`
-  width: 700px;
-  height: 750px;
+const Form = styled(ModalContainer)`
+  width: 600px;
+  height: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -185,6 +188,10 @@ const Form = styled.form`
 const TitleBox = styled(Box)`
   flex-direction: column;
   margin: 20px 0;
+`;
+
+const ReviewSubTitle = styled(SubTitle)`
+  margin-top: 10px;
 `;
 
 const Button = styled.button`
@@ -222,16 +229,8 @@ const ReviewTextArea = styled.textarea`
   font-size: 16px;
   padding: 10px 10px;
   border: solid 1px #a7a7a7;
-  margin-bottom: 15px;
+  margin-bottom: 10px 0;
   resize: none;
-`;
-const ImgLabel = styled.label`
-  padding: 6px 25px;
-  background-color: ${props => props.theme.mainColor};
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  margin: 10px 0;
 `;
 
 const ButtonContainer = styled.div`

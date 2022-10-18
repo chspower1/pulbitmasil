@@ -32,6 +32,9 @@ export const SubTitle = styled.h3`
   /* font-family: "SebangBold"; */
   font-size: 18px;
   color: ${props => props.theme.mainColor};
+  &:first-child {
+    margin-bottom: 10px;
+  }
 `;
 export const Desc = styled.p`
   font-family: "Sebang";
