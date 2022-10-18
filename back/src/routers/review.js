@@ -116,7 +116,7 @@ reviewRouter.put("/:reviewId", login_required, uploadSingle, async function (req
       [description, imgName, crewId[0].crewId, reviewId],
     );
 
-    if (rows.changedRows) {
+    if (rows.affectedRows) {
       res.status(200).json({ success: true });
     } else {
       res.sendStatus(404);
