@@ -83,8 +83,8 @@ export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) 
   );
 }
 const MapBox = styled.div`
-  width: 50%;
-  height: 100%;
+  width: 350px;
+  height: 340px;
   border: 5px solid #88caae;
   border-radius: 10px;
 `;
