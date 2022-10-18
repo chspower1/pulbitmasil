@@ -1,4 +1,4 @@
-import { changePassword } from "@api/user";
+import { changePassword, getUser } from "@api/user";
 import { userAtom } from "@atom/user";
 import { Box, Container, Title, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -14,17 +14,22 @@ import UserEditNav from "@components/UserEditNav";
 import NameChangeModal from "@components/modal/NameChangeModal";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { ReviewDeleteIdAtom } from "@atom/atom";
+import { useQuery } from "@tanstack/react-query";
 export interface UserPasswordProps {
   setIsPasswordChange: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function MyPage() {
-  const user = useRecoilValue(userAtom);
   const [isEdit, setIsEdit] = useState(false);
   const { menu, target } = useParams();
   const [isPasswordChange, setIsPasswordChange] = useState(false);
   const [isNameChange, setIsNameChange] = useState(false);
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const { data: user } = useQuery(["user"], getUser, {
+    onSuccess(data) {
+      console.log("mypage query 작동 완료", data);
+    },
+  });
   const handleClickChangePassword = () => {
     // changePassword()
     if (user?.social === "origin") {
@@ -83,7 +88,7 @@ export default function MyPage() {
           isNameChange={isNameChange}
           name={user?.name!}
         ></NameChangeModal>
-        {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId}  />}
+        {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
       </AnimatePresence>
     </MyPageWrapper>
   );

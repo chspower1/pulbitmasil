@@ -45,3 +45,11 @@ export async function deleteGreenCrewMember(crewId: number) {
     return err;
   }
 }
+export async function getSummaryGreenCrews() {
+  try {
+    const { data } = await axiosInstance.get("greencrew/summary");
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UserLoginForm, UserRegisterForm } from "@type/user";
+import { User, UserLoginForm, UserRegisterForm } from "@type/user";
 import { Cpi, IDodream } from "@type/dodream";
 import { axiosInstance, BASE_URL } from "./axiosInstance";
 
@@ -10,16 +10,27 @@ export async function requestLogin(loginInfo: UserLoginForm) {
     const { data } = await axiosInstance.post(`user/login`, bodyData, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`, // 왜넣어줬지?
       },
     });
-    console.log("test------------", data);
-    if (!data) return false;
     sessionStorage.setItem("userToken", data.token);
-    // console.log("풀빛마실로그인", data);
+    console.log("풀빛마실로그인", data);
     return data;
   } catch (err) {
     // alert("로그인 정보가 옳지 않습니다!");
+    console.log(err);
+  }
+}
+export async function getUser() {
+  try {
+    const { data: user }: { data: User } = await axiosInstance.get(`user/mypage`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+      },
+    });
+    console.log("유저정보 받아오기 ", user);
+    return user;
+  } catch (err) {
     console.log(err);
   }
 }

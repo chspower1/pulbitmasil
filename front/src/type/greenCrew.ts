@@ -16,3 +16,9 @@ export interface IGreenCrew {
   CPI: coordinate[];
 }
 type coordinate = { x: number; y: number };
+export interface SummaryGreenCrew {
+  title: string;
+  course: string;
+  startAt: Date;
+  area: string;
+}

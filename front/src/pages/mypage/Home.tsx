@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Container, Title, Wrapper, SubTitle, Desc, Row, GreenAccent } from "@style/Layout";
 import styled from "styled-components";
-import { getGreenCrews } from "@api/greenCrew";
+import { getSummaryGreenCrews } from "@api/greenCrew";
 import { useQuery } from "@tanstack/react-query";
-import { IGreenCrew } from "@type/greenCrew";
+import { IGreenCrew, SummaryGreenCrew } from "@type/greenCrew";
 import { User } from "@type/user";
 export default function Home({ user }: { user: User }) {
-  const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
+  const { data: greenCrews } = useQuery<SummaryGreenCrew[] | undefined>(["summaryGreenCrew"], getSummaryGreenCrews, {
     onSuccess(data) {
       console.log("mypage query 작동", data);
     },
