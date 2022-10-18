@@ -5,7 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import { ContentBox, ItemDate, ItemTitle, List, Item as ItemGuide } from "./Home";
+import { useRecoilState } from "recoil";
+import { ReviewDeleteIdAtom } from "@atom/atom";
 export default function ReviewList({ reviews }: { reviews: UserReviews[] | undefined }) {
+  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   return (
     <List>
       {reviews?.map(review => (
@@ -16,7 +19,7 @@ export default function ReviewList({ reviews }: { reviews: UserReviews[] | undef
               <ItemDate>{review?.createAt}</ItemDate>
             </Box>
           </ContentBox>
-          <DeleteBtn>
+          <DeleteBtn onClick={() => setReviewDelId(13)}>
             <FontAwesomeIcon icon={faTrashCan} size="2xl" color="#E17055" />
           </DeleteBtn>
         </Item>
@@ -33,5 +36,10 @@ const DeleteBtn = styled(Box)`
   width: 55px;
   height: 55px;
   border: solid 2px ${props => props.theme.dangerColor};
+  background-color: white;
   border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: ${props => props.theme.dangerColor};
+  }
 `;

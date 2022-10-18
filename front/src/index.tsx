@@ -7,12 +7,16 @@ import "./style/fonts/fonts.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GlobalStyled } from "@style/GlobalStyled";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { AxiosError } from "axios";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       suspense: true,
       staleTime: 1000 * 60 * 5,
+      onError(err) {
+        console.log(err);
+      },
     },
   },
 });

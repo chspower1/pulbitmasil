@@ -8,11 +8,13 @@ export interface User {
   social: "origin" | "kakao" | "naver";
 }
 export interface UserReviews {
+  reviewId?: number;
   title: string;
   description: string;
   createAt: string;
 }
 export interface UserGreenCrews {
+  crewId?: number;
   title: string;
   course: string;
   startAt: string;
