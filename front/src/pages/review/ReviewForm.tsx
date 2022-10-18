@@ -13,13 +13,13 @@ import ReviewModal from "@components/modal/ReviewCancelModal";
 import { Title, Wrapper, Box, Container, SubTitle, DangerAccent } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { User } from "@type/user";
+import { User, UserGreenCrew } from "@type/user";
 import { getUser } from "@api/user";
+import { IGreenCrew } from "@type/greenCrew";
 
 export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData }) {
   const { type, userId, reviewId } = formProps;
   console.log(formProps);
-  const [user, setUser] = useRecoilState(userAtom);
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const navigate = useNavigate();
   const mode = type;
@@ -35,6 +35,11 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   const [uploadImg, setUploadImg] = useState<any>(); // any 말고??
   const queryClient = useQueryClient();
   const image = watch("reviewImg");
+  const [inProgressGreenCrew, setInProgressGreenCrew] = useState<UserGreenCrew[] | undefined>();
+  const [doneGreenCrew, setDoneProgressGreenCrew] = useState<UserGreenCrew[] | undefined>();
+
+  // Query
+  const { data: user } = useQuery<User | undefined>(["user"], getUser);
   const { data: review } = useQuery<IReview>(["review", reviewId], () => getOneReview(reviewId!), {
     onSuccess(data) {
       console.log("ReviewForm query 동작", data);
@@ -43,8 +48,9 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     },
     enabled: mode === "UPDATE",
   });
+  const userGreenCrews = user?.greenCrews;
 
-  //qeury
+  // Mutation
   const reviewMutation = useMutation(mode === "CREATE" ? createReview : editReview, {
     onSuccess: () => {
       queryClient.invalidateQueries(["reviews"]);
@@ -57,6 +63,13 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     },
   });
 
+  // Util
+  const checkInProgress = (greenCrews: UserGreenCrew[]) => {
+    setInProgressGreenCrew(greenCrews?.filter(greenCrew => greenCrew.inProgress! === 1));
+    setDoneProgressGreenCrew(greenCrews?.filter(greenCrew => greenCrew.inProgress! === 0));
+  };
+
+  // useEffect
   useEffect(() => {
     setIsReviewCancelModal(false);
     setImagePreview(review?.reviewImg!); // Query 일정시간동안 호출 안함 .그래서 해당부분 안찍힘?
@@ -64,16 +77,12 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   }, []);
 
   useEffect(() => {
-    if (image && image.length > 0) {
-      const file = image[0];
-      setImagePreview(window.URL.createObjectURL(file as File));
-      console.log("이미지", imagePreview);
-      setUploadImg(file);
-
-      console.log(image);
-      console.log(window.URL.createObjectURL(file as File));
-    }
-  }, [image]);
+    checkInProgress(user?.greenCrews!);
+  }, []);
+  const handleClickCancel = () => {
+    console.log("handleclickcancel");
+    setIsReviewCancelModal(true);
+  };
   const handleSubmitReview = handleSubmit(data => {
     const formData = new FormData();
     formData.append("description", data.description);
@@ -114,12 +123,17 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     }
   });
 
-  const handleClickCancel = () => {
-    console.log("handleclickcancel");
-    setIsReviewCancelModal(true);
-  };
-  const UserGreenCrew = user?.greenCrews;
+  useEffect(() => {
+    if (image && image.length > 0) {
+      const file = image[0];
+      setImagePreview(window.URL.createObjectURL(file as File));
+      console.log("이미지", imagePreview);
+      setUploadImg(file);
 
+      console.log(image);
+      console.log(window.URL.createObjectURL(file as File));
+    }
+  }, [image]);
   return (
     <FormWrap>
       <Form as="form" onSubmit={handleSubmitReview}>
@@ -131,10 +145,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           </SubTitle>
         </TitleBox>
         <SelectInput as="select" height={40} {...register("title")}>
-          {UserGreenCrew?.length === 0 ? (
+          {Boolean(userGreenCrews?.find(userGreenCrew => userGreenCrew.inProgress === 1)) ? (
             <Option> 없음</Option>
           ) : (
-            UserGreenCrew?.map(userGreenCrew => <Option>{userGreenCrew?.title}</Option>)
+            userGreenCrews?.map(userGreenCrews => <Option>{userGreenCrews?.title}</Option>)
           )}
         </SelectInput>
 

@@ -13,6 +13,7 @@ export interface IGreenCrew {
   curMember: number;
   content: string;
   trafficInfo: string;
+  inProgress: number;
   CPI: coordinate[];
 }
 type coordinate = { x: number; y: number };

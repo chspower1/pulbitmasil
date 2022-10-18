@@ -19,6 +19,7 @@ export interface UserGreenCrew {
   course: string;
   startAt: Date;
   area: string;
+  inProgress: number;
 }
 export interface UserRegisterForm extends Omit<User, "token"> {
   password: string;
