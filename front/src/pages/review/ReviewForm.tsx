@@ -45,11 +45,11 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
       console.log("리뷰폼 유저 패치", data);
     },
   });
-  const { data: review } = useQuery<IReview>(["review", reviewId], () => getOneReview(reviewId!), {
+  const { data: review, isLoading } = useQuery<IReview>(["review", reviewId], () => getOneReview(reviewId!), {
     onSuccess(data) {
       console.log("ReviewForm query review 동작", data);
-      setImagePreview(review?.reviewImg!); // Query 일정시간동안 호출 안함 .그래서 해당부분 안찍힘?
-      setValue("description", review?.description!);
+      setImagePreview(data?.reviewImg!); // Query 일정시간동안 호출 안함 .그래서 해당부분 안찍힘?
+      setValue("description", data?.description!);
     },
     enabled: mode === "UPDATE",
   });
@@ -64,6 +64,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   });
   const userMutation = useMutation(getUser, {
     onSuccess: () => {
+      console.log("유저 뮤테이션 완료");
       queryClient.invalidateQueries(["user"]);
     },
   });
@@ -74,6 +75,50 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     setDoneGreenCrew(greenCrews?.filter(greenCrew => greenCrew.inProgress! === 0));
   };
 
+  // Handle
+  const onvalid = async (data: IReviewContent) => {
+    console.log("------------------", data);
+    const formData = new FormData();
+    formData.append("description", data.description);
+    switch (mode) {
+      case "CREATE":
+        console.log(data);
+        formData.append("title", data.title);
+        const createDay = dayjs(new Date());
+        formData.append("createAt", createDay.toString());
+        formData.append("file", uploadImg);
+        console.log("Create formData", formData);
+        await reviewMutation.mutate(formData);
+        await userMutation.mutate();
+        console.log(user);
+        navigate("/review");
+        break;
+
+      case "UPDATE":
+        console.log("업데이트 데이터", data);
+        if (data.title === "") formData.append("title", review?.title!);
+        else formData.append("title", data.title);
+        console.log("||||||||||||||||||||||||||", review?.title);
+        console.log("||||||||||||||||||||||||||", formData.get("title"));
+        formData.append("userId", user?.id!.toString()!);
+        formData.append("reviewId", reviewId!.toString());
+
+        if (uploadImg) {
+          // 사진파일이 변했다면 ,file 객체 전달
+          formData.append("file", uploadImg);
+        } else {
+          // 사진파일이 그대로라면, 이미지 url 전달
+          console.log("reviewImg", review?.reviewImg!);
+          formData.append("imageUrl", review?.reviewImg! as string);
+        }
+        // editReview(formData, review?.reviewId!);
+        console.log("Update formData", formData.get("reviewId"));
+        await reviewMutation.mutate(formData);
+        await userMutation.mutate();
+        navigate("/review");
+        break;
+    }
+  };
   // useEffect
   useEffect(() => {
     setIsReviewCancelModal(false);
@@ -88,45 +133,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     console.log("handleclickcancel");
     setIsReviewCancelModal(true);
   };
-  const handleSubmitReview = handleSubmit(data => {
-    console.log("------------------", data);
-    const formData = new FormData();
-    formData.append("description", data.description);
-    formData.append("title", data.title);
-    switch (mode) {
-      case "CREATE":
-        console.log(data);
-        const createDay = dayjs(new Date());
-        formData.append("createAt", createDay.toString());
-        formData.append("file", uploadImg);
-        console.log("Create formData", formData);
-        reviewMutation.mutate(formData);
-        userMutation.mutate();
-        console.log(user);
-        navigate("/review");
-        break;
-
-      case "UPDATE":
-        console.log(data);
-        formData.append("userId", user?.id!.toString()!);
-        formData.append("reviewId", reviewId!.toString());
-
-        if (uploadImg) {
-          // 사진파일이 변했다면 ,file 객체 전달
-          formData.append("file", uploadImg);
-        } else {
-          // 사진파일이 그대로라면, 이미지 url 전달
-          console.log("reviewImg", review?.reviewImg!);
-          formData.append("imageUrl", review?.reviewImg! as string);
-        }
-        // editReview(formData, review?.reviewId!);
-        console.log("Update formData", formData.get("reviewId"));
-        reviewMutation.mutate(formData);
-        userMutation.mutate();
-        navigate("/review");
-        break;
-    }
-  });
 
   useEffect(() => {
     if (image && image.length > 0) {
@@ -140,7 +146,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   }, [image]);
   return (
     <FormWrap>
-      <Form as="form" onSubmit={handleSubmitReview}>
+      <Form as="form" onSubmit={handleSubmit(onvalid)}>
         <TitleBox>
           <Title>풀빛마실 이야기</Title>
           <ReviewSubTitle>
@@ -159,7 +165,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
             )}
           </SelectInput>
         )}
-        {mode === "UPDATE" && review && doneGreenCrews && (
+        {mode === "UPDATE" && !isLoading && (
           <SelectInput as="select" height={40} {...register("title")}>
             {doneGreenCrews?.map(doneGreenCrew =>
               review?.title === doneGreenCrew.title ? (
