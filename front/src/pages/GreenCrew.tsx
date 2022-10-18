@@ -44,6 +44,7 @@ export default function GreenCrew() {
     },
   });
   const { data: user } = useQuery<User | undefined>(["user"], getUser, {
+    enabled: Boolean(sessionStorage.getItem("userToken")),
     onSuccess(data) {
       console.log("user query 작동", data);
     },
@@ -128,7 +129,9 @@ export default function GreenCrew() {
   }, []);
 
   useEffect(() => {
-    searchCrew(user?.greenCrews!, greenCrews![selectedArea]);
+    if (user) {
+      searchCrew(user?.greenCrews!, greenCrews![selectedArea]);
+    }
   }, [greenCrews, selectedArea]);
   return (
     <GreenCrewWrapper>
