@@ -76,7 +76,7 @@ export default function GreenCrew() {
     }
   };
 
-  const isPartici = (userGreenCrew: UserGreenCrew[], greenCrew: IGreenCrew) => {
+  const searchCrew = (userGreenCrew: UserGreenCrew[], greenCrew: IGreenCrew) => {
     const isParticipated = Boolean(userGreenCrew.find(userGreenCrew => userGreenCrew.crewId === greenCrew.crewId));
     console.log("=======================================", isParticipated);
     setIsParticipate(isParticipated);
@@ -128,7 +128,7 @@ export default function GreenCrew() {
   }, []);
 
   useEffect(() => {
-    isPartici(user?.greenCrews!, greenCrews![selectedArea]);
+    searchCrew(user?.greenCrews!, greenCrews![selectedArea]);
   }, [greenCrews, selectedArea]);
   return (
     <GreenCrewWrapper>
