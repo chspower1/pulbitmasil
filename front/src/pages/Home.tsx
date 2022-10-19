@@ -232,6 +232,7 @@ const BtnBox = styled.div`
 `;
 
 const Title = styled.div`
+  color: white;
   font-size: 52px;
   line-height: 83px;
   font-weight: 400;

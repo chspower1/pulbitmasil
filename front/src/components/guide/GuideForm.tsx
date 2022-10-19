@@ -10,6 +10,7 @@ import {
   Box,
   Row,
   DangerAccent,
+  MainBtn,
 } from "@style/Layout";
 import { useNavigate } from "react-router-dom";
 
@@ -18,8 +19,8 @@ import styled from "styled-components";
 export default function GuideForm({ content }: { content: Content }) {
   const navigate = useNavigate();
   const handleClickNavigate = () => {
-    if(content.num === 6) {
-      window.open(`${"http://news.seoul.go.kr/env/files/2018/11/601365c0483251.00291148.pdf"}`, "_blank")
+    if (content.num === 6) {
+      window.open(`${"http://news.seoul.go.kr/env/files/2018/11/601365c0483251.00291148.pdf"}`, "_blank");
     }
     navigate(content?.buttonURL!);
   };
@@ -32,14 +33,17 @@ export default function GuideForm({ content }: { content: Content }) {
         <Line src={`/assets/images/guide/tab_${isRight ? "right" : "left"}.png`} />
       </LineBox>
       <TextBox>
-        <Title style={{margin:"15px 0"}}>{content.title}</Title>
+        <Title style={{ margin: "15px 0" }}>{content.title}</Title>
         <Desc>{content.description}</Desc>
-        {content.type === "button" ? <Button onClick={handleClickNavigate}>{content.buttonValue!}</Button>:""}
+        {content.type === "button" ? (
+          <MainBtn width="auto" onClick={handleClickNavigate}>
+            {content.buttonValue!}
+          </MainBtn>
+        ) : (
+          ""
+        )}
       </TextBox>
-      <Img
-        src={`assets/images/guide/guide${content.num}.png`}
-        alt="guide photo"
-      />
+      <Img src={`assets/images/guide/guide${content.num}.png`} alt="guide photo" />
     </Container>
   );
 }

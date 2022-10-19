@@ -66,8 +66,9 @@ export const MainBtn = styled(motion.button)<{ width?: string; height?: string }
   height: ${props => (props.height ? props.height : "45px")};
   border-radius: 5px;
   font-size: 18px;
-  /* padding: 0px 15px; */
+  padding: ${props => props.width === "auto" && "0px 15px"};
   background-color: ${props => props.theme.mainColor};
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); // 나는 쉐도우 없는것도 괜찮은듯?
   &:hover {
     background-color: ${props => props.theme.accentColor};
   }

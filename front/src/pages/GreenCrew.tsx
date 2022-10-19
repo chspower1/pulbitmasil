@@ -131,12 +131,20 @@ export default function GreenCrew() {
     <GreenCrewWrapper>
       <AreaNav>
         {[0, 1, 2, 3].map(area => (
-          <AreaBtn className={selectedArea === area ? "active" : "normal"} onClick={() => setSelectedArea(area)}>
+          <MainBtn
+            width="150px"
+            height="60px"
+            className={selectedArea === area ? "active" : "normal"}
+            onClick={() => setSelectedArea(area)}
+          >
             {areas[area]}
-          </AreaBtn>
+          </MainBtn>
         ))}
         <Link to="/guide">
-          <AreaBtn style={{ backgroundColor: "#E17055" }}>풀빛마실 준비하는 법</AreaBtn>
+          <DangerBtn width="150px" height="60px">
+            풀빛마실
+            <br /> 준비하는 법
+          </DangerBtn>
         </Link>
       </AreaNav>
       <RootContainer>
@@ -244,7 +252,7 @@ const GreenCrewWrapper = styled(Wrapper)`
 `;
 const AreaNav = styled(Box)`
   position: fixed;
-  left: 0px;
+  left: -5px;
   top: 50%;
   transform: translateY(-50%);
 
@@ -317,7 +325,6 @@ const CourseBox = styled(Box)`
   padding: 0 10px;
 `;
 
-const StartAt = styled.div``;
 const DetailTitle = styled(Desc)`
   display: flex;
   justify-content: space-between;

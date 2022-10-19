@@ -64,7 +64,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
 
           <TextContainer>
             <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>{title}</p>
-            <Description>{description}</Description>
+            <Description className={userId === user?.id ? "small" : "normal"}>{description}</Description>
           </TextContainer>
         </ContentsContainer>
         <ButtonContainer layoutId={`${reviewId}btn`}>
@@ -113,7 +113,7 @@ const ReviewContainer = styled(ModalContainer)`
 
 const ImgContainer = styled(motion.div)`
   width: 500px;
-  height: 350px;
+  height: 300px;
   position: relative;
 `;
 const ReviewImg = styled(motion.img)`
@@ -122,6 +122,7 @@ const ReviewImg = styled(motion.img)`
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 const TextContainer = styled(motion.div)`
   width: 100%;
@@ -132,14 +133,21 @@ const TextContainer = styled(motion.div)`
 const Description = styled(motion.div)`
   padding: 10px;
   width: 100%;
-  height: 90px;
   letter-spacing: 1px;
   line-height: 1.3em;
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 16px;
   overflow-x: hidden;
   overflow-y: auto;
   resize: none;
+  color: ${props => props.theme.textColor};
+  border: solid 1px ${props => props.theme.borderColor};
+  &.small {
+    height: 110px;
+  }
+  &.normal {
+    height: 150px;
+  }
 `;
 const InfoBox = styled(motion.div)`
   margin-left: 20px;

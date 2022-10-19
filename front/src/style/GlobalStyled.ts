@@ -13,6 +13,7 @@ export const GlobalStyled = createGlobalStyle`
         font-family: "Sebang";
         ::-webkit-scrollbar {
         display: none;
+        color:${props => props.theme.textColor};
   }
   
     }
@@ -61,5 +62,6 @@ export const GlobalStyled = createGlobalStyle`
     * {
         font-family: "Sebang";
         box-sizing: border-box;
+        color:${props => props.theme.textColor};
     }
 `;

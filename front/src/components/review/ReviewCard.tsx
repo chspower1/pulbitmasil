@@ -101,7 +101,7 @@ const ImgContainer = styled(motion.div)`
 `;
 const TextContainer = styled(motion.div)`
   width: 100%;
-  height: 100px;
+  height: 60px;
   margin-top: 20px;
 `;
 
@@ -111,6 +111,7 @@ const ReviewImg = styled(motion.img)`
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 
 const InfoBox = styled(motion.div)`
@@ -134,14 +135,12 @@ const ButtonContainer = styled(motion.div)`
   right: 10px;
 `;
 const Description = styled(motion.p)`
-  text-overflow: ellipsis;
   letter-spacing: 1px;
   line-height: 1.3em;
   margin-top: 10px;
+  width: 100%;
+  height: 30px;
   overflow: hidden;
-  word-break: break-word;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2; // 원하는 라인수
-  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
