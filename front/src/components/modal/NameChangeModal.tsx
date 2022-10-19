@@ -70,7 +70,6 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
             <InputBox>
               <InputTitle>현재 이름</InputTitle>
               <Input disabled placeholder="현재 이름" defaultValue={name} type="text" id="currentName" />
-              <ErrorMessage>{errors.currentName?.message}</ErrorMessage>
             </InputBox>
 
             <InputBox>
