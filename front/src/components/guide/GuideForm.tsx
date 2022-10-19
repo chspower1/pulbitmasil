@@ -33,12 +33,12 @@ export default function GuideForm({ content }: { content: Content }) {
         <Line src={`/assets/images/guide/tab_${isRight ? "right" : "left"}.png`} />
       </LineBox>
       <TextBox>
-        <Title style={{ margin: "15px 0" }}>{content.title}</Title>
+        <GuideTitle style={{ margin: "15px 0" }}>{content.title}</GuideTitle>
         <Desc>{content.description}</Desc>
         {content.type === "button" ? (
-          <MainBtn width="auto" onClick={handleClickNavigate}>
+          <GuideMainBtn width="auto" onClick={handleClickNavigate}>
             {content.buttonValue!}
-          </MainBtn>
+          </GuideMainBtn>
         ) : (
           ""
         )}
@@ -47,6 +47,12 @@ export default function GuideForm({ content }: { content: Content }) {
     </Container>
   );
 }
+
+const GuideTitle = styled(Title)`
+  @media screen and (max-width: 1024px) {
+    font-size: 24px;
+  };
+`;
 
 const Number = styled(Title)`
   position: absolute;
@@ -65,23 +71,77 @@ const Container = styled(ContainerGuide)<{ isRight: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
+
+  @media screen and (max-width: 1024px) {
+    justify-content: flex-start;
+  }
+  
+
   ${Number} {
     margin-right: ${props => (props.isRight ? "-200px" : "200px")};
+
+    @media screen and (max-width: 1024px) {
+      margin-left: 18%;
+    };
+
+    @media screen and (max-width: 767px) {
+      margin-left: ${props => (props.isRight ? "1%" : "15%")};
+    };
+
+    @media screen and (max-width: 550px) {
+      margin-left: ${props => (props.isRight ? "5%" : "21%")};
+    };
   }
   ${TextBox} {
     margin-right: ${props => (props.isRight ? "500px" : "-500px")};
     align-items: ${props => (props.isRight ? "flex-end" : "flex-start")};
     width: 250px;
+
+    @media screen and (max-width: 1024px) {
+      margin-left: 32%;
+      align-items: center;
+    };
+
+    @media screen and (max-width: 767px) {
+      margin-left: 25%;
+    }
+
+    @media screen and (max-width: 550px) {
+      margin-left: 45%;
+      align-items: flex-start;
+    };
+
     ${Desc} {
       text-align: ${props => (props.isRight ? "right" : "left")};
       width: 230px;
       line-height: 22px;
       letter-spacing: 0.05em;
       white-space: pre-line;
+
+      @media screen and (max-width: 1024px) {
+        text-align: center;
+      }
+      @media screen and (max-width: 767px) {
+        font-size: 13px;
+        
+      };
+      @media screen and (max-width: 550px) {
+        text-align: left;
+        width: 190px;
+      };
     }
   }
   ${Img} {
     margin-right: ${props => (props.isRight ? "1100px" : "-1100px")};
+    @media screen and (max-width: 1024px) {
+      margin-left: 70%;
+    };
+    @media screen and (max-width: 767px) {
+      width: 150px;
+    }
+    @media screen and (max-width: 550px) {
+      display: none;
+    };
   }
 `;
 const Line = styled.img`
@@ -93,8 +153,15 @@ const LineBox = styled(Box)<{ isRight: boolean }>`
   width: 100px;
   height: 100%;
   justify-content: ${props => (props.isRight ? "flex-end" : "flex-start")};
+
+  @media screen and (max-width: 1024px) {
+    margin-left: 3%;
+  };
+  @media screen and (max-width: 550px) {
+    margin-left: 7%;
+  };
 `;
-const Button = styled.button`
-  padding: 10px;
+const GuideMainBtn = styled(MainBtn)`
+  /* padding: 10px; */
   margin: 10px 0;
 `;
