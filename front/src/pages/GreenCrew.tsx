@@ -6,7 +6,7 @@ import { useState, useEffect, startTransition } from "react";
 import { createGreenCrewMember, deleteGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
 import Moment from "react-moment";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
 import moment from "moment";
 import { useInterval } from "react-use";
@@ -31,6 +31,7 @@ export default function GreenCrew() {
   const [time, setTime] = useState<string>();
   const [curMember, setCurMember] = useState(0);
   const [isParticipate, setIsParticipate] = useState<boolean>();
+  const navigate = useNavigate();
 
   // Query
   const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
@@ -98,9 +99,9 @@ export default function GreenCrew() {
   };
   const DTime = (day: string) => {
     return (
-      <CrewTitle style={{ fontSize: "32px" }}>
+      <TimeDesc>
         <Desc as="span">남은시간 : </Desc> {day}
-      </CrewTitle>
+      </TimeDesc>
     );
   };
 
@@ -149,9 +150,9 @@ export default function GreenCrew() {
       </AreaNav>
       <RootContainer>
         <CrewTitle>{greenCrews![selectedArea]?.title!}</CrewTitle>
-        <Desc className="num_desc" style={{ alignSelf: "end" }}>
+        <NumDesc>
           현재 <GreenAccent>{curMember}명</GreenAccent>이 참여중!
-        </Desc>
+        </NumDesc>
         <TopBox>
           <InfoBox>
             <DescBox>
@@ -205,9 +206,7 @@ export default function GreenCrew() {
         <SecondBox>
           <TimeBox className="time">
             <Row style={{ marginLeft: "auto" }}>
-              <StatusBox>
-                <div>{DTime(time!)}</div>
-              </StatusBox>
+              <StatusBox>{DTime(time!)}</StatusBox>
 
               {!isParticipate ? (
                 <MainBtn width="55%" height="60px" onClick={handleClickEnter}>
@@ -255,10 +254,22 @@ const AreaNav = styled(Box)`
   left: -5px;
   top: 50%;
   transform: translateY(-50%);
-
   flex-direction: column;
   height: 360px;
   justify-content: space-between;
+  margin-top: 100px;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    left: 0px;
+    top: 0px;
+    transform: translateY(0);
+    height: 60px;
+    margin-top: 65px;
+    z-index: 1000;
+  }
 `;
 const StatusBox = styled(Box)`
   flex-direction: column;
@@ -271,10 +282,26 @@ const StartDate = styled(Desc)`
 `;
 const CrewTitle = styled(Title)`
   color: ${props => props.theme.accentColor};
+  @media screen and (max-width: 768px) {
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 1024px) {
+    margin-top: 30px;
+  }
+`;
+
+const TimeDesc = styled(Title)`
+  color: ${props => props.theme.accentColor};
+`;
+
+const NumDesc = styled(Desc)`
+  align-self: end;
+  margin-right: 20px;
 `;
 const AreaBtn = styled.button`
   width: 150px;
   height: 60px;
+  font-size: 18px;
   &.active {
     background-color: ${props => props.theme.mainColor};
   }
@@ -284,26 +311,54 @@ const AreaBtn = styled.button`
   &:hover {
     background-color: ${props => props.theme.mainColor};
   }
+
+  @media screen and (max-width: 768px) {
+    width: 25%;
+    height: 50px;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 25%;
+    height: 55px;
+    font-size: 14px;
+  }
 `;
 const RootContainer = styled(Container)`
   flex-direction: column;
   justify-content: flex-start;
   width: 700px;
   height: 100%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 1024px) {
+  }
 `;
-const TopBox = styled(Box)``;
+const TopBox = styled(Box)`
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    flex-direction: column-reverse;
+  }
+`;
 const InfoBox = styled(Box)`
-  position: relative;
   width: 310px;
   height: 340px;
   margin-right: 10px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+  }
 `;
 const SecondBox = styled(Box)`
-  position: relative;
   flex-direction: column;
 `;
 const Row = styled(Box)`
   width: 100%;
+  @media screen and (max-width: 768px) {
+    /* flex-direction: column; */
+  }
 `;
 const DescBox = styled(Box)`
   background-color: white;
@@ -315,6 +370,10 @@ const DescBox = styled(Box)`
   padding: 20px;
   border-radius: 20px;
   font-size: 16px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const IconImg = styled.img`
   margin-right: 10px;
@@ -323,7 +382,9 @@ const CourseBox = styled(Box)`
   width: 100%;
   justify-content: space-between;
   padding: 0 10px;
+  margin-bottom: 5px;
 `;
+
 
 const DetailTitle = styled(Desc)`
   display: flex;
@@ -343,7 +404,7 @@ const TimeBox = styled(Box)`
 const ContentBox = styled(Box)`
   width: 670px;
   overflow-y: scroll;
-  height: 50%;
+  height: auto;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -351,14 +412,18 @@ const ContentBox = styled(Box)`
   background-color: white;
   border-radius: 20px;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 `;
-const ContentTitle = styled(Box)``;
+const ContentTitle = styled(Box)`
+  margin-bottom: 10px;
+`;
 
 const ContentDescription = styled(Desc)`
   overflow-y: auto;
-
   width: 100%;
-  height: 200px;
   padding: 10px;
   border: solid 1px #f1f1f1;
 `;

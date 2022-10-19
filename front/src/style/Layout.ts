@@ -30,11 +30,19 @@ export const Title = styled.span`
   font-size: 32px;
   color: ${props => props.theme.mainColor};
   font-family: "SebangBold";
+
+  @media screen and (max-width: 768px) {
+    font-size: 24px;
+  }
 `;
 export const SubTitle = styled.h3`
   /* font-family: "SebangBold"; */
   font-size: 18px;
   color: ${props => props.theme.mainColor};
+
+  /* @media screen and (max-width: 768px) {
+    font-size: 17px;
+  }; */
 `;
 export const Desc = styled.p`
   font-family: "Sebang";

@@ -30,6 +30,14 @@ const WalkWrap = styled(Wrapper)`
   flex-direction: column;
   justify-content: flex-start;
   /* padding-bottom: 40px; */
+
+  /* @media screen and (min-width: 1024px) {
+    display: none;
+  }
+
+  @media screen and (min-width: 768px) {
+    display: none;
+  } */
 `;
 
 const DodreamContainer = styled(Container)`
@@ -42,6 +50,11 @@ const DodreamTitle = styled(Title)`
   text-align: center;
   color: #008037;
   margin-bottom: 40px;
+  /* font-size: 28px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 32px;
+  } */
 `;
 
 const MapBox = styled(Box)`
@@ -54,3 +67,4 @@ const TableBox = styled(Box)`
   margin-top: 3vh;
   width: 750px;
 `;
+
