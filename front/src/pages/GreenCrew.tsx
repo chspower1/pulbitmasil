@@ -137,14 +137,14 @@ export default function GreenCrew() {
           </AreaBtn>
         ))}
         <Link to="/guide">
-          <AreaBtn style={{ backgroundColor: "#E17055" }}>풀빛마실 준비하는 법</AreaBtn>
+          <AreaBtn style={{ backgroundColor: "#E17055" }}>풀빛마실 준비방법</AreaBtn>
         </Link>
       </AreaNav>
       <RootContainer>
         <CrewTitle>{greenCrews![selectedArea]?.title!}</CrewTitle>
-        <Desc className="num_desc" style={{ alignSelf: "end" }}>
+        <NumDesc>
           현재 <GreenAccent>{curMember}명</GreenAccent>이 참여중!
-        </Desc>
+        </NumDesc>
         <TopBox>
           <InfoBox>
             <DescBox>
@@ -261,9 +261,14 @@ const StartDate = styled(Desc)`
 const CrewTitle = styled(Title)`
   color: ${props => props.theme.accentColor};
 `;
+const NumDesc = styled(Desc)`
+  align-self: end;
+  margin-right: 20px;
+`;
 const AreaBtn = styled.button`
   width: 150px;
   height: 60px;
+  font-size: 18px;
   &.active {
     background-color: ${props => props.theme.mainColor};
   }
@@ -347,7 +352,7 @@ const TimeBox = styled(Box)`
 const ContentBox = styled(Box)`
   width: 670px;
   overflow-y: scroll;
-  height: 50%;
+  height: auto;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -356,13 +361,13 @@ const ContentBox = styled(Box)`
   border-radius: 20px;
   margin-bottom: 20px;
 `;
-const ContentTitle = styled(Box)``;
+const ContentTitle = styled(Box)`
+  margin-bottom: 10px;
+`;
 
 const ContentDescription = styled(Desc)`
   overflow-y: auto;
-
   width: 100%;
-  height: 200px;
   padding: 10px;
   border: solid 1px #f1f1f1;
 `;
