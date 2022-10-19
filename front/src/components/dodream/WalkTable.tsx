@@ -6,7 +6,7 @@ import DodreamFilter from "./DodreamFilter";
 import { convertTime } from "@components/modal/DodreamDetail";
 import { selectedDodreamAtom } from "@atom/dodream";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
-import { Box, Container, Wrapper } from  "@style/Layout";
+import { Box, Container, Wrapper } from "@style/Layout";
 
 interface Tableprops {
   columns: {
@@ -21,7 +21,7 @@ interface Tableprops {
 
 function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Tableprops) {
   const courseCategory = ["전체", "한강지천길/계절길", "근교산자락길", "서울둘레길", "한양도성길", "생태문화길"];
-
+  const [selecetedCategory, setSelecetedCategory] = useState("전체");
   const {
     getTableProps,
     getTableBodyProps,
@@ -48,6 +48,7 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
 
   const handleCategory = (e: React.MouseEvent) => {
     let categoryName = (e.target as HTMLButtonElement).value;
+    setSelecetedCategory(categoryName);
     categoryName !== "전체" ? setDodream(filterCategory(categoryName)) : setDodream(dodream);
   };
 
@@ -56,8 +57,13 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
       <FindBox>
         <BtnBox>
           {courseCategory.map((course, index) => (
-            <Button key={index} value={course} onClick={handleCategory}>
-              {course === '한강지천길/계절길' ? '한강지천길': course}
+            <Button
+              key={index}
+              value={course}
+              onClick={handleCategory}
+              className={selecetedCategory === course ? "active" : "normal"}
+            >
+              {course === "한강지천길/계절길" ? "한강지천길" : course}
             </Button>
           ))}
         </BtnBox>
@@ -85,8 +91,7 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
             {rows.map((row, i) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}
-                >
+                <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
                     if (cell.column.id === "course_name") {
                       return (
@@ -167,6 +172,9 @@ const WholeContainer = styled(Box)`
   background-color: none;
   margin: 0;
   padding: 0;
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const TableWrapper = styled.div`
@@ -180,13 +188,21 @@ const TableWrapper = styled.div`
   margin: 0;
   height: 30vh;
   overflow-y: scroll;
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 610px) {
+    font-size: 12px;
+  }
 `;
 
 const FindBox = styled(Box)`
   margin: 0;
-  @media screen and (max-width: 767px) {
+
+  @media screen and (max-width: 768px) {
     flex-direction: column-reverse;
-    width: 100%;
+    width: 95%;
     align-items: center;
   }
 `;
@@ -235,27 +251,26 @@ const Styles = styled(Box)`
       :nth-child(2) {
         width: 280px;
       }
-      :nth-child(n+3){
+      :nth-child(n + 3) {
         width: 100px;
       }
       :last-child {
         border-right: 0;
       }
-      @media screen and (max-width: 767px) {
+      @media screen and (max-width: 768px) {
         :first-child {
           display: none;
         }
         :nth-child(4) {
-          width: 50px;
+          width: 70px;
         }
         width: 100%;
       }
-      @media screen and (max-width: 575px){
+      @media screen and (max-width: 610px) {
         :nth-child(6) {
           display: none;
         }
       }
-
     }
   }
 `;
@@ -263,44 +278,46 @@ const BtnBox = styled(Box)`
   display: flex;
   align-items: center;
   margin-bottom: -20px;
-
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 768px) {
     margin-bottom: 0;
-    width: 100%;
+    width: 95%;
     justify-content: center;
   }
-  @media screen and (max-width: 575px) {
+  @media screen and (max-width: 610px) {
     flex-wrap: wrap;
   }
 `;
 
 const Button = styled.button`
   padding: 0.3em 0.1em;
-  width: 90px;
   height: 35px;
   font-weight: 400;
-  font-size: 14px;
-  background-color: #4EA983;
-  width: 80px;
+  font-size: 16px;
+  width: 100px;
   height: 35px;
-  border-right: 1px solid #79B59B;
+  border-right: 1px solid #79b59b;
   border-radius: 5px 5px 0px 0px;
   :last-child {
     margin-right: 40px;
   }
-
+  &.normal {
+    background-color: #9bc7b5;
+  }
+  &.active {
+    background-color: #4ea983;
+  }
   :hover {
     font-weight: 900;
   }
 
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 768px) {
     :last-child {
       margin-right: 0px;
     }
     width: 16.6%;
   }
-  @media screen and (max-width: 575px) {
-    border: 1px solid #88CAAE;
+  @media screen and (max-width: 610px) {
+    border: 1px solid #88caae;
     border-radius: 0px;
     width: 33.3%;
   }
