@@ -29,7 +29,6 @@ const WalkWrap = styled(Wrapper)`
   background-image: url("/assets/images/walk.jpg");
   flex-direction: column;
   justify-content: flex-start;
-  height: auto;
   /* padding-bottom: 40px; */
   @media screen and (max-width: 768px) {
     height: auto;
@@ -40,7 +39,7 @@ const WalkWrap = styled(Wrapper)`
 const DodreamContainer = styled(Container)`
   flex-direction: column;
   justify-content: flex-start;
-  padding-bottom: 40px;
+
 `;
 
 const DodreamTitle = styled(Title)`

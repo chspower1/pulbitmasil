@@ -186,7 +186,7 @@ const TableWrapper = styled.div`
   background-color: white;
   padding: 0;
   margin: 0;
-  height: 30vh;
+  height: 35vh;
   overflow-y: scroll;
   width: 100%;
   @media screen and (max-width: 870px) {
