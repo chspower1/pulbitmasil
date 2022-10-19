@@ -21,16 +21,17 @@ export const ModalContainer = styled(motion.form)<{ width?: string; height?: str
   border-radius: 10px;
 
   align-items: center;
+ 
 `;
 export const ModalTitle = styled.h1`
   margin-top: 70px;
-  margin-bottom: 24px;
-  font-size: 32px;
+  margin-bottom: 28px;
+  font-size: 28px;
   color: ${props => props.theme.mainColor};
 `;
 export const ModalDesc = styled.p`
   display: flex;
-  font-size: 30px;
+  font-size: 24px;
   color: ${props => props.theme.textColor};
   margin-bottom: 18px;
 `;
@@ -50,17 +51,4 @@ export const Overlay = styled(motion.div)`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
-`;
-export const ModalCloseBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  border-radius: 10px;
-  padding: 0;
 `;

@@ -17,6 +17,7 @@ import FindPasswordModal from "@components/modal/FindPasswordModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
 import MenuNav from "@components/MenuNav";
+import RegisterModal from "@components/modal/RegisterModal";
 // import ModalPortal from "@components/modal/ModalPortal";
 
 // Interface
@@ -102,7 +103,7 @@ export default function Nav() {
   }, []);
   useEffect(() => {
     pathname === "/" ? setCurState("home") : setCurState(pathname.split("/")[1]);
-    console.log("현재 pathname", pathname, curState);
+    console.log("현재 pathname", pathname);
   }, [pathname]);
   useEffect(() => {
     console.log(window.innerWidth);
@@ -205,6 +206,7 @@ export default function Nav() {
         <LoginModal></LoginModal>
         <FindPasswordModal></FindPasswordModal>
         <DodreamDetalModal />
+        <RegisterModal />
         {isUserNav && <UserNav setIsUserNav={setIsUserNav} handleClickLogout={handleClickLogout}></UserNav>}
         {isMenuNav && <MenuNav setIsMenuNav={setIsMenuNav}></MenuNav>}
         <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>

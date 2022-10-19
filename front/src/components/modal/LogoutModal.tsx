@@ -9,7 +9,7 @@ import { userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
 import { createPortal } from "react-dom";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
-import { DangerAccent } from "@style/Layout";
+import { DangerAccent, MainBtn, DangerBtn } from "@style/Layout";
 
 export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
@@ -32,13 +32,13 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
               <DangerAccent>로그아웃&nbsp; </DangerAccent>하시겠습니까?
             </LogoutDesc>
             <ModalBtnContainer>
-              <LogoutBtn type="button" onClick={handleClickLogout}>
+              <DangerBtn style={{ marginRight: "10px" }} type="button" onClick={handleClickLogout}>
                 로그아웃
-              </LogoutBtn>
+              </DangerBtn>
 
-              <CloseBtn type="button" onClick={() => setIsLogoutModal(false)}>
+              <MainBtn type="button" onClick={() => setIsLogoutModal(false)}>
                 취소
-              </CloseBtn>
+              </MainBtn>
             </ModalBtnContainer>
           </LogoutModalContainer>
           <Overlay
@@ -63,24 +63,4 @@ const LogoutModalContainer = styled(ModalContainer)`
 const LogoutDesc = styled(ModalDesc)`
   margin-top: 60px;
   margin-bottom: 40px;
-`;
-
-const LogoutBtn = styled.button`
-  width: 100px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  font-size: 22px;
-  background-color: ${props => props.theme.dangerColor};
-  &:hover {
-    background-color: #cc5e43;
-  }
-`;
-const CloseBtn = styled(LogoutBtn)`
-  background-color: ${props => props.theme.mainColor};
-  &:hover {
-    background-color: ${props => props.theme.accentColor};
-  }
 `;

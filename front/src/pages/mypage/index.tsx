@@ -1,6 +1,6 @@
 import { changePassword, getUser } from "@api/user";
 import { userAtom } from "@atom/user";
-import { Box, Container, Title, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
+import { Box, Container, Title, Wrapper, SubTitle, Desc, Row, MainBtn } from "@style/Layout";
 import { useRecoilState, useRecoilValue } from "recoil";
 import PasswordChangeModal from "@components/modal/PasswordChangeModal";
 import { useState, useEffect } from "react";
@@ -75,7 +75,9 @@ export default function MyPage() {
           {menu === "greencrew" && <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>}
           {menu === "review" && <ReviewList reviews={user?.reviews}></ReviewList>}
         </ContentBox>
-        <EditInfoBtn onClick={() => setIsEdit(cur => !cur)}>정보 수정</EditInfoBtn>
+        <EditBtn onClick={() => setIsEdit(cur => !cur)} width="100px">
+          정보 수정
+        </EditBtn>
         <AnimatePresence>{isEdit && <UserEditNav setIsEdit={setIsEdit} />}</AnimatePresence>
       </MyPageContainer>
       <AnimatePresence>
@@ -161,11 +163,8 @@ const MyPageContainer = styled(Container)`
   width: 600px;
   height: 100%;
 `;
-
-const EditInfoBtn = styled.button`
+const EditBtn = styled(MainBtn)`
   position: absolute;
-  width: 100px;
-  height: 40px;
   top: 20px;
   right: 20px;
 `;

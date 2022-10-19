@@ -13,6 +13,7 @@ export const GlobalStyled = createGlobalStyle`
         font-family: "Sebang";
         ::-webkit-scrollbar {
         display: none;
+        color:${props => props.theme.textColor};
   }
   
     }

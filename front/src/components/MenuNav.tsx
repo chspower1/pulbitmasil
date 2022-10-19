@@ -31,7 +31,7 @@ export default function MenuNav({ setIsMenuNav }: { setIsMenuNav: React.Dispatch
       <UserNavWrapper variants={variants} initial="hidden" animate="visible">
         {navMenus.map((menu, index) => (
           <Link key={index} to={menu === "home" ? "/" : menu}>
-            <Button>{navKorMenus[index]}</Button>
+            <Button onClick={() => setIsMenuNav(false)}>{navKorMenus[index]}</Button>
           </Link>
         ))}
       </UserNavWrapper>

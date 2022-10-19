@@ -9,6 +9,7 @@ import { ReviewDeleteIdAtom } from "@atom/atom";
 import ReviewDeleteModal from "../modal/ReviewDeleteModal";
 import { ModalAccent } from "@style/ModalStyle";
 import dayjs from "dayjs";
+import { MainBtn, DangerBtn } from "@style/Layout";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, description, createAt, name, reviewImg, title, area } = review;
@@ -21,7 +22,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 
   return (
     <>
-      <CardWrap whileHover={{ scale: 1.03 }} layoutId={`${reviewId}wrap`}>
+      <CardWrap whileHover={{ scale: 1.06 }} layoutId={`${reviewId}wrap`}>
         <motion.div
           onClick={() => {
             navigate(`${reviewId}`);
@@ -30,7 +31,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           <ImgContainer>
             <ReviewImg src={reviewImg as string} alt="review image"></ReviewImg>
           </ImgContainer>
-          <ReviewContainer>
+          <ReviewContainer layoutId={`${reviewId}review`}>
             <InfoContainer>
               <CardImg src={`/assets/icon/user/profile01.png`} />
               <InfoBox>
@@ -49,17 +50,20 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
         </motion.div>
         <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId ? (
-            <Btn onClick={() => navigate(`edit/${reviewId}`, { state: { reviewId, userId } })}>수정</Btn>
+            <MainBtn onClick={() => navigate(`edit/${reviewId}`, { state: { reviewId, userId } })} width="80px">
+              수정
+            </MainBtn>
           ) : null}
 
           {user?.id === userId ? (
-            <Btn
+            <DangerBtn
+              width="80px"
               onClick={() => {
                 setReviewDelId(reviewId!);
               }}
             >
               삭제
-            </Btn>
+            </DangerBtn>
           ) : null}
         </ButtonContainer>
       </CardWrap>
@@ -67,7 +71,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   );
 }
 
-const CardWrap = styled(motion(motion.div))`
+const CardWrap = styled(motion.div)`
   position: relative;
   width: 370px;
   height: 430px;
@@ -75,6 +79,7 @@ const CardWrap = styled(motion(motion.div))`
   box-shadow: 3px 3px 15px #b0bec5;
   margin: 0 23px;
   margin-bottom: 40px;
+  cursor: pointer;
 `;
 const InfoContainer = styled(motion.div)`
   display: flex;
@@ -97,7 +102,7 @@ const ImgContainer = styled(motion.div)`
 `;
 const TextContainer = styled(motion.div)`
   width: 100%;
-  height: 100px;
+  height: 60px;
   margin-top: 20px;
 `;
 
@@ -107,6 +112,7 @@ const ReviewImg = styled(motion.img)`
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 
 const InfoBox = styled(motion.div)`
@@ -123,27 +129,19 @@ const CardImg = styled(motion.img)`
 `;
 const ButtonContainer = styled(motion.div)`
   display: flex;
-  flex-direction: row;
   position: absolute;
-  width: 100%;
-  bottom: 0px;
-`;
-const Btn = styled(motion.button)`
-  width: 50%;
-  height: 15px;
-  &:first-child {
-    border-right: 1px #388e3c solid;
-  }
+  justify-content: space-between;
+  width: 45%;
+  bottom: 10px;
+  right: 10px;
 `;
 const Description = styled(motion.p)`
-  text-overflow: ellipsis;
   letter-spacing: 1px;
   line-height: 1.3em;
   margin-top: 10px;
+  width: 100%;
+  height: 30px;
   overflow: hidden;
-  word-break: break-word;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2; // 원하는 라인수
-  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

@@ -10,7 +10,7 @@ import { userAtom } from "@atom/user";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
-import { Title, Wrapper, Box, Container, SubTitle, DangerAccent } from "@style/Layout";
+import { Title, Wrapper, Box, Container, SubTitle, DangerAccent, MainBtn, DangerBtn } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { User, UserGreenCrew } from "@type/user";
@@ -196,10 +196,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         />
 
         <ButtonContainer>
-          <Button>{mode === "UPDATE" ? "수정하기" : "등록하기"}</Button>
-          <Button className="cancle" type="button" onClick={handleClickCancel}>
+          <MainBtn>{mode === "UPDATE" ? "수정하기" : "등록하기"}</MainBtn>
+          <DangerBtn className="cancle" type="button" onClick={handleClickCancel}>
             취소
-          </Button>
+          </DangerBtn>
         </ButtonContainer>
         <ReviewModal />
       </Form>
@@ -214,36 +214,27 @@ const FormWrap = styled(Wrapper)`
 `;
 const Form = styled(ModalContainer)`
   width: 600px;
-  height: 700px;
+  height: 750px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   background-color: white;
   border-radius: 10px;
+  padding: 30px;
 `;
 const TitleBox = styled(Box)`
   flex-direction: column;
-  margin: 20px 0;
 `;
 
 const ReviewSubTitle = styled(SubTitle)`
-  margin-top: 10px;
+  margin-top: 15px;
 `;
 
-const Button = styled.button`
-  width: 180px;
-  height: 45px;
-
-  &.cancle {
-    background-color: ${props => props.theme.dangerColor};
-  }
-`;
 const Input = styled.input<{ height: number }>`
   width: 550px;
   height: ${props => props.height}px;
   border: solid 1px #a7a7a7;
-  margin-bottom: 15px;
 `;
 const SelectInput = styled(Input)`
   font-size: 18px;
@@ -272,7 +263,7 @@ const ReviewTextArea = styled.textarea`
 
 const ButtonContainer = styled.div`
   display: flex;
-  width: 420px;
+  width: 50%;
   height: 45px;
   justify-content: space-between;
 `;

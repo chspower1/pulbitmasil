@@ -28,9 +28,7 @@ export const contents2: Content[] = [
     title: "풀빛마실 가기",
     description:
       `편안한 복장으로 약속된 시간에 맞춰 늦지 않게 모임 장소로 고고~` + "(❁´◡`❁) ", //(❁´◡`❁) 이모티콘 백틱안됨
-      type: "button",
-      buttonValue: "나의 풀빛마실 확인하기",
-      buttonURL: "/userInfo",
+      type: "normal",
   },
   {
     num: 4,

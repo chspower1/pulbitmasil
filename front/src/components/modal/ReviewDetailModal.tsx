@@ -1,6 +1,7 @@
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { userAtom } from "@atom/user";
-import { ModalCloseBtn, ModalContainer, ModalWrap } from "@style/ModalStyle";
+import { DangerBtn, MainBtn } from "@style/Layout";
+import { ModalContainer, ModalWrap } from "@style/ModalStyle";
 import { IReview } from "@type/review";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
@@ -49,7 +50,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             //
           ></ReviewImg>
         </ImgContainer>
-        <ContentsContainer>
+        <ContentsContainer layoutId={`${reviewId}review`}>
           <InfoContainer>
             <CardImg src={`/assets/icon/user/profile01.png`} />
             <InfoBox>
@@ -63,23 +64,23 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
 
           <TextContainer>
             <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>{title}</p>
-            <Description>{description}</Description>
+            <Description className={userId === user?.id ? "small" : "normal"}>{description}</Description>
           </TextContainer>
         </ContentsContainer>
         <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId && (
             <>
-              <Btn type="button" onClick={handleClickEdit}>
+              <MainBtn type="button" onClick={handleClickEdit}>
                 수정
-              </Btn>
-              <Btn
+              </MainBtn>
+              <DangerBtn
                 type="button"
                 onClick={() => {
                   setReviewDelId(reviewId!);
                 }}
               >
                 삭제
-              </Btn>
+              </DangerBtn>
             </>
           )}
         </ButtonContainer>
@@ -112,7 +113,7 @@ const ReviewContainer = styled(ModalContainer)`
 
 const ImgContainer = styled(motion.div)`
   width: 500px;
-  height: 350px;
+  height: 300px;
   position: relative;
 `;
 const ReviewImg = styled(motion.img)`
@@ -121,6 +122,7 @@ const ReviewImg = styled(motion.img)`
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 const TextContainer = styled(motion.div)`
   width: 100%;
@@ -131,14 +133,21 @@ const TextContainer = styled(motion.div)`
 const Description = styled(motion.div)`
   padding: 10px;
   width: 100%;
-  height: 90px;
   letter-spacing: 1px;
   line-height: 1.3em;
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 16px;
   overflow-x: hidden;
   overflow-y: auto;
   resize: none;
+  color: ${props => props.theme.textColor};
+  border: solid 1px ${props => props.theme.borderColor};
+  &.small {
+    height: 110px;
+  }
+  &.normal {
+    height: 150px;
+  }
 `;
 const InfoBox = styled(motion.div)`
   margin-left: 20px;
@@ -166,17 +175,9 @@ const CardImg = styled(motion.img)`
 `;
 const ButtonContainer = styled(motion.div)`
   display: flex;
-  width: 500px;
-  flex-direction: row;
+  width: 50%;
   position: absolute;
   margin: auto;
-  left: 0;
-  bottom: 0;
-`;
-const Btn = styled(motion.button)`
-  width: 300px;
-  height: 20px;
-  &:first-child {
-    border-right: 1px #388e3c solid;
-  }
+  justify-content: space-between;
+  bottom: 20px;
 `;

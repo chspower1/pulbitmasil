@@ -1,26 +1,26 @@
 import styled from "styled-components";
-import { Wrapper, Container, Box, Title, Desc, SubTitle } from "@style/Layout";
+import { Wrapper, Container, Box, Title, Desc, SubTitle, MainBtn, GreenAccent, DangerBtn } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState, useEffect, startTransition } from "react";
 import { createGreenCrewMember, deleteGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
 import Moment from "react-moment";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
 import moment from "moment";
 import { useInterval } from "react-use";
 import { data } from "@components/chart/LineChart";
 import { Node } from "react-markdown/lib/rehype-filter";
-import { GreenAccent } from "./../style/Layout";
 import { timeEnd, timeLog } from "console";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userAtom } from "@atom/user";
 import { getJSDocReturnTag } from "typescript";
 import { getUser } from "@api/user";
 import { User, UserGreenCrew } from "@type/user";
 import dayjs, { extend } from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { isRegisterModalAtom } from "@atom/atom";
 
 dayjs.extend(duration);
 
@@ -32,6 +32,8 @@ export default function GreenCrew() {
   const [time, setTime] = useState<string>();
   const [curMember, setCurMember] = useState(0);
   const [isParticipate, setIsParticipate] = useState<boolean>();
+  const setIsRegisterModal = useSetRecoilState(isRegisterModalAtom);
+  const navigate = useNavigate();
 
   // Query
   const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
@@ -67,12 +69,16 @@ export default function GreenCrew() {
 
   // Handle
   const handleClickEnter = async () => {
-    setCurMember(cur => cur + 1);
-    setIsParticipate(true);
-    console.log("handleclickenter", isParticipate);
-    await createGreenCrewMember(greenCrews![selectedArea].crewId);
-    greenCrewMutation.mutate();
-    userMutation.mutate();
+    if (sessionStorage.getItem("userToken")) {
+      setCurMember(cur => cur + 1);
+      setIsParticipate(true);
+      console.log("handleclickenter", isParticipate);
+      await createGreenCrewMember(greenCrews![selectedArea].crewId);
+      greenCrewMutation.mutate();
+      userMutation.mutate();
+    } else {
+      setIsRegisterModal(true);
+    }
   };
   const handleClickDelete = async () => {
     setCurMember(cur => cur - 1);
@@ -99,9 +105,9 @@ export default function GreenCrew() {
   };
   const DTime = (day: string) => {
     return (
-      <CrewTitle style={{ fontSize: "32px" }}>
-        <Desc as="span">남은시간 : </Desc> {day}
-      </CrewTitle>
+      <TimeDesc>
+        <Desc as="span">남은시간 : </Desc> <RestTime>{day}</RestTime>
+      </TimeDesc>
     );
   };
 
@@ -132,19 +138,27 @@ export default function GreenCrew() {
     <GreenCrewWrapper>
       <AreaNav>
         {[0, 1, 2, 3].map(area => (
-          <AreaBtn className={selectedArea === area ? "active" : "normal"} onClick={() => setSelectedArea(area)}>
+          <AreaBtn
+            width="150px"
+            height="60px"
+            className={selectedArea === area ? "active" : "normal"}
+            onClick={() => setSelectedArea(area)}
+          >
             {areas[area]}
           </AreaBtn>
         ))}
         <Link to="/guide">
-          <AreaBtn style={{ backgroundColor: "#E17055" }}>풀빛마실 준비하는 법</AreaBtn>
+          <ReadyBtn className="ready" width="150px" height="60px">
+            풀빛마실
+            <br /> 준비하는 법
+          </ReadyBtn>
         </Link>
       </AreaNav>
       <RootContainer>
         <CrewTitle>{greenCrews![selectedArea]?.title!}</CrewTitle>
-        <Desc className="num_desc" style={{ alignSelf: "end" }}>
+        <NumDesc>
           현재 <GreenAccent>{curMember}명</GreenAccent>이 참여중!
-        </Desc>
+        </NumDesc>
         <TopBox>
           <InfoBox>
             <DescBox>
@@ -197,15 +211,17 @@ export default function GreenCrew() {
         </TopBox>
         <SecondBox>
           <TimeBox className="time">
-            <Row style={{ marginLeft: "auto" }}>
-              <StatusBox>
-                <div>{DTime(time!)}</div>
-              </StatusBox>
+            <Row>
+              <StatusBox>{DTime(time!)}</StatusBox>
 
               {!isParticipate ? (
-                <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
+                <MainBtn width="55%" height="60px" onClick={handleClickEnter}>
+                  참여하기
+                </MainBtn>
               ) : (
-                <DeleteBtn onClick={handleClickDelete}>취소하기</DeleteBtn>
+                <DangerBtn width="55%" height="60px" onClick={handleClickDelete}>
+                  취소하기
+                </DangerBtn>
               )}
             </Row>
           </TimeBox>
@@ -234,25 +250,41 @@ export default function GreenCrew() {
 }
 const GreenCrewWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
-  background-attachment: fixed;
+  
   overflow: scroll;
-  height: auto;
   position: relative;
 `;
 const AreaNav = styled(Box)`
   position: fixed;
-  left: 0px;
+  left: -5px;
   top: 50%;
   transform: translateY(-50%);
-
   flex-direction: column;
   height: 360px;
   justify-content: space-between;
+  margin-top: 100px;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    left: 0px;
+    top: 0px;
+    transform: translateY(0);
+    height: 60px;
+    margin-top: 65px;
+    z-index: 1000;
+  }
 `;
 const StatusBox = styled(Box)`
   flex-direction: column;
   width: 50%;
   height: 100%;
+`;
+const RestTime = styled(Title)`
+  @media screen and (max-width: 768px) {
+    font-size: 32px;
+  }
 `;
 const StartDate = styled(Desc)`
   font-family: "SebangBold";
@@ -260,10 +292,30 @@ const StartDate = styled(Desc)`
 `;
 const CrewTitle = styled(Title)`
   color: ${props => props.theme.accentColor};
+  @media screen and (max-width: 768px) {
+    margin-top: 30px;
+  }
+  @media screen and (max-width: 1024px) {
+    margin-top: 30px;
+  }
 `;
-const AreaBtn = styled.button`
+
+const TimeDesc = styled(Title)`
+  color: ${props => props.theme.accentColor};
+  display: flex;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
+`;
+
+const NumDesc = styled(Desc)`
+  align-self: end;
+  margin-right: 20px;
+`;
+const AreaBtn = styled(MainBtn)`
   width: 150px;
   height: 60px;
+  font-size: 18px;
   &.active {
     background-color: ${props => props.theme.mainColor};
   }
@@ -273,26 +325,56 @@ const AreaBtn = styled.button`
   &:hover {
     background-color: ${props => props.theme.mainColor};
   }
+
+  @media screen and (max-width: 768px) {
+    width: 25%;
+    height: 50px;
+    font-size: 14px;
+  }
+  @media screen and (max-width: 1024px) {
+    width: 25%;
+    height: 55px;
+    font-size: 14px;
+    border-radius: 0px;
+  }
 `;
 const RootContainer = styled(Container)`
   flex-direction: column;
   justify-content: flex-start;
   width: 700px;
   height: 100%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 1024px) {
+  }
 `;
-const TopBox = styled(Box)``;
+const TopBox = styled(Box)`
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    flex-direction: column-reverse;
+  }
+`;
 const InfoBox = styled(Box)`
-  position: relative;
   width: 310px;
   height: 340px;
   margin-right: 10px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    margin-right: 0px;
+  }
 `;
 const SecondBox = styled(Box)`
-  position: relative;
   flex-direction: column;
 `;
 const Row = styled(Box)`
   width: 100%;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 `;
 const DescBox = styled(Box)`
   background-color: white;
@@ -304,6 +386,10 @@ const DescBox = styled(Box)`
   padding: 20px;
   border-radius: 20px;
   font-size: 16px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const IconImg = styled.img`
   margin-right: 10px;
@@ -312,23 +398,9 @@ const CourseBox = styled(Box)`
   width: 100%;
   justify-content: space-between;
   padding: 0 10px;
+  margin-bottom: 5px;
 `;
 
-const EnterBtn = styled.button`
-  width: 330px;
-  min-width: 130px;
-  height: 50px;
-  max-height: 70px;
-  font-size: 28px;
-  border-radius: 8px;
-`;
-const DeleteBtn = styled(EnterBtn)`
-  background-color: ${props => props.theme.dangerColor};
-  &:hover {
-    background-color: ${props => props.theme.accentDangerColor};
-  }
-`;
-const StartAt = styled.div``;
 const DetailTitle = styled(Desc)`
   display: flex;
   justify-content: space-between;
@@ -347,7 +419,7 @@ const TimeBox = styled(Box)`
 const ContentBox = styled(Box)`
   width: 670px;
   overflow-y: scroll;
-  height: 50%;
+  height: auto;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -355,22 +427,25 @@ const ContentBox = styled(Box)`
   background-color: white;
   border-radius: 20px;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 `;
-const ContentTitle = styled(Box)``;
+const ContentTitle = styled(Box)`
+  margin-bottom: 10px;
+`;
 
 const ContentDescription = styled(Desc)`
   overflow-y: auto;
-
   width: 100%;
-  height: 200px;
   padding: 10px;
   border: solid 1px #f1f1f1;
 `;
-const ReadyBtn = styled.button`
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
-  width: 150px;
-  height: 40px;
-  background-color: ${props => props.theme.dangerColor};
+const ReadyBtn = styled(DangerBtn)`
+  &.ready {
+    @media screen and (max-width: 1024px) {
+      display: none;
+    }
+  }
 `;

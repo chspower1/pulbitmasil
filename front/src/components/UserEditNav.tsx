@@ -37,7 +37,7 @@ export default function UserEditNav({ setIsEdit }: { setIsEdit: React.Dispatch<R
     <UserNavWrapper variants={variants} initial="hidden" animate="visible">
       {userNavMenus.map((menu, index) => (
         <Link key={index} to={menu}>
-          <Button>
+          <Button onClick={() => setIsEdit(false)}>
             <BtnText variants={item}>{userNavKorMenus[index]}</BtnText>
           </Button>
         </Link>

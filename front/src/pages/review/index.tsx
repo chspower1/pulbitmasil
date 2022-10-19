@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { ReviewDeleteIdAtom, isRegisterModalAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { isLoginSelector, userAtom } from "@atom/user";
-import { Box, Container, DangerAccent, Wrapper } from "@style/Layout";
+import { Box, Container, Wrapper, Title, MainBtn } from "@style/Layout";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
 import RegisterModal from "@components/modal/RegisterModal";
@@ -35,13 +35,15 @@ export default function Review() {
   return (
     <ReviewWrap>
       <TitleContainer>
-        <Title>풀빛마실 이야기</Title>
+        <ReviewTitle>풀빛마실 이야기</ReviewTitle>
       </TitleContainer>
       <CardContainer>
         <SubTitle>
-          풀빛마실<DangerAccent> 후기</DangerAccent>를 공유해주세요!
+          <Accent>풀빛마실</Accent> 후기를 공유해주세요!
         </SubTitle>
-        <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
+        <ReviewBtn onClick={handleClickCreateReview} width="160px" height="60px">
+          이야기 작성
+        </ReviewBtn>
         <CardBox>
           {reviews?.map(review => {
             return <Card key={review.reviewId} review={review}></Card>;
@@ -63,22 +65,20 @@ export default function Review() {
 
 const ReviewWrap = styled(Wrapper)`
   position: relative;
-  margin-top: 50px;
   flex-direction: column;
   background-image: url("/assets/images/walk.jpg");
+  margin-top: 40px;
 `;
 
 const TitleContainer = styled.div`
   text-align: center;
+  height: 50px;
 `;
-const Title = styled.h1`
-  font-weight: 700;
+const ReviewTitle = styled(Title)`
   font-size: 32px;
-  text-align: center;
-  color: ${props => props.theme.mainColor};
+  color: ${props => props.theme.accentColor};
   border-bottom: 1px solid #eceff1;
   width: 500px;
-  margin: auto;
   padding-bottom: 10px;
 `;
 const SubTitle = styled.p`
@@ -86,21 +86,22 @@ const SubTitle = styled.p`
   margin-top: 15px;
   color: ${props => props.theme.mainColor};
 `;
+const Accent = styled.span`
+  color: ${props => props.theme.dangerColor};
+`;
+
 const CardContainer = styled(Container)`
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
   height: 90%;
   overflow-y: scroll;
+  padding-top: 0px;
 `;
 
-const ReviewBtn = styled.button`
-  border-radius: 5px;
-  width: 120px;
-  height: 30px;
-  font-size: 18px;
-  margin-top: 15px;
-  margin-bottom: 30px;
+const ReviewBtn = styled(MainBtn)`
+  margin: 30px 0px;
+  font-size: 22px;
 `;
 const CardBox = styled(Box)`
   flex-wrap: wrap;

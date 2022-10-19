@@ -30,12 +30,17 @@ export default function DodreamFilter({ preGlobalFilteredRows, globalFilter, set
 const Input = styled.label`
   position: relative;
   margin-bottom: 10px;
+  width: 100%;
   input {
     padding: 0 15px;
     width: 230px;
     height: 40px;
     border-radius: 5px;
     font-size: 14px;
+    @media screen and (max-width: 870px) {
+      width: 80%;
+    }
+
     ::placeholder {
       font-weight: 400;
       line-height: 24px;
@@ -45,11 +50,15 @@ const Input = styled.label`
     }
   }
   button {
+    position: absolute;
     width: 35px;
     background-color: transparent;
     position: absolute;
-    right: 3px;
+    right: 3%;
     bottom: -15px;
+    @media screen and (max-width: 870px) {
+      right: 10%;
+    }
     &:hover {
       background-color: transparent;
       transform: scale(1.1);

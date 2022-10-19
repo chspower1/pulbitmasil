@@ -18,7 +18,7 @@ export default function Dodream() {
           <DodreamMap dodream={dodream!} />
         </MapBox>
         <TableBox>
-            <WalkTable dodream={dodream!} />
+          <WalkTable dodream={dodream!} />
         </TableBox>
       </DodreamContainer>
     </WalkWrap>
@@ -30,27 +30,36 @@ const WalkWrap = styled(Wrapper)`
   flex-direction: column;
   justify-content: flex-start;
   /* padding-bottom: 40px; */
+  @media screen and (max-width: 768px) {
+    height: auto;
+    overflow-y: auto;
+  }
 `;
 
 const DodreamContainer = styled(Container)`
   flex-direction: column;
   justify-content: flex-start;
-  padding-bottom: 40px;
+
 `;
 
 const DodreamTitle = styled(Title)`
   text-align: center;
   color: #008037;
-  margin-bottom: 40px;
 `;
 
 const MapBox = styled(Box)`
   width: 750px;
   height: 35vh;
   margin-top: 4vh;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 const TableBox = styled(Box)`
   margin-top: 3vh;
   width: 750px;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 `;
