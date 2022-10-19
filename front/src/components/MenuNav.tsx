@@ -6,14 +6,16 @@ import { isLoginModalAtom, isLogoutModalAtom } from "@atom/atom";
 import { UserNavProps } from "./layout/Nav";
 import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
 
-export default function UserNav({ setIsUserNav }: UserNavProps) {
+export default function MenuNav({ setIsMenuNav }: { setIsMenuNav: React.Dispatch<React.SetStateAction<boolean>> }) {
+  const navMenus = ["home", "about", "dodream", "greencrew", "review"];
+  const navKorMenus = ["홈", "소개", "산책로", "모임", "후기"];
   const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
   const userNavKorMenus = ["로그인", "회원가입"];
   const setIsLoginModalAtom = useSetRecoilState(isLoginModalAtom);
   const { pathname } = useLocation();
   const handleClickLogin = async () => {
     setIsLoginModalAtom(true);
-    setIsUserNav(false);
+    setIsMenuNav(false);
   };
   const variants = {
     visible: { opacity: 1 },
@@ -27,15 +29,11 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
   return (
     <AnimatePresence>
       <UserNavWrapper variants={variants} initial="hidden" animate="visible">
-        <Button onClick={handleClickLogin}>
-          <BtnText variants={item}>로그인</BtnText>
-        </Button>
-
-        <Link to="/register">
-          <Button onClick={() => setIsUserNav(false)}>
-            <BtnText variants={item}>회원가입</BtnText>
-          </Button>
-        </Link>
+        {navMenus.map((menu, index) => (
+          <Link key={index} to={menu === "home" ? "/" : menu}>
+            <Button>{navKorMenus[index]}</Button>
+          </Link>
+        ))}
       </UserNavWrapper>
     </AnimatePresence>
   );

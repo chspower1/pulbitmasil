@@ -98,9 +98,9 @@ export default function MyPage() {
 }
 
 const MyPageWrapper = styled(Wrapper)`
-  height: auto;
-  overflow-y: scroll;
+  /* height: auto; */
   background-image: url("/assets/images/register_img.jpg");
+  overflow-y: scroll;
 `;
 const MyPageTitle = styled(Title)``;
 const ProfileBox = styled(Box)`
