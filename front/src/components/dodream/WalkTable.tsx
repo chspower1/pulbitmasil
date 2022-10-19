@@ -161,7 +161,7 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   );
 }
 
-const WholeContainer = styled(Container)`
+const WholeContainer = styled(Box)`
   display: flex;
   flex-direction: column;
   background-color: none;
@@ -177,6 +177,7 @@ const TableWrapper = styled.div`
   text-align: center;
   background-color: white;
   padding: 0;
+  margin: 0;
   height: 30vh;
   overflow-y: scroll;
 `;
@@ -185,7 +186,7 @@ const FindBox = styled(Box)`
   margin: 0;
 `;
 
-const Styles = styled(Container)`
+const Styles = styled(Box)`
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
