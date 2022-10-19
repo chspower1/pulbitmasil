@@ -98,6 +98,8 @@ export default function MyPage() {
 }
 
 const MyPageWrapper = styled(Wrapper)`
+  height: auto;
+  overflow-y: scroll;
   background-image: url("/assets/images/register_img.jpg");
 `;
 const MyPageTitle = styled(Title)``;
@@ -113,10 +115,12 @@ const Img = styled.img`
 `;
 const ContentBox = styled(Box)`
   flex-direction: column;
-  width: 100%;
-  height: 65%;
+  width: 600px;
+  height: auto;
+  min-height: 640px;
   align-items: center;
   border-radius: 20px;
+  justify-content: flex-start;
 `;
 const NameBox = styled(Row)`
   margin-top: 10px;

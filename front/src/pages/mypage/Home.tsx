@@ -54,7 +54,9 @@ export default function Home({ user }: { user: User }) {
 export const HomeWrap = styled(Box)`
   flex-direction: column;
   justify-content: flex-start;
-  height: 100%;
+  width: 100%;
+  height: auto;
+  padding: 30px 0px;
   background-color: #f5f5f5;
   border-radius: 20px;
 `;
@@ -62,6 +64,7 @@ export const HomeContainer = styled(Box)<{ height?: string }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: ${props => (props.height ? props.height : "auto")};
 
   &.content {
@@ -72,10 +75,8 @@ export const HomeContainer = styled(Box)<{ height?: string }>`
 export const List = styled(Container)`
   flex-direction: column;
   width: 100%;
-  /* height: 100%; */
   justify-content: flex-start;
   padding: 0px 30px;
-  overflow-y: scroll;
 `;
 export const GrayTitle = styled(Title)`
   font-size: 22px;

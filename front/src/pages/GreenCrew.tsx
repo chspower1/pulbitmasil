@@ -274,7 +274,6 @@ const RootContainer = styled(Container)`
   width: 700px;
   height: 100%;
   padding: 40px 20px;
-  background-color: black;
 `;
 const TopContainer = styled(Container)``;
 const InfoContainer = styled(Container)`

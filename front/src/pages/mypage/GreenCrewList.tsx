@@ -33,42 +33,39 @@ export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCre
   }, []);
   return (
     <HomeWrap>
-      <HomeContainer height="50%">
-        <GrayTitle>
-          <Title>완료</Title>
-        </GrayTitle>
-        <List>
-          {inProgressGreenCrew?.map(greenCrew => (
-            <Item>
-              <HeaderBox>서북</HeaderBox>
-              <ContentBox>
-                <ItemTitle>{greenCrew?.title}</ItemTitle>
-                <Box>
-                  <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
-                </Box>
-              </ContentBox>
-            </Item>
-          ))}
-        </List>
-      </HomeContainer>
-      <HomeContainer height="50%">
-        <GrayTitle>
-          <Title>진행중</Title>
-        </GrayTitle>
-        <List>
-          {doneGreenCrew?.map(greenCrew => (
-            <Item>
-              <HeaderBox>서북</HeaderBox>
-              <ContentBox>
-                <ItemTitle>{greenCrew?.title}</ItemTitle>
-                <Box>
-                  <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
-                </Box>
-              </ContentBox>
-            </Item>
-          ))}
-        </List>
-      </HomeContainer>
+      <GrayTitle>
+        <Title>완료</Title>
+      </GrayTitle>
+      <List>
+        {inProgressGreenCrew?.map(greenCrew => (
+          <Item>
+            <HeaderBox>서북</HeaderBox>
+            <ContentBox>
+              <ItemTitle>{greenCrew?.title}</ItemTitle>
+              <Box>
+                <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
+              </Box>
+            </ContentBox>
+          </Item>
+        ))}
+      </List>
+
+      <GrayTitle>
+        <Title>진행중</Title>
+      </GrayTitle>
+      <List>
+        {doneGreenCrew?.map(greenCrew => (
+          <Item>
+            <HeaderBox>서북</HeaderBox>
+            <ContentBox>
+              <ItemTitle>{greenCrew?.title}</ItemTitle>
+              <Box>
+                <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
+              </Box>
+            </ContentBox>
+          </Item>
+        ))}
+      </List>
     </HomeWrap>
   );
 }

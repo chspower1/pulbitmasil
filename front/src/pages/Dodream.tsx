@@ -12,15 +12,16 @@ export default function Dodream() {
 
   return (
     <WalkWrap>
-      <DodreamTitle>한 눈에 보는 서울시 산책로</DodreamTitle>
-      <MapContainer>
-        <DodreamMap dodream={dodream!} />
-      </MapContainer>
-      <TableContainer>
+      <WalkContainer>
+        <DodreamTitle>한 눈에 보는 서울시 산책로</DodreamTitle>
+        <MapBox>
+          <DodreamMap dodream={dodream!} />
+        </MapBox>
+        <TableBox>
           <WalkTable dodream={dodream!} />
-      </TableContainer>  
+        </TableBox>
+      </WalkContainer>
     </WalkWrap>
-
   );
 }
 const WalkWrap = styled(Wrapper)`
@@ -30,22 +31,21 @@ const WalkWrap = styled(Wrapper)`
   justify-content: space-between;
   height: 100vh;
 `;
-
-
+const WalkContainer = styled(Container)`
+  flex-direction: column;
+`;
 const DodreamTitle = styled(Title)`
   text-align: center;
-  margin-top: 60px;
   color: #008037;
+  margin-bottom: 40px;
 `;
 
-const MapContainer = styled(Container)`
-  width: 750px;
+const MapBox = styled(Box)`
+  width: 70px;
   height: 40vh;
 `;
 
-const TableContainer = styled(Container)`
+const TableBox = styled(Box)`
   width: 750px;
   height: 20vh;
 `;
-
-
