@@ -209,7 +209,7 @@ export default function GreenCrew() {
               )}
             </Row>
           </TimeBox>
-          <ContentBox style={{ marginBottom: "20px" }}>
+          <ContentBox>
             <ContentTitle>
               <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
               <GreenAccent style={{ fontSize: "18px" }}>"{greenCrews![selectedArea]?.course}"</GreenAccent>은?
@@ -234,10 +234,17 @@ export default function GreenCrew() {
 }
 const GreenCrewWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
+  background-attachment: fixed;
+  overflow: scroll;
+  height: auto;
+  position: relative;
 `;
 const AreaNav = styled(Box)`
   position: fixed;
   left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+
   flex-direction: column;
   height: 360px;
   justify-content: space-between;
@@ -272,13 +279,8 @@ const RootContainer = styled(Container)`
   justify-content: flex-start;
   width: 700px;
   height: 100%;
-  background-color: gray;
-  /* padding-bottom: 100px; */
 `;
-const TopBox = styled(Box)`
-  background-color: yellow;
-  height: 50vh;
-`;
+const TopBox = styled(Box)``;
 const InfoBox = styled(Box)`
   position: relative;
   width: 310px;
@@ -288,11 +290,6 @@ const InfoBox = styled(Box)`
 const SecondBox = styled(Box)`
   position: relative;
   flex-direction: column;
-  /* height: 50%; */
-  justify-content: flex-start;
-  align-items: space-between;
-  background-color: black;
-  height: 38vh;
 `;
 const Row = styled(Box)`
   width: 100%;
@@ -348,7 +345,7 @@ const TimeBox = styled(Box)`
   height: 100px;
 `;
 const ContentBox = styled(Box)`
-  width: 100%;
+  width: 670px;
   overflow-y: scroll;
   height: 50%;
   flex-direction: column;
@@ -357,6 +354,7 @@ const ContentBox = styled(Box)`
   padding: 20px;
   background-color: white;
   border-radius: 20px;
+  margin-bottom: 20px;
 `;
 const ContentTitle = styled(Box)``;
 
@@ -364,7 +362,7 @@ const ContentDescription = styled(Desc)`
   overflow-y: auto;
 
   width: 100%;
-  height: 100%;
+  height: 200px;
   padding: 10px;
   border: solid 1px #f1f1f1;
 `;
