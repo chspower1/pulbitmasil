@@ -67,7 +67,7 @@ const PulbitmasilTitle = styled(Title)`
 
 const PulbitmasilSubTitle = styled(SubTitle)`
   margin: 20px 0;
-  font-size: 24px;
+  /* font-size: 24px; */
   font-family: "Sebang";
   line-height: 28px;
   display: flex;
