@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const ModalWrap = styled.div`
   position: fixed;
+  top: 0px;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -18,6 +19,7 @@ export const ModalContainer = styled(motion.form)<{ width?: string; height?: str
   display: flex;
   flex-direction: column;
   border-radius: 10px;
+
   align-items: center;
 `;
 export const ModalTitle = styled.h1`
@@ -60,5 +62,5 @@ export const ModalCloseBtn = styled.button`
   top: 20px;
   right: 20px;
   border-radius: 10px;
-  padding:0;
+  padding: 0;
 `;

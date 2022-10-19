@@ -68,7 +68,7 @@ export default function DodreamDetalModal() {
             <CourseName>{selectedDodream?.course_name}</CourseName>
             <MapBox id="detailMap"></MapBox>
             <DescContainer>
-              <Row style={{marginTop: 20}}>
+              <Row style={{ marginTop: 20 }}>
                 <Box>
                   <Title>길 종류 :</Title>
                   <Desc>{selectedDodream?.course_category_nm.split("/")[0]}</Desc>
@@ -79,7 +79,7 @@ export default function DodreamDetalModal() {
                 </Box>
                 <Box></Box>
               </Row>
-              <Row style={{marginBottom: 20}}>
+              <Row style={{ marginBottom: 20 }}>
                 <Box>
                   <Title>거리 :</Title>
                   <Desc>{selectedDodream?.distance}</Desc>
@@ -102,7 +102,7 @@ export default function DodreamDetalModal() {
                 <LongDesc dangerouslySetInnerHTML={{ __html: `${selectedDodream?.content!}` }} />
               </DetailRow>
             </DescContainer>
-            <ModalCloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)} >
+            <ModalCloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>
               <svg width="15" height="15" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"

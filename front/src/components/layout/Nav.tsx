@@ -105,8 +105,11 @@ export default function Nav() {
     console.log("현재 pathname", pathname, curState);
   }, [pathname]);
   useEffect(() => {
+    console.log(window.innerWidth);
     if (window.innerWidth > 1028) {
       setViewMode("desktop");
+      setIsMenuNav(false);
+      setIsUserNav(false);
     } else if (window.innerWidth > 768) {
       setViewMode("tablet");
     } else {
@@ -165,7 +168,6 @@ export default function Nav() {
             </Link>
           </LoginContainer>
         )}
-        {isUserNav && <UserNav setIsUserNav={setIsUserNav}></UserNav>}
 
         {isLogin && (
           <UserContainer>
@@ -203,7 +205,7 @@ export default function Nav() {
         <LoginModal></LoginModal>
         <FindPasswordModal></FindPasswordModal>
         <DodreamDetalModal />
-        {isUserNav && <UserNav setIsUserNav={setIsUserNav}></UserNav>}
+        {isUserNav && <UserNav setIsUserNav={setIsUserNav} handleClickLogout={handleClickLogout}></UserNav>}
         {isMenuNav && <MenuNav setIsMenuNav={setIsMenuNav}></MenuNav>}
         <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
       </Wrap>
