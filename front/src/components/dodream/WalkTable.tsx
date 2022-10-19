@@ -233,11 +233,11 @@ const Styles = styled(Box)`
           border-bottom: 0;
         }
       }
-      :hover {
-        background-color: rgba(217, 217, 217, 0.5);
-      }
       :nth-child(odd) {
         background-color: rgba(199, 225, 214, 0.3);
+      }
+      &:hover {
+        background-color: rgba(182, 209, 197, 0.5);
       }
     }
 
@@ -245,11 +245,17 @@ const Styles = styled(Box)`
     td {
       margin: 0;
       padding: 0.5rem;
+
       :first-child {
         width: 150px;
       }
       :nth-child(2) {
         width: 280px;
+        transition: all 0.4s ease;
+        &:hover {
+          font-weight: 800;
+          font-size: 16px;
+        }
       }
       :nth-child(n + 3) {
         width: 100px;
@@ -257,6 +263,7 @@ const Styles = styled(Box)`
       :last-child {
         border-right: 0;
       }
+
       @media screen and (max-width: 870px) {
         :first-child {
           display: none;
