@@ -2,7 +2,7 @@ import { Router } from "express";
 const greencrewRouter = Router();
 import { getCpi } from "../db/mongoDB/mongodb";
 import login_required from "../middlewares/login_required";
-import maria from "../db/connect/maria";
+import maria from "../db/mariaDB/maria";
 
 greencrewRouter.get("/", async function (req, res, next) {
   try {

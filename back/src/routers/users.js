@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import login_required from "../middlewares/login_required";
-import maria from "../db/connect/maria";
+import maria from "../db/mariaDB/maria";
 import random_password from "../middlewares/random_password";
 import { emailForTempPassword } from "../utils/email";
 import { Router } from "express";

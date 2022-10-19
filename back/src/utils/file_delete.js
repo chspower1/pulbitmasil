@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { nextTick } from "process";
-import maria from "../db/connect/maria";
+import maria from "../db/mariaDB/maria";
 
 const fileDelete = async reviewId => {
   const [rows] = await maria.query("SELECT reviewImg FROM REVIEW WHERE reviewId = ?", [reviewId]);

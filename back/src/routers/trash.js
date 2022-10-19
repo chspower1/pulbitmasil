@@ -1,6 +1,6 @@
 import { Router } from "express";
 const trashRouter = Router();
-import maria from "../db/connect/maria";
+import maria from "../db/mariaDB/maria";
 
 trashRouter.get("/", async function (req, res) {
   const [rows] = await maria.execute("SELECT * FROM TRASHCAN");

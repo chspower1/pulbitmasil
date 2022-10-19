@@ -2,7 +2,7 @@ import { Router } from "express";
 const authRouter = Router();
 import axios from "axios";
 require("dotenv").config();
-import maria from "../db/connect/maria";
+import maria from "../db/mariaDB/maria";
 import jwt from "jsonwebtoken";
 
 const KAKAO_OAUTH_TOKEN_API_URL = "https://kauth.kakao.com/oauth/token";
