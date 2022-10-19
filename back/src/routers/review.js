@@ -1,7 +1,7 @@
 import { Router } from "express";
 const reviewRouter = Router();
 import login_required from "../middlewares/login_required";
-import maria from "../db/connect/maria";
+import maria from "../db/mariaDB/maria";
 import { upload } from "../utils/file_upload";
 import { fileDelete } from "../utils/file_delete";
 const uploadSingle = upload.single("file");

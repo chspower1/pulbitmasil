@@ -6,7 +6,7 @@ const client = new MongoClient(url);
 
 const dbName = "test";
 
-async function dodream() {
+async function getDodream() {
   await client.connect();
 
   const db = client.db(dbName);
@@ -15,7 +15,7 @@ async function dodream() {
   return collection;
 }
 
-async function cpi(id) {
+async function getCpi(id) {
   await client.connect();
 
   const db = client.db(dbName);
@@ -24,4 +24,4 @@ async function cpi(id) {
   return collection;
 }
 
-export { dodream, cpi };
+export { getDodream, getCpi };
