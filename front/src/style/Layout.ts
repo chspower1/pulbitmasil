@@ -11,11 +11,12 @@ export const Wrapper = styled.section`
   overflow: hidden;
 `;
 
-export const Container = styled.div`
-  width: 100%;
+export const Container = styled.div<{ width?: string }>`
+  width: ${props => (props.width ? props.width : "100%")};
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 40px 0px;
 `;
 
 export const Box = styled.div`
