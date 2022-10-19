@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Wrapper, Container, Box, Title, Desc, SubTitle } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
-import { useState, useEffect } from "react";
+import { useState, useEffect, startTransition } from "react";
 import { createGreenCrewMember, deleteGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
 import Moment from "react-moment";
@@ -21,10 +21,8 @@ import { getUser } from "@api/user";
 import { User, UserGreenCrew } from "@type/user";
 import dayjs, { extend } from "dayjs";
 import duration from "dayjs/plugin/duration";
-import "dayjs/locale/ko";
 
 dayjs.extend(duration);
-dayjs.locale("ko");
 
 export default function GreenCrew() {
   // Variable
@@ -95,24 +93,15 @@ export default function GreenCrew() {
   };
   const convertDate = (startAt: Date) => {
     const day = dayjs(new Date(startAt));
-    const startDay = day.format("YYYY/MM/DD");
-    const startTime = day.format("A HH:mm:ss");
+    const startTime = day.format("A HH:mm");
 
-    return (
-      <StartAt>
-        <StartDate>{startDay}</StartDate>
-        <StartTime>
-          <Desc as="span">시작시간 : </Desc>
-          {startTime}
-        </StartTime>
-      </StartAt>
-    );
+    return startTime;
   };
   const DTime = (day: string) => {
     return (
-      <Title style={{ fontSize: "40px" }}>
+      <CrewTitle style={{ fontSize: "32px" }}>
         <Desc as="span">남은시간 : </Desc> {day}
-      </Title>
+      </CrewTitle>
     );
   };
 
@@ -147,72 +136,80 @@ export default function GreenCrew() {
             {areas[area]}
           </AreaBtn>
         ))}
+        <Link to="/guide">
+          <AreaBtn style={{ backgroundColor: "#E17055" }}>풀빛마실 준비하는 법</AreaBtn>
+        </Link>
       </AreaNav>
       <RootContainer>
-        <Title>{greenCrews![selectedArea]?.title!}</Title>
-        <FirstContainer>
-          <DescBox>
-            {convertDate(greenCrews![selectedArea]?.startAt!)}
-            <CourseBox>
-              <DetailTitle>
-                <IconImg src={"assets/icon/greencrew/course_icon.svg"} alt="#" />
-                코스
-              </DetailTitle>
-              <DetailDescription>{greenCrews![selectedArea]!.course}</DetailDescription>
-            </CourseBox>
-            <CourseBox>
-              <DetailTitle>
-                <IconImg src="/assets/icon/greencrew/distance_icon.svg" alt="#" />
-                거리
-              </DetailTitle>
-              <DetailDescription>{greenCrews![selectedArea]!.distance}</DetailDescription>
-            </CourseBox>
-            <CourseBox>
-              <DetailTitle>
-                <IconImg src="/assets/icon/greencrew/lead_time_icon.svg" alt="#" />
-                소요시간
-              </DetailTitle>
-              <DetailDescription>{greenCrews![selectedArea]!.leadTime}</DetailDescription>
-            </CourseBox>
-            <CourseBox>
-              <DetailTitle>
-                <IconImg src="/assets/icon/greencrew/max_member_icon.svg" alt="#" />
-                모집인원
-              </DetailTitle>
-              <DetailDescription>{greenCrews![selectedArea]!.maxMember}</DetailDescription>
-            </CourseBox>
-            <CourseBox>
-              <DetailTitle>
-                <IconImg src="/assets/icon/greencrew/level_icon.svg" alt="#" />
-                난이도
-              </DetailTitle>
-              <DetailDescription>{greenCrews![selectedArea]!.level}</DetailDescription>
-            </CourseBox>
-          </DescBox>
+        <CrewTitle>{greenCrews![selectedArea]?.title!}</CrewTitle>
+        <Desc className="num_desc" style={{ alignSelf: "end" }}>
+          현재 <GreenAccent>{curMember}명</GreenAccent>이 참여중!
+        </Desc>
+        <TopContainer>
+          <InfoContainer>
+            <DescBox>
+              <CourseBox>
+                <DetailTitle>
+                  <IconImg src={"assets/icon/greencrew/course_icon.svg"} alt="#" />
+                  일시 :
+                </DetailTitle>
+                <DetailDescription>{convertDate(greenCrews![selectedArea]?.startAt!)}</DetailDescription>
+              </CourseBox>
 
+              <CourseBox>
+                <DetailTitle>
+                  <IconImg src={"assets/icon/greencrew/course_icon.svg"} alt="#" />
+                  코스 :
+                </DetailTitle>
+                <DetailDescription>{greenCrews![selectedArea]!.course}</DetailDescription>
+              </CourseBox>
+              <CourseBox>
+                <DetailTitle>
+                  <IconImg src="/assets/icon/greencrew/distance_icon.svg" alt="#" />
+                  거리 :
+                </DetailTitle>
+                <DetailDescription>{greenCrews![selectedArea]!.distance}</DetailDescription>
+              </CourseBox>
+              <CourseBox>
+                <DetailTitle>
+                  <IconImg src="/assets/icon/greencrew/lead_time_icon.svg" alt="#" />
+                  소요시간 :
+                </DetailTitle>
+                <DetailDescription>{greenCrews![selectedArea]!.leadTime}</DetailDescription>
+              </CourseBox>
+              <CourseBox>
+                <DetailTitle>
+                  <IconImg src="/assets/icon/greencrew/max_member_icon.svg" alt="#" />
+                  모집인원 :
+                </DetailTitle>
+                <DetailDescription>{greenCrews![selectedArea]!.maxMember + "명"}</DetailDescription>
+              </CourseBox>
+              <CourseBox>
+                <DetailTitle>
+                  <IconImg src="/assets/icon/greencrew/level_icon.svg" alt="#" />
+                  난이도 :
+                </DetailTitle>
+                <DetailDescription>{"Level " + greenCrews![selectedArea]!.level}</DetailDescription>
+              </CourseBox>
+            </DescBox>
+          </InfoContainer>
           <GreenCrewMap greenCrew={greenCrews![selectedArea]!} />
-        </FirstContainer>
+        </TopContainer>
         <SecondContainer>
-          <ContentBox>
-            <Row>
-              <Col>
-                <StatusBox>
-                  <div>{DTime(time!)}</div>
-                  <Desc>
-                    현재까지 <GreenAccent style={{ fontSize: "32px" }}>{curMember}명</GreenAccent>이 참여하고 있어요!
-                  </Desc>
-                </StatusBox>
-              </Col>
-              <Col>
-                {!isParticipate ? (
-                  <EnterBtn onClick={handleClickEnter}>참여</EnterBtn>
-                ) : (
-                  <DeleteBtn onClick={handleClickDelete}>취소</DeleteBtn>
-                )}
-              </Col>
+          <TimeBox className="time">
+            <Row style={{ marginLeft: "auto" }}>
+              <StatusBox>
+                <div>{DTime(time!)}</div>
+              </StatusBox>
+
+              {!isParticipate ? (
+                <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
+              ) : (
+                <DeleteBtn onClick={handleClickDelete}>취소하기</DeleteBtn>
+              )}
             </Row>
-          </ContentBox>
-          <ContentBox>
+          </TimeBox>
+          <ContentBox style={{ marginBottom: "20px" }}>
             <ContentTitle>
               <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
               <GreenAccent style={{ fontSize: "18px" }}>"{greenCrews![selectedArea]?.course}"</GreenAccent>은?
@@ -231,15 +228,13 @@ export default function GreenCrew() {
             />
           </ContentBox>
         </SecondContainer>
-        <Link to="/guide">
-          <ReadyBtn>풀빛마실 준비하는 법</ReadyBtn>
-        </Link>
       </RootContainer>
     </GreenCrewWrapper>
   );
 }
 const GreenCrewWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
+  /* padding-top: 120px; */
 `;
 const AreaNav = styled(Box)`
   position: fixed;
@@ -250,18 +245,15 @@ const AreaNav = styled(Box)`
 `;
 const StatusBox = styled(Box)`
   flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100%;
-  height: 100px;
-  margin: 20px 0px;
+  width: 50%;
+  height: 100%;
 `;
 const StartDate = styled(Desc)`
   font-family: "SebangBold";
   margin-bottom: 10px;
 `;
-const StartTime = styled(Title)`
-  color: ${props => props.theme.textColor};
+const CrewTitle = styled(Title)`
+  color: ${props => props.theme.accentColor};
 `;
 const AreaBtn = styled.button`
   width: 150px;
@@ -278,17 +270,18 @@ const AreaBtn = styled.button`
 `;
 const RootContainer = styled(Container)`
   flex-direction: column;
-  width: 800px;
+  justify-content: flex-start;
+  width: 700px;
   height: 100%;
-  background-color: white;
-  padding: 0px 40px;
+  padding: 40px 20px;
   background-color: black;
 `;
-const FirstContainer = styled(Container)`
+const TopContainer = styled(Container)``;
+const InfoContainer = styled(Container)`
   position: relative;
-  width: 100%;
-  height: 34%;
-  margin-top: 30px;
+  width: 310px;
+  height: 340px;
+  margin-right: 10px;
 `;
 const SecondContainer = styled(Container)`
   position: relative;
@@ -299,35 +292,37 @@ const SecondContainer = styled(Container)`
 `;
 const Row = styled(Box)`
   width: 100%;
-  justify-content: space-between;
-`;
-const Col = styled(Box)`
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
 `;
 const DescBox = styled(Box)`
+  background-color: white;
   flex-direction: column;
-  width: 50%;
+  width: 190%;
   height: 100%;
   align-items: flex-start;
   justify-content: space-between;
+  padding: 20px;
+  border-radius: 20px;
+  font-size: 16px;
 `;
 const IconImg = styled.img`
   margin-right: 10px;
 `;
 const CourseBox = styled(Box)`
-  width: 70%;
+  width: 100%;
   justify-content: space-between;
+  padding: 0 10px;
 `;
+
 const EnterBtn = styled.button`
-  width: 200px;
+  width: 330px;
   min-width: 130px;
-  height: 80px;
+  height: 60px;
   max-height: 70px;
-  font-size: 32px;
+  font-size: 30px;
+  border-radius: 8px;
 `;
 const DeleteBtn = styled(EnterBtn)`
+  height: 60px;
   background-color: ${props => props.theme.dangerColor};
   &:hover {
     background-color: ${props => props.theme.accentDangerColor};
@@ -336,18 +331,29 @@ const DeleteBtn = styled(EnterBtn)`
 const StartAt = styled.div``;
 const DetailTitle = styled(Desc)`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 const DetailDescription = styled(SubTitle)`
-  color: ${props => props.theme.mainColor};
+  color: ${props => props.theme.accentColor};
+  font-weight: bold;
+  justify-self: flex-end;
+`;
+
+const TimeBox = styled(Box)`
+  width: 100%;
+  height: 100px;
 `;
 const ContentBox = styled(Box)`
   width: 100%;
-  height: 33.3%;
+  overflow-y: scroll;
+  height: 150px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px;
 `;
 const ContentTitle = styled(Box)``;
 

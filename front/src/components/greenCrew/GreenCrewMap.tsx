@@ -83,15 +83,15 @@ export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) 
   );
 }
 const MapBox = styled.div`
-  width: 50%;
-  height: 100%;
-  border: 5px solid #88caae;
+  width: 350px;
+  height: 340px;
+  border: 5px solid ${props => props.theme.weekColor};
   border-radius: 10px;
 `;
 const DescBox = styled.div`
   width: 150px;
   text-align: center;
   padding: 8px;
-  background-color: #2a9c6b;
+  background-color: ${props => props.theme.mainColor};
   color: white;
 `;
