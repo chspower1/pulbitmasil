@@ -37,7 +37,7 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
     navigate(`/mypage/${menu}`);
   };
 
-  const handleSubmitChange = handleSubmit(data => {
+  const onvaild = async (data: PasswordForm) => {
     console.log(data);
 
     changePassword(data).then(status => {
@@ -50,14 +50,14 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
     });
 
     // closeRegisterModal();
-  });
+  };
 
   return (
     <AnimatePresence>
       {isPasswordChange && (
         <PasswordWrapper>
           <PasswordContainer
-            onSubmit={handleSubmitChange}
+            onSubmit={handleSubmit(onvaild)}
             variants={ModalVariant}
             initial="initial"
             animate="animate"
@@ -215,14 +215,6 @@ const ErrorMessage = styled.div`
   bottom: -20px;
 `;
 
-const Button = styled.button`
-  width: 200px;
-  height: 64px;
-  font-size: 18px;
-  &:first-child {
-    margin-right: 10px;
-  }
-`;
 const ButtonBox = styled(Box)`
   margin-top: 20px;
   width: 100%;

@@ -3,12 +3,15 @@ import { useForm } from "react-hook-form";
 import { changeName } from "@api/user";
 import { NameChangeForm } from "@type/user";
 
-import { Wrapper } from "@style/Layout";
+import { Box, Wrapper } from "@style/Layout";
 
 import { useNavigate } from "react-router-dom";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
-import { ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
+import { DangerBtn, MainBtn, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { AnimatePresence } from "framer-motion";
+import { useRecoilState } from "recoil";
+import { userAtom } from "@atom/user";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface NameChangeModalProps {
   setIsNameChange: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,42 +21,56 @@ interface NameChangeModalProps {
 }
 
 export default function NameChangeModal({ setIsNameChange, name, isNameChange, menu }: NameChangeModalProps) {
+  const queryClient = useQueryClient();
+  const userMutation = useMutation(changeName, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+      queryClient.invalidateQueries(["reviews"]);
+    },
+  });
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
     reset,
-    getValues,
   } = useForm<NameChangeForm>();
   const navigate = useNavigate();
+  const [user, setUser] = useRecoilState(userAtom);
+
   const closeRegisterModal = async () => {
     setIsNameChange(false);
     reset();
     navigate(`/mypage/${menu}`);
   };
 
-  const handleSubmitChange = handleSubmit(data => {
-    changeName(data.newName);
+  const onvalid = async (data: NameChangeForm) => {
+    console.log(data);
+    await changeName(data.newName);
+    userMutation.mutate(data?.newName);
+    setUser({ ...user!, name: data?.newName });
     closeRegisterModal();
-  });
+  };
 
   return (
     <AnimatePresence>
       {isNameChange && (
         <PasswordWrapper>
           <FormContainer
-            onSubmit={handleSubmitChange}
+            onSubmit={handleSubmit(onvalid)}
             variants={ModalVariant}
             initial="initial"
             animate="animate"
             exit="exit"
+            width="700px"
+            height="450px"
           >
             <Title>이름 수정</Title>
 
             <InputBox>
               <InputTitle>현재 이름</InputTitle>
               <Input
+                disabled
                 placeholder="현재 이름"
                 defaultValue={name}
                 type="text"
@@ -79,10 +96,15 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
               />
               <ErrorMessage>{errors.newName?.message}</ErrorMessage>
             </InputBox>
-            <Button>수정하기</Button>
-            <Button type="button" onClick={closeRegisterModal}>
-              취소하기
-            </Button>
+
+            <ButtonBox>
+              <MainBtn width="200px" height="60px" style={{ marginRight: "10px" }}>
+                수정하기
+              </MainBtn>
+              <DangerBtn width="200px" height="60px" type="button" onClick={closeRegisterModal}>
+                취소하기
+              </DangerBtn>
+            </ButtonBox>
           </FormContainer>
           <Overlay
             onClick={closeRegisterModal}
@@ -104,17 +126,14 @@ const PasswordWrapper = styled(ModalWrap)`
   height: 100vh;
 `;
 const FormContainer = styled(ModalContainer)`
-  width: 700px;
-  height: 750px;
-  padding: 60px;
-  padding-bottom: 75px;
   color: #bdbdbd;
+  padding: 20px 0;
 `;
 
 const Title = styled.h1`
   font-size: 32px;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin: 30px 0;
   color: ${props => props.theme.mainColor};
 `;
 const Description = styled.p`
@@ -168,4 +187,8 @@ const Form = styled.form`
   width: 530px;
   height: 500px;
   margin: auto;
+`;
+const ButtonBox = styled(Box)`
+  margin-top: 20px;
+  width: 100%;
 `;
