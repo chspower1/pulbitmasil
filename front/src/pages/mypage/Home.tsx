@@ -24,7 +24,8 @@ export default function Home({ user }: { user: User }) {
     <HomeWrap>
       <HomeContainer height="30%">
         <GrayTitle>
-          <Title>{user.name}</Title>님 <Title>풀빛마실</Title>에<Title>{user.greenCrews?.length}회</Title> 참여하셨어요!
+          <Title>{user.name}</Title>님 <Title> 풀빛마실</Title>에 <Title>{user.greenCrews?.length}회</Title>{" "}
+          참여하셨어요!
         </GrayTitle>
       </HomeContainer>
       <HomeContainer className="content" height="70%">

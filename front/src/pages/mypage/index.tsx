@@ -121,6 +121,11 @@ const ProfileBox = styled(Box)`
   flex-direction: column;
   position: relative;
   margin: 15px 0;
+  pading: 0 10px;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    /* flex-direction: column; */
+  }
 `;
 const Img = styled.img`
   width: 50px;
@@ -134,11 +139,20 @@ const ContentBox = styled(Box)`
   align-items: center;
   border-radius: 20px;
   justify-content: flex-start;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    /* flex-direction: column; */
+  }
 `;
 const NameBox = styled(Row)`
   margin-top: 10px;
   justify-content: center;
   align-items: center;
+
+  /* @media screen and (max-width: 768px) {
+    font-size
+  } */
 `;
 const Name = styled(Title)`
   font-size: 24px;
@@ -154,6 +168,12 @@ const Email = styled(Desc)`
 `;
 const MenuBox = styled(Box)`
   bottom: 0px;
+  width: 100%;
+
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    /* flex-direction: column; */
+  }
 `;
 const Menu = styled.button`
   font-size: 20px;
@@ -173,6 +193,11 @@ const MyPageContainer = styled(Container)`
   flex-direction: column;
   width: 600px;
   height: 100%;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    /* flex-direction: column; */
+  }
 `;
 const EditBtn = styled(MainBtn)`
   position: absolute;
