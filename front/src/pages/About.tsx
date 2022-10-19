@@ -51,6 +51,7 @@ export default function Content() {
 }
 const Section = styled.div`
   height: 100vh;
+  width: 100%;
 `;
 
 const Box = styled.div`
@@ -62,6 +63,11 @@ const Box = styled.div`
   background-image: url("/assets/images/about/about_bg_img01.jpg");
   background-size: cover;
   padding: 0;
+
+  @media screen and (min-width: 1124px) {
+    width: 100%;
+    /* flex-direction: column; */
+  }
 `;
 const Title = styled.h1`
   font-size: 36px;
@@ -76,10 +82,22 @@ const MoveUpBtn = styled.div`
 `;
 const BenefitBox = styled(Box)`
   background-image: url("/assets/images/about/benefit_bg.jpg");
+  @media screen and (min-width: 1124px) {
+    width: 100%;
+    /* flex-direction: column; */
+  }
 `;
 const UniqueBox = styled(Box)`
   background-image: url("/assets/images/about/unique_bg.jpg");
+  @media screen and (min-width: 1124px) {
+    width: 100%;
+    /* flex-direction: column; */
+  }
 `;
 const ProblemBox = styled(Box)`
   background-image: url("/assets/images/about/problem_bg.jpg");
+  @media screen and (min-width: 1124px) {
+    width: 100%;
+    /* flex-direction: column; */
+  }
 `;
