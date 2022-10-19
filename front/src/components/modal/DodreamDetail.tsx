@@ -68,7 +68,7 @@ export default function DodreamDetalModal() {
             <CourseName>{selectedDodream?.course_name}</CourseName>
             <MapBox id="detailMap"></MapBox>
             <DescContainer>
-              <Row>
+              <Row style={{marginTop: 20}}>
                 <Box>
                   <Title>길 종류 :</Title>
                   <Desc>{selectedDodream?.course_category_nm.split("/")[0]}</Desc>
@@ -77,8 +77,9 @@ export default function DodreamDetalModal() {
                   <Title>자치구 :</Title>
                   <Desc>{selectedDodream?.area_gu}</Desc>
                 </Box>
+                <Box></Box>
               </Row>
-              <Row>
+              <Row style={{marginBottom: 20}}>
                 <Box>
                   <Title>거리 :</Title>
                   <Desc>{selectedDodream?.distance}</Desc>
@@ -101,8 +102,8 @@ export default function DodreamDetalModal() {
                 <LongDesc dangerouslySetInnerHTML={{ __html: `${selectedDodream?.content!}` }} />
               </DetailRow>
             </DescContainer>
-            <ModalCloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>
-              <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ModalCloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)} >
+              <svg width="15" height="15" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
                   stroke="white"
@@ -128,28 +129,29 @@ export default function DodreamDetalModal() {
 const DodreamModalContainer = styled(ModalContainer)`
   z-index: 10000;
   position: absolute;
-  width: 1000px;
-  height: 800px;
+  width: 600px;
+  height: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px 150px;
+  /* padding: 0px 150px; */
 `;
 const CourseName = styled.h1`
   margin: 25px;
-  font-size: 42px;
+  font-size: 24px;
   color: ${props => props.theme.mainColor};
 `;
 const MapBox = styled.div`
-  width: 700px;
-  height: 350px;
+  width: 500px;
+  height: 500px;
   border-radius: 5px;
   border: solid 5px ${props => props.theme.weekColor};
 `;
 const DescContainer = styled.div`
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
+  width: 500px;
 `;
 const Row = styled.div`
   display: flex;
@@ -157,46 +159,35 @@ const Row = styled.div`
 `;
 const DetailRow = styled(Row)`
   justify-content: space-between;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 const Box = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  width: 200px;
-  height: 60px;
-  margin-right: 30px;
+  width: 180px;
+  height: 40px;
+  /* margin-right: 30px; */
 `;
 const Title = styled.div`
   color: ${props => props.theme.textColor};
-  font-size: 18px;
+  font-size: 16px;
 `;
 const BoldTitle = styled(Title)`
   font-family: "SebangBold";
+  font-size: 16px;
 `;
 const Desc = styled.h1`
-  font-size: 22px;
+  font-size: 18px;
   color: ${props => props.theme.mainColor};
 `;
 const LongDesc = styled(Title)`
-  line-height: 1.4;
-  width: 630px;
-  height: 130px;
-  overflow: scroll;
+  line-height: 1.5;
+  width: 430px;
+  height: 100px;
+  overflow-y: scroll;
   text-overflow: ellipsis;
   border: solid 1px ${props => props.theme.weekColor};
   padding: 10px;
-`;
-const LogoutBtn = styled.button`
-  width: 100px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  font-size: 22px;
-  background-color: ${props => props.theme.dangerColor};
-  &:hover {
-    background-color: #cc5e43;
-  }
+  font-size: 13px;
 `;
