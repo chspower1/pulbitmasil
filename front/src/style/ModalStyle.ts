@@ -24,13 +24,13 @@ export const ModalContainer = styled(motion.form)<{ width?: string; height?: str
 `;
 export const ModalTitle = styled.h1`
   margin-top: 70px;
-  margin-bottom: 24px;
-  font-size: 32px;
+  margin-bottom: 28px;
+  font-size: 28px;
   color: ${props => props.theme.mainColor};
 `;
 export const ModalDesc = styled.p`
   display: flex;
-  font-size: 30px;
+  font-size: 24px;
   color: ${props => props.theme.textColor};
   margin-bottom: 18px;
 `;
@@ -63,4 +63,27 @@ export const ModalCloseBtn = styled.button`
   right: 20px;
   border-radius: 10px;
   padding: 0;
+`;
+
+export const MainBtn = styled.button<{ width?: string; height?: string }>`
+  width: ${props => (props.width ? props.width : "120px")};
+  height: ${props => (props.height ? props.height : "45px")};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 18px;
+  background-color: ${props => props.theme.mainColor};
+  &:hover {
+    background-color: ${props => props.theme.accentColor};
+  }
+`;
+export const DangerBtn = styled(MainBtn)<{ width?: string; height?: string }>`
+  width: ${props => (props.width ? props.width : "120px")};
+  height: ${props => (props.height ? props.height : "45px")};
+
+  background-color: ${props => props.theme.dangerColor};
+  &:hover {
+    background-color: #cc5e43;
+  }
 `;

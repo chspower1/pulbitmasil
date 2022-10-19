@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Wrapper } from "@style/Layout";
+import { Box, Wrapper } from "@style/Layout";
 import { UserPasswordProps } from "@pages/mypage";
 import { AnimatePresence } from "framer-motion";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
-import { ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
+import { DangerBtn, MainBtn, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { useNavigate } from "react-router-dom";
 import { PasswordForm } from "@type/user";
 interface PasswordChangeModalProps {
@@ -37,7 +37,7 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
     navigate(`/mypage/${menu}`);
   };
 
-  const handleSubmitChange = handleSubmit(data => {
+  const onvaild = async (data: PasswordForm) => {
     console.log(data);
 
     changePassword(data).then(status => {
@@ -50,20 +50,20 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
     });
 
     // closeRegisterModal();
-  });
+  };
 
   return (
     <AnimatePresence>
       {isPasswordChange && (
         <PasswordWrapper>
-          <ModalContainer
-            onSubmit={handleSubmitChange}
+          <PasswordContainer
+            onSubmit={handleSubmit(onvaild)}
             variants={ModalVariant}
             initial="initial"
             animate="animate"
             exit="exit"
             width="700px"
-            height="750px"
+            height="550px"
           >
             <Title>비밀번호 수정</Title>
 
@@ -144,12 +144,15 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
 
               <ErrorMessage>{errors?.confirmPassword?.message!}</ErrorMessage>
             </InputBox>
-
-            <Button>수정하기</Button>
-            <Button type="button" onClick={closeRegisterModal}>
-              취소하기
-            </Button>
-          </ModalContainer>
+            <ButtonBox>
+              <MainBtn width="200px" height="60px" style={{ marginRight: "10px" }}>
+                수정하기
+              </MainBtn>
+              <DangerBtn width="200px" height="60px" type="button" onClick={closeRegisterModal}>
+                취소하기
+              </DangerBtn>
+            </ButtonBox>
+          </PasswordContainer>
           <Overlay
             onClick={closeRegisterModal}
             variants={OverlayVariant}
@@ -170,17 +173,17 @@ const PasswordWrapper = styled(ModalWrap)`
   height: 100vh;
 `;
 
+const PasswordContainer = styled(ModalContainer)`
+  padding: 20px 0;
+`;
+
 const Title = styled.h1`
   font-size: 32px;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin: 30px 0;
   color: ${props => props.theme.mainColor};
 `;
-const Description = styled.p`
-  font-size: 16px;
-  margin-bottom: 45px;
-  color: ${props => props.theme.textColor};
-`;
+
 const InputBox = styled.div`
   position: relative;
   width: 530px;
@@ -212,9 +215,7 @@ const ErrorMessage = styled.div`
   bottom: -20px;
 `;
 
-const Button = styled.button`
-  width: 200px;
-  height: 64px;
-  font-size: 18px;
-  margin-top: 45px;
+const ButtonBox = styled(Box)`
+  margin-top: 20px;
+  width: 100%;
 `;

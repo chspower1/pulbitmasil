@@ -102,7 +102,7 @@ export default function Nav() {
   }, []);
   useEffect(() => {
     pathname === "/" ? setCurState("home") : setCurState(pathname.split("/")[1]);
-    console.log("현재 pathname", pathname, curState);
+    console.log("현재 pathname", pathname);
   }, [pathname]);
   useEffect(() => {
     console.log(window.innerWidth);
@@ -177,7 +177,7 @@ export default function Nav() {
                 <UserName>{user?.name}</UserName>
               </UserNameBox>
             </Link>
-            <Link to="mypage/home">
+            <Link to="mypage">
               <SubTitle style={{ fontFamily: "SebangBold" }}>마이페이지</SubTitle>
             </Link>
             <Logout onClick={handleClickLogout}>로그아웃</Logout>
