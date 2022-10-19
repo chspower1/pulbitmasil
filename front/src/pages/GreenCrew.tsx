@@ -145,8 +145,8 @@ export default function GreenCrew() {
         <Desc className="num_desc" style={{ alignSelf: "end" }}>
           현재 <GreenAccent>{curMember}명</GreenAccent>이 참여중!
         </Desc>
-        <TopContainer>
-          <InfoContainer>
+        <TopBox>
+          <InfoBox>
             <DescBox>
               <CourseBox>
                 <DetailTitle>
@@ -192,10 +192,10 @@ export default function GreenCrew() {
                 <DetailDescription>{"Level " + greenCrews![selectedArea]!.level}</DetailDescription>
               </CourseBox>
             </DescBox>
-          </InfoContainer>
+          </InfoBox>
           <GreenCrewMap greenCrew={greenCrews![selectedArea]!} />
-        </TopContainer>
-        <SecondContainer>
+        </TopBox>
+        <SecondBox>
           <TimeBox className="time">
             <Row style={{ marginLeft: "auto" }}>
               <StatusBox>
@@ -227,14 +227,13 @@ export default function GreenCrew() {
               }}
             />
           </ContentBox>
-        </SecondContainer>
+        </SecondBox>
       </RootContainer>
     </GreenCrewWrapper>
   );
 }
 const GreenCrewWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
-  /* padding-top: 120px; */
 `;
 const AreaNav = styled(Box)`
   position: fixed;
@@ -273,22 +272,27 @@ const RootContainer = styled(Container)`
   justify-content: flex-start;
   width: 700px;
   height: 100%;
-  padding: 40px 20px;
-  background-color: black;
+  background-color: gray;
+  /* padding-bottom: 100px; */
 `;
-const TopContainer = styled(Container)``;
-const InfoContainer = styled(Container)`
+const TopBox = styled(Box)`
+  background-color: yellow;
+  height: 50vh;
+`;
+const InfoBox = styled(Box)`
   position: relative;
   width: 310px;
   height: 340px;
   margin-right: 10px;
 `;
-const SecondContainer = styled(Container)`
+const SecondBox = styled(Box)`
   position: relative;
   flex-direction: column;
-  height: 50%;
+  /* height: 50%; */
   justify-content: flex-start;
   align-items: space-between;
+  background-color: black;
+  height: 38vh;
 `;
 const Row = styled(Box)`
   width: 100%;
@@ -296,7 +300,7 @@ const Row = styled(Box)`
 const DescBox = styled(Box)`
   background-color: white;
   flex-direction: column;
-  width: 190%;
+  width: 320px;
   height: 100%;
   align-items: flex-start;
   justify-content: space-between;
@@ -316,13 +320,12 @@ const CourseBox = styled(Box)`
 const EnterBtn = styled.button`
   width: 330px;
   min-width: 130px;
-  height: 60px;
+  height: 50px;
   max-height: 70px;
-  font-size: 30px;
+  font-size: 28px;
   border-radius: 8px;
 `;
 const DeleteBtn = styled(EnterBtn)`
-  height: 60px;
   background-color: ${props => props.theme.dangerColor};
   &:hover {
     background-color: ${props => props.theme.accentDangerColor};
@@ -347,7 +350,7 @@ const TimeBox = styled(Box)`
 const ContentBox = styled(Box)`
   width: 100%;
   overflow-y: scroll;
-  height: 150px;
+  height: 50%;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
