@@ -10,16 +10,19 @@ import { UserNavProps } from "@components/layout/Nav";
 import { createPortal } from "react-dom";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
 import { DangerAccent, MainBtn, DangerBtn } from "@style/Layout";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
   const [user, setUser] = useRecoilState(userAtom);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const handleClickLogout = () => {
     sessionStorage.removeItem("userToken");
     setIsUserNav(false);
     setIsLogoutModal(false);
     setUser(null);
+    queryClient.removeQueries({ queryKey: ["user"] });
     navigate("/");
   };
 

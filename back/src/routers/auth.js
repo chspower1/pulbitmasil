@@ -111,7 +111,7 @@ authRouter.get("/kakao/info/:access_token", async function (req, res, next) {
 
 authRouter.get("/naver", async function (req, res, next) {
   const access_token = req.query.access_token;
-
+  console.log(access_token);
   await axios
     .get(`${NAVER_OAUTH_TOKEN_API_URL}`, {
       headers: {

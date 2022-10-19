@@ -63,10 +63,14 @@ export async function kakaoLogin(code: string) {
   return data;
 }
 export async function naverLogin(accessToken: string, stateToken: string) {
-  const { data } = await axiosInstance.get(`auth/naver?access_token=${accessToken}&state_token=${stateToken}`);
-  sessionStorage.setItem("userToken", data.token);
-  // console.log("네이버로그인", data);
-  return data;
+  try {
+    const { data } = await axiosInstance.get(`auth/naver?access_token=${accessToken}&state_token=${stateToken}`);
+    sessionStorage.setItem("userToken", data.token);
+    // console.log("네이버로그인", data);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export async function changePassword(data: PasswordForm) {

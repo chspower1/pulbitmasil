@@ -106,7 +106,8 @@ export default function GreenCrew() {
   const DTime = (day: string) => {
     return (
       <TimeDesc>
-        <Desc as="span">남은시간 : </Desc> <RestTime>{day}</RestTime>
+        <Desc as="span">남은시간&nbsp;:&nbsp;</Desc>
+        <RestTime>{day}</RestTime>
       </TimeDesc>
     );
   };
@@ -250,7 +251,7 @@ export default function GreenCrew() {
 }
 const GreenCrewWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
-  
+
   overflow: scroll;
   position: relative;
 `;
@@ -282,6 +283,8 @@ const StatusBox = styled(Box)`
   height: 100%;
 `;
 const RestTime = styled(Title)`
+  width: 180px;
+  font-size: 40px;
   @media screen and (max-width: 768px) {
     font-size: 32px;
   }
@@ -303,8 +306,11 @@ const CrewTitle = styled(Title)`
 const TimeDesc = styled(Title)`
   color: ${props => props.theme.accentColor};
   display: flex;
+  align-items: flex-end;
   @media screen and (max-width: 1024px) {
     flex-direction: column;
+    align-items: flex-start;
+    padding-left: 30px;
   }
 `;
 
@@ -377,7 +383,7 @@ const Row = styled(Box)`
   }
 `;
 const DescBox = styled(Box)`
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
   flex-direction: column;
   width: 320px;
   height: 100%;
@@ -424,7 +430,7 @@ const ContentBox = styled(Box)`
   align-items: flex-start;
   justify-content: flex-start;
   padding: 20px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 20px;
   margin-bottom: 20px;
 
