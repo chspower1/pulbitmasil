@@ -99,7 +99,7 @@ export default function GreenCrew() {
   };
   const DTime = (day: string) => {
     return (
-      <CrewTitle style={{ fontSize: "40px" }}>
+      <CrewTitle style={{ fontSize: "32px" }}>
         <Desc as="span">남은시간 : </Desc> {day}
       </CrewTitle>
     );
@@ -209,7 +209,7 @@ export default function GreenCrew() {
               )}
             </Row>
           </TimeBox>
-          <ContentBox>
+          <ContentBox style={{ marginBottom: "20px" }}>
             <ContentTitle>
               <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
               <GreenAccent style={{ fontSize: "18px" }}>"{greenCrews![selectedArea]?.course}"</GreenAccent>은?
@@ -234,7 +234,7 @@ export default function GreenCrew() {
 }
 const GreenCrewWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
-  padding-top: 120px;
+  /* padding-top: 120px; */
 `;
 const AreaNav = styled(Box)`
   position: fixed;
@@ -246,8 +246,7 @@ const AreaNav = styled(Box)`
 const StatusBox = styled(Box)`
   flex-direction: column;
   width: 50%;
-  height: 100px;
-  margin: 20px 0px;
+  height: 100%;
 `;
 const StartDate = styled(Desc)`
   font-family: "SebangBold";
@@ -271,9 +270,10 @@ const AreaBtn = styled.button`
 `;
 const RootContainer = styled(Container)`
   flex-direction: column;
+  justify-content: flex-start;
   width: 700px;
   height: 100%;
-  padding: 0px 20px;
+  padding: 40px 20px;
 `;
 const TopContainer = styled(Container)``;
 const InfoContainer = styled(Container)`
@@ -317,10 +317,11 @@ const EnterBtn = styled.button`
   min-width: 130px;
   height: 60px;
   max-height: 70px;
-  font-size: 32px;
+  font-size: 30px;
   border-radius: 8px;
 `;
 const DeleteBtn = styled(EnterBtn)`
+  height: 60px;
   background-color: ${props => props.theme.dangerColor};
   &:hover {
     background-color: ${props => props.theme.accentDangerColor};
@@ -340,13 +341,16 @@ const DetailDescription = styled(SubTitle)`
 
 const TimeBox = styled(Box)`
   width: 100%;
+  height: 100px;
 `;
 const ContentBox = styled(Box)`
   width: 100%;
+  overflow-y: scroll;
+  height: 150px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 10px;
+  padding: 20px;
   background-color: white;
   border-radius: 20px;
 `;
