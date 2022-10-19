@@ -4,7 +4,6 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
 import { userRouter } from "./routers/users";
-import { trashRouter } from "./routers/trash";
 import { reviewRouter } from "./routers/review";
 import { authRouter } from "./routers/auth";
 import { dodreamRouter } from "./routers/dodream";
@@ -22,7 +21,6 @@ app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 
 app.use("/user", userRouter);
-app.use("/trash", trashRouter);
 app.use("/auth", authRouter);
 app.use("/review", reviewRouter);
 app.use("/dodream", dodreamRouter);

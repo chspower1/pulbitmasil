@@ -30,24 +30,3 @@ pool.on("release", function (connection) {
 });
 
 export default maria;
-
-// const execute = async (sql, context) => {
-//   try {
-//     const [rows, fields] = await maria.execute(sql, context);
-//     return rows;
-//   } catch (err) {
-//     return err;
-//   }
-// };
-// module.exports = execute;
-
-// async function findById(id) {
-//   try {
-//     const [rows, feilds] = await maria.query("SELECT * FROM USER WHERE id = ?;", [id]);
-//     console.log(rows);
-//   } catch (err) {
-//     return err;
-//   }
-// }
-
-// findById(32);
