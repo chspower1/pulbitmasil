@@ -6,7 +6,7 @@ import DodreamFilter from "./DodreamFilter";
 import { convertTime } from "@components/modal/DodreamDetail";
 import { selectedDodreamAtom } from "@atom/dodream";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
-import { Box } from  "@style/Layout";
+import { Box, Container, Wrapper } from  "@style/Layout";
 
 interface Tableprops {
   columns: {
@@ -160,26 +160,29 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   );
 }
 
-const WholeWrapper = styled.div`
-  height: 30%;
+const WholeWrapper = styled(Wrapper)`
+  display: flex;
+  flex-direction: column;
   background-color: none;
 `;
 
 const TableWrapper = styled.div`
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 21px;
   color: #636e72;
   text-align: center;
   background-color: white;
   padding: 0;
-  height: 400px;
+  height: 330px;
   overflow-y: scroll;
 `;
 
-const FindBox = styled(Box)``;
+const FindBox = styled(Box)`
+  margin: 0;
+`;
 
-const Styles = styled.div`
+const Styles = styled(Container)`
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
@@ -194,7 +197,8 @@ const Styles = styled.div`
       position: sticky;
       top: 0px;
       margin: 0 0 0 0;
-      background-color: #c7e1d6;
+      background-color: ${props => props.theme.mainColor};
+      color: ${props => props.theme.weekBorderColor};
     }
 
     tr {
@@ -227,23 +231,38 @@ const Styles = styled.div`
     }
   }
 `;
-const BtnBox = styled.div`
-  margin-top: 70px;
+const BtnBox = styled(Box)`
   display: flex;
   align-items: center;
+  margin-bottom: -20px;
 `;
 
 const Button = styled.button`
-  margin: 0 7px;
-  padding: 0.5em 0.3em;
-  width: 100px;
-  height: 50px;
+  padding: 0.3em 0.1em;
+  width: 5em;
+  height: 35px;
   font-weight: 400;
   font-size: 13px;
-  border-radius: 5px;
-  background-color: #88caae;
+  background-color: #4EA983;
+  width: 80px;
+  height: 35px;
+  border-right: 1px solid #79B59B;
+  border-radius: 5px 5px 0px 0px;
+  :last-child {
+    margin-right: 40px;
+  }
 
   :hover {
     font-weight: 900;
   }
 `;
+
+
+// mainColor: "#2A9C6B",
+//   textColor: "#636E72",
+//   weekColor: "#88CAAE",
+//   accentColor: "#008037",
+//   borderColor: "#A7A7A7",
+//   dangerColor: "#E17055",
+//   accentDangerColor: "#CB593D",
+//   weekBorderColor: "#F6F6F6",

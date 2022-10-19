@@ -29,13 +29,13 @@ export default function DodreamFilter({ preGlobalFilteredRows, globalFilter, set
 
 const Input = styled.label`
   position: relative;
-
+  margin-bottom: 10px;
   input {
     padding: 0 15px;
-    width: 360px;
-    height: 50px;
+    width: 230px;
+    height: 40px;
     border-radius: 5px;
-    font-size: 20px;
+    font-size: 14px;
     ::placeholder {
       font-weight: 400;
       line-height: 24px;
@@ -45,10 +45,11 @@ const Input = styled.label`
     }
   }
   button {
+    width: 35px;
     background-color: transparent;
     position: absolute;
-    right: 5px;
-    bottom: -25px;
+    right: 3px;
+    bottom: -15px;
     &:hover {
       background-color: transparent;
       transform: scale(1.1);
