@@ -62,6 +62,5 @@ export const GlobalStyled = createGlobalStyle`
     * {
         font-family: "Sebang";
         box-sizing: border-box;
-        color:${props => props.theme.textColor};
     }
 `;

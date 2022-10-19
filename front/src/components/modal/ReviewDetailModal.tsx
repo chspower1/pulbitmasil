@@ -50,7 +50,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             //
           ></ReviewImg>
         </ImgContainer>
-        <ContentsContainer>
+        <ContentsContainer layoutId={`${reviewId}review`}>
           <InfoContainer>
             <CardImg src={`/assets/icon/user/profile01.png`} />
             <InfoBox>

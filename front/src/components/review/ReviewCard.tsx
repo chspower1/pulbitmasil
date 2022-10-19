@@ -22,7 +22,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
 
   return (
     <>
-      <CardWrap whileHover={{ scale: 1.03 }} layoutId={`${reviewId}wrap`}>
+      <CardWrap whileHover={{ scale: 1.06 }} layoutId={`${reviewId}wrap`}>
         <motion.div
           onClick={() => {
             navigate(`${reviewId}`);
@@ -31,7 +31,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           <ImgContainer>
             <ReviewImg src={reviewImg as string} alt="review image"></ReviewImg>
           </ImgContainer>
-          <ReviewContainer>
+          <ReviewContainer layoutId={`${reviewId}review`}>
             <InfoContainer>
               <CardImg src={`/assets/icon/user/profile01.png`} />
               <InfoBox>
@@ -79,6 +79,7 @@ const CardWrap = styled(motion.div)`
   box-shadow: 3px 3px 15px #b0bec5;
   margin: 0 23px;
   margin-bottom: 40px;
+  cursor: pointer;
 `;
 const InfoContainer = styled(motion.div)`
   display: flex;
