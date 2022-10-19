@@ -6,6 +6,7 @@ import DodreamFilter from "./DodreamFilter";
 import { convertTime } from "@components/modal/DodreamDetail";
 import { selectedDodreamAtom } from "@atom/dodream";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
+import { Box, Container, Wrapper } from  "@style/Layout";
 
 interface Tableprops {
   columns: {
@@ -51,19 +52,21 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
   };
 
   return (
-    <WholeWrapper>
-      <DodreamFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        setGlobalFilter={setGlobalFilter}
-        globalFilter={state.globalFilter}
-      />
-      <BtnBox>
-        {courseCategory.map((course, index) => (
-          <Button key={index} value={course} onClick={handleCategory}>
-            {course}
-          </Button>
-        ))}
-      </BtnBox>
+    <WholeContainer>
+      <FindBox>
+        <BtnBox>
+          {courseCategory.map((course, index) => (
+            <Button key={index} value={course} onClick={handleCategory}>
+              {course === '한강지천길/계절길' ? '한강지천길': course}
+            </Button>
+          ))}
+        </BtnBox>
+        <DodreamFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          setGlobalFilter={setGlobalFilter}
+          globalFilter={state.globalFilter}
+        />
+      </FindBox>
       <TableWrapper>
         <table {...getTableProps()}>
           <thead>
@@ -82,7 +85,8 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
             {rows.map((row, i) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr {...row.getRowProps()}
+                >
                   {row.cells.map(cell => {
                     if (cell.column.id === "course_name") {
                       return (
@@ -106,7 +110,7 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
           </tbody>
         </table>
       </TableWrapper>
-    </WholeWrapper>
+    </WholeContainer>
   );
 }
 
@@ -157,24 +161,31 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   );
 }
 
-const WholeWrapper = styled.div`
-  height: 500px;
+const WholeContainer = styled(Container)`
+  display: flex;
+  flex-direction: column;
   background-color: none;
+  margin: 0;
+  padding: 0;
 `;
 
 const TableWrapper = styled.div`
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 21px;
   color: #636e72;
   text-align: center;
   background-color: white;
   padding: 0;
-  height: 400px;
+  height: 30vh;
   overflow-y: scroll;
 `;
 
-const Styles = styled.div`
+const FindBox = styled(Box)`
+  margin: 0;
+`;
+
+const Styles = styled(Container)`
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
@@ -185,11 +196,13 @@ const Styles = styled.div`
     border-spacing: 0;
     text-align: center;
     width: 100%;
+    margin-top: 0;
     thead {
       position: sticky;
       top: 0px;
       margin: 0 0 0 0;
-      background-color: #c7e1d6;
+      background-color: ${props => props.theme.mainColor};
+      color: ${props => props.theme.weekBorderColor};
     }
 
     tr {
@@ -200,6 +213,9 @@ const Styles = styled.div`
       }
       :hover {
         background-color: rgba(217, 217, 217, 0.5);
+      }
+      :nth-child(odd) {
+        background-color: rgba(199, 225, 214, 0.3);
       }
     }
 
@@ -222,21 +238,26 @@ const Styles = styled.div`
     }
   }
 `;
-const BtnBox = styled.div`
-  margin-top: 70px;
+const BtnBox = styled(Box)`
   display: flex;
   align-items: center;
+  margin-bottom: -20px;
 `;
 
 const Button = styled.button`
-  margin: 0 7px;
-  padding: 0.5em 0.3em;
-  width: 140px;
-  height: 50px;
+  padding: 0.3em 0.1em;
+  width: 80px;
+  height: 35px;
   font-weight: 400;
-  font-size: 18px;
-  border-radius: 5px;
-  background-color: #88caae;
+  font-size: 13px;
+  background-color: #4EA983;
+  width: 80px;
+  height: 35px;
+  border-right: 1px solid #79B59B;
+  border-radius: 5px 5px 0px 0px;
+  :last-child {
+    margin-right: 40px;
+  }
 
   :hover {
     font-weight: 900;

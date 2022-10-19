@@ -95,8 +95,8 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
   );
 }
 const MapBox = styled.div`
-  width: 700px;
-  height: 750px;
+  width: 100%;
+  height: 100%;
   border: 5px solid #88caae;
   border-radius: 10px;
 `;
