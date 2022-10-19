@@ -72,6 +72,7 @@ export const HomeContainer = styled(Container)<{ height: string }>`
 `;
 export const List = styled(Container)`
   flex-direction: column;
+  width: 100%;
   height: 100%;
   overflow-y: scroll;
 `;
@@ -95,8 +96,7 @@ export const HeaderBox = styled(Box)`
   height: 100%;
 `;
 export const ContentBox = styled(Box)`
-  width: 540px;
-  height: 100%;
+  width: 100%;
   padding: 0px 15px;
   justify-content: space-between;
   border-radius: 5px;

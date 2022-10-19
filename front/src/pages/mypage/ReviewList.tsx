@@ -49,6 +49,7 @@ export default function ReviewList({ reviews }: { reviews: UserReview[] | undefi
 }
 
 const Item = styled(ItemGuide)`
+  height: 50px;
   justify-content: space-between;
 `;
 const Title = styled(TitleGuide)`
