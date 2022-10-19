@@ -35,6 +35,6 @@ export interface PasswordForm {
   confirmPassword?: string;
 }
 export interface NameChangeForm {
-  currentName: string;
+  currentName?: string;
   newName: string;
 }
