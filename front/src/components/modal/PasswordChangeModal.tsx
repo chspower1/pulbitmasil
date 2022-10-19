@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Box, Wrapper } from "@style/Layout";
+import { Box, Wrapper, DangerBtn, MainBtn } from "@style/Layout";
 import { UserPasswordProps } from "@pages/mypage";
 import { AnimatePresence } from "framer-motion";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
-import { DangerBtn, MainBtn, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
+import { ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { useNavigate } from "react-router-dom";
 import { PasswordForm } from "@type/user";
 interface PasswordChangeModalProps {

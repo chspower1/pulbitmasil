@@ -6,8 +6,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
-import { ModalCloseBtn } from "@style/ModalStyle";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
+import { CloseBtn } from "@style/Layout";
 export default function WelcomeModal() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
@@ -67,7 +67,7 @@ const RegisterModalContainer = styled(ModalContainer)`
   height: 200px;
 `;
 
-const RegisterModalCloseBtn = styled(ModalCloseBtn)`
+const RegisterModalCloseBtn = styled(CloseBtn)`
   width: 36px;
   height: 36px;
   top: 10px;

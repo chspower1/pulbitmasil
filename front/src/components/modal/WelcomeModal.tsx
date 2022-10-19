@@ -5,8 +5,9 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { userAtom } from "@atom/user";
-import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, ModalCloseBtn, Overlay } from "@style/ModalStyle";
+import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
+import { CloseBtn, MainBtn } from "@style/Layout";
 export default function WelcomeModal() {
   const [isWelcomeModal, setIsWelcomeModal] = useRecoilState(isWelcomeModalAtom);
   const user = useRecoilValue(userAtom);
@@ -25,9 +26,11 @@ export default function WelcomeModal() {
               오늘&nbsp;<ModalAccent>풀빛마실</ModalAccent>&nbsp;어떠세요&nbsp;?
             </ModalDesc>
             <Link to="/greencrew">
-              <StartBtn onClick={closeWelcomeModal}>풀빛마실 GoGo</StartBtn>
+              <MainBtn onClick={closeWelcomeModal} width="150px">
+                풀빛마실 GoGo
+              </MainBtn>
             </Link>
-            <WelcomeCloseBtn type="button" onClick={closeWelcomeModal}>
+            <CloseBtn type="button" onClick={closeWelcomeModal}>
               <svg width="14" height="14" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
@@ -37,7 +40,7 @@ export default function WelcomeModal() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </WelcomeCloseBtn>
+            </CloseBtn>
           </WelcomeModalContainer>
           <Overlay
             onClick={closeWelcomeModal}
@@ -58,22 +61,6 @@ const WelcomeModalContainer = styled(ModalContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 500px;
-  height: 200px;
-`;
-
-const WelcomeCloseBtn = styled(ModalCloseBtn)`
-  width: 36px;
-  height: 36px;
-  top: 10px;
-  right: 10px;
-`;
-const StartBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  font-size: 22px;
-  width: 180px;
-  height: 40px;
+  width: 400px;
+  height: 180px;
 `;

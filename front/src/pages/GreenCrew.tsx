@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Wrapper, Container, Box, Title, Desc, SubTitle } from "@style/Layout";
+import { Wrapper, Container, Box, Title, Desc, SubTitle, MainBtn, GreenAccent, DangerBtn } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState, useEffect, startTransition } from "react";
@@ -12,7 +12,6 @@ import moment from "moment";
 import { useInterval } from "react-use";
 import { data } from "@components/chart/LineChart";
 import { Node } from "react-markdown/lib/rehype-filter";
-import { GreenAccent } from "./../style/Layout";
 import { timeEnd, timeLog } from "console";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userAtom } from "@atom/user";
@@ -203,9 +202,13 @@ export default function GreenCrew() {
               </StatusBox>
 
               {!isParticipate ? (
-                <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
+                <MainBtn width="55%" height="60px" onClick={handleClickEnter}>
+                  참여하기
+                </MainBtn>
               ) : (
-                <DeleteBtn onClick={handleClickDelete}>취소하기</DeleteBtn>
+                <DangerBtn width="55%" height="60px" onClick={handleClickDelete}>
+                  취소하기
+                </DangerBtn>
               )}
             </Row>
           </TimeBox>
@@ -314,20 +317,6 @@ const CourseBox = styled(Box)`
   padding: 0 10px;
 `;
 
-const EnterBtn = styled.button`
-  width: 330px;
-  min-width: 130px;
-  height: 50px;
-  max-height: 70px;
-  font-size: 28px;
-  border-radius: 8px;
-`;
-const DeleteBtn = styled(EnterBtn)`
-  background-color: ${props => props.theme.dangerColor};
-  &:hover {
-    background-color: ${props => props.theme.accentDangerColor};
-  }
-`;
 const StartAt = styled.div``;
 const DetailTitle = styled(Desc)`
   display: flex;
@@ -365,12 +354,4 @@ const ContentDescription = styled(Desc)`
   height: 200px;
   padding: 10px;
   border: solid 1px #f1f1f1;
-`;
-const ReadyBtn = styled.button`
-  position: absolute;
-  bottom: 30px;
-  right: 30px;
-  width: 150px;
-  height: 40px;
-  background-color: ${props => props.theme.dangerColor};
 `;

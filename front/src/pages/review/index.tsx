@@ -9,7 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { ReviewDeleteIdAtom, isRegisterModalAtom } from "@atom/atom";
 import ReviewDeleteModal from "@components/modal/ReviewDeleteModal";
 import { isLoginSelector, userAtom } from "@atom/user";
-import { Box, Container, Wrapper, Title } from "@style/Layout";
+import { Box, Container, Wrapper, Title, MainBtn } from "@style/Layout";
 import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import { AnimatePresence } from "framer-motion";
 import RegisterModal from "@components/modal/RegisterModal";
@@ -41,7 +41,9 @@ export default function Review() {
         <SubTitle>
           <Accent>풀빛마실</Accent> 후기를 공유해주세요!
         </SubTitle>
-        <ReviewBtn onClick={handleClickCreateReview}>이야기 작성</ReviewBtn>
+        <ReviewBtn onClick={handleClickCreateReview} width="160px" height="60px">
+          이야기 작성
+        </ReviewBtn>
         <CardBox>
           {reviews?.map(review => {
             return <Card key={review.reviewId} review={review}></Card>;
@@ -97,13 +99,9 @@ const CardContainer = styled(Container)`
   padding-top: 0px;
 `;
 
-const ReviewBtn = styled.button`
-  border-radius: 5px;
-  width: 120px;
-  height: 30px;
-  font-size: 18px;
-  margin-top: 15px;
-  margin-bottom: 30px;
+const ReviewBtn = styled(MainBtn)`
+  margin: 30px 0px;
+  font-size: 22px;
 `;
 const CardBox = styled(Box)`
   flex-wrap: wrap;

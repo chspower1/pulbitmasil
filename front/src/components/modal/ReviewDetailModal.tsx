@@ -1,6 +1,7 @@
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { userAtom } from "@atom/user";
-import { ModalCloseBtn, ModalContainer, ModalWrap } from "@style/ModalStyle";
+import { DangerBtn, MainBtn } from "@style/Layout";
+import { ModalContainer, ModalWrap } from "@style/ModalStyle";
 import { IReview } from "@type/review";
 import dayjs from "dayjs";
 import { AnimatePresence, motion } from "framer-motion";
@@ -69,17 +70,17 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
         <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId && (
             <>
-              <Btn type="button" onClick={handleClickEdit}>
+              <MainBtn type="button" onClick={handleClickEdit}>
                 수정
-              </Btn>
-              <Btn
+              </MainBtn>
+              <DangerBtn
                 type="button"
                 onClick={() => {
                   setReviewDelId(reviewId!);
                 }}
               >
                 삭제
-              </Btn>
+              </DangerBtn>
             </>
           )}
         </ButtonContainer>
@@ -166,17 +167,9 @@ const CardImg = styled(motion.img)`
 `;
 const ButtonContainer = styled(motion.div)`
   display: flex;
-  width: 500px;
-  flex-direction: row;
+  width: 50%;
   position: absolute;
   margin: auto;
-  left: 0;
-  bottom: 0;
-`;
-const Btn = styled(motion.button)`
-  width: 300px;
-  height: 20px;
-  &:first-child {
-    border-right: 1px #388e3c solid;
-  }
+  justify-content: space-between;
+  bottom: 20px;
 `;

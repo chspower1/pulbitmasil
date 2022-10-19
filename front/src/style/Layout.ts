@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const Wrapper = styled.section`
   display: flex;
@@ -58,4 +59,32 @@ export const Row = styled.div<{ height?: string }>`
   width: 100%;
   height: ${props => (props.height ? props.height : "auto")};
   align-items: center;
+`;
+
+export const MainBtn = styled(motion.button)<{ width?: string; height?: string }>`
+  width: ${props => (props.width ? props.width : "120px")};
+  height: ${props => (props.height ? props.height : "45px")};
+  border-radius: 5px;
+  font-size: 18px;
+  /* padding: 0px 15px; */
+  background-color: ${props => props.theme.mainColor};
+  &:hover {
+    background-color: ${props => props.theme.accentColor};
+  }
+`;
+export const DangerBtn = styled(MainBtn)<{ width?: string; height?: string }>`
+  width: ${props => (props.width ? props.width : "120px")};
+  height: ${props => (props.height ? props.height : "45px")};
+
+  background-color: ${props => props.theme.dangerColor};
+  &:hover {
+    background-color: #cc5e43;
+  }
+`;
+export const CloseBtn = styled(MainBtn)`
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  top: 10px;
+  right: 10px;
 `;

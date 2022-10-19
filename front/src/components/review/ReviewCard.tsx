@@ -9,6 +9,7 @@ import { ReviewDeleteIdAtom } from "@atom/atom";
 import ReviewDeleteModal from "../modal/ReviewDeleteModal";
 import { ModalAccent } from "@style/ModalStyle";
 import dayjs from "dayjs";
+import { MainBtn, DangerBtn } from "@style/Layout";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, description, createAt, name, reviewImg, title, area } = review;
@@ -49,17 +50,20 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
         </motion.div>
         <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId ? (
-            <Btn onClick={() => navigate(`edit/${reviewId}`, { state: { reviewId, userId } })}>수정</Btn>
+            <MainBtn onClick={() => navigate(`edit/${reviewId}`, { state: { reviewId, userId } })} width="80px">
+              수정
+            </MainBtn>
           ) : null}
 
           {user?.id === userId ? (
-            <Btn
+            <DangerBtn
+              width="80px"
               onClick={() => {
                 setReviewDelId(reviewId!);
               }}
             >
               삭제
-            </Btn>
+            </DangerBtn>
           ) : null}
         </ButtonContainer>
       </CardWrap>
@@ -67,7 +71,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   );
 }
 
-const CardWrap = styled(motion(motion.div))`
+const CardWrap = styled(motion.div)`
   position: relative;
   width: 370px;
   height: 430px;
@@ -123,17 +127,11 @@ const CardImg = styled(motion.img)`
 `;
 const ButtonContainer = styled(motion.div)`
   display: flex;
-  flex-direction: row;
   position: absolute;
-  width: 100%;
-  bottom: 0px;
-`;
-const Btn = styled(motion.button)`
-  width: 50%;
-  height: 15px;
-  &:first-child {
-    border-right: 1px #388e3c solid;
-  }
+  justify-content: space-between;
+  width: 45%;
+  bottom: 10px;
+  right: 10px;
 `;
 const Description = styled(motion.p)`
   text-overflow: ellipsis;

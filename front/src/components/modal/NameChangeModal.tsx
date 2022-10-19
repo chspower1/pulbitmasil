@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import { changeName } from "@api/user";
 import { NameChangeForm } from "@type/user";
 
-import { Box, Wrapper } from "@style/Layout";
+import { Box, Wrapper, MainBtn, DangerBtn } from "@style/Layout";
 
 import { useNavigate } from "react-router-dom";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
-import { DangerBtn, MainBtn, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
+import { ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { AnimatePresence } from "framer-motion";
 import { useRecoilState } from "recoil";
 import { userAtom } from "@atom/user";

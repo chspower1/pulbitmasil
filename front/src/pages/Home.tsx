@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
-import { Container, Wrapper as HomeWrapper } from "@style/Layout";
+import { Container, Wrapper as HomeWrapper, MainBtn } from "@style/Layout";
 import { Link } from "react-router-dom";
 import Loading from "@components/Loading";
 
@@ -122,10 +122,14 @@ export default function Home() {
             <Title>{HOMETEXT[textIndex].title2}</Title>
             <BtnBox>
               <Link to="about">
-                <Button>{HOMETEXT[textIndex].button1}</Button>
+                <MainBtn width="150px" height="60px">
+                  {HOMETEXT[textIndex].button1}
+                </MainBtn>
               </Link>
               <Link to="greencrew">
-                <Button>{HOMETEXT[textIndex].button2}</Button>
+                <MainBtn width="180px" height="60px">
+                  {HOMETEXT[textIndex].button2}
+                </MainBtn>
               </Link>
             </BtnBox>
           </HomeText>
@@ -221,19 +225,12 @@ const HomeText = styled.div`
 `;
 const BtnBox = styled.div`
   display: flex;
+  width: 350px;
+  justify-content: space-between;
   margin-top: 20px;
   padding: 0;
 `;
-const Button = styled.button`
-  width: 200px;
-  height: 60px;
-  margin-right: 12px;
-  background: #169e5c;
-  border-radius: 10px;
-  font-weight: 400;
-  font-size: 19px;
-  line-height: 24px;
-`;
+
 const Title = styled.div`
   font-size: 52px;
   line-height: 83px;

@@ -2,11 +2,11 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { ModalCloseBtn, Overlay } from "@style/ModalStyle";
-import { ModalContainer, ModalWrap as LogoutModalWrap } from "@style/ModalStyle";
+import { ModalContainer, ModalWrap as LogoutModalWrap, Overlay } from "@style/ModalStyle";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import ReactMarkdown from "react-markdown";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
+import { CloseBtn } from "@style/Layout";
 
 const { kakao }: any = window;
 
@@ -102,7 +102,7 @@ export default function DodreamDetalModal() {
                 <LongDesc dangerouslySetInnerHTML={{ __html: `${selectedDodream?.content!}` }} />
               </DetailRow>
             </DescContainer>
-            <ModalCloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>
+            <CloseBtn type="button" onClick={() => setIsDodreamDetalModal(false)}>
               <svg width="15" height="15" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M19 3L11 11L3 19M3 3L19 19"
@@ -112,7 +112,7 @@ export default function DodreamDetalModal() {
                   stroke-linejoin="round"
                 />
               </svg>
-            </ModalCloseBtn>
+            </CloseBtn>
           </DodreamModalContainer>
           <Overlay
             onClick={() => setIsDodreamDetalModal(false)}

@@ -51,39 +51,3 @@ export const Overlay = styled(motion.div)`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
 `;
-export const ModalCloseBtn = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 22px;
-  width: 30px;
-  height: 30px;
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  border-radius: 10px;
-  padding: 0;
-`;
-
-export const MainBtn = styled.button<{ width?: string; height?: string }>`
-  width: ${props => (props.width ? props.width : "120px")};
-  height: ${props => (props.height ? props.height : "45px")};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  font-size: 18px;
-  background-color: ${props => props.theme.mainColor};
-  &:hover {
-    background-color: ${props => props.theme.accentColor};
-  }
-`;
-export const DangerBtn = styled(MainBtn)<{ width?: string; height?: string }>`
-  width: ${props => (props.width ? props.width : "120px")};
-  height: ${props => (props.height ? props.height : "45px")};
-
-  background-color: ${props => props.theme.dangerColor};
-  &:hover {
-    background-color: #cc5e43;
-  }
-`;

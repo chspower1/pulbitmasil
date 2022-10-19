@@ -3,21 +3,13 @@ import { AnimatePresence } from "framer-motion";
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import {
-  ModalBtnContainer,
-  ModalDesc,
-  ModalContainer,
-  ModalWrap as LogoutModalWrap,
-  Overlay,
-  DangerBtn,
-  MainBtn,
-} from "@style/ModalStyle";
+import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap as LogoutModalWrap, Overlay } from "@style/ModalStyle";
 import { Link, useNavigate } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
 import { createPortal } from "react-dom";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
-import { DangerAccent } from "@style/Layout";
+import { DangerAccent, MainBtn, DangerBtn } from "@style/Layout";
 
 export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);

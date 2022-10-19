@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Wrapper } from "@style/Layout";
+import { Wrapper, MainBtn } from "@style/Layout";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
@@ -125,7 +125,9 @@ export default function Register() {
 
             <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>
           </InputBox>
-          <Button>가입하기</Button>
+          <MainBtn width="200px" height="60px">
+            가입하기
+          </MainBtn>
         </Form>
       </FormContainer>
     </RegisterWrapper>
@@ -199,20 +201,12 @@ const ErrorMessage = styled.div`
   bottom: -20px;
 `;
 
-const Button = styled.button`
-  width: 200px;
-  height: 64px;
-  font-size: 18px;
-  margin-top: 45px;
-`;
-
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 530px;
   height: 500px;
   margin: auto;
-  /* display: inline; */
 `;
