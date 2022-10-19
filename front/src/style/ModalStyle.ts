@@ -54,10 +54,11 @@ export const ModalCloseBtn = styled.button`
   justify-content: center;
   align-items: center;
   font-size: 22px;
-  width: 44px;
-  height: 44px;
+  width: 30px;
+  height: 30px;
   position: absolute;
   top: 20px;
   right: 20px;
   border-radius: 10px;
+  padding:0;
 `;
