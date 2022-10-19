@@ -29,15 +29,12 @@ const WalkWrap = styled(Wrapper)`
   background-image: url("/assets/images/walk.jpg");
   flex-direction: column;
   justify-content: flex-start;
+  height: auto;
   /* padding-bottom: 40px; */
-
-  /* @media screen and (min-width: 1024px) {
-    display: none;
+  @media screen and (max-width: 769px) {
+    height: auto;
+    overflow-y: auto;
   }
-
-  @media screen and (min-width: 768px) {
-    display: none;
-  } */
 `;
 
 const DodreamContainer = styled(Container)`
@@ -49,22 +46,22 @@ const DodreamContainer = styled(Container)`
 const DodreamTitle = styled(Title)`
   text-align: center;
   color: #008037;
-  margin-bottom: 40px;
-  /* font-size: 28px;
-
-  @media screen and (min-width: 768px) {
-    font-size: 32px;
-  } */
 `;
 
 const MapBox = styled(Box)`
   width: 750px;
   height: 35vh;
   margin-top: 4vh;
+  @media screen and (max-width: 769px) {
+    width: 90%;
+  }
 `;
 
 const TableBox = styled(Box)`
   margin-top: 3vh;
   width: 750px;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 

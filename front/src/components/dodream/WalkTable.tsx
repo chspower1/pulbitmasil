@@ -184,6 +184,11 @@ const TableWrapper = styled.div`
 
 const FindBox = styled(Box)`
   margin: 0;
+  @media screen and (max-width: 767px) {
+    flex-direction: column-reverse;
+    width: 100%;
+    align-items: center;
+  }
 `;
 
 const Styles = styled(Box)`
@@ -236,6 +241,21 @@ const Styles = styled(Box)`
       :last-child {
         border-right: 0;
       }
+      @media screen and (max-width: 767px) {
+        :first-child {
+          display: none;
+        }
+        :nth-child(4) {
+          width: 50px;
+        }
+        width: 100%;
+      }
+      @media screen and (max-width: 575px){
+        :nth-child(6) {
+          display: none;
+        }
+      }
+
     }
   }
 `;
@@ -243,14 +263,23 @@ const BtnBox = styled(Box)`
   display: flex;
   align-items: center;
   margin-bottom: -20px;
+
+  @media screen and (max-width: 767px) {
+    margin-bottom: 0;
+    width: 100%;
+    justify-content: center;
+  }
+  @media screen and (max-width: 575px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const Button = styled.button`
   padding: 0.3em 0.1em;
-  width: 80px;
+  width: 90px;
   height: 35px;
   font-weight: 400;
-  font-size: 13px;
+  font-size: 14px;
   background-color: #4EA983;
   width: 80px;
   height: 35px;
@@ -262,5 +291,17 @@ const Button = styled.button`
 
   :hover {
     font-weight: 900;
+  }
+
+  @media screen and (max-width: 767px) {
+    :last-child {
+      margin-right: 0px;
+    }
+    width: 16.6%;
+  }
+  @media screen and (max-width: 575px) {
+    border: 1px solid #88CAAE;
+    border-radius: 0px;
+    width: 33.3%;
   }
 `;

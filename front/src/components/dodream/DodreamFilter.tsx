@@ -36,12 +36,17 @@ const Input = styled.label`
     height: 40px;
     border-radius: 5px;
     font-size: 14px;
+
     ::placeholder {
       font-weight: 400;
       line-height: 24px;
       display: flex;
       align-items: flex-end;
       color: #b9c6cb;
+    }
+
+    @media screen and (max-width: 767px) {
+      width: 500px;
     }
   }
   button {
@@ -50,6 +55,9 @@ const Input = styled.label`
     position: absolute;
     right: 3px;
     bottom: -15px;
+    @media screen and (max-width: 769px) {
+    width: 80%;
+  }
     &:hover {
       background-color: transparent;
       transform: scale(1.1);
