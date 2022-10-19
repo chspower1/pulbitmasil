@@ -125,7 +125,7 @@ authRouter.get("/naver", async function (req, res, next) {
       const email = result.data.response.email;
 
       const [rows] = await maria.query(
-        `SELECT A.id, A.email, A.name, A.social, A.hashedPassword, B.reviewId, C.crewId, 
+        `SELECT A.id, A.email, A.name, A.social, A.hashedPassword, B.reviewId, C.crewId
       FROM USER AS A
       LEFT JOIN REVIEW AS B
       ON A.id = B.userId
