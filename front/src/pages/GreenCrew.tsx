@@ -383,7 +383,7 @@ const Row = styled(Box)`
   }
 `;
 const DescBox = styled(Box)`
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
   flex-direction: column;
   width: 320px;
   height: 100%;
@@ -430,7 +430,7 @@ const ContentBox = styled(Box)`
   align-items: flex-start;
   justify-content: flex-start;
   padding: 20px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 20px;
   margin-bottom: 20px;
 
