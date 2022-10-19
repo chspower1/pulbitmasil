@@ -37,7 +37,7 @@ const Input = styled.label`
     height: 40px;
     border-radius: 5px;
     font-size: 14px;
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 870px) {
       width: 80%;
     }
 
@@ -56,7 +56,7 @@ const Input = styled.label`
     position: absolute;
     right: 3%;
     bottom: -15px;
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 870px) {
       right: 10%;
     }
     &:hover {
