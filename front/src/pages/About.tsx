@@ -60,6 +60,7 @@ const Box = styled.div`
   flex-direction: column;
   height: 100vh;
   background-image: url("/assets/images/about/about_bg_img01.jpg");
+  background-size: cover;
   padding: 0;
 `;
 const Title = styled.h1`
