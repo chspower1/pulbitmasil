@@ -3,13 +3,13 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
-import { userRouter } from "./src/routers/users";
-import { trashRouter } from "./src/routers/trash";
-import { reviewRouter } from "./src/routers/review";
-import { authRouter } from "./src/routers/auth";
-import { dodreamRouter } from "./src/routers/dodream";
-import { greencrewRouter } from "./src/routers/greencrew";
-import { errorMiddleware } from "./src/middlewares/error_middleware";
+import { userRouter } from "./routers/users";
+import { trashRouter } from "./routers/trash";
+import { reviewRouter } from "./routers/review";
+import { authRouter } from "./routers/auth";
+import { dodreamRouter } from "./routers/dodream";
+import { greencrewRouter } from "./routers/greencrew";
+import { errorMiddleware } from "./middlewares/error_middleware";
 
 const app = express();
 
