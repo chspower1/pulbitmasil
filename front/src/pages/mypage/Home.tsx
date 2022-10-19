@@ -7,7 +7,7 @@ import { IGreenCrew, SummaryGreenCrew } from "@type/greenCrew";
 import { User } from "@type/user";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-// dayjs.locale("ko");
+dayjs.locale("ko");
 
 export function changeDayForm(date: Date) {
   const formatDate = dayjs(date).format(`YYYY.MM.DD(dddd) A HH:MM`);
@@ -81,6 +81,7 @@ export const List = styled(Container)`
 export const GrayTitle = styled(Title)`
   font-size: 22px;
   color: ${props => props.theme.textColor};
+  padding: 40px 0;
 `;
 
 export const Item = styled(Box)`

@@ -103,13 +103,24 @@ const MyPageWrapper = styled(Wrapper)`
   /* height: auto; */
   background-image: url("/assets/images/register_img.jpg");
   overflow-y: scroll;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto;
 `;
-const MyPageTitle = styled(Title)``;
+
+const MyPageTitle = styled(Title)`
+  font-size: 32px;
+  color: ${props => props.theme.accentColor};
+  width: 500px;
+  text-align: center;
+`;
+
 const ProfileBox = styled(Box)`
   width: 100%;
   height: 35%;
   flex-direction: column;
   position: relative;
+  margin: 15px 0;
 `;
 const Img = styled.img`
   width: 50px;
@@ -145,7 +156,7 @@ const MenuBox = styled(Box)`
   bottom: 0px;
 `;
 const Menu = styled.button`
-  font-size: 24px;
+  font-size: 20px;
   width: 150px;
   height: 50px;
   border-radius: 20px 20px 0px 0px;
@@ -165,6 +176,9 @@ const MyPageContainer = styled(Container)`
 `;
 const EditBtn = styled(MainBtn)`
   position: absolute;
-  top: 20px;
+  top: 35px;
   right: 20px;
+  font-size: 16px;
+  width: 100px;
+  height: 40px;
 `;
