@@ -50,14 +50,16 @@ export default function MyPage() {
   return (
     <MyPageWrapper>
       <MyPageContainer>
+        <MyPageTitle>마이 페이지</MyPageTitle>
         <ProfileBox>
-          <MyPageTitle>마이 페이지</MyPageTitle>
           <Img src="/assets/icon/user/user_img.svg" />
           <NameBox>
             <Name>{user?.name}</Name>
             <Icon src={`/assets/icon/${user?.social}_logo.png`} />
           </NameBox>
           <Email>{user?.email}</Email>
+        </ProfileBox>
+        <ContentBox>
           <MenuBox>
             <Link to="/mypage/home">
               <Menu className={menu === "home" ? "active" : "normal"}>홈</Menu>
@@ -69,8 +71,6 @@ export default function MyPage() {
               <Menu className={menu === "greencrew" ? "active" : "normal"}>풀빛마실</Menu>
             </Link>
           </MenuBox>
-        </ProfileBox>
-        <ContentBox>
           {menu === "home" && <Home user={user!} />}
           {menu === "greencrew" && <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>}
           {menu === "review" && <ReviewList reviews={user?.reviews}></ReviewList>}
@@ -99,13 +99,8 @@ export default function MyPage() {
 
 const MyPageWrapper = styled(Wrapper)`
   background-image: url("/assets/images/register_img.jpg");
-  padding: 40px 0px;
-  padding-top: 70px;
 `;
-const MyPageTitle = styled(Title)`
-  position: absolute;
-  top: 40px;
-`;
+const MyPageTitle = styled(Title)``;
 const ProfileBox = styled(Box)`
   width: 100%;
   height: 35%;
@@ -113,14 +108,14 @@ const ProfileBox = styled(Box)`
   position: relative;
 `;
 const Img = styled.img`
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
 `;
 const ContentBox = styled(Box)`
-  background-color: white;
+  flex-direction: column;
   width: 100%;
   height: 65%;
-  align-items: flex-start;
+  align-items: center;
   border-radius: 20px;
 `;
 const NameBox = styled(Row)`
@@ -141,12 +136,11 @@ const Email = styled(Desc)`
   font-size: 22px;
 `;
 const MenuBox = styled(Box)`
-  position: absolute;
   bottom: 0px;
 `;
 const Menu = styled.button`
   font-size: 24px;
-  width: 170px;
+  width: 150px;
   height: 50px;
   border-radius: 20px 20px 0px 0px;
   box-shadow: 2px 0px 7px rgba(0, 0, 0, 0.2);

@@ -51,19 +51,18 @@ export default function Home({ user }: { user: User }) {
     </HomeWrap>
   );
 }
-export const HomeWrap = styled(Container)`
+export const HomeWrap = styled(Box)`
   flex-direction: column;
   justify-content: flex-start;
   height: 100%;
   background-color: #f5f5f5;
   border-radius: 20px;
 `;
-export const HomeContainer = styled(Container)<{ height: string }>`
+export const HomeContainer = styled(Box)<{ height?: string }>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: ${props => props.height};
-  padding: 30px;
+  height: ${props => (props.height ? props.height : "auto")};
 
   &.content {
     border-radius: 20px;
@@ -73,7 +72,9 @@ export const HomeContainer = styled(Container)<{ height: string }>`
 export const List = styled(Container)`
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  justify-content: flex-start;
+  padding: 0px 30px;
   overflow-y: scroll;
 `;
 export const GrayTitle = styled(Title)`
@@ -97,10 +98,11 @@ export const HeaderBox = styled(Box)`
 `;
 export const ContentBox = styled(Box)`
   width: 100%;
+  height: 50px;
   padding: 0px 15px;
   justify-content: space-between;
   border-radius: 5px;
-  background-color: ${props => props.theme.weekBorderColor};
+  background: solid 1px ${props => props.theme.weekBorderColor};
 `;
 export const ItemTitle = styled(SubTitle)`
   font-size: 18px;

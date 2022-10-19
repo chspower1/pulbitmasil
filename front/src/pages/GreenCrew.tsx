@@ -282,6 +282,7 @@ const RootContainer = styled(Container)`
   height: 100%;
   background-color: white;
   padding: 0px 40px;
+  background-color: black;
 `;
 const FirstContainer = styled(Container)`
   position: relative;
