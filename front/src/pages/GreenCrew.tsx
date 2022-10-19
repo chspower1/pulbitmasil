@@ -21,10 +21,8 @@ import { getUser } from "@api/user";
 import { User, UserGreenCrew } from "@type/user";
 import dayjs, { extend } from "dayjs";
 import duration from "dayjs/plugin/duration";
-import "dayjs/locale/ko";
 
 dayjs.extend(duration);
-dayjs.locale("ko");
 
 export default function GreenCrew() {
   // Variable
@@ -95,16 +93,15 @@ export default function GreenCrew() {
   };
   const convertDate = (startAt: Date) => {
     const day = dayjs(new Date(startAt));
-    // const startDay = day.format("YYYY/MM/DD");
-    const startTime = day.format("YY/MM/DD A HH:mm");
+    const startTime = day.format("A HH:mm");
 
     return startTime;
   };
   const DTime = (day: string) => {
     return (
-      <Title style={{ fontSize: "40px" }}>
+      <CrewTitle style={{ fontSize: "40px" }}>
         <Desc as="span">남은시간 : </Desc> {day}
-      </Title>
+      </CrewTitle>
     );
   };
 
@@ -144,7 +141,7 @@ export default function GreenCrew() {
         </Link>
       </AreaNav>
       <RootContainer>
-        <Title>{greenCrews![selectedArea]?.title!}</Title>
+        <CrewTitle>{greenCrews![selectedArea]?.title!}</CrewTitle>
         <Desc className="num_desc" style={{ alignSelf: "end" }}>
           현재 <GreenAccent>{curMember}명</GreenAccent>이 참여중!
         </Desc>
@@ -201,18 +198,15 @@ export default function GreenCrew() {
         <SecondContainer>
           <TimeBox className="time">
             <Row style={{ marginLeft: "auto" }}>
-              <Col>
-                <StatusBox>
-                  <div>{DTime(time!)}</div>
-                </StatusBox>
-              </Col>
-              <Col>
-                {!isParticipate ? (
-                  <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
-                ) : (
-                  <DeleteBtn onClick={handleClickDelete}>취소하기</DeleteBtn>
-                )}
-              </Col>
+              <StatusBox>
+                <div>{DTime(time!)}</div>
+              </StatusBox>
+
+              {!isParticipate ? (
+                <EnterBtn onClick={handleClickEnter}>참여하기</EnterBtn>
+              ) : (
+                <DeleteBtn onClick={handleClickDelete}>취소하기</DeleteBtn>
+              )}
             </Row>
           </TimeBox>
           <ContentBox>
@@ -251,8 +245,7 @@ const AreaNav = styled(Box)`
 `;
 const StatusBox = styled(Box)`
   flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
+  width: 50%;
   height: 100px;
   margin: 20px 0px;
 `;
@@ -260,8 +253,8 @@ const StartDate = styled(Desc)`
   font-family: "SebangBold";
   margin-bottom: 10px;
 `;
-const StartTime = styled(Title)`
-  color: ${props => props.theme.textColor};
+const CrewTitle = styled(Title)`
+  color: ${props => props.theme.accentColor};
 `;
 const AreaBtn = styled.button`
   width: 150px;
@@ -278,16 +271,16 @@ const AreaBtn = styled.button`
 `;
 const RootContainer = styled(Container)`
   flex-direction: column;
-  width: 800px;
+  width: 700px;
   height: 100%;
   padding: 0px 20px;
 `;
 const TopContainer = styled(Container)``;
 const InfoContainer = styled(Container)`
   position: relative;
-  width: 50%;
+  width: 310px;
   height: 340px;
-  margin: 0 auto;
+  margin-right: 10px;
 `;
 const SecondContainer = styled(Container)`
   position: relative;
@@ -298,11 +291,6 @@ const SecondContainer = styled(Container)`
 `;
 const Row = styled(Box)`
   width: 100%;
-`;
-const Col = styled(Box)`
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
 `;
 const DescBox = styled(Box)`
   background-color: white;
@@ -318,10 +306,14 @@ const DescBox = styled(Box)`
 const IconImg = styled.img`
   margin-right: 10px;
 `;
-const CourseBox = styled(Box)``;
+const CourseBox = styled(Box)`
+  width: 100%;
+  justify-content: space-between;
+  padding: 0 10px;
+`;
 
 const EnterBtn = styled.button`
-  width: 350px;
+  width: 330px;
   min-width: 130px;
   height: 60px;
   max-height: 70px;
@@ -337,12 +329,13 @@ const DeleteBtn = styled(EnterBtn)`
 const StartAt = styled.div``;
 const DetailTitle = styled(Desc)`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 const DetailDescription = styled(SubTitle)`
-  color: ${props => props.theme.mainColor};
+  color: ${props => props.theme.accentColor};
   font-weight: bold;
+  justify-self: flex-end;
 `;
 
 const TimeBox = styled(Box)`

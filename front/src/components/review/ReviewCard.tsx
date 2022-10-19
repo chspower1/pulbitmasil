@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, description, createAt, name, reviewImg, title } = review;
-  const isEdit = true;
+  // const isEdit = true;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);

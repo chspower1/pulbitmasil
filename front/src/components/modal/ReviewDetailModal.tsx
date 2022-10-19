@@ -11,7 +11,6 @@ import styled from "styled-components";
 
 export default function ReviewDetailModal({ review }: { review: IReview }) {
   const { reviewId, name, createAt, description, userId, reviewImg, title } = review;
-  const isEdit = true;
 
   const navigate = useNavigate();
   const reviewMatch = useMatch(`/review/${reviewId}`);
@@ -48,11 +47,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             alt="review image"
             //
           ></ReviewImg>
-          <ModalCloseBtn
-            onClick={() => {
-              navigate("/review");
-            }}
-          >
+          <ModalCloseBtn onClick={() => navigate("/review")}>
             <svg width="14" height="14" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M19 3L11 11L3 19M3 3L19 19"
