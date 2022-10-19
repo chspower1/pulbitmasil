@@ -100,7 +100,7 @@ export default function GreenCrew() {
   const DTime = (day: string) => {
     return (
       <TimeDesc>
-        <Desc as="span">남은시간 : </Desc> {day}
+        <Desc as="span">남은시간 : </Desc> <RestTime>{day}</RestTime>
       </TimeDesc>
     );
   };
@@ -132,20 +132,20 @@ export default function GreenCrew() {
     <GreenCrewWrapper>
       <AreaNav>
         {[0, 1, 2, 3].map(area => (
-          <MainBtn
+          <AreaBtn
             width="150px"
             height="60px"
             className={selectedArea === area ? "active" : "normal"}
             onClick={() => setSelectedArea(area)}
           >
             {areas[area]}
-          </MainBtn>
+          </AreaBtn>
         ))}
         <Link to="/guide">
-          <DangerBtn width="150px" height="60px">
+          <ReadyBtn className="ready" width="150px" height="60px">
             풀빛마실
             <br /> 준비하는 법
-          </DangerBtn>
+          </ReadyBtn>
         </Link>
       </AreaNav>
       <RootContainer>
@@ -205,7 +205,7 @@ export default function GreenCrew() {
         </TopBox>
         <SecondBox>
           <TimeBox className="time">
-            <Row style={{ marginLeft: "auto" }}>
+            <Row>
               <StatusBox>{DTime(time!)}</StatusBox>
 
               {!isParticipate ? (
@@ -276,6 +276,11 @@ const StatusBox = styled(Box)`
   width: 50%;
   height: 100%;
 `;
+const RestTime = styled(Title)`
+  @media screen and (max-width: 768px) {
+    font-size: 32px;
+  }
+`;
 const StartDate = styled(Desc)`
   font-family: "SebangBold";
   margin-bottom: 10px;
@@ -292,13 +297,17 @@ const CrewTitle = styled(Title)`
 
 const TimeDesc = styled(Title)`
   color: ${props => props.theme.accentColor};
+  display: flex;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
 `;
 
 const NumDesc = styled(Desc)`
   align-self: end;
   margin-right: 20px;
 `;
-const AreaBtn = styled.button`
+const AreaBtn = styled(MainBtn)`
   width: 150px;
   height: 60px;
   font-size: 18px;
@@ -321,6 +330,7 @@ const AreaBtn = styled.button`
     width: 25%;
     height: 55px;
     font-size: 14px;
+    border-radius: 0px;
   }
 `;
 const RootContainer = styled(Container)`
@@ -349,6 +359,7 @@ const InfoBox = styled(Box)`
     width: 100%;
     height: auto;
     margin-top: 10px;
+    margin-right: 0px;
   }
 `;
 const SecondBox = styled(Box)`
@@ -357,7 +368,7 @@ const SecondBox = styled(Box)`
 const Row = styled(Box)`
   width: 100%;
   @media screen and (max-width: 768px) {
-    /* flex-direction: column; */
+    width: 90%;
   }
 `;
 const DescBox = styled(Box)`
@@ -384,7 +395,6 @@ const CourseBox = styled(Box)`
   padding: 0 10px;
   margin-bottom: 5px;
 `;
-
 
 const DetailTitle = styled(Desc)`
   display: flex;
@@ -426,4 +436,11 @@ const ContentDescription = styled(Desc)`
   width: 100%;
   padding: 10px;
   border: solid 1px #f1f1f1;
+`;
+const ReadyBtn = styled(DangerBtn)`
+  &.ready {
+    @media screen and (max-width: 1024px) {
+      display: none;
+    }
+  }
 `;

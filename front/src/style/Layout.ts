@@ -83,8 +83,6 @@ export const MainBtn = styled(motion.button)<{ width?: string; height?: string }
   }
   @media screen and (max-width: 768px) {
     font-size: 14px;
-    width: auto;
-    height: auto;
     padding: 15px;
   }
 `;
