@@ -172,7 +172,7 @@ const WholeContainer = styled(Box)`
   background-color: none;
   margin: 0;
   padding: 0;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 870px) {
     width: 100vw;
   }
 `;
@@ -189,7 +189,7 @@ const TableWrapper = styled.div`
   height: 30vh;
   overflow-y: scroll;
   width: 100%;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 870px) {
     width: 90%;
   }
   @media screen and (max-width: 610px) {
@@ -200,7 +200,7 @@ const TableWrapper = styled.div`
 const FindBox = styled(Box)`
   margin: 0;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 870px) {
     flex-direction: column-reverse;
     width: 95%;
     align-items: center;
@@ -257,7 +257,7 @@ const Styles = styled(Box)`
       :last-child {
         border-right: 0;
       }
-      @media screen and (max-width: 768px) {
+      @media screen and (max-width: 870px) {
         :first-child {
           display: none;
         }
@@ -278,7 +278,7 @@ const BtnBox = styled(Box)`
   display: flex;
   align-items: center;
   margin-bottom: -20px;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 870px) {
     margin-bottom: 0;
     width: 95%;
     justify-content: center;
@@ -310,7 +310,7 @@ const Button = styled.button`
     font-weight: 900;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 870px) {
     :last-child {
       margin-right: 0px;
     }

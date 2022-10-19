@@ -21,6 +21,7 @@ export const ModalContainer = styled(motion.form)<{ width?: string; height?: str
   border-radius: 10px;
 
   align-items: center;
+ 
 `;
 export const ModalTitle = styled.h1`
   margin-top: 70px;

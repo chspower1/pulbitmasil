@@ -103,4 +103,5 @@ export const CloseBtn = styled(MainBtn)`
   height: 36px;
   top: 10px;
   right: 10px;
+  padding: 0px;
 `;

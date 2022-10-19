@@ -2,7 +2,7 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { ModalContainer, ModalWrap as LogoutModalWrap, Overlay } from "@style/ModalStyle";
+import { ModalContainer, ModalWrap as DodreamModalWrap, Overlay } from "@style/ModalStyle";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import ReactMarkdown from "react-markdown";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
@@ -63,7 +63,7 @@ export default function DodreamDetalModal() {
   return (
     <AnimatePresence>
       {isDodreamDetalModal && (
-        <LogoutModalWrap>
+        <DodreamModalWrap>
           <DodreamModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <CourseName>{selectedDodream?.course_name}</CourseName>
             <MapBox id="detailMap"></MapBox>
@@ -121,20 +121,25 @@ export default function DodreamDetalModal() {
             animate="animate"
             exit="exit"
           />
-        </LogoutModalWrap>
+        </DodreamModalWrap>
       )}
     </AnimatePresence>
   );
 }
 const DodreamModalContainer = styled(ModalContainer)`
   z-index: 10000;
-  position: absolute;
+  position: fixed;
   width: 600px;
   height: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
   /* padding: 0px 150px; */
+  @media screen and (max-width: 575px) {
+    left: 0px;
+    width: 100vw;
+    height: 90vh;
+  }
 `;
 const CourseName = styled.h1`
   margin: 25px;
@@ -146,12 +151,19 @@ const MapBox = styled.div`
   height: 500px;
   border-radius: 5px;
   border: solid 5px ${props => props.theme.weekColor};
+  @media screen and (max-width: 575px) {
+    width: 100vw;
+  }
 `;
 const DescContainer = styled.div`
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   width: 500px;
+  @media screen and (max-width: 575px) {
+    width: 100vw;
+    align-items: center;
+  }
 `;
 const Row = styled.div`
   display: flex;
@@ -160,6 +172,10 @@ const Row = styled.div`
 const DetailRow = styled(Row)`
   justify-content: space-between;
   margin-bottom: 20px;
+  @media screen and (max-width: 575px) {
+    width: 95%;
+    flex-direction: column;
+  }
 `;
 const Box = styled.div`
   display: flex;
@@ -167,7 +183,10 @@ const Box = styled.div`
   align-items: center;
   width: 180px;
   height: 40px;
-  /* margin-right: 30px; */
+  @media screen and (max-width: 575px) {
+    width: 130px;
+    flex-direction: column;
+  }
 `;
 const Title = styled.div`
   color: ${props => props.theme.textColor};
@@ -189,5 +208,8 @@ const LongDesc = styled(Title)`
   text-overflow: ellipsis;
   border: solid 1px ${props => props.theme.weekColor};
   padding: 10px;
-  font-size: 13px;
+  font-size: 14px;
+  @media screen and (max-width: 575px) {
+    width: 100%;
+  }
 `;
