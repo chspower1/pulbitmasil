@@ -18,39 +18,34 @@ export default function Dodream() {
       </MapContainer>
       <TableContainer>
           <WalkTable dodream={dodream!} />
-      </TableContainer>
+      </TableContainer>  
     </WalkWrap>
+
   );
 }
 const WalkWrap = styled(Wrapper)`
   position: relative;
   background-image: url("/assets/images/walk.jpg");
-  display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
 `;
 
+
 const DodreamTitle = styled(Title)`
   text-align: center;
-  margin-top: 30px;
+  margin-top: 60px;
   color: #008037;
 `;
 
 const MapContainer = styled(Container)`
-  position: absolute;
-  top: 15vh;
-  width: 80vh;
+  width: 750px;
   height: 40vh;
-  /* background-color: #008037; */
-  /* margin: 30px; */
-  margin-top: 30px;
 `;
 
 const TableContainer = styled(Container)`
-  position: absolute;
-  top: 25vh;
-  width: 80vh;
+  width: 750px;
+  height: 20vh;
 `;
 
 

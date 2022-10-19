@@ -52,12 +52,12 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
   };
 
   return (
-    <WholeWrapper>
+    <WholeContainer>
       <FindBox>
         <BtnBox>
           {courseCategory.map((course, index) => (
             <Button key={index} value={course} onClick={handleCategory}>
-              {course}
+              {course === '한강지천길/계절길' ? '한강지천길': course}
             </Button>
           ))}
         </BtnBox>
@@ -85,7 +85,8 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
             {rows.map((row, i) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()}>
+                <tr {...row.getRowProps()}
+                >
                   {row.cells.map(cell => {
                     if (cell.column.id === "course_name") {
                       return (
@@ -109,7 +110,7 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
           </tbody>
         </table>
       </TableWrapper>
-    </WholeWrapper>
+    </WholeContainer>
   );
 }
 
@@ -160,10 +161,12 @@ export default function WalkTable({ dodream }: { dodream: IDodream[] }) {
   );
 }
 
-const WholeWrapper = styled(Wrapper)`
+const WholeContainer = styled(Container)`
   display: flex;
   flex-direction: column;
   background-color: none;
+  margin: 0;
+  padding: 0;
 `;
 
 const TableWrapper = styled.div`
@@ -174,7 +177,7 @@ const TableWrapper = styled.div`
   text-align: center;
   background-color: white;
   padding: 0;
-  height: 330px;
+  height: 30vh;
   overflow-y: scroll;
 `;
 
@@ -193,6 +196,7 @@ const Styles = styled(Container)`
     border-spacing: 0;
     text-align: center;
     width: 100%;
+    margin-top: 0;
     thead {
       position: sticky;
       top: 0px;
@@ -209,6 +213,9 @@ const Styles = styled(Container)`
       }
       :hover {
         background-color: rgba(217, 217, 217, 0.5);
+      }
+      :nth-child(odd) {
+        background-color: rgba(199, 225, 214, 0.3);
       }
     }
 
@@ -239,7 +246,7 @@ const BtnBox = styled(Box)`
 
 const Button = styled.button`
   padding: 0.3em 0.1em;
-  width: 5em;
+  width: 80px;
   height: 35px;
   font-weight: 400;
   font-size: 13px;
@@ -256,13 +263,3 @@ const Button = styled.button`
     font-weight: 900;
   }
 `;
-
-
-// mainColor: "#2A9C6B",
-//   textColor: "#636E72",
-//   weekColor: "#88CAAE",
-//   accentColor: "#008037",
-//   borderColor: "#A7A7A7",
-//   dangerColor: "#E17055",
-//   accentDangerColor: "#CB593D",
-//   weekBorderColor: "#F6F6F6",
