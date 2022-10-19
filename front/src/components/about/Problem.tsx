@@ -2,7 +2,7 @@ import { PopulationChart } from "../chart/Population";
 import {
   AboutContent,
   Container,
-  Title,
+  Title as TitleGuide,
   SubTitle as SubTitleGuide,
   GreenAccent,
   Desc,
@@ -32,7 +32,7 @@ export default function Problem() {
           </Desc>
         </Row>
         <Row>
-          <NewsBox style={{ width: "400px", height: "130px", backgroundColor: "white" }}>
+          <NewsBox>
             <NewsText
               onClick={() => window.open(`${"https://www.mk.co.kr/news/society/view/2022/04/314838/"}`, "_blank")}
             >
@@ -71,37 +71,45 @@ const Wrap = styled(AboutContent)`
   align-items: center;
   justify-content: space-between;
 `;
-const ContentContainer = styled(Container)`
+const ContentContainer = styled(Box)`
   height: 400px;
   flex-direction: column;
   justify-content: space-between;
+`;
+const Title = styled(TitleGuide)`
+  margin-bottom: 15px;
 `;
 const SubTitle = styled(SubTitleGuide)`
   font-family: "Sebang";
   font-size: 24px;
   line-height: 1.3;
+  margin-bottom: 10px;
   color: ${props => props.theme.textColor};
   &.end {
     font-size: 22px;
   }
 `;
 
-const ChartContainer = styled(Container)`
+const ChartContainer = styled(Box)`
   width: 550px;
   height: 400px;
 `;
 
 const NewsBox = styled(Box)`
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
   width: 400px;
   height: 130px;
   flex-direction: column;
-  align-items: baseline;
+  align-items: flex-start;
+  justify-content: center;
   padding-left: 10px;
+  margin: 15px 0px;
+  border-radius: 10px;
 `;
 
 const NewsText = styled(SubTitle)`
   font-size: 17px;
+  margin: 0px;
   padding: 7px 0;
   line-height: 21px;
   cursor: pointer;

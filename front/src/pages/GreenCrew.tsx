@@ -13,13 +13,14 @@ import { useInterval } from "react-use";
 import { data } from "@components/chart/LineChart";
 import { Node } from "react-markdown/lib/rehype-filter";
 import { timeEnd, timeLog } from "console";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userAtom } from "@atom/user";
 import { getJSDocReturnTag } from "typescript";
 import { getUser } from "@api/user";
 import { User, UserGreenCrew } from "@type/user";
 import dayjs, { extend } from "dayjs";
 import duration from "dayjs/plugin/duration";
+import { isRegisterModalAtom } from "@atom/atom";
 
 dayjs.extend(duration);
 
@@ -31,6 +32,7 @@ export default function GreenCrew() {
   const [time, setTime] = useState<string>();
   const [curMember, setCurMember] = useState(0);
   const [isParticipate, setIsParticipate] = useState<boolean>();
+  const setIsRegisterModal = useSetRecoilState(isRegisterModalAtom);
   const navigate = useNavigate();
 
   // Query
@@ -67,12 +69,16 @@ export default function GreenCrew() {
 
   // Handle
   const handleClickEnter = async () => {
-    setCurMember(cur => cur + 1);
-    setIsParticipate(true);
-    console.log("handleclickenter", isParticipate);
-    await createGreenCrewMember(greenCrews![selectedArea].crewId);
-    greenCrewMutation.mutate();
-    userMutation.mutate();
+    if (sessionStorage.getItem("userToken")) {
+      setCurMember(cur => cur + 1);
+      setIsParticipate(true);
+      console.log("handleclickenter", isParticipate);
+      await createGreenCrewMember(greenCrews![selectedArea].crewId);
+      greenCrewMutation.mutate();
+      userMutation.mutate();
+    } else {
+      setIsRegisterModal(true);
+    }
   };
   const handleClickDelete = async () => {
     setCurMember(cur => cur - 1);
@@ -244,9 +250,8 @@ export default function GreenCrew() {
 }
 const GreenCrewWrapper = styled(Wrapper)`
   background-image: url(${process.env.PUBLIC_URL}/assets/images/register_img.jpg);
-  background-attachment: fixed;
+  
   overflow: scroll;
-  height: auto;
   position: relative;
 `;
 const AreaNav = styled(Box)`

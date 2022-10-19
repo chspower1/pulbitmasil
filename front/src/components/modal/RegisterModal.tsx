@@ -8,7 +8,7 @@ import { userAtom } from "@atom/user";
 import { ModalAccent, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 import { CloseBtn } from "@style/Layout";
-export default function WelcomeModal() {
+export default function RegisterModal() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
   const openLoginModal = () => {

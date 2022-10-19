@@ -10,6 +10,8 @@ export const Wrapper = styled.section`
   height: 100vh;
   padding-top: 70px;
   overflow: hidden;
+  background-attachment: fixed;
+  background-size: cover;
   background-color: ${props => props.theme.borderColor};
 `;
 
