@@ -183,10 +183,20 @@ export default function Nav() {
           </UserContainer>
         )}
         <Col>
-          <UserBox onClick={() => setIsUserNav(cur => !cur)}>
+          <UserBox
+            onClick={() => {
+              setIsMenuNav(false);
+              setIsUserNav(cur => !cur);
+            }}
+          >
             <FontAwesomeIcon icon={faUser} color="white" size="xl" />
           </UserBox>
-          <UserMenuNavBox onClick={() => setIsMenuNav(cur => !cur)}>
+          <UserMenuNavBox
+            onClick={() => {
+              setIsUserNav(false);
+              setIsMenuNav(cur => !cur);
+            }}
+          >
             <FontAwesomeIcon icon={faBars} color="white" size="2xl" />
           </UserMenuNavBox>
         </Col>
@@ -228,6 +238,9 @@ const MenuBox = styled(Col)`
   top: 0;
   bottom: 0;
   margin: auto;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 const UserBox = styled.button`
   width: 40px;
@@ -268,9 +281,6 @@ const Items = styled.ul`
   align-items: center;
   a:not(:last-of-type) {
     border-right: solid 1px gray;
-  }
-  @media screen and (max-width: 768px) {
-    display: none;
   }
 `;
 const Item = styled.li`
