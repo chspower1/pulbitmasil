@@ -7,7 +7,7 @@ import {
   GreenAccent,
   Desc,
   Box,
-  Row,
+  Row as RowGuide,
   DangerAccent,
 } from "@style/Layout";
 import React from "react";
@@ -70,18 +70,27 @@ export default function Problem() {
 const Wrap = styled(AboutContent)`
   align-items: center;
   justify-content: space-between;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
 `;
 const ContentContainer = styled(Box)`
   height: 400px;
   flex-direction: column;
   justify-content: space-between;
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+    align-items: center;
+  }
+`;
+const Row = styled(RowGuide)`
+  justify-content: center;
 `;
 const Title = styled(TitleGuide)`
   margin-bottom: 15px;
 `;
 const SubTitle = styled(SubTitleGuide)`
   font-family: "Sebang";
-  font-size: 24px;
   line-height: 1.3;
   margin-bottom: 10px;
   color: ${props => props.theme.textColor};

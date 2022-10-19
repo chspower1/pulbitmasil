@@ -157,7 +157,7 @@ const GreenCircleImg = styled(Box)`
 
   @media screen and (max-width: 1124px) {
     max-width: 100%;
-
+  }
   @media screen and (max-width: 625px) {
     max-width: 100%;
     background-image: url("");

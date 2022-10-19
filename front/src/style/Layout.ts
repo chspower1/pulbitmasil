@@ -33,8 +33,11 @@ export const Title = styled.span`
   color: ${props => props.theme.mainColor};
   font-family: "SebangBold";
 
-  @media screen and (max-width: 768px) {
-    font-size: 24px;
+  @media screen and (max-width: 1024px) {
+    font-size: 28px;
+  }
+  @media screen and (max-width: 728px) {
+    font-size: 22px;
   }
 `;
 export const SubTitle = styled.h3`
@@ -42,15 +45,24 @@ export const SubTitle = styled.h3`
   font-size: 18px;
   color: ${props => props.theme.mainColor};
 
-  /* @media screen and (max-width: 768px) {
-    font-size: 17px;
-  }; */
+  @media screen and (max-width: 1024px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 728px) {
+    font-size: 14px;
+  }
 `;
 export const Desc = styled.p`
   font-family: "Sebang";
   font-size: 16px;
   line-height: 1.3;
   color: ${props => props.theme.textColor};
+  @media screen and (max-width: 1024px) {
+    font-size: 15px;
+  }
+  @media screen and (max-width: 728px) {
+    font-size: 14px;
+  }
 `;
 export const GreenAccent = styled.span`
   font-family: "SebangBold";
