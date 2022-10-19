@@ -10,6 +10,7 @@ export const Wrapper = styled.section`
   height: 100vh;
   padding-top: 70px;
   overflow: hidden;
+  background-color: ${props => props.theme.borderColor};
 `;
 
 export const Container = styled.div<{ width?: string }>`
@@ -71,6 +72,12 @@ export const MainBtn = styled(motion.button)<{ width?: string; height?: string }
   /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); // 나는 쉐도우 없는것도 괜찮은듯? */
   &:hover {
     background-color: ${props => props.theme.accentColor};
+  }
+  @media screen and (max-width: 768px) {
+    font-size: 14px;
+    width: auto;
+    height: auto;
+    padding: 15px;
   }
 `;
 export const DangerBtn = styled(MainBtn)<{ width?: string; height?: string }>`

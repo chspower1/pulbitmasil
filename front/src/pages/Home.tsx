@@ -116,10 +116,18 @@ export default function Home() {
           exit="exit"
           transition={{ duration: 1 }}
         >
-          <Img src={`/assets/images/home/home_img0${imgIndex}.jpg`} alt="#" />
+          <Img
+            src={`/assets/images/home/home_img0${imgIndex}.jpg`}
+            alt="#"
+            className={imgIndex === 1 ? "first" : "normal"}
+          />
           <HomeText>
-            <Title>{HOMETEXT[textIndex].title1}</Title>
-            <Title>{HOMETEXT[textIndex].title2}</Title>
+            <Title>
+              {HOMETEXT[textIndex].title1}
+              <br />
+              {HOMETEXT[textIndex].title2}
+            </Title>
+
             <BtnBox>
               <Link to="about">
                 <MainBtn width="150px" height="60px">
@@ -150,11 +158,23 @@ export default function Home() {
           handleClickArrowBtn(true);
         }}
       >
-        <FontAwesomeIcon icon={faChevronRight} size={"4x"} />
+        <FontAwesomeIcon icon={faChevronRight} size={window.innerWidth < 728 ? "2xl" : "4x"} />
       </RightBtn>
       <LeftBtn onClick={() => handleClickArrowBtn(false)}>
-        <FontAwesomeIcon icon={faChevronLeft} size={"4x"} />
+        <FontAwesomeIcon icon={faChevronLeft} size={window.innerWidth < 728 ? "2xl" : "4x"} />
       </LeftBtn>
+      {/* <MobileBtnBox>
+        <Link to="about">
+          <MainBtn width="150px" height="60px">
+            {HOMETEXT[textIndex].button1}
+          </MainBtn>
+        </Link>
+        <Link to="greencrew">
+          <MainBtn width="180px" height="60px">
+            {HOMETEXT[textIndex].button2}
+          </MainBtn>
+        </Link>
+      </MobileBtnBox> */}
     </HomeWrapper>
   );
 }
@@ -163,14 +183,20 @@ const HomeContainer = styled(motion.div)`
   width: 100vw;
   height: 100vh;
 `;
-const SlideContainer = styled.div`
-  width: 100vw;
-`;
+
 const Img = styled(motion.img)`
   width: 100%;
   height: 100%;
   filter: brightness(0.7);
   object-fit: cover;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    overflow: hidden;
+    &.first {
+      position: absolute;
+      width: 200%;
+    }
+  }
 `;
 const RightBtn = styled(motion.button)`
   background-color: transparent;
@@ -183,6 +209,9 @@ const RightBtn = styled(motion.button)`
     background-color: transparent;
     transform: scale(1.1);
     opacity: 0.7;
+  }
+  @media screen and (max-width: 768px) {
+    width: 30px;
   }
 `;
 const LeftBtn = styled(RightBtn)`
@@ -229,6 +258,21 @@ const BtnBox = styled.div`
   justify-content: space-between;
   margin-top: 20px;
   padding: 0;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+`;
+const MobileBtnBox = styled(BtnBox)`
+  display: none;
+  position: absolute;
+  width: 100vw;
+  margin-top: 20px;
+  padding: 0;
+  @media screen and (max-width: 768px) {
+    display: flex;
+    width: 80vw;
+    bottom: 50px;
+  }
 `;
 
 const Title = styled.div`
@@ -236,4 +280,11 @@ const Title = styled.div`
   font-size: 52px;
   line-height: 83px;
   font-weight: 400;
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    font-size: 22px;
+    line-height: 40px;
+    width: 100vw;
+    top: 100px;
+  }
 `;
