@@ -48,7 +48,6 @@ reviewRouter.get("/:reviewId", async function (req, res, next) {
   }
 });
 
-// 리뷰 작성
 reviewRouter.post("/create", login_required, uploadSingle, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
@@ -90,7 +89,6 @@ reviewRouter.post("/create", login_required, uploadSingle, async function (req, 
 
 reviewRouter.put("/:reviewId", login_required, uploadSingle, async function (req, res, next) {
   try {
-    console.log(req.body);
     const reviewer = parseInt(req.body.userId);
     const userId = req.currentUserId;
     const description = req.body.description ?? null;
