@@ -171,7 +171,7 @@ export default function Nav() {
 
         {isLogin && (
           <UserContainer>
-            <Link to="mypage">
+            <Link to="mypage/home">
               <UserNameBox>
                 <img src="/assets/icon/user/user_img.svg" />
                 <UserName>{user?.name}</UserName>

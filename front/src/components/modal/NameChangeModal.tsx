@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 import { ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { AnimatePresence } from "framer-motion";
+import { useSetRecoilState } from "recoil";
+import { userAtom } from "@atom/user";
 
 interface NameChangeModalProps {
   setIsNameChange: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,6 +29,7 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
     getValues,
   } = useForm<NameChangeForm>();
   const navigate = useNavigate();
+  const setUser = useSetRecoilState(userAtom);
   const closeRegisterModal = async () => {
     setIsNameChange(false);
     reset();
@@ -36,6 +39,9 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
   const handleSubmitChange = handleSubmit(data => {
     changeName(data.newName);
     closeRegisterModal();
+    setUser(prev => {
+      return { ...prev!, name: data.newName };
+    });
   });
 
   return (

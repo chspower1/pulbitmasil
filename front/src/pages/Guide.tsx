@@ -2,12 +2,11 @@ import React, { ReactNode } from "react";
 import {
   Wrapper as WrapGuide,
   AboutContent,
-  Container as ContainerGuide,
+  Box as BoxGuide,
   Title,
   SubTitle as SubTitleGuide,
   GreenAccent,
   Desc,
-  Box,
   Row,
   DangerAccent,
 } from "@style/Layout";
@@ -68,13 +67,13 @@ const Wrap = styled(WrapGuide)`
   height: 300vh;
   overflow: scroll;
 `;
-const PageContainer = styled(ContainerGuide)<{ bgColor: string }>`
+const PageContainer = styled(BoxGuide)<{ bgColor: string }>`
   flex-direction: column;
   width: 100%;
   height: 100vh;
   background-color: ${props => props.bgColor};
 `;
-const SectionContainer = styled(ContainerGuide)`
+const SectionContainer = styled(BoxGuide)`
   width: 100%;
   height: 33.3%;
 `;

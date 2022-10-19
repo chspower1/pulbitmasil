@@ -37,7 +37,7 @@ export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCre
         <Title>완료</Title>
       </GrayTitle>
       <List>
-        {inProgressGreenCrew?.map(greenCrew => (
+        {doneGreenCrew?.map(greenCrew => (
           <Item>
             <HeaderBox>서북</HeaderBox>
             <ContentBox>
@@ -54,7 +54,7 @@ export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCre
         <Title>진행중</Title>
       </GrayTitle>
       <List>
-        {doneGreenCrew?.map(greenCrew => (
+        {inProgressGreenCrew?.map(greenCrew => (
           <Item>
             <HeaderBox>서북</HeaderBox>
             <ContentBox>
