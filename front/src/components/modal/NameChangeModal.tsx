@@ -69,17 +69,7 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
 
             <InputBox>
               <InputTitle>현재 이름</InputTitle>
-              <Input
-                disabled
-                placeholder="현재 이름"
-                defaultValue={name}
-                type="text"
-                id="currentName"
-                {...register("currentName", {
-                  required: { value: true, message: "이름을 입력해주세요." },
-                  minLength: { value: 2, message: "2자 이상 입력해주세요." },
-                })}
-              />
+              <Input disabled placeholder="현재 이름" defaultValue={name} type="text" id="currentName" />
               <ErrorMessage>{errors.currentName?.message}</ErrorMessage>
             </InputBox>
 
