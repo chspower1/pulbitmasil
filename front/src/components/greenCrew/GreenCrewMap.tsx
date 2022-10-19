@@ -87,6 +87,10 @@ const MapBox = styled.div`
   height: 340px;
   border: 5px solid ${props => props.theme.weekColor};
   border-radius: 10px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const DescBox = styled.div`
   width: 150px;
