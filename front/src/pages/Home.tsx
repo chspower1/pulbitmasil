@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
-import { Container, Wrapper as HomeWrapper, MainBtn } from "@style/Layout";
+import { Wrapper as HomeWrapper, MainBtn } from "@style/Layout";
 import { Link } from "react-router-dom";
-import Loading from "@components/Loading";
 
 const HOMETEXT = [
   {

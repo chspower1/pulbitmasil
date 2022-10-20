@@ -216,7 +216,7 @@ const Input = styled.input`
   ::placeholder {
     color: ${props => props.theme.weekColor};
   }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 1024px) {
     width: 100%;
   }
 `;

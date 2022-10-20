@@ -12,7 +12,7 @@ import testData from "../test_data/greenCrewTest.json";
 import { data } from "@components/chart/LineChart";
 
 import { timeEnd, timeLog } from "console";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { userAtom } from "@atom/user";
 import { getJSDocReturnTag } from "typescript";
 import { getUser } from "@api/user";

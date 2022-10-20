@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Box, Container, Title, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
+import { useEffect, useState } from "react";
+import { Box, Title, SubTitle, Desc, Row } from "@style/Layout";
 import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { UserGreenCrew } from "@type/user";
 import {
   List,
@@ -12,13 +10,12 @@ import {
   ItemDate,
   ItemCourse,
   changeDayForm,
-  HomeContainer,
   GrayTitle,
   HomeWrap,
   HeaderBox,
   ListBox,
 } from "./Home";
-import dayjs from "dayjs";
+
 export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCrew[] | undefined }) {
   const [inProgressGreenCrew, setInProgressGreenCrew] = useState<UserGreenCrew[] | undefined>();
   const [doneGreenCrew, setDoneProgressGreenCrew] = useState<UserGreenCrew[] | undefined>();

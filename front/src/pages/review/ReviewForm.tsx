@@ -47,7 +47,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     },
     enabled: mode === "UPDATE",
   });
-  const userGreenCrews = user?.greenCrews;
 
   // Mutation
   const reviewMutation = useMutation(mode === "CREATE" ? createReview : editReview, {
@@ -101,7 +100,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     
           formData.append("imageUrl", review?.reviewImg! as string);
         }
-        // editReview(formData, review?.reviewId!);
+    
      
         await reviewMutation.mutate(formData);
         await userMutation.mutate();

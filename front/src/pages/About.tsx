@@ -1,7 +1,5 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import ReactFullpage from "@fullpage/react-fullpage";
-import SideBar from "@components/about/SideBar";
 
 import Benefit from "@components/about/Benefit";
 import Unique from "@components/about/Unique";
@@ -65,38 +63,23 @@ const Box = styled.div`
 
   @media screen and (min-width: 1124px) {
     width: 100%;
-    /* flex-direction: column; */
   }
-`;
-const Title = styled.h1`
-  font-size: 36px;
-  color: ${props => props.theme.mainColor};
-`;
-const Description = styled.p`
-  font-size: 22px;
-  color: ${props => props.theme.textColor};
-`;
-const MoveUpBtn = styled.div`
-  top: 20px;
 `;
 const BenefitBox = styled(Box)`
   background-image: url("/assets/images/about/benefit_bg.jpg");
   @media screen and (min-width: 1124px) {
     width: 100%;
-    /* flex-direction: column; */
   }
 `;
 const UniqueBox = styled(Box)`
   background-image: url("/assets/images/about/unique_bg.jpg");
   @media screen and (min-width: 1124px) {
     width: 100%;
-    /* flex-direction: column; */
   }
 `;
 const ProblemBox = styled(Box)`
   background-image: url("/assets/images/about/problem_bg.jpg");
   @media screen and (min-width: 1124px) {
     width: 100%;
-    /* flex-direction: column; */
   }
 `;
