@@ -22,9 +22,14 @@ export default function MenuNav({
     setIsLoginModalAtom(true);
     setIsMenuNav(false);
   };
-  const variants = {
-    visible: { opacity: 1 },
-    hidden: { opacity: 0 },
+  const menuVariants = {
+    visible: { x: 0 },
+    hidden: {
+      x: 200,
+      transition: {
+        type: "tween",
+      },
+    },
   };
   const item = {
     visible: { opacity: 1, y: 0 },
@@ -33,7 +38,12 @@ export default function MenuNav({
 
   return (
     <AnimatePresence>
-      <UserNavWrapper variants={variants} initial="hidden" animate="visible">
+      <UserNavWrapper
+        initial={{ x: 200 }}
+        animate={{ x: 0 }}
+        exit={{ x: 200 }}
+        transition={{ type: "tween", duration: 0.4 }}
+      >
         {navMenus.map((menu, index) =>
           menu === "logout" ? (
             isLogin && (
@@ -62,9 +72,11 @@ const UserNavWrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
   right: 0px;
-  top: 70px;
+  top: 0px;
+  height: 100vh;
   background: white;
-  min-width: 180px;
+  width: 200px;
+  background-color: ${props => props.theme.mainColor};
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   @media screen and (min-width: 1024px) {
     display: none;
