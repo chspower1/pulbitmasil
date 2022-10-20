@@ -30,7 +30,6 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
 
     // 마커 데이터 할당
     let markerPositions = dodream?.map(road => {
-      // console.log("-------------", road.x, road.y);
       return {
         title: road.course_name,
         content: road.course_name,
@@ -85,7 +84,6 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
       }
       // 마우스 클릭 시 함수
       function handleClickMarker(dodream: IDodream) {
-        console.log(dodream);
         setSelectedDodream(dodream);
         setIsDodreamDetalModal(true);
       }

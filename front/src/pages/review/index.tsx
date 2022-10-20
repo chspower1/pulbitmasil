@@ -22,11 +22,7 @@ export default function Review() {
   const [isRegisterModal, setIsRegisterModal] = useRecoilState(isRegisterModalAtom);
 
   const isLogin = useRecoilValue(isLoginSelector);
-  const { data: reviews } = useQuery<IReview[]>(["reviews"], getReviews, {
-    onSuccess(data) {
-      console.log("Review query 동작", data);
-    },
-  });
+  const { data: reviews } = useQuery<IReview[]>(["reviews"], getReviews);
 
   const handleClickCreateReview = () => {
     isLogin ? navigate("/review/write") : setIsRegisterModal(true);

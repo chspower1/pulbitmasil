@@ -38,7 +38,6 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
   };
 
   const onvaild = async (data: PasswordForm) => {
-    console.log(data);
 
     changePassword(data).then(status => {
       if (status === 406) {

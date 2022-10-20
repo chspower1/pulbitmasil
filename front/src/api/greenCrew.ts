@@ -5,12 +5,9 @@ import { axiosInstance } from "./axiosInstance";
 export async function getGreenCrews() {
   try {
     const { data }: { data: IGreenCrew[] } = await axiosInstance.get("greencrew");
-    console.log("API", data);
     const result = data.map(greenCrew => {
       const newTrafficInfo = greenCrew.trafficInfo.replace(/\\r|\\n/g, "");
       const newContent = greenCrew.content.replace(/\\r|\\n/g, "");
-      console.log("old : ", greenCrew.trafficInfo);
-      console.log("new : ", newTrafficInfo);
       const newGreenCrew = { ...greenCrew, trafficInfo: newTrafficInfo, content: newContent };
       return newGreenCrew;
     });
@@ -21,8 +18,6 @@ export async function getGreenCrews() {
 }
 export async function createGreenCrewMember(crewId: number) {
   try {
-    console.log(crewId);
-    console.log(sessionStorage.getItem("userToken"));
     return await axiosInstance.get(`greencrew/${crewId}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -34,8 +29,6 @@ export async function createGreenCrewMember(crewId: number) {
 }
 export async function deleteGreenCrewMember(crewId: number) {
   try {
-    console.log(crewId);
-    console.log(sessionStorage.getItem("userToken"));
     return await axiosInstance.delete(`greencrew/${crewId}`, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,

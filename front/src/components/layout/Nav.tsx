@@ -94,7 +94,7 @@ export default function Nav() {
 
   useEffect(() => {
     scrollY.onChange(() => {
-      // console.log(scrollY.get());
+
       if (scrollY.get() > 80) {
         navAnimation.start("scroll");
       } else {
@@ -104,10 +104,8 @@ export default function Nav() {
   }, []);
   useEffect(() => {
     pathname === "/" ? setCurState("home") : setCurState(pathname.split("/")[1]);
-    console.log("현재 pathname", pathname);
   }, [pathname]);
   useEffect(() => {
-    console.log(window.innerWidth);
     if (window.innerWidth > 1028) {
       setViewMode("desktop");
       setIsMenuNav(false);

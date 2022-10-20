@@ -4,12 +4,11 @@ import { axiosInstance } from "./axiosInstance";
 export async function getDodream() {
   try {
     const { data } = await axiosInstance.get(`dodream`);
-    console.log(data);
     const dodream: IDodream[] = [];
     data.map((road: any) => {
       const nameArr = Object.keys(road.course_name) as string[];
       nameArr.map((name, mapIndex) => {
-        // console.log(road.course_category_nm, index, name);
+    
         const index = mapIndex;
         const course_category_nm = road.course_category_nm as string;
         const course_name = name as string;
@@ -43,6 +42,6 @@ export async function getDodream() {
     });
     return dodream;
   } catch (err) {
-    console.log("getDodream Error", err);
+    console.log( err);
   }
 }

@@ -15,11 +15,7 @@ export function changeDayForm(date: Date) {
 }
 
 export default function Home({ user }: { user: User }) {
-  const { data: greenCrews } = useQuery<SummaryGreenCrew[] | undefined>(["summaryGreenCrew"], getSummaryGreenCrews, {
-    onSuccess(data) {
-      console.log("mypage query 작동", data);
-    },
-  });
+  const { data: greenCrews } = useQuery<SummaryGreenCrew[] | undefined>(["summaryGreenCrew"], getSummaryGreenCrews);
   return (
     <HomeWrap>
       <HomeContainer height="30%">

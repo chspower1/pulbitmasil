@@ -27,11 +27,7 @@ export default function MyPage() {
   const [isNameChange, setIsNameChange] = useState(false);
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   const navigate = useNavigate();
-  const { data: user } = useQuery<User | undefined>(["user"], getUser, {
-    onSuccess(data) {
-      console.log("mypage query 작동 완료", data);
-    },
-  });
+  const { data: user } = useQuery<User | undefined>(["user"], getUser);
   const handleClickChangePassword = () => {
     // changePassword()
     if (user?.social === "origin") {
@@ -47,7 +43,7 @@ export default function MyPage() {
       setIsNameChange(true);
     }
   }, [target]);
-  console.log("-------------", menu, target);
+
   return (
     <MyPageWrapper>
       <MyPageContainer>

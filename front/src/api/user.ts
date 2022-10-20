@@ -13,7 +13,6 @@ export async function requestLogin(loginInfo: UserLoginForm) {
       },
     });
     sessionStorage.setItem("userToken", data.token);
-    console.log("풀빛마실로그인", data);
     return data;
   } catch (err) {
     console.log(err);
@@ -30,7 +29,6 @@ export async function getUser() {
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       },
     });
-    console.log("유저정보 받아오기 ", user);
     return user;
   } catch (err) {
     console.log(err);
@@ -40,7 +38,6 @@ export async function getUser() {
 export async function registerUser(newUser: UserRegisterForm) {
   try {
     const bodyData = JSON.stringify(newUser);
-    console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
     const { status } = await axiosInstance.post(`user/register`, bodyData, {
       headers: {
         "Content-Type": "application/json",
@@ -56,17 +53,15 @@ export async function registerUser(newUser: UserRegisterForm) {
 }
 
 export async function kakaoLogin(code: string) {
-  // console.log(`%cGET 요청 ${BASE_URL}auth/kakao?code=${code}`, "color: #a25cd1;");
   const { data } = await axiosInstance.get(`auth/kakao?code=${code}`);
   sessionStorage.setItem("userToken", data.token);
-  // console.log("카카오로그인", data);
   return data;
 }
 export async function naverLogin(accessToken: string, stateToken: string) {
   try {
     const { data } = await axiosInstance.get(`auth/naver?access_token=${accessToken}&state_token=${stateToken}`);
     sessionStorage.setItem("userToken", data.token);
-    // console.log("네이버로그인", data);
+
     return data;
   } catch (err) {
     console.log(err);
@@ -74,7 +69,6 @@ export async function naverLogin(accessToken: string, stateToken: string) {
 }
 
 export async function changePassword(data: PasswordForm) {
-  console.log(`%cPUT 요청 ${BASE_URL}/user/password`, "color: #a25cd1;");
   const { newPassword, password } = data;
 
   try {
@@ -96,8 +90,6 @@ export async function changePassword(data: PasswordForm) {
   }
 }
 export async function resetPassword(email: string) {
-  console.log(`%cPUT 요청 ${BASE_URL}/user/reset`, "color: #a25cd1;");
-
   try {
     const { status } = await axiosInstance.put(`/user/reset`, { email });
     return status;
@@ -109,8 +101,6 @@ export async function resetPassword(email: string) {
 }
 
 export async function changeName(name: string) {
-  console.log(`%cPUT 요청 ${BASE_URL}/user/name`, "color: #a25cd1;");
-
   return axiosInstance.put(
     `user/name`,
     { name },

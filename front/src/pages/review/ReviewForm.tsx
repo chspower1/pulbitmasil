@@ -20,7 +20,6 @@ import { ModalContainer, ModalWrap } from "@style/ModalStyle";
 
 export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData }) {
   const { type, userId, reviewId } = formProps;
-  console.log(formProps);
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
   const navigate = useNavigate();
   const mode = type;
@@ -40,14 +39,9 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   const [doneGreenCrews, setDoneGreenCrew] = useState<UserGreenCrew[] | undefined>();
 
   // Query
-  const { data: user } = useQuery<User | undefined>(["user"], getUser, {
-    onSuccess(data) {
-      console.log("리뷰폼 유저 패치", data);
-    },
-  });
+  const { data: user } = useQuery<User | undefined>(["user"], getUser);
   const { data: review, isLoading } = useQuery<IReview>(["review", reviewId], () => getOneReview(reviewId!), {
     onSuccess(data) {
-      console.log("ReviewForm query review 동작", data);
       setImagePreview(data?.reviewImg!); // Query 일정시간동안 호출 안함 .그래서 해당부분 안찍힘?
       setValue("description", data?.description!);
     },
@@ -64,7 +58,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   });
   const userMutation = useMutation(getUser, {
     onSuccess: () => {
-      console.log("유저 뮤테이션 완료");
       queryClient.invalidateQueries(["user"]);
     },
   });
@@ -77,29 +70,26 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
 
   // Handle
   const onvalid = async (data: IReviewContent) => {
-    console.log("------------------", data);
     const formData = new FormData();
     formData.append("description", data.description);
     switch (mode) {
       case "CREATE":
-        console.log(data);
+    
         formData.append("title", data.title);
         const createDay = dayjs(new Date());
         formData.append("createAt", createDay.toString());
         formData.append("file", uploadImg);
-        console.log("Create formData", formData);
         await reviewMutation.mutate(formData);
         await userMutation.mutate();
-        console.log(user);
+    
         navigate("/review");
         break;
 
       case "UPDATE":
-        console.log("업데이트 데이터", data);
+   
         if (data.title === "") formData.append("title", review?.title!);
         else formData.append("title", data.title);
-        console.log("||||||||||||||||||||||||||", review?.title);
-        console.log("||||||||||||||||||||||||||", formData.get("title"));
+   
         formData.append("userId", user?.id!.toString()!);
         formData.append("reviewId", reviewId!.toString());
 
@@ -108,11 +98,11 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           formData.append("file", uploadImg);
         } else {
           // 사진파일이 그대로라면, 이미지 url 전달
-          console.log("reviewImg", review?.reviewImg!);
+    
           formData.append("imageUrl", review?.reviewImg! as string);
         }
         // editReview(formData, review?.reviewId!);
-        console.log("Update formData", formData.get("reviewId"));
+     
         await reviewMutation.mutate(formData);
         await userMutation.mutate();
         navigate("/review");
@@ -130,7 +120,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     checkInProgress(user?.greenCrews!);
   }, []);
   const handleClickCancel = () => {
-    console.log("handleclickcancel");
     setIsReviewCancelModal(true);
   };
 
@@ -138,10 +127,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     if (image && image.length > 0) {
       const file = image[0];
       setImagePreview(window.URL.createObjectURL(file as File));
-      console.log("이미지", imagePreview);
+
       setUploadImg(file);
-      console.log(image);
-      console.log(window.URL.createObjectURL(file as File));
+   
+  
     }
   }, [image]);
   return (

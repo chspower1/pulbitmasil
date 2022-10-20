@@ -5,12 +5,12 @@ import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
 import { useState, useEffect, startTransition } from "react";
 import { createGreenCrewMember, deleteGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
-import Moment from "react-moment";
+
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
 
 import { data } from "@components/chart/LineChart";
-import { Node } from "react-markdown/lib/rehype-filter";
+
 import { timeEnd, timeLog } from "console";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userAtom } from "@atom/user";
@@ -38,7 +38,6 @@ export default function GreenCrew() {
   const { data: greenCrews } = useQuery<IGreenCrew[] | undefined>(["greenCrew"], getGreenCrews, {
     onSuccess(data) {
       setCurMember(data![selectedArea].curMember);
-      console.log("GreenCrew Query성공", data);
     },
     onError(err) {
       console.log(err);
@@ -46,9 +45,6 @@ export default function GreenCrew() {
   });
   const { data: user } = useQuery<User | undefined>(["user"], getUser, {
     enabled: Boolean(sessionStorage.getItem("userToken")),
-    onSuccess(data) {
-      console.log("user query 작동", data);
-    },
     onError(err) {
       console.log(err);
     },
@@ -72,7 +68,6 @@ export default function GreenCrew() {
       if (window.confirm("참여하시겠어요?")) {
         setCurMember(cur => cur + 1);
         setIsParticipate(true);
-        console.log("handleclickenter", isParticipate);
         await createGreenCrewMember(greenCrews![selectedArea].crewId);
         greenCrewMutation.mutate();
         userMutation.mutate();
@@ -83,7 +78,6 @@ export default function GreenCrew() {
   };
   const handleClickDelete = async () => {
     setCurMember(cur => cur - 1);
-    console.log("handleClickDelete", isParticipate);
     if (window.confirm("정말 취소하시겠어요?")) {
       setIsParticipate(false);
       await deleteGreenCrewMember(greenCrews![selectedArea].crewId);
@@ -95,7 +89,6 @@ export default function GreenCrew() {
 
   const searchCrew = (userGreenCrew: UserGreenCrew[], greenCrew: IGreenCrew) => {
     const isParticipated = Boolean(userGreenCrew.find(userGreenCrew => userGreenCrew.crewId === greenCrew.crewId));
-    console.log("=======================================", isParticipated);
     setIsParticipate(isParticipated);
   };
   const convertDate = (startAt: Date) => {

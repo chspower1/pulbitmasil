@@ -41,7 +41,6 @@ const HOMETEXT = [
 //Variants
 const HomeImgVariants = {
   initial: (next: boolean) => {
-    // console.log("exit", next);
     return {
       x: next ? -window.innerWidth : window.innerWidth,
 
@@ -51,7 +50,6 @@ const HomeImgVariants = {
     };
   },
   exit: (next: boolean) => {
-    // console.log("entry", next);
     return {
       x: next ? window.innerWidth : -window.innerWidth,
     };
@@ -77,26 +75,21 @@ export default function Home() {
     setLeaving(prev => !prev);
   };
   const handleClickArrowBtn = (next: boolean) => {
-    if (leaving) return console.log(leaving);
-    else {
+    if (!leaving) {
       setNext(next);
       toggleLeaving();
       setImgIndex(prev => (next ? (prev === imgMaxIndex ? 1 : prev + 1) : prev === 1 ? imgMaxIndex : prev - 1));
       setTextIndex(prev => (next ? (prev === textMaxIndex ? 0 : prev + 1) : prev === 0 ? textMaxIndex : prev - 1));
-      // console.log("Click! and nextState:", next);
     }
   };
   const handleClickPoint = (imgIndex: number, num: number) => {
-    if (leaving) return console.log(leaving);
-    toggleLeaving();
-    setImgIndex(num);
-    imgIndex < num ? setNext(true) : setNext(false);
+    if (!leaving) {
+      toggleLeaving();
+      setImgIndex(num);
+      imgIndex < num ? setNext(true) : setNext(false);
+    }
   };
-  // const timer = setInterval(() => {
-  //   handleClickArrowBtn(true);
-  // }, 7000);
   useEffect(() => {
-    // console.log("turn");
     const timer = setInterval(() => {
       handleClickArrowBtn(true);
     }, 7000);

@@ -17,10 +17,9 @@ export default function Content() {
       navigationTooltips={about}
       scrollingSpeed={1000}
       onLeave={(origin, destination, direction) => {
-        // console.log("onLeave event", { origin, destination, direction });
       }}
       render={({ state, fullpageApi }) => {
-        // console.log("render prop change", state, fullpageApi);
+
         return (
           <ReactFullpage.Wrapper>
             <Section className="section">

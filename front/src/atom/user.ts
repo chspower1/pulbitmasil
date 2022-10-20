@@ -9,7 +9,6 @@ export const isLoginSelector = selector({
   get: ({ get }) => {
     const user = get(userAtom);
     const checkLogin = sessionStorage.getItem("userToken") && user?.token ? true : false;
-    console.log(user);
     return checkLogin;
   },
 });

@@ -99,7 +99,7 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
                           style={{ color: "#2f8353", cursor: "pointer" }}
                           onClick={() => {
                             const target = dodream.filter(road => road.course_name === (cell.value as string));
-                            // console.log(target[0]);
+                    
                             setSelectedDodream(target[0]);
                           }}
                           {...cell.getCellProps()}

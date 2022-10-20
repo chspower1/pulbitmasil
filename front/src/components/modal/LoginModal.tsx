@@ -14,12 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
 import { UserLoginForm } from "@type/user";
-import {
-  ModalWrap,
-  ModalContainer as LoginForm,
-  ModalTitle as LoginTitle,
-  Overlay,
-} from "@style/ModalStyle";
+import { ModalWrap, ModalContainer as LoginForm, ModalTitle as LoginTitle, Overlay } from "@style/ModalStyle";
 import FindPasswordModal from "./FindPasswordModal";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 import { CloseBtn } from "@style/Layout";
@@ -53,11 +48,9 @@ export default function LoginModal() {
     const href = window.location.href;
     let params = new URL(window.location.href).searchParams;
     let code = params.get("code");
-    // console.log(code);
   };
 
   const closeLoginModal = async () => {
-    console.log("reset Login Modal");
     setIsLoginModal(false);
     reset();
   };
@@ -74,11 +67,7 @@ export default function LoginModal() {
     } else {
       setIsWelcomeModal(true);
     }
-    // console.log("풀빛마실 로그인, 넘어온 데이터\n", id, email, name, token);
     setCurUser({ id, email, name, token, social, greenCrews, reviews });
-    console.log("--------------test");
-    console.log(id, email, name, token, social);
-    // console.log("풀빛마실 User상태\n", curUser);
   };
 
   //로그인 시 모달비활성화,홈으로 이동

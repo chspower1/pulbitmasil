@@ -28,9 +28,6 @@ export default function FindPasswordModal() {
     reset,
     getValues,
   } = useForm<EmailForm>();
-  useEffect(() => {
-    console.log("find", isFindPassword);
-  }, []);
 
   const closeFindModal = async () => {
     setIsFindPassword(false);
@@ -39,7 +36,6 @@ export default function FindPasswordModal() {
 
   const handleSubmitFind = handleSubmit(data => {
     resetPassword(watch("email")).then(status => {
-      console.log(status);
       if (status === 205) {
         closeFindModal();
         alert("임시비밀번호가 발급되었습니다.");

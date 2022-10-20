@@ -47,7 +47,6 @@ export default function BarChart() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { checked, id } = e.currentTarget;
-    // console.log(checked, id);
     if (checked === true) {
       setLabels([...labels, id].sort());
       labels.push(id);

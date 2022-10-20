@@ -45,7 +45,6 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
   };
 
   const onvalid = async (data: NameChangeForm) => {
-    console.log(data);
     await changeName(data.newName);
     userMutation.mutate(data?.newName);
     setUser({ ...user!, name: data?.newName });

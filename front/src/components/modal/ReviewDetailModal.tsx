@@ -12,7 +12,6 @@ import styled from "styled-components";
 
 export default function ReviewDetailModal({ review }: { review: IReview }) {
   const { reviewId, name, createAt, description, userId, reviewImg, title, area } = review;
-  console.log("디테일모달", review);
   const navigate = useNavigate();
   const reviewMatch = useMatch(`/review/${reviewId}`);
   const user = useRecoilValue(userAtom);
@@ -23,15 +22,9 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
   };
 
   const handleClickEdit = () => {
-    console.log(review);
     navigate(`/review/edit/${reviewId}`, { state: { reviewId, userId } });
   };
   const createDay = dayjs(createAt!).format("YYYY-MM-DD");
-
-  useEffect(() => {
-    console.log(reviewMatch);
-    console.log(reviewId);
-  }, []);
 
   return (
     <ModalWrap>

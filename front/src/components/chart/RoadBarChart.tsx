@@ -55,7 +55,7 @@ export default function RoadBarChart() {
   const [labels, setLabels] = useState(Object.keys(roads));
 
   const handleChange = (checked: boolean, id: string) => {
-    // console.log(checked, id);
+
     if (checked === true) {
       setLabels([...labels, id].sort());
       labels.push(id);
