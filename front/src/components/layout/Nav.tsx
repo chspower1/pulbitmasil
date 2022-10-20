@@ -12,7 +12,7 @@ import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
 import DodreamDetalModal from "@components/modal/DodreamDetail";
-import { SubTitle } from "@style/Layout";
+import { Box, SubTitle } from "@style/Layout";
 import FindPasswordModal from "@components/modal/FindPasswordModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -84,6 +84,7 @@ export default function Nav() {
   // };
   const handleClickLogin = () => {
     setIsloginModal(true);
+    setIsMenuNav(false);
   };
 
   const handleClickLogout = async () => {
@@ -159,7 +160,18 @@ export default function Nav() {
             </AnimatePresence>
           </Items>
         </MenuBox>
-        {isLogin || (
+
+        {isLogin ? (
+          <UserContainer>
+            <Link to="mypage/home">
+              <UserNameBox>
+                <img src="/assets/icon/user/user_img.svg" />
+                <UserName>{user?.name}</UserName>
+              </UserNameBox>
+            </Link>
+            <Logout onClick={handleClickLogout}>로그아웃</Logout>
+          </UserContainer>
+        ) : (
           <LoginContainer>
             <LoginBox>
               <LoginBtn onClick={handleClickLogin}>로그인</LoginBtn>
@@ -169,46 +181,48 @@ export default function Nav() {
             </Link>
           </LoginContainer>
         )}
-
-        {isLogin && (
-          <UserContainer>
-            <Link to="mypage/home">
-              <UserNameBox>
-                <img src="/assets/icon/user/user_img.svg" />
-                <UserName>{user?.name}</UserName>
-              </UserNameBox>
+        {isLogin ? (
+          <Col>
+            <Link to="/mypage/home">
+              <MobileUserBox onClick={() => setIsMenuNav(false)}>
+                <UserBox style={{ margin: "0px" }}>
+                  <FontAwesomeIcon icon={faUser} color="white" size="xl" />
+                </UserBox>
+                <UserName className="mobile">{user?.name}</UserName>
+              </MobileUserBox>
             </Link>
-            {/* <Link to="mypage/home">
-              <SubTitle style={{ fontFamily: "SebangBold" }}>마이페이지</SubTitle>
-            </Link> */}
-            <Logout onClick={handleClickLogout}>로그아웃</Logout>
-            {/* <MenuImg onClick={handleClickMenu} src="/assets/icon/user/menu_button.svg" /> */}
-          </UserContainer>
+            <UserMenuNavBox
+              onClick={() => {
+                setIsUserNav(false);
+                setIsMenuNav(cur => !cur);
+              }}
+            >
+              <FontAwesomeIcon icon={faBars} color="white" size="2xl" />
+            </UserMenuNavBox>
+          </Col>
+        ) : (
+          <Col>
+            <UserBox onClick={handleClickLogin}>
+              <FontAwesomeIcon icon={faUser} color="white" size="xl" />
+            </UserBox>
+
+            <UserMenuNavBox
+              onClick={() => {
+                setIsUserNav(false);
+                setIsMenuNav(cur => !cur);
+              }}
+            >
+              <FontAwesomeIcon icon={faBars} color="white" size="2xl" />
+            </UserMenuNavBox>
+          </Col>
         )}
-        <Col>
-          <UserBox
-            onClick={() => {
-              setIsMenuNav(false);
-              setIsUserNav(cur => !cur);
-            }}
-          >
-            <FontAwesomeIcon icon={faUser} color="white" size="xl" />
-          </UserBox>
-          <UserMenuNavBox
-            onClick={() => {
-              setIsUserNav(false);
-              setIsMenuNav(cur => !cur);
-            }}
-          >
-            <FontAwesomeIcon icon={faBars} color="white" size="2xl" />
-          </UserMenuNavBox>
-        </Col>
+
         <LoginModal></LoginModal>
         <FindPasswordModal></FindPasswordModal>
         <DodreamDetalModal />
         <RegisterModal />
         {isUserNav && <UserNav setIsUserNav={setIsUserNav} handleClickLogout={handleClickLogout}></UserNav>}
-        {isMenuNav && <MenuNav setIsMenuNav={setIsMenuNav}></MenuNav>}
+        {isMenuNav && <MenuNav setIsMenuNav={setIsMenuNav} isLogin={isLogin} />}
         <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
       </Wrap>
     </>
@@ -242,9 +256,14 @@ const MenuBox = styled(Col)`
   top: 0;
   bottom: 0;
   margin: auto;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 860px) {
     display: none;
   }
+`;
+const MobileUserBox = styled(Box)`
+  flex-direction: column;
+  height: 70px;
+  margin-right: 10px;
 `;
 const UserBox = styled.button`
   width: 40px;
@@ -254,7 +273,7 @@ const UserBox = styled.button`
   transition: all 0.4s ease;
   border-radius: 35px;
   cursor: pointer;
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 860px) {
     display: none;
   }
 `;
@@ -267,7 +286,7 @@ const UserMenuNavBox = styled.button`
   transition: all 0.4s ease;
 
   cursor: pointer;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 860px) {
     display: none;
   }
 `;
@@ -317,7 +336,7 @@ const LoginContainer = styled.div`
   align-items: center;
   position: absolute;
   right: 20px;
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 860px) {
     display: none;
   }
 `;
@@ -381,6 +400,12 @@ const UserName = styled.span`
   margin: 10px;
   font-size: 18px;
   font-family: "SebangBold";
+  &.mobile {
+    margin: 0px;
+    margin-top: 5px;
+    font-size: 14px;
+    font-family: "Sebang";
+  }
 `;
 
 const UserNameBox = styled.div`

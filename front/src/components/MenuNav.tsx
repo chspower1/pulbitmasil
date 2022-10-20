@@ -6,12 +6,17 @@ import { isLoginModalAtom, isLogoutModalAtom } from "@atom/atom";
 import { UserNavProps } from "./layout/Nav";
 import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
 
-export default function MenuNav({ setIsMenuNav }: { setIsMenuNav: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const navMenus = ["home", "about", "dodream", "greencrew", "review"];
-  const navKorMenus = ["홈", "소개", "산책로", "모임", "후기"];
-  const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
-  const userNavKorMenus = ["로그인", "회원가입"];
+export default function MenuNav({
+  setIsMenuNav,
+  isLogin,
+}: {
+  setIsMenuNav: React.Dispatch<React.SetStateAction<boolean>>;
+  isLogin: boolean;
+}) {
+  const navMenus = ["home", "about", "dodream", "greencrew", "review", "logout"];
+  const navKorMenus = ["홈", "소개", "산책로", "모임", "후기", "로그아웃"];
   const setIsLoginModalAtom = useSetRecoilState(isLoginModalAtom);
+  const setIsLogoutModalAtom = useSetRecoilState(isLogoutModalAtom);
   const { pathname } = useLocation();
   const handleClickLogin = async () => {
     setIsLoginModalAtom(true);
@@ -29,11 +34,24 @@ export default function MenuNav({ setIsMenuNav }: { setIsMenuNav: React.Dispatch
   return (
     <AnimatePresence>
       <UserNavWrapper variants={variants} initial="hidden" animate="visible">
-        {navMenus.map((menu, index) => (
-          <Link key={index} to={menu === "home" ? "/" : menu}>
-            <Button onClick={() => setIsMenuNav(false)}>{navKorMenus[index]}</Button>
-          </Link>
-        ))}
+        {navMenus.map((menu, index) =>
+          menu === "logout" ? (
+            isLogin && (
+              <Button
+                onClick={() => {
+                  setIsMenuNav(false);
+                  setIsLogoutModalAtom(true);
+                }}
+              >
+                {navKorMenus[index]}
+              </Button>
+            )
+          ) : (
+            <Link key={index} to={menu === "home" ? "/" : menu}>
+              <Button onClick={() => setIsMenuNav(false)}>{navKorMenus[index]}</Button>
+            </Link>
+          ),
+        )}
       </UserNavWrapper>
     </AnimatePresence>
   );
