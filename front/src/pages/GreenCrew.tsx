@@ -2,19 +2,12 @@ import styled from "styled-components";
 import { Wrapper, Container, Box, Title, Desc, SubTitle, MainBtn, GreenAccent, DangerBtn } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import GreenCrewMap from "@components/greenCrew/GreenCrewMap";
-import { useState, useEffect, startTransition } from "react";
+import { useState, useEffect } from "react";
 import { createGreenCrewMember, deleteGreenCrewMember, getGreenCrews } from "@api/greenCrew";
 import { IGreenCrew } from "@type/greenCrew";
 
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import testData from "../test_data/greenCrewTest.json";
-
-import { data } from "@components/chart/LineChart";
-
-import { timeEnd, timeLog } from "console";
+import { Link, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { userAtom } from "@atom/user";
-import { getJSDocReturnTag } from "typescript";
 import { getUser } from "@api/user";
 import { User, UserGreenCrew } from "@type/user";
 import dayjs, { extend } from "dayjs";
