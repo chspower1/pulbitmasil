@@ -274,7 +274,7 @@ const AreaNav = styled(Box)`
     transform: translateY(0);
     height: 60px;
     margin-top: 65px;
-    z-index: 1000;
+    z-index: 100;
   }
 `;
 const StatusBox = styled(Box)`
