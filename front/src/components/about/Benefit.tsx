@@ -60,6 +60,7 @@ const Wrap = styled(AboutContent)`
   @media screen and (max-width: 1024px) {
   }
   @media screen and (max-width: 764px) {
+    width: 100%;
   }
 `;
 const BenefitBox = styled(Box)<{ color: string }>`
@@ -71,9 +72,10 @@ const BenefitBox = styled(Box)<{ color: string }>`
   padding: 0px 20px;
   background-color: rgba(255, 255, 255, 0.7);
 
-  @media screen and (max-width: 764px) {
-    height: 100px;
-    width: 60%;
+  @media screen and (max-width: 1024px) {
+    height: 150px;
+    max-width: 400px;
+    width: 90%;
     margin-bottom: 20px;
   }
 `;
@@ -92,10 +94,10 @@ const Row = styled(RowGuide)`
     justify-content: space-between;
 
     @media screen and (max-width: 1024px) {
-      width: 70%;
+      flex-direction: column;
+      width: 100%;
     }
     @media screen and (max-width: 764px) {
-      flex-direction: column;
     }
   }
   &.subTitle {
@@ -105,7 +107,7 @@ const Row = styled(RowGuide)`
       height: 30%;
     }
     @media screen and (max-width: 764px) {
-      width: 40%;
+      width: 90%;
       height: 30%;
     }
   }
@@ -125,7 +127,6 @@ const Img = styled.img`
     height: 40px;
   }
   @media screen and (max-width: 764px) {
-    margin-top: -130px;
     width: 40px;
     height: 40px;
   }

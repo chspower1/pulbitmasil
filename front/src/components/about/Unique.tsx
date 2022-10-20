@@ -63,11 +63,15 @@ export default function Unique() {
   );
 }
 const Wrap = styled(AboutContent)`
+  width: 100%;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 1024px) {
+  }
 `;
 const ImgContainer = styled(Container)`
-  justify-content: flex-start;
+  justify-content: flex-end;
+  margin-right: 100px;
   width: 47%;
   @media screen and (max-width: 1024px) {
     display: none;
@@ -86,6 +90,9 @@ const ContentContainer = styled(Container)`
   @media screen and (max-width: 1024px) {
     align-items: center;
     justify-content: space-between;
+  }
+  @media screen and (max-width: 728px) {
+    width: 90%;
   }
 `;
 const SubTitle = styled(SubTitleGuide)`
