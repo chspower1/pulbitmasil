@@ -149,7 +149,7 @@ const FormContainer = styled(ModalContainer)`
   z-index: 1;
   background-color: white;
   position: relative;
-  width: 700px;
+  width: 650px;
   height: 750px;
   padding: 60px;
   padding-bottom: 75px;
