@@ -3,7 +3,7 @@ export const lightTheme: DefaultTheme = {
   mainColor: "#2A9C6B",
   textColor: "#636e72",
   weekColor: "#88CAAE",
-  accentColor: "#008037",
+  accentColor: "#308153",
   borderColor: "#EEEEEE",
   dangerColor: "#E17055",
   accentDangerColor: "#CB593D",

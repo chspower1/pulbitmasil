@@ -185,9 +185,9 @@ export default function Nav() {
           <Col>
             <Link to="/mypage/home">
               <MobileUserBox onClick={() => setIsMenuNav(false)}>
-                <UserBox style={{ margin: "0px" }}>
+                <UserIcon style={{ margin: "0px" }}>
                   <FontAwesomeIcon icon={faUser} color="white" size="xl" />
-                </UserBox>
+                </UserIcon>
                 <UserName className="mobile">{user?.name}</UserName>
               </MobileUserBox>
             </Link>
@@ -202,9 +202,9 @@ export default function Nav() {
           </Col>
         ) : (
           <Col>
-            <UserBox onClick={handleClickLogin}>
+            <UserIcon onClick={handleClickLogin}>
               <FontAwesomeIcon icon={faUser} color="white" size="xl" />
-            </UserBox>
+            </UserIcon>
 
             <UserMenuNavBox
               onClick={() => {
@@ -221,8 +221,8 @@ export default function Nav() {
         <FindPasswordModal></FindPasswordModal>
         <DodreamDetalModal />
         <RegisterModal />
-        {isUserNav && <UserNav setIsUserNav={setIsUserNav} handleClickLogout={handleClickLogout}></UserNav>}
-        {isMenuNav && <MenuNav setIsMenuNav={setIsMenuNav} isLogin={isLogin} />}
+        <UserNav isUserNav={isUserNav} setIsUserNav={setIsUserNav} handleClickLogout={handleClickLogout}></UserNav>
+        <MenuNav isMenuNav={isMenuNav} setIsMenuNav={setIsMenuNav} isLogin={isLogin} user={user} />
         <LogoutModal setIsUserNav={setIsUserNav}></LogoutModal>
       </Wrap>
     </>
@@ -268,7 +268,7 @@ const MobileUserBox = styled(Box)`
     display: none;
   }
 `;
-const UserBox = styled.button`
+export const UserIcon = styled.button`
   width: 40px;
   height: 40px;
   margin-right: 15px;
@@ -398,7 +398,7 @@ const UserContainer = styled(LoginContainer)`
   /* width: 310px; */
 `;
 
-const UserName = styled.span`
+export const UserName = styled.span`
   color: ${props => props.theme.textColor};
   margin: 10px;
   font-size: 18px;

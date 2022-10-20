@@ -27,7 +27,6 @@ export default function Benefit() {
           <BoxTitle>
             운동을 통한 건강한 <GreenAccent>체력</GreenAccent>
           </BoxTitle>
-
           <Desc>
             쓰레기를 주울 때 앉았다 일어나는 <br />
             동작을 반복해야 하기 때문에 단순히 걷거나 뛰는 유산소 운동보다
