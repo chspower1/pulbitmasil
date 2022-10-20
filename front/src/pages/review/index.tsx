@@ -51,7 +51,6 @@ export default function Review() {
         </CardBox>
       </CardContainer>
       {reviewDelId && <ReviewDeleteModal reviewId={reviewDelId} />}
-      <RegisterModal />
       <AnimatePresence>
         {reviewMatch && (
           <ReviewDetailModal
