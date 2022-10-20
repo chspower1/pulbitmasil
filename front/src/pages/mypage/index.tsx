@@ -234,6 +234,7 @@ const MyPageContainer = styled(Container)`
   }
 `;
 const EditBtn = styled(MainBtn)`
+  z-index: 1000;
   position: absolute;
   top: 35px;
   right: 20px;
@@ -243,9 +244,11 @@ const EditBtn = styled(MainBtn)`
 
   @media screen and (max-width: 768px) {
     position: absolute;
+    font-size: 14px;
     width: 80px;
     height: 40px;
-    top: 0px;
+    top: 50px;
+    padding: 0px;
 
     /* flex-direction: column; */
   }

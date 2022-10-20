@@ -58,7 +58,7 @@ const UserNavWrapper = styled(motion.div)`
   @media screen and (max-width: 768px) {
     width: 80px;
     height: 40px;
-    top: 80px;
+    top: 130px;
 
     /* flex-direction: column; */
   }
