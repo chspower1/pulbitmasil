@@ -42,7 +42,7 @@ export default function Home({ user }: { user: User }) {
         <List>
           {greenCrews?.map(greenCrew => (
             <Item>
-              <HeaderBox>서북</HeaderBox>
+              <HeaderBox>{greenCrew?.area}</HeaderBox>
               <ContentBox>
                 <ListBox>
                   <ItemTitle>{greenCrew?.title}</ItemTitle>
@@ -110,6 +110,7 @@ export const Item = styled(Box)`
   margin: 10px 0px;
   border: solid 1px #d9d9d9;
   border-radius: 5px;
+
   @media screen and (max-width: 768px) {
     height: 60px;
   }
@@ -117,7 +118,7 @@ export const Item = styled(Box)`
 export const HeaderBox = styled(Box)`
   background-color: ${props => props.theme.mainColor};
   color: white;
-  width: 50px;
+  width: 115px;
   height: 100%;
   @media screen and (max-width: 768px) {
     font-size: 14px;
