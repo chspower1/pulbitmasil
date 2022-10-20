@@ -171,6 +171,7 @@ const PasswordWrapper = styled(ModalWrap)`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  z-index: 10;
 `;
 
 const PasswordContainer = styled(ModalContainer)`

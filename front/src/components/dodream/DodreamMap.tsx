@@ -6,12 +6,16 @@ import DodreamDetail from "@components/modal/DodreamDetail";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import { IDodream } from "@type/dodream";
 import { useRecoilState } from "recoil";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
+import { Box } from "@style/Layout";
 
 const { kakao }: any = window;
 
 export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
   const [isDodreamDetalModal, setIsDodreamDetalModal] = useRecoilState(isDodreamDetalModalAtom);
   const [selectedDodream, setSelectedDodream] = useRecoilState(selectedDodreamAtom);
+  const [counter, setCounter] = useState(0);
   useEffect(() => {
     // 지도생성
     const xy = selectedDodream
@@ -86,10 +90,23 @@ export default function DodreamMap({ dodream }: { dodream: IDodream[] }) {
         setIsDodreamDetalModal(true);
       }
     }
-  }, [dodream, selectedDodream]);
+
+    // 지도 원래대로 이동시키기
+    function panTo() {
+      // 이동할 위도 경도 위치를 생성합니다
+      var moveLatLon = new kakao.maps.LatLng(selectedDodream!.cpi[0].x, selectedDodream!.cpi[0].y);
+
+      // 지도 중심을 부드럽게 이동시킵니다
+      // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+      map.panTo(moveLatLon);
+    }
+  }, [dodream, selectedDodream, counter]);
 
   return (
     <>
+      <ResetBtn onClick={() => setSelectedDodream(null)}>
+        <FontAwesomeIcon icon={faRotateRight} size="xl" />
+      </ResetBtn>
       <MapBox id="map" />
     </>
   );
@@ -100,8 +117,14 @@ const MapBox = styled.div`
   border: 5px solid #88caae;
   border-radius: 10px;
 `;
-const DescBox = styled.div`
-  width: 150px;
+export const ResetBtn = styled.button`
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   text-align: center;
   padding: 8px;
   background-color: #2a9c6b;
