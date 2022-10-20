@@ -138,4 +138,7 @@ const NewsText = styled(SubTitle)`
   &:hover {
     color: ${props => props.theme.mainColor};
   }
+  @media screen and (max-width: 758px) {
+    font-size: 16px;
+  }
 `;
