@@ -70,12 +70,14 @@ export default function GreenCrew() {
   // Handle
   const handleClickEnter = async () => {
     if (sessionStorage.getItem("userToken")) {
-      setCurMember(cur => cur + 1);
-      setIsParticipate(true);
-      console.log("handleclickenter", isParticipate);
-      await createGreenCrewMember(greenCrews![selectedArea].crewId);
-      greenCrewMutation.mutate();
-      userMutation.mutate();
+      if (window.confirm("참여하시겠어요?")) {
+        setCurMember(cur => cur + 1);
+        setIsParticipate(true);
+        console.log("handleclickenter", isParticipate);
+        await createGreenCrewMember(greenCrews![selectedArea].crewId);
+        greenCrewMutation.mutate();
+        userMutation.mutate();
+      }
     } else {
       setIsRegisterModal(true);
     }
