@@ -10,9 +10,9 @@
 ## 1. 프로젝트 소개🔍
 
 - #### 사용 데이터
-  [서울시 산책로 데이터](https://data.seoul.go.kr/dataList/OA-2501/S/1/datasetView.do)
-  [서울시 노상 쓰레기통 데이터](https://data.seoul.go.kr/dataList/OA-15069/F/1/datasetView.do)
-  [전국 유동인구 변화량](https://data.kostat.go.kr/social/moblilePopMoveInfoPage.do)
+  [서울시 산책로 데이터](https://data.seoul.go.kr/dataList/OA-2501/S/1/datasetView.do)     
+  [서울시 노상 쓰레기통 데이터](https://data.seoul.go.kr/dataList/OA-15069/F/1/datasetView.do)     
+  [전국 유동인구 변화량](https://data.kostat.go.kr/social/moblilePopMoveInfoPage.do)     
   <br>
 - #### 웹서비스에 대한 개요
   저희 웹서비스는 주민들과 산책을 하며 쓰레기를 줍는 실천을 통해 환경을 보호하자는 취지로 탄생했습니다. 이를 위해 산책로 데이터와 쓰레기통 데이터를 연결하여 산책 경로의 목적지를 서울시에서 설치한 쓰레기 통으로 설정하였고 정해진 시간마다 자동으로 생성되는 모집 페이지를 통해 지구를 지키는 작은 발걸음에 동참할 수 있습니다.  
