@@ -234,7 +234,7 @@ const MyPageContainer = styled(Container)`
   }
 `;
 const EditBtn = styled(MainBtn)`
-  z-index: 1000;
+  z-index: 10;
   position: absolute;
   top: 35px;
   right: 20px;
