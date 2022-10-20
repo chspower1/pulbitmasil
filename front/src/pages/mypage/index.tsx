@@ -70,7 +70,7 @@ export default function MyPage() {
             <Menu className={menu === "home" ? "active" : "normal"} onClick={() => navigate("/mypage/home")}>
               홈
             </Menu>
-            <Menu className={menu === "review" ? "active" : "normal"} onClick={() => navigate("/mypage/home")}>
+            <Menu className={menu === "review" ? "active" : "normal"} onClick={() => navigate("/mypage/review")}>
               리뷰
             </Menu>
             <Menu className={menu === "greencrew" ? "active" : "normal"} onClick={() => navigate("/mypage/greencrew")}>

@@ -15,13 +15,13 @@ import {
   HomeContainer,
   GrayTitle,
   HeaderBox,
+  ListBox,
+  ItemCourse,
 } from "./Home";
 import { useRecoilState } from "recoil";
 import { ReviewDeleteIdAtom } from "@atom/atom";
-import dayjs from "dayjs";
 
 export default function ReviewList({ reviews }: { reviews: UserReview[] | undefined }) {
-  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
   return (
     <HomeWrap>
       <HomeContainer height="20%">
@@ -35,7 +35,10 @@ export default function ReviewList({ reviews }: { reviews: UserReview[] | undefi
             <Item>
               <HeaderBox>서북</HeaderBox>
               <ContentBox>
-                <ItemTitle>{review?.title}</ItemTitle>
+                <ListBox>
+                  <ItemTitle>{review?.title}</ItemTitle>
+                  {/* <ItemCourse as="span">({review?.})</ItemCourse> */}
+                </ListBox>
                 <Box>
                   <ItemDate>{changeDayForm(review?.createAt)}</ItemDate>
                 </Box>
