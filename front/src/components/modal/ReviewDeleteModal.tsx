@@ -1,27 +1,20 @@
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
-import React, { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { Navigate, useNavigate } from "react-router-dom";
-import {
-  ModalBtnContainer,
-  ModalDesc,
-  ModalContainer,
-  ModalWrap as LogoutModalWrap,
-  ModalWrap,
-  Overlay,
-} from "@style/ModalStyle";
+import { useNavigate } from "react-router-dom";
+import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { deleteReview } from "@api/review";
 import { userAtom } from "@atom/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { OverlayVariant } from "@style/ModalVariants";
-import { getUser, requestLogin } from "@api/user";
+import { getUser } from "@api/user";
 import { DangerAccent } from "@style/Layout";
 
 export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
-  const [user, setUser] = useRecoilState(userAtom);
+  const user = useRecoilValue(userAtom);
   // const [reviews, setReviews] = useRecoilState(ReviewsAtom);
   const navigate = useNavigate();
 
@@ -93,9 +86,7 @@ const ReviewModalContainer = styled(ModalContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: absolute; */
   margin: auto;
-
   top: 0;
   bottom: 0;
   left: 0;

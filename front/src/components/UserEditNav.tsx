@@ -1,17 +1,16 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {  useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { Link, Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link,  useNavigate, useParams } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { isLogoutModalAtom } from "@atom/atom";
-import { UserNavProps } from "./layout/Nav";
-import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
+
+import { motion } from "framer-motion";
 
 interface UserEditNavProps {}
 export default function UserEditNav({ setIsEdit }: { setIsEdit: React.Dispatch<React.SetStateAction<boolean>> }) {
   const { menu, target } = useParams();
   const userNavMenus = [`/mypage/${menu}/edit/password`, `/mypage/${menu}/edit/name`];
   const userNavKorMenus = ["비밀번호 수정", "이름 수정"];
-  const setIsLogoutModal = useSetRecoilState(isLogoutModalAtom);
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
 
@@ -23,7 +22,6 @@ export default function UserEditNav({ setIsEdit }: { setIsEdit: React.Dispatch<R
       navigate(`mypage/${menu}`);
     }
   };
-
   const variants = {
     visible: { opacity: 1 },
     hidden: { opacity: 0 },

@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import { isReviewCancelAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
+import { OverlayVariant } from "@style/ModalVariants";
 import { DangerAccent } from "@style/Layout";
 export default function ReviewModal() {
   const [isReviewCancelModal, setIsReviewCancelModal] = useRecoilState(isReviewCancelAtom);
@@ -90,8 +90,8 @@ const CancelDesc = styled(ModalDesc)`
     font-size: 22px;
 
     @media screen and (max-width: 767px) {
-    font-size: 18px;
-  }
+      font-size: 18px;
+    }
   }
 `;
 

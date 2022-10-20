@@ -1,20 +1,17 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
-import { isLoginSelector, userAtom } from "@atom/user";
-import { isLoginModalAtom, isLogoutModalAtom } from "@atom/atom";
-import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
+import { Link } from "react-router-dom";
+import { isLoginSelector } from "@atom/user";
+import { isLoginModalAtom } from "@atom/atom";
+import { motion, AnimatePresence } from "framer-motion";
 interface UserNavProps {
   setIsUserNav: React.Dispatch<React.SetStateAction<boolean>>;
   handleClickLogout: () => Promise<void>;
   isUserNav: boolean;
 }
 export default function UserNav({ setIsUserNav, handleClickLogout, isUserNav }: UserNavProps) {
-  const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
-  const userNavKorMenus = ["로그인", "회원가입"];
   const setIsLoginModalAtom = useSetRecoilState(isLoginModalAtom);
   const isLogin = useRecoilValue(isLoginSelector);
-  const { pathname } = useLocation();
   const handleClickLogin = async () => {
     setIsLoginModalAtom(true);
     setIsUserNav(false);

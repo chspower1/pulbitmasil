@@ -1,22 +1,14 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
-import { userAtom } from "@atom/user";
+
 import { isLoginModalAtom, isLogoutModalAtom } from "@atom/atom";
-import { UserIcon, UserNavProps } from "./layout/Nav";
-import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
+import { UserIcon } from "./layout/Nav";
+import { motion, AnimatePresence } from "framer-motion";
 import { User } from "@type/user";
-import { Box, Desc, SubTitle, Title as TitleGuide } from "@style/Layout";
+import { Box, Desc, Title as TitleGuide } from "@style/Layout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronRight,
-  faDoorOpen,
-  faHouse,
-  faImage,
-  faRightFromBracket,
-  faRoad,
-  faUsers,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDoorOpen, faHouse, faImage, faRightFromBracket, faRoad, faUsers } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { Overlay } from "@style/ModalStyle";
 import { OverlayVariant } from "@style/ModalVariants";
@@ -29,30 +21,12 @@ interface MenuNav {
 }
 
 export default function MenuNav({ setIsMenuNav, isLogin, isMenuNav, user }: MenuNav) {
-  const navMenus = ["home", "about", "dodream", "greencrew", "review", "logout"];
-  const navKorMenus = ["홈", "소개", "산책로", "모임", "후기", "로그아웃"];
-  const menuIcons = ["faHouse", "faRoad", "faUsers", "faImage"];
   const setIsLoginModalAtom = useSetRecoilState(isLoginModalAtom);
   const setIsLogoutModalAtom = useSetRecoilState(isLogoutModalAtom);
-  const { pathname } = useLocation();
   const handleClickLogin = async () => {
     setIsLoginModalAtom(true);
     setIsMenuNav(false);
   };
-  const menuVariants = {
-    visible: { x: 0 },
-    hidden: {
-      x: 200,
-      transition: {
-        type: "tween",
-      },
-    },
-  };
-  const item = {
-    visible: { opacity: 1, y: 0 },
-    hidden: { opacity: 0, y: -50 },
-  };
-
   return (
     <AnimatePresence>
       {isMenuNav && (
@@ -195,9 +169,6 @@ const MenuList = styled(motion.div)`
 `;
 const ItemBox = styled(motion.button)`
   height: 50px;
-  &:not(last-child) {
-    /* border-bottom: solid 1px ${props => props.theme.weekBorderColor}; */
-  }
 `;
 const Row = styled(motion.div)`
   display: flex;
@@ -207,4 +178,3 @@ const Row = styled(motion.div)`
   align-items: center;
   justify-content: space-between;
 `;
-const BtnText = styled(motion.p)``;

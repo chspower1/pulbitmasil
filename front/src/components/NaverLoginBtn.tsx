@@ -1,7 +1,7 @@
 import { isLoginModalAtom } from "@atom/atom";
 import { useEffect, useRef } from "react";
 import { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { NaverLogin } from "./modal/LoginModal";
 
 declare global {
@@ -20,7 +20,7 @@ interface User {
 export default function NaverLoginBtn() {
   const naverRef = useRef<any>();
   const [data, setData] = useState<User>({ name: "", email: "" });
-  const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
+  const setIsLoginModal = useSetRecoilState(isLoginModalAtom);
   useEffect(CDM, []);
 
   function CDM() {

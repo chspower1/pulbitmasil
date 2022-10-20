@@ -1,20 +1,19 @@
 import { isLogoutModalAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
 import React from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap as LogoutModalWrap, Overlay } from "@style/ModalStyle";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userAtom } from "@atom/user";
 import { UserNavProps } from "@components/layout/Nav";
-import { createPortal } from "react-dom";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
 import { DangerAccent, MainBtn, DangerBtn } from "@style/Layout";
 import { useQueryClient } from "@tanstack/react-query";
 
 export default function LogoutModal({ setIsUserNav }: UserNavProps) {
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
-  const [user, setUser] = useRecoilState(userAtom);
+  const setUser = useSetRecoilState(userAtom);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const handleClickLogout = () => {

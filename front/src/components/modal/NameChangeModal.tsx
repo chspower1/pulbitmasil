@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { changeName } from "@api/user";
 import { NameChangeForm } from "@type/user";
 
-import { Box, Wrapper, MainBtn, DangerBtn } from "@style/Layout";
+import { Box, MainBtn, DangerBtn } from "@style/Layout";
 
 import { useNavigate } from "react-router-dom";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
@@ -32,7 +32,6 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
     register,
     handleSubmit,
     formState: { errors },
-    watch,
     reset,
   } = useForm<NameChangeForm>();
   const navigate = useNavigate();
@@ -133,11 +132,7 @@ const Title = styled.h1`
     font-size: 24px;
   }
 `;
-const Description = styled.p`
-  font-size: 16px;
-  margin-bottom: 45px;
-  color: ${props => props.theme.textColor};
-`;
+
 const InputBox = styled.div`
   position: relative;
   width: 530px;
@@ -182,22 +177,8 @@ const ErrorMessage = styled.div`
   bottom: -20px;
 `;
 
-const Button = styled.button`
-  width: 200px;
-  height: 64px;
-  font-size: 18px;
-  margin-top: 45px;
-`;
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 530px;
-  height: 500px;
-  margin: auto;
-`;
+
 const ButtonBox = styled(Box)`
   margin-top: 20px;
   width: 100%;
