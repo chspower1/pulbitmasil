@@ -10,7 +10,6 @@ import { MainBtn, DangerBtn } from "@style/Layout";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
   const { userId, reviewId, description, createAt, name, reviewImg, title, area } = review;
-  console.log(review);
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
   const setReviewDelId = useSetRecoilState(ReviewDeleteIdAtom);

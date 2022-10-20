@@ -4,8 +4,6 @@ import ReviewForm from "./ReviewForm";
 
 export default function UpdateReview() {
   const { state } = useLocation(); //reviewId, userId
-  console.log("state", state);
-
   const updateData: IReviewUpdateData = {
     type: "UPDATE",
     reviewId: state.reviewId,
