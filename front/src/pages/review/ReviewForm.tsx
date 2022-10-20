@@ -196,10 +196,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
         />
 
         <ButtonContainer>
-          <MainBtn>{mode === "UPDATE" ? "수정하기" : "등록하기"}</MainBtn>
-          <DangerBtn className="cancle" type="button" onClick={handleClickCancel}>
+          <RegisterBtn>{mode === "UPDATE" ? "수정하기" : "등록하기"} </RegisterBtn>
+          <CloseBtn className="cancle" type="button" onClick={handleClickCancel}>
             취소
-          </DangerBtn>
+          </CloseBtn>
         </ButtonContainer>
         <ReviewModal />
       </Form>
@@ -214,7 +214,6 @@ const FormWrap = styled(Wrapper)`
 `;
 const Form = styled(ModalContainer)`
   width: 600px;
-  height: 750px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -222,9 +221,18 @@ const Form = styled(ModalContainer)`
   background-color: white;
   border-radius: 10px;
   padding: 30px;
+  @media screen and (max-width: 764px) {
+    width: 80%;
+    height: auto;
+  }
 `;
 const TitleBox = styled(Box)`
   flex-direction: column;
+  margin-bottom: 30px;
+
+  @media screen and (max-width: 764px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const ReviewSubTitle = styled(SubTitle)`
@@ -235,11 +243,20 @@ const Input = styled.input<{ height: number }>`
   width: 550px;
   height: ${props => props.height}px;
   border: solid 1px #a7a7a7;
+
+  @media screen and (max-width: 764px) {
+    width: 80%;
+  }
 `;
 const SelectInput = styled(Input)`
   font-size: 18px;
   color: ${props => props.theme.accentColor};
   padding: 0px 10px;
+  margin-bottom: 20px;
+  @media screen and (max-width: 764px) {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
 `;
 const Option = styled.option`
   font-size: 16px;
@@ -259,24 +276,38 @@ const ReviewTextArea = styled.textarea`
   border: solid 1px #a7a7a7;
   margin-bottom: 10px 0;
   resize: none;
+  margin-bottom: 30px;
+  @media screen and (max-width: 764px) {
+    width: 80%;
+    height: 200px;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 100%;
   height: 45px;
-  justify-content: space-between;
+  justify-content: center;
 `;
 const ImgBox = styled(Box)`
-  width: 550px;
+  /* box-sizing: border-box; */
+  width: 100%;
   height: 155px;
   overflow: hidden;
   margin: 0 auto;
   cursor: pointer;
   transition: background-color 0.4s ease;
   border: dashed 2px ${props => props.theme.weekColor};
+  margin-bottom: 20px;
+
   &:hover {
     background-color: #f5fffa;
+  }
+  @media screen and (max-width: 764px) {
+    width: 80%;
+    margin-bottom: 10px;
   }
 `;
 const ErrorMessage = styled.div`
@@ -286,4 +317,23 @@ const ErrorMessage = styled.div`
   height: 14px;
   right: 0px;
   bottom: -20px;
+`;
+
+const RegisterBtn = styled(MainBtn)`
+  @media screen and (max-width: 764px) {
+    width: 100px;
+    height: 35px;
+  }
+`;
+
+const CloseBtn = styled(RegisterBtn)`
+  margin-left: 20px;
+  background-color: ${props => props.theme.dangerColor};
+  &:hover {
+    background-color: #cc5e43;
+  }
+
+  @media screen and (max-width: 764px) {
+    margin-left: 10px;
+  }
 `;
