@@ -42,6 +42,9 @@ export const GlobalStyled = createGlobalStyle`
             font-family: "Sebang";
             font-size:18px;
             letter-spacing: 0px;
+            @media screen and (max-width:768px){
+                font-size:13px;
+            }
         }
     }
     button { 
