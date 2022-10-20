@@ -51,10 +51,17 @@ const UserNavWrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
   right: 0px;
-  top: 65px;
-  background: white;
+  top: 75px;
   min-width: 180px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+  @media screen and (max-width: 768px) {
+    width: 80px;
+    height: 40px;
+    top: 80px;
+
+    /* flex-direction: column; */
+  }
 `;
 
 const Button = styled.button`
