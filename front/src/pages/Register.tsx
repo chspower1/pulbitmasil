@@ -146,6 +146,7 @@ const RegisterWrapper = styled(Wrapper)`
   /* opacity: 0.5; */
 `;
 const FormContainer = styled(ModalContainer)`
+  z-index: 1;
   background-color: white;
   position: relative;
   width: 700px;
