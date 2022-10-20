@@ -13,9 +13,7 @@ export const ModalWrap = styled.div`
   margin: 0;
 
   @media screen and (max-width: 767px) {
-    position: fixed;
-    left: 10%;
-    width: 80%;
+    width: 100%;
   }
 `;
 export const ModalContainer = styled(motion.form)<{ width?: string; height?: string }>`

@@ -213,6 +213,7 @@ const FormWrap = styled(Wrapper)`
   background-image: url("/assets/images/register_img.jpg");
 `;
 const Form = styled(ModalContainer)`
+  z-index: 1;
   width: 600px;
   display: flex;
   height: 800px;

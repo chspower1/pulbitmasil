@@ -59,7 +59,7 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
               </p>
               <p style={{ fontSize: "20px", marginTop: "5px" }}>{createDay} </p>
             </InfoBox>
-            <p style={{ position: "absolute", right: "25px" }}>{area}</p>
+            <Area>{area}</Area>
           </InfoContainer>
 
           <TextContainer>
@@ -93,6 +93,7 @@ const Overlay = styled(motion.div)`
   position: fixed;
   z-index: 1000;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -109,10 +110,13 @@ const ReviewContainer = styled(ModalContainer)`
   right: 0;
   margin: auto;
   background-color: white;
+  @media screen and (max-width: 758px) {
+    width: 95%;
+  }
 `;
 
 const ImgContainer = styled(motion.div)`
-  width: 500px;
+  width: 100%;
   height: 300px;
   position: relative;
 `;
@@ -123,6 +127,7 @@ const ReviewImg = styled(motion.img)`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 10px 10px 0px 0px;
 `;
 const TextContainer = styled(motion.div)`
   width: 100%;
@@ -160,7 +165,13 @@ const ContentsContainer = styled(motion.div)`
   height: 250px;
   padding: 30px;
 `;
-
+const Area = styled(motion.p)`
+  position: absolute;
+  right: 15px;
+  @media screen and (max-width: 758px) {
+    bottom: 0px;
+  }
+`;
 const InfoContainer = styled(motion.div)`
   display: flex;
   position: relative;
@@ -180,4 +191,7 @@ const ButtonContainer = styled(motion.div)`
   margin: auto;
   justify-content: space-between;
   bottom: 20px;
+  @media screen and (max-width: 758px) {
+    width: 70%;
+  }
 `;
