@@ -2,8 +2,6 @@
 <img src="https://i.ibb.co/2vR8STP/Group-243.png" alt="drawing" width="300"/>
 <figure>
     <img src="https://i.ibb.co/ZKMrTnw/24817789-77z-2203-w014-n001-31a-p21-31.jpg" title="plogging">    
-    <figcaption style="color:grey">Redgreystock - Freepik.com
-</figcaption>
 </figure>
 🌿풀빛마실은 조깅을 하며 쓰레기를 줍는 '플로깅'을 확대하여 동네 이웃과 함께 산책을 하며 환경을 보호할 수 있는 커뮤니티 서비스입니다. 환경 문제에 대해 누구나 큰 마음을 먹을 수는 없기에, 작지만 자발적인 실천을 모아가면 좋겠다는 마음에서 시작하였습니다.🌿
 
@@ -12,9 +10,9 @@
 ## 1. 프로젝트 소개🔍
 
 - #### 사용 데이터
-  [서울시 산책로 데이터](https://data.seoul.go.kr/dataList/OA-2501/S/1/datasetView.do)
-  [서울시 노상 쓰레기통 데이터](https://data.seoul.go.kr/dataList/OA-15069/F/1/datasetView.do)
-  [전국 유동인구 변화량](https://data.kostat.go.kr/social/moblilePopMoveInfoPage.do)
+  [서울시 산책로 데이터](https://data.seoul.go.kr/dataList/OA-2501/S/1/datasetView.do)     
+  [서울시 노상 쓰레기통 데이터](https://data.seoul.go.kr/dataList/OA-15069/F/1/datasetView.do)     
+  [전국 유동인구 변화량](https://data.kostat.go.kr/social/moblilePopMoveInfoPage.do)     
   <br>
 - #### 웹서비스에 대한 개요
   저희 웹서비스는 주민들과 산책을 하며 쓰레기를 줍는 실천을 통해 환경을 보호하자는 취지로 탄생했습니다. 이를 위해 산책로 데이터와 쓰레기통 데이터를 연결하여 산책 경로의 목적지를 서울시에서 설치한 쓰레기 통으로 설정하였고 정해진 시간마다 자동으로 생성되는 모집 페이지를 통해 지구를 지키는 작은 발걸음에 동참할 수 있습니다.  
@@ -140,3 +138,5 @@
 ## 7. FAQ
 
 - 자주 받는 질문 정리
+
+<figcaption style="color:grey">Redgreystock - Freepik.com</figcaption>
