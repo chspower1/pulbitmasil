@@ -92,6 +92,7 @@ export function PopulationChart() {
         },
       },
     },
+    aspectRatio: 1,
   };
 
   const data: Data = {
@@ -105,5 +106,5 @@ export function PopulationChart() {
     ],
   };
 
-  return <Bar options={options} data={data} width={500} height={400} />;
+  return <Bar options={options} data={data} width={400} height={400} />;
 }
