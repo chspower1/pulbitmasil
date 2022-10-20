@@ -264,6 +264,9 @@ const MobileUserBox = styled(Box)`
   flex-direction: column;
   height: 70px;
   margin-right: 10px;
+  @media screen and (min-width: 860px) {
+    display: none;
+  }
 `;
 const UserBox = styled.button`
   width: 40px;
