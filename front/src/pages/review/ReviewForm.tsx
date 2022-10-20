@@ -245,7 +245,7 @@ const Input = styled.input<{ height: number }>`
   border: solid 1px #a7a7a7;
 
   @media screen and (max-width: 764px) {
-    width: 80%;
+    width: 100%;
   }
 `;
 const SelectInput = styled(Input)`
@@ -278,7 +278,7 @@ const ReviewTextArea = styled.textarea`
   resize: none;
   margin-bottom: 30px;
   @media screen and (max-width: 764px) {
-    width: 80%;
+    width: 100%;
     height: 200px;
     font-size: 14px;
     margin-bottom: 20px;
@@ -306,7 +306,7 @@ const ImgBox = styled(Box)`
     background-color: #f5fffa;
   }
   @media screen and (max-width: 764px) {
-    width: 80%;
+    width: 100%;
     margin-bottom: 10px;
   }
 `;
