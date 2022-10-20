@@ -26,6 +26,7 @@ export default function MyPage() {
   const [isPasswordChange, setIsPasswordChange] = useState(false);
   const [isNameChange, setIsNameChange] = useState(false);
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const navigate = useNavigate();
   const { data: user } = useQuery<User | undefined>(["user"], getUser, {
     onSuccess(data) {
       console.log("mypage query 작동 완료", data);
@@ -50,7 +51,12 @@ export default function MyPage() {
   return (
     <MyPageWrapper>
       <MyPageContainer>
-        <MyPageTitle>마이 페이지</MyPageTitle>
+        <TopBox>
+          <MyPageTitle>마이 페이지</MyPageTitle>
+          <EditBtn onClick={() => setIsEdit(cur => !cur)} width="100px">
+            정보 수정
+          </EditBtn>
+        </TopBox>
         <ProfileBox>
           <Img src="/assets/icon/user/user_img.svg" />
           <NameBox>
@@ -61,23 +67,21 @@ export default function MyPage() {
         </ProfileBox>
         <ContentBox>
           <MenuBox>
-            <Link to="/mypage/home">
-              <Menu className={menu === "home" ? "active" : "normal"}>홈</Menu>
-            </Link>
-            <Link to="/mypage/review">
-              <Menu className={menu === "review" ? "active" : "normal"}>리뷰</Menu>
-            </Link>
-            <Link to="/mypage/greencrew">
-              <Menu className={menu === "greencrew" ? "active" : "normal"}>풀빛마실</Menu>
-            </Link>
+            <Menu className={menu === "home" ? "active" : "normal"} onClick={() => navigate("/mypage/home")}>
+              홈
+            </Menu>
+            <Menu className={menu === "review" ? "active" : "normal"} onClick={() => navigate("/mypage/home")}>
+              리뷰
+            </Menu>
+            <Menu className={menu === "greencrew" ? "active" : "normal"} onClick={() => navigate("/mypage/greencrew")}>
+              풀빛마실
+            </Menu>
           </MenuBox>
           {menu === "home" && <Home user={user!} />}
           {menu === "greencrew" && <GreenCrewList greenCrews={user?.greenCrews}></GreenCrewList>}
           {menu === "review" && <ReviewList reviews={user?.reviews}></ReviewList>}
         </ContentBox>
-        <EditBtn onClick={() => setIsEdit(cur => !cur)} width="100px">
-          정보 수정
-        </EditBtn>
+
         <AnimatePresence>{isEdit && <UserEditNav setIsEdit={setIsEdit} />}</AnimatePresence>
       </MyPageContainer>
       <AnimatePresence>
@@ -114,6 +118,14 @@ const MyPageTitle = styled(Title)`
   width: 500px;
   text-align: center;
 `;
+const TopBox = styled(Box)`
+  width: 100%;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+    /* flex-direction: column; */
+    position: relative;
+  }
+`;
 
 const ProfileBox = styled(Box)`
   width: 100%;
@@ -130,6 +142,10 @@ const ProfileBox = styled(Box)`
 const Img = styled.img`
   width: 50px;
   height: 50px;
+  @media screen and (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
 `;
 const ContentBox = styled(Box)`
   flex-direction: column;
@@ -141,7 +157,7 @@ const ContentBox = styled(Box)`
   justify-content: flex-start;
 
   @media screen and (max-width: 768px) {
-    width: 90%;
+    width: 80%;
     /* flex-direction: column; */
   }
 `;
@@ -157,22 +173,35 @@ const NameBox = styled(Row)`
 const Name = styled(Title)`
   font-size: 24px;
   color: ${props => props.theme.textColor};
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 const Icon = styled.img`
   margin-left: 5px;
   width: 24px;
   height: 24px;
+
+  @media screen and (max-width: 768px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 const Email = styled(Desc)`
   font-size: 22px;
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 const MenuBox = styled(Box)`
   bottom: 0px;
-  width: 100%;
+  width: 95%;
 
   @media screen and (max-width: 768px) {
     width: 90%;
     /* flex-direction: column; */
+    margin: 0 auto;
   }
 `;
 const Menu = styled.button`
@@ -186,6 +215,11 @@ const Menu = styled.button`
   }
   &.active {
     background-color: ${props => props.theme.mainColor};
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 25px;
+    font-size: 16px;
   }
 `;
 const MyPageContainer = styled(Container)`
@@ -206,4 +240,13 @@ const EditBtn = styled(MainBtn)`
   font-size: 16px;
   width: 100px;
   height: 40px;
+
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    width: 80px;
+    height: 40px;
+    top: 0px;
+
+    /* flex-direction: column; */
+  }
 `;
