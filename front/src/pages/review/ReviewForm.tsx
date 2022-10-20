@@ -230,6 +230,7 @@ const Form = styled(ModalContainer)`
   }
   @media screen and (max-height: 1000px) {
     height: 90%;
+    max-height: 650px;
   }
 `;
 const TitleBox = styled(Box)`
