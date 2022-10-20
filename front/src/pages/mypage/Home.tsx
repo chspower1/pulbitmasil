@@ -99,26 +99,21 @@ export const GrayTitle = styled(Box)`
     font-size: 20px;
     display: flex;
     flex-direction: column;
+    padding: 20px 0;
   }
 `;
 
 export const Item = styled(Box)`
   width: 100%;
-  height: 50px;
   justify-content: center;
   margin: 10px 0px;
   border: solid 1px #d9d9d9;
   border-radius: 5px;
-
-  @media screen and (max-width: 764px) {
-    paddingtop
-  }
 `;
 export const HeaderBox = styled(Box)`
   background-color: ${props => props.theme.mainColor};
   color: white;
   width: 50px;
-  height: 100%;
 
   @media screen and (max-width: 768px) {
     font-size: 14px;
@@ -133,6 +128,8 @@ export const ContentBox = styled(Box)`
   background: solid 1px ${props => props.theme.weekBorderColor};
   @media screen and (max-width: 768px) {
     flex-direction: column;
+    padding: 5px;
+    height: auto;
   }
 `;
 export const ItemTitle = styled(SubTitle)`
@@ -156,10 +153,11 @@ const HomeRow = styled(Box)`
   margin-bottom: 10px;
 `;
 
-const ListBox = styled(Box)`
+export const ListBox = styled(Box)`
   flex-direction: column;
   align-items: flex-start;
   @media screen and (max-width: 764px) {
     align-items: center;
+    padding: 5px 0;
   }
 `;

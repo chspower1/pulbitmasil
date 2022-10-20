@@ -16,6 +16,7 @@ import {
   GrayTitle,
   HomeWrap,
   HeaderBox,
+  ListBox,
 } from "./Home";
 import dayjs from "dayjs";
 export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCrew[] | undefined }) {
@@ -41,7 +42,10 @@ export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCre
           <Item>
             <HeaderBox>서북</HeaderBox>
             <ContentBox>
-              <ItemTitle>{greenCrew?.title}</ItemTitle>
+              <ListBox>
+                <ItemTitle>{greenCrew?.title}</ItemTitle>
+                <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
+              </ListBox>
               <Box>
                 <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
               </Box>
@@ -58,7 +62,10 @@ export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCre
           <Item>
             <HeaderBox>서북</HeaderBox>
             <ContentBox>
-              <ItemTitle>{greenCrew?.title}</ItemTitle>
+              <ListBox>
+                <ItemTitle>{greenCrew?.title}</ItemTitle>
+                <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
+              </ListBox>
               <Box>
                 <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
               </Box>
