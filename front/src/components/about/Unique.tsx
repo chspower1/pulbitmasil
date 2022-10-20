@@ -20,10 +20,7 @@ export default function Unique() {
   return (
     <Wrap>
       <ImgContainer>
-        <Img
-          src="https://plus.unsplash.com/premium_photo-1661266878025-ca5773b7dfa4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-          alt="#"
-        />
+        <Img src="/assets/images/about/unique.jpg" alt="#" />
       </ImgContainer>
       <ContentContainer>
         <TextRow>
@@ -72,7 +69,7 @@ const Wrap = styled(AboutContent)`
 `;
 const ImgContainer = styled(Container)`
   justify-content: flex-end;
-  margin-right: 100px;
+  margin-right: 70px;
   width: 47%;
   @media screen and (max-width: 1024px) {
     display: none;
@@ -106,8 +103,11 @@ const SubTitle = styled(SubTitleGuide)`
   }
 `;
 const Img = styled.img`
-  width: 345px;
+  width: 360px;
   height: 460px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: solid 5px ${props => props.theme.weekColor};
 `;
 const Desc = styled(DescGuide)`
   line-height: 1.1;
@@ -120,7 +120,6 @@ const Btn = styled(MainBtn)`
   height: 50px;
   font-size: 18px;
   padding: 10px 5px;
-  margin: 0px 10px;
 
   @media screen and (max-width: 1024px) {
     width: 150px;
@@ -129,7 +128,11 @@ const Btn = styled(MainBtn)`
   }
 `;
 const BtnBox = styled(Box)`
+  width: 380px;
   justify-content: space-between;
+  @media screen and (max-width: 1024px) {
+    width: 320px;
+  }
 `;
 
 const TextRow = styled(Row)`
