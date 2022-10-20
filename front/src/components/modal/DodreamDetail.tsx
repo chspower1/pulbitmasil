@@ -29,6 +29,7 @@ export default function DodreamDetalModal() {
         detailMapOption = {
           center: new kakao.maps.LatLng(selectedDodream?.cpi[0].x, selectedDodream?.cpi[0].y), // 이미지 지도의 중심좌표
           level: 3, // 이미지 지도의 확대 레벨
+          draggable: false,
         };
 
       //  지도 생성

@@ -84,7 +84,10 @@ const ContentContainer = styled(Box)`
   }
 `;
 const Row = styled(RowGuide)`
-  justify-content: center;
+  justify-content: flex-start;
+  @media screen and (max-width: 1024px) {
+    justify-content: center;
+  }
 `;
 const Title = styled(TitleGuide)`
   margin-bottom: 15px;
@@ -102,6 +105,10 @@ const SubTitle = styled(SubTitleGuide)`
 const ChartContainer = styled(Box)`
   width: 550px;
   height: 400px;
+  @media screen and (max-width: 1024px) {
+    width: 90%;
+    align-items: center;
+  }
 `;
 
 const NewsBox = styled(Box)`

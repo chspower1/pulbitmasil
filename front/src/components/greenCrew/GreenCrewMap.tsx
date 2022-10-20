@@ -17,7 +17,7 @@ export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) 
       let mapContainer = document.getElementById("greenCrewMap"), // 지도를 표시할 div
         mapOption = {
           center: points[0], // 지도의 중심좌표
-          level: 6, // 지도의 확대 레벨
+          level: 4, // 지도의 확대 레벨
         };
 
       // 지도 생성
@@ -27,10 +27,12 @@ export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) 
       let clickLine = new kakao.maps.Polyline({
         map: greenCrewMap, // 선을 표시할 지도입니다
         path: points, // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
-        strokeWeight: 3, // 선의 두께입니다
+        strokeWeight: 5, // 선의 두께입니다
         strokeColor: "#00552d", // 선의 색깔입니다
-        strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+        strokeOpacity: 0.8, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
         strokeStyle: "dash", // 선의 스타일입니다
+        endArrow: true,
+        zIndex: 10,
       });
       let distance = Math.round(clickLine.getLength());
 
@@ -52,7 +54,15 @@ export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) 
         title: "끝", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image: endMarkerImage, // 마커 이미지
       });
+      // 좌표를 한눈에 보기
+      var bounds = new kakao.maps.LatLngBounds();
+      for (let i = 0; i < points.length; i++) {
+        // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
 
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(points[i]);
+      }
+      greenCrewMap.setBounds(bounds);
       function showDistance(content: any, targetPoint: any) {
         if (distanceOverlay) {
           // 커스텀오버레이가 생성된 상태이면
