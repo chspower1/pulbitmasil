@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import ReactFullpage from "@fullpage/react-fullpage";
 
@@ -62,7 +61,6 @@ const Box = styled.div`
 
   @media screen and (min-width: 1124px) {
     width: 100%;
-    /* flex-direction: column; */
   }
 `;
 const Title = styled.h1`
@@ -80,20 +78,17 @@ const BenefitBox = styled(Box)`
   background-image: url("/assets/images/about/benefit_bg.jpg");
   @media screen and (min-width: 1124px) {
     width: 100%;
-    /* flex-direction: column; */
   }
 `;
 const UniqueBox = styled(Box)`
   background-image: url("/assets/images/about/unique_bg.jpg");
   @media screen and (min-width: 1124px) {
     width: 100%;
-    /* flex-direction: column; */
   }
 `;
 const ProblemBox = styled(Box)`
   background-image: url("/assets/images/about/problem_bg.jpg");
   @media screen and (min-width: 1124px) {
     width: 100%;
-    /* flex-direction: column; */
   }
 `;

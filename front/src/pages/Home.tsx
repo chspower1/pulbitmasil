@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { userAtom } from "@atom/user";
-import { Container, Wrapper as HomeWrapper, MainBtn } from "@style/Layout";
+import { Wrapper as HomeWrapper, MainBtn } from "@style/Layout";
 import { Link } from "react-router-dom";
 
 const HOMETEXT = [

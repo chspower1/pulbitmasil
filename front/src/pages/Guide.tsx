@@ -1,4 +1,3 @@
-import React, { ReactNode } from "react";
 import { Wrapper as WrapGuide, Box as BoxGuide, Title, SubTitle as SubTitleGuide, DangerAccent } from "@style/Layout";
 import styled from "styled-components";
 import GuideForm from "@components/guide/GuideForm";
