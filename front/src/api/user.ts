@@ -53,9 +53,13 @@ export async function registerUser(newUser: UserRegisterForm) {
 }
 
 export async function kakaoLogin(code: string) {
-  const { data } = await axiosInstance.get(`auth/kakao?code=${code}`);
-  sessionStorage.setItem("userToken", data.token);
-  return data;
+  try {
+    const { data } = await axiosInstance.get(`auth/kakao?code=${code}`);
+    sessionStorage.setItem("userToken", data.token);
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 export async function naverLogin(accessToken: string, stateToken: string) {
   try {
