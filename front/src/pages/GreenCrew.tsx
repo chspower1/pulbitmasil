@@ -8,8 +8,7 @@ import { IGreenCrew } from "@type/greenCrew";
 import Moment from "react-moment";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import testData from "../test_data/greenCrewTest.json";
-import moment from "moment";
-import { useInterval } from "react-use";
+
 import { data } from "@components/chart/LineChart";
 import { Node } from "react-markdown/lib/rehype-filter";
 import { timeEnd, timeLog } from "console";

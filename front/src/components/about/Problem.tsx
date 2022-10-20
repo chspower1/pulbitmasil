@@ -72,6 +72,7 @@ const Wrap = styled(AboutContent)`
   justify-content: space-between;
   @media screen and (max-width: 1024px) {
     flex-direction: column;
+    width: 100%;
   }
 `;
 const ContentContainer = styled(Box)`
@@ -79,7 +80,7 @@ const ContentContainer = styled(Box)`
   flex-direction: column;
   justify-content: space-between;
   @media screen and (max-width: 1024px) {
-    width: 90%;
+    width: 100%;
     align-items: center;
   }
 `;
@@ -106,7 +107,7 @@ const ChartContainer = styled(Box)`
   width: 550px;
   height: 400px;
   @media screen and (max-width: 1024px) {
-    width: 90%;
+    width: 100%;
     align-items: center;
   }
 `;
@@ -121,6 +122,10 @@ const NewsBox = styled(Box)`
   padding-left: 10px;
   margin: 15px 0px;
   border-radius: 10px;
+  @media screen and (max-width: 758px) {
+    max-width: 400px;
+    width: 95%;
+  }
 `;
 
 const NewsText = styled(SubTitle)`
@@ -132,5 +137,8 @@ const NewsText = styled(SubTitle)`
   transition: color 0.4s ease;
   &:hover {
     color: ${props => props.theme.mainColor};
+  }
+  @media screen and (max-width: 758px) {
+    font-size: 16px;
   }
 `;

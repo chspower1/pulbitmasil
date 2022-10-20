@@ -20,6 +20,7 @@ interface Data {
       label: string;
       data: number[];
       backgroundColor: string[];
+      borderRadius: number;
     },
   ];
 }
@@ -92,6 +93,7 @@ export function PopulationChart() {
         },
       },
     },
+    aspectRatio: 1,
   };
 
   const data: Data = {
@@ -100,10 +102,11 @@ export function PopulationChart() {
       {
         label: "유동인구량",
         data: labels.map(label => population[label].average / 1000000),
-        backgroundColor: ["#91DD9E", "#F7ACAC", "#A0C8EE", "#DAB4F1"],
+        backgroundColor: ["#E57E7A", "#ECCB96", "#B8D4A3", "#ACD6F9"],
+        borderRadius: 15,
       },
     ],
   };
 
-  return <Bar options={options} data={data} width={500} height={400} />;
+  return <Bar options={options} data={data} width={400} height={400} />;
 }

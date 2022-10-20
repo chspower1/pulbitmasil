@@ -26,7 +26,7 @@ root.render(
   <RecoilRoot>
     <QueryClientProvider client={queryClient}>
       <App />
-      <ReactQueryDevtools initialIsOpen={true} />
+      {/* <ReactQueryDevtools initialIsOpen={true} /> */}
     </QueryClientProvider>
   </RecoilRoot>,
 

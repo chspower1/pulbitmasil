@@ -8,6 +8,7 @@ import {
   Box,
   Row,
   DangerAccent,
+  MainBtn,
 } from "@style/Layout";
 import React from "react";
 import styled from "styled-components";
@@ -19,10 +20,7 @@ export default function Unique() {
   return (
     <Wrap>
       <ImgContainer>
-        <Img
-          src="https://plus.unsplash.com/premium_photo-1661266878025-ca5773b7dfa4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-          alt="#"
-        />
+        <Img src="/assets/images/about/unique.jpg" alt="#" />
       </ImgContainer>
       <ContentContainer>
         <TextRow>
@@ -63,11 +61,15 @@ export default function Unique() {
   );
 }
 const Wrap = styled(AboutContent)`
+  width: 100%;
   align-items: center;
   justify-content: center;
+  @media screen and (max-width: 1024px) {
+  }
 `;
 const ImgContainer = styled(Container)`
-  justify-content: flex-start;
+  justify-content: flex-end;
+  margin-right: 70px;
   width: 47%;
   @media screen and (max-width: 1024px) {
     display: none;
@@ -87,6 +89,9 @@ const ContentContainer = styled(Container)`
     align-items: center;
     justify-content: space-between;
   }
+  @media screen and (max-width: 758px) {
+    width: 90%;
+  }
 `;
 const SubTitle = styled(SubTitleGuide)`
   font-family: "Sebang";
@@ -98,8 +103,11 @@ const SubTitle = styled(SubTitleGuide)`
   }
 `;
 const Img = styled.img`
-  width: 345px;
+  width: 360px;
   height: 460px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: solid 5px ${props => props.theme.weekColor};
 `;
 const Desc = styled(DescGuide)`
   line-height: 1.1;
@@ -107,12 +115,11 @@ const Desc = styled(DescGuide)`
     text-align: center;
   }
 `;
-const Btn = styled.button`
+const Btn = styled(MainBtn)`
   width: 180px;
   height: 50px;
   font-size: 18px;
   padding: 10px 5px;
-  margin-right: 20px;
 
   @media screen and (max-width: 1024px) {
     width: 150px;
@@ -120,7 +127,13 @@ const Btn = styled.button`
     font-size: 14px;
   }
 `;
-const BtnBox = styled(Box)``;
+const BtnBox = styled(Box)`
+  width: 380px;
+  justify-content: space-between;
+  @media screen and (max-width: 1024px) {
+    width: 320px;
+  }
+`;
 
 const TextRow = styled(Row)`
   @media screen and (max-width: 1024px) {

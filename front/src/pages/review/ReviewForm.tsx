@@ -213,8 +213,10 @@ const FormWrap = styled(Wrapper)`
   background-image: url("/assets/images/register_img.jpg");
 `;
 const Form = styled(ModalContainer)`
+  z-index: 1;
   width: 600px;
   display: flex;
+  height: 800px;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
@@ -222,8 +224,13 @@ const Form = styled(ModalContainer)`
   border-radius: 10px;
   padding: 30px;
   @media screen and (max-width: 764px) {
-    width: 80%;
-    height: auto;
+    padding: 20px;
+    width: 90%;
+    height: 70%;
+  }
+  @media screen and (max-height: 1000px) {
+    height: 90%;
+    max-height: 650px;
   }
 `;
 const TitleBox = styled(Box)`
