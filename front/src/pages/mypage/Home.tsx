@@ -105,16 +105,20 @@ export const GrayTitle = styled(Box)`
 
 export const Item = styled(Box)`
   width: 100%;
+  height: 50px;
   justify-content: center;
   margin: 10px 0px;
   border: solid 1px #d9d9d9;
   border-radius: 5px;
+  @media screen and (max-width: 768px) {
+    height: 60px;
+  }
 `;
 export const HeaderBox = styled(Box)`
   background-color: ${props => props.theme.mainColor};
   color: white;
   width: 50px;
-
+  height: 100%;
   @media screen and (max-width: 768px) {
     font-size: 14px;
   }
