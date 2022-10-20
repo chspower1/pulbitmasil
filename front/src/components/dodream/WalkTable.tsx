@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { useGlobalFilter, useTable, useSortBy } from "react-table";
-import { useMemo, useEffect, useState } from "react";
+import { useMemo, useState } from "react";
 import { IDodream } from "@type/dodream";
 import DodreamFilter from "./DodreamFilter";
 import { convertTime } from "@components/modal/DodreamDetail";
 import { selectedDodreamAtom } from "@atom/dodream";
 import { SetterOrUpdater, useSetRecoilState } from "recoil";
-import { Box, Container, Wrapper } from "@style/Layout";
+import { Box } from "@style/Layout";
 
 interface Tableprops {
   columns: {
@@ -28,7 +28,6 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
     headerGroups,
     rows,
     prepareRow,
-    preGlobalFilteredRows,
     setGlobalFilter,
     state,
   } = useTable(
@@ -68,7 +67,6 @@ function Table({ columns, data, setDodream, dodream, setSelectedDodream }: Table
           ))}
         </BtnBox>
         <DodreamFilter
-          preGlobalFilteredRows={preGlobalFilteredRows}
           setGlobalFilter={setGlobalFilter}
           globalFilter={state.globalFilter}
         />
@@ -172,6 +170,7 @@ const WholeContainer = styled(Box)`
   background-color: none;
   margin: 0;
   padding: 0;
+
   @media screen and (max-width: 870px) {
     width: 100vw;
   }
@@ -189,6 +188,7 @@ const TableWrapper = styled.div`
   height: 35vh;
   overflow-y: scroll;
   width: 100%;
+
   @media screen and (max-width: 870px) {
     width: 90%;
   }
@@ -285,6 +285,7 @@ const BtnBox = styled(Box)`
   display: flex;
   align-items: center;
   margin-bottom: -20px;
+
   @media screen and (max-width: 870px) {
     margin-bottom: 0;
     width: 95%;

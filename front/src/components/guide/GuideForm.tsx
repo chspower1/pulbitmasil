@@ -1,19 +1,12 @@
-import { Content, POS } from "@pages/Guide";
+import { Content } from "@pages/Guide";
 import {
-  Wrapper as WrapGuide,
-  AboutContent,
   Container as ContainerGuide,
   Title,
-  SubTitle as SubTitleGuide,
-  GreenAccent,
   Desc,
   Box,
-  Row,
-  DangerAccent,
   MainBtn,
 } from "@style/Layout";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
 
 export default function GuideForm({ content }: { content: Content }) {
@@ -53,7 +46,6 @@ const GuideTitle = styled(Title)`
     font-size: 24px;
   };
 `;
-
 const Number = styled(Title)`
   position: absolute;
   font-size: 40px;
@@ -75,7 +67,6 @@ const Container = styled(ContainerGuide)<{ isRight: boolean }>`
   @media screen and (max-width: 1024px) {
     justify-content: flex-start;
   }
-  
 
   ${Number} {
     margin-right: ${props => (props.isRight ? "-200px" : "200px")};
@@ -83,11 +74,9 @@ const Container = styled(ContainerGuide)<{ isRight: boolean }>`
     @media screen and (max-width: 1024px) {
       margin-left: 18%;
     };
-
     @media screen and (max-width: 767px) {
       margin-left: ${props => (props.isRight ? "1%" : "15%")};
     };
-
     @media screen and (max-width: 550px) {
       margin-left: ${props => (props.isRight ? "5%" : "21%")};
     };
@@ -101,11 +90,9 @@ const Container = styled(ContainerGuide)<{ isRight: boolean }>`
       margin-left: 32%;
       align-items: center;
     };
-
     @media screen and (max-width: 767px) {
       margin-left: 25%;
     }
-
     @media screen and (max-width: 550px) {
       margin-left: 45%;
       align-items: flex-start;
@@ -122,8 +109,7 @@ const Container = styled(ContainerGuide)<{ isRight: boolean }>`
         text-align: center;
       }
       @media screen and (max-width: 767px) {
-        font-size: 13px;
-        
+        font-size: 13px;       
       };
       @media screen and (max-width: 550px) {
         text-align: left;
@@ -162,6 +148,5 @@ const LineBox = styled(Box)<{ isRight: boolean }>`
   };
 `;
 const GuideMainBtn = styled(MainBtn)`
-  /* padding: 10px; */
   margin: 10px 0;
 `;

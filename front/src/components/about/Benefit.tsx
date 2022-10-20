@@ -7,7 +7,6 @@ import {
   Box,
   Row as RowGuide,
 } from "@style/Layout";
-import React from "react";
 import styled from "styled-components";
 
 export default function Benefit() {

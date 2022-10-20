@@ -2,8 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { useAsyncDebounce } from "react-table";
 import styled from "styled-components";
 
-export default function DodreamFilter({ preGlobalFilteredRows, globalFilter, setGlobalFilter }: any) {
-  const count = preGlobalFilteredRows.length;
+export default function DodreamFilter({ globalFilter, setGlobalFilter }: any) {
   const [value, setValue] = useState(globalFilter);
   const onChange = useAsyncDebounce(value => {
     setGlobalFilter(value || undefined);

@@ -1,7 +1,7 @@
 import { PopulationChart } from "../chart/Population";
+import styled from "styled-components";
 import {
   AboutContent,
-  Container,
   Title as TitleGuide,
   SubTitle as SubTitleGuide,
   GreenAccent,
@@ -10,8 +10,6 @@ import {
   Row as RowGuide,
   DangerAccent,
 } from "@style/Layout";
-import React from "react";
-import styled from "styled-components";
 
 export default function Problem() {
   return (
@@ -111,7 +109,6 @@ const ChartContainer = styled(Box)`
     align-items: center;
   }
 `;
-
 const NewsBox = styled(Box)`
   background-color: rgba(255, 255, 255, 0.5);
   width: 400px;
@@ -127,7 +124,6 @@ const NewsBox = styled(Box)`
     width: 95%;
   }
 `;
-
 const NewsText = styled(SubTitle)`
   font-size: 17px;
   margin: 0px;
