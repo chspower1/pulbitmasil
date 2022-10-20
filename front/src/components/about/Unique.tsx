@@ -8,6 +8,7 @@ import {
   Box,
   Row,
   DangerAccent,
+  MainBtn,
 } from "@style/Layout";
 import React from "react";
 import styled from "styled-components";
@@ -91,7 +92,7 @@ const ContentContainer = styled(Container)`
     align-items: center;
     justify-content: space-between;
   }
-  @media screen and (max-width: 728px) {
+  @media screen and (max-width: 758px) {
     width: 90%;
   }
 `;
@@ -114,12 +115,12 @@ const Desc = styled(DescGuide)`
     text-align: center;
   }
 `;
-const Btn = styled.button`
+const Btn = styled(MainBtn)`
   width: 180px;
   height: 50px;
   font-size: 18px;
   padding: 10px 5px;
-  margin-right: 20px;
+  margin: 0px 10px;
 
   @media screen and (max-width: 1024px) {
     width: 150px;
@@ -127,7 +128,9 @@ const Btn = styled.button`
     font-size: 14px;
   }
 `;
-const BtnBox = styled(Box)``;
+const BtnBox = styled(Box)`
+  justify-content: space-between;
+`;
 
 const TextRow = styled(Row)`
   @media screen and (max-width: 1024px) {
