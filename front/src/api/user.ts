@@ -7,7 +7,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
   const bodyData = JSON.stringify(loginInfo);
 
   try {
-    const { data } = await axiosInstance.post(`user/login`, bodyData, {
+    const { data } = await axiosInstance.post(`login`, bodyData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -24,7 +24,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
 }
 export async function getUser() {
   try {
-    const { data: user }: { data: User } = await axiosInstance.get(`user/mypage`, {
+    const { data: user }: { data: User } = await axiosInstance.get(`mypage`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -40,8 +40,8 @@ export async function getUser() {
 export async function registerUser(newUser: UserRegisterForm) {
   try {
     const bodyData = JSON.stringify(newUser);
-    console.log(`%cGET 요청 ${BASE_URL + "user/register"}`, "color: #a25cd1;");
-    const { status } = await axiosInstance.post(`user/register`, bodyData, {
+    console.log(`%cGET 요청 ${BASE_URL + "register"}`, "color: #a25cd1;");
+    const { status } = await axiosInstance.post(`register`, bodyData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -57,14 +57,14 @@ export async function registerUser(newUser: UserRegisterForm) {
 
 export async function kakaoLogin(code: string) {
   // console.log(`%cGET 요청 ${BASE_URL}auth/kakao?code=${code}`, "color: #a25cd1;");
-  const { data } = await axiosInstance.get(`auth/kakao?code=${code}`);
+  const { data } = await axiosInstance.get(`kakao?code=${code}`);
   sessionStorage.setItem("userToken", data.token);
   // console.log("카카오로그인", data);
   return data;
 }
 export async function naverLogin(accessToken: string, stateToken: string) {
   try {
-    const { data } = await axiosInstance.get(`auth/naver?access_token=${accessToken}&state_token=${stateToken}`);
+    const { data } = await axiosInstance.get(`naver?access_token=${accessToken}&state_token=${stateToken}`);
     sessionStorage.setItem("userToken", data.token);
     // console.log("네이버로그인", data);
     return data;
@@ -74,12 +74,12 @@ export async function naverLogin(accessToken: string, stateToken: string) {
 }
 
 export async function changePassword(data: PasswordForm) {
-  console.log(`%cPUT 요청 ${BASE_URL}/user/password`, "color: #a25cd1;");
+  console.log(`%cPUT 요청 ${BASE_URL}/password`, "color: #a25cd1;");
   const { newPassword, password } = data;
 
   try {
     const { status } = await axiosInstance.put(
-      `/user/password`,
+      `/password`,
       { newPassword, password },
       {
         headers: {
@@ -96,10 +96,10 @@ export async function changePassword(data: PasswordForm) {
   }
 }
 export async function resetPassword(email: string) {
-  console.log(`%cPUT 요청 ${BASE_URL}/user/reset`, "color: #a25cd1;");
+  console.log(`%cPUT 요청 ${BASE_URL}/reset`, "color: #a25cd1;");
 
   try {
-    const { status } = await axiosInstance.put(`/user/reset`, { email });
+    const { status } = await axiosInstance.put(`/reset`, { email });
     return status;
   } catch (err) {
     if (axios.isAxiosError(err) && err?.response?.status === 402) {
@@ -109,10 +109,10 @@ export async function resetPassword(email: string) {
 }
 
 export async function changeName(name: string) {
-  console.log(`%cPUT 요청 ${BASE_URL}/user/name`, "color: #a25cd1;");
+  console.log(`%cPUT 요청 ${BASE_URL}/name`, "color: #a25cd1;");
 
   return axiosInstance.put(
-    `user/name`,
+    `name`,
     { name },
     {
       headers: {

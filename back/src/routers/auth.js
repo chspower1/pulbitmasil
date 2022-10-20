@@ -61,11 +61,11 @@ authRouter.get("/kakao/info/:access_token", async function (req, res, next) {
           "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'kakao','kakao')",
           [result.data.kakao_account.profile.nickname, email],
         );
-        const token = jwt.sign({ id: rows2[0].insertId, access_token: access_token }, secretKey);
+        const token = jwt.sign({ id: rows2.insertId, access_token: access_token }, secretKey);
 
         res.status(200).json({
           success: true,
-          id: rows2[0].insertId,
+          id: rows2.insertId,
           name: result.data.kakao_account.profile.nickname,
           email: email,
           social: "kakao",
@@ -139,11 +139,11 @@ authRouter.get("/naver", async function (req, res, next) {
           "INSERT INTO USER(name, email, hashedPassword,social) VALUES(?,?,'naver', 'naver')",
           [name, email],
         );
-        const token = jwt.sign({ id: rows2[0].insertId, access_token: access_token }, secretKey);
+        const token = jwt.sign({ id: rows2.insertId, access_token: access_token }, secretKey);
 
         res.status(200).json({
           success: true,
-          id: rows2[0].insertId,
+          id: rows2.insertId,
           name: name,
           email: email,
           social: "naver",
