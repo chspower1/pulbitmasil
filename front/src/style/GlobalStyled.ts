@@ -30,6 +30,11 @@ export const GlobalStyled = createGlobalStyle`
             outline: none; 
             box-shadow: 0 0 0 2px ${props => props.theme.mainColor};
         }
+        ::placeholder{
+        @media screen and (max-width:768px){
+                font-size:14px;
+            }
+        }
     }
 
     
@@ -43,7 +48,7 @@ export const GlobalStyled = createGlobalStyle`
             font-size:18px;
             letter-spacing: 0px;
             @media screen and (max-width:768px){
-                font-size:13px;
+                font-size:14px;
             }
         }
     }
