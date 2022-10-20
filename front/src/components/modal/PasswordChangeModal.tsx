@@ -6,8 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Box, Wrapper, DangerBtn, MainBtn } from "@style/Layout";
-import { UserPasswordProps } from "@pages/mypage";
+import { Box, DangerBtn, MainBtn } from "@style/Layout";
+
 import { AnimatePresence } from "framer-motion";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 import { ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
@@ -38,7 +38,6 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
   };
 
   const onvaild = async (data: PasswordForm) => {
-
     changePassword(data).then(status => {
       if (status === 406) {
         alert("현재 비밀번호가 일치하지 않습니다.");
@@ -47,8 +46,6 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
         closeRegisterModal();
       }
     });
-
-    // closeRegisterModal();
   };
 
   return (
@@ -72,14 +69,13 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
                 placeholder="숫자,특수문자,영문 포함 8자리 이상"
                 type={isViewCurPassword ? "text" : "password"}
                 id="password"
-                // type="password"
                 {...register("password", {
                   required: { value: true, message: "비밀번호를 입력해주세요." },
                   minLength: { value: 8, message: "8자 이상 입력해주세요." },
-                  // pattern: {
-                  //   value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
-                  //   message: "숫자,특수문자,영문 포함 8자리 이상 적어주세요.",
-                  // },
+                  pattern: {
+                    value: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
+                    message: "숫자,특수문자,영문 포함 8자리 이상 적어주세요.",
+                  },
                 })}
               />
               <ViewPassword style={{ top: "18px" }}>
@@ -99,7 +95,7 @@ export default function PasswordChangeModal({ setIsPasswordChange, isPasswordCha
                 placeholder="숫자,특수문자,영문 포함 8자리 이상"
                 type={isViewPassword ? "text" : "password"}
                 id="newPassword"
-                // type="password"
+        
                 {...register("newPassword", {
                   required: { value: true, message: "비밀번호를 입력해주세요." },
                   minLength: { value: 8, message: "8자 이상 입력해주세요." },
@@ -221,7 +217,7 @@ const Input = styled.input`
   @media screen and (max-width: 767px) {
     width: 100%;
     ::placeholder {
-     font-size: 16px;
+      font-size: 16px;
     }
   }
 `;

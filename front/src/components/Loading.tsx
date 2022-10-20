@@ -9,6 +9,3 @@ export default function Loading() {
     </Wrapper>
   );
 }
-const Img = styled.img`
-  /* background-color: transparent; */
-`;

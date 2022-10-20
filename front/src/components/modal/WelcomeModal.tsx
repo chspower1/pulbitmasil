@@ -1,6 +1,5 @@
 import { isWelcomeModalAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
-import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { Link } from "react-router-dom";

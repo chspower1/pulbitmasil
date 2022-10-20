@@ -71,11 +71,3 @@ const CheckBox = styled(Box)`
 const DistrictCheckBox = styled(CheckBox)`
   height: 150px;
 `;
-const CheckContainer = styled(Container)`
-  flex-wrap: wrap;
-`;
-const ItemBox = styled(Box)`
-  margin: 0.2em 0.5em;
-  padding: 0.5em 0.7em;
-  background-color: rgba(25, 76, 29, 0.1);
-`;

@@ -1,13 +1,10 @@
 import { userAtom } from "@atom/user";
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { IReview } from "@type/review";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { ReviewDeleteIdAtom } from "@atom/atom";
-import ReviewDeleteModal from "../modal/ReviewDeleteModal";
-import { ModalAccent } from "@style/ModalStyle";
 import dayjs from "dayjs";
 import { MainBtn, DangerBtn } from "@style/Layout";
 
@@ -16,7 +13,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   console.log(review);
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
-  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const setReviewDelId = useSetRecoilState(ReviewDeleteIdAtom);
 
   const createDay = dayjs(createAt).format("YYYY-MM-DD");
 

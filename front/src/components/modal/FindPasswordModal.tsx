@@ -1,15 +1,11 @@
-import { isLogoutModalAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
-import React, { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import React from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap as FindModalWrap, Overlay } from "@style/ModalStyle";
-import { Link, useNavigate } from "react-router-dom";
-import { isPasswordFindModalAtom, userAtom } from "@atom/user";
-import { UserNavProps } from "@components/layout/Nav";
-import { createPortal } from "react-dom";
+
+import { isPasswordFindModalAtom } from "@atom/user";
 import { useForm } from "react-hook-form";
-import { UserPasswordProps } from "@pages/mypage";
 import { resetPassword } from "@api/user";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 import { Box, DangerAccent } from "@style/Layout";
@@ -26,7 +22,6 @@ export default function FindPasswordModal() {
     formState: { errors },
     watch,
     reset,
-    getValues,
   } = useForm<EmailForm>();
 
   const closeFindModal = async () => {
@@ -51,11 +46,9 @@ export default function FindPasswordModal() {
         <FindModalWrap>
           <FindForm onSubmit={handleSubmitFind} variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <LogoutDesc>
-              가입한<DangerAccent>&nbsp;이메일&nbsp;</DangerAccent>로 
+              가입한<DangerAccent>&nbsp;이메일&nbsp;</DangerAccent>로
             </LogoutDesc>
-            <LogoutDesc>  
-              임시비밀번호가 발급됩니다.
-            </LogoutDesc>
+            <LogoutDesc>임시비밀번호가 발급됩니다.</LogoutDesc>
             <LogoutDesc>하단에 이메일 주소를 적어주세요.</LogoutDesc>
             <InputBox>
               <InputTitle>이메일</InputTitle>
@@ -174,7 +167,7 @@ const Input = styled.input`
   @media screen and (max-width: 767px) {
     width: 100%;
     ::placeholder {
-     font-size: 16px;
+      font-size: 16px;
     }
   }
 `;

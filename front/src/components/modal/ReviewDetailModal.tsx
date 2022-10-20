@@ -4,18 +4,16 @@ import { DangerBtn, MainBtn } from "@style/Layout";
 import { ModalContainer, ModalWrap } from "@style/ModalStyle";
 import { IReview } from "@type/review";
 import dayjs from "dayjs";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState, SetStateAction, Dispatch, useEffect } from "react";
-import { useMatch, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
 export default function ReviewDetailModal({ review }: { review: IReview }) {
   const { reviewId, name, createAt, description, userId, reviewImg, title, area } = review;
   const navigate = useNavigate();
-  const reviewMatch = useMatch(`/review/${reviewId}`);
   const user = useRecoilValue(userAtom);
-  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const setReviewDelId = useSetRecoilState(ReviewDeleteIdAtom);
 
   const handleClickOverlay = () => {
     navigate("/review");

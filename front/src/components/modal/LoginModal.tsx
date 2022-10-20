@@ -4,23 +4,20 @@ import styled from "styled-components";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { isLoginModalAtom, isWelcomeModalAtom } from "@atom/atom";
 import { isLoginSelector, isPasswordFindModalAtom } from "@atom/user";
-import { Link, useLocation, useMatch, useNavigate } from "react-router-dom";
-
-import { kakaoLogin, requestLogin } from "@api/user";
+import { Link, useMatch, useNavigate } from "react-router-dom";
+import { requestLogin } from "@api/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
 import { UserLoginForm } from "@type/user";
 import { ModalWrap, ModalContainer as LoginForm, ModalTitle as LoginTitle, Overlay } from "@style/ModalStyle";
-import FindPasswordModal from "./FindPasswordModal";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 import { CloseBtn } from "@style/Layout";
 
 export default function LoginModal() {
-  const { pathname } = useLocation();
   const {
     register,
     formState: { errors },
@@ -29,15 +26,13 @@ export default function LoginModal() {
   } = useForm<UserLoginForm>({ mode: "onChange" });
   const [isLoginModal, setIsLoginModal] = useRecoilState(isLoginModalAtom);
   const isLogin = useRecoilValue(isLoginSelector);
-  const [isFindPassword, setIsFindPassword] = useRecoilState(isPasswordFindModalAtom);
+  const setIsFindPassword = useSetRecoilState(isPasswordFindModalAtom);
   const [isViewPassword, setIsViewPassword] = useState(false);
-  const navigator = useNavigate();
-  const match = useMatch("/register");
   const setIsWelcomeModal = useSetRecoilState(isWelcomeModalAtom);
   const handleClickViewPassword = () => {
     setIsViewPassword(cur => !cur);
   };
-  const [curUser, setCurUser] = useRecoilState(userAtom);
+  const setUser = useSetRecoilState(userAtom);
 
   // 카카오 로그인
   const REST_API_KEY = process.env.REACT_APP_KAKAO_API;
@@ -45,9 +40,6 @@ export default function LoginModal() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const handleClickKakao = () => {
     window.location.href = KAKAO_AUTH_URL;
-    const href = window.location.href;
-    let params = new URL(window.location.href).searchParams;
-    let code = params.get("code");
   };
 
   const closeLoginModal = async () => {
@@ -67,13 +59,12 @@ export default function LoginModal() {
     } else {
       setIsWelcomeModal(true);
     }
-    setCurUser({ id, email, name, token, social, greenCrews, reviews });
+    setUser({ id, email, name, token, social, greenCrews, reviews });
   };
 
   //로그인 시 모달비활성화,홈으로 이동
   useEffect(() => {
     if (isLogin) {
-      // navigator("/");
       closeLoginModal();
     }
   }, [isLogin]);
