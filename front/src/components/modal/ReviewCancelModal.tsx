@@ -24,7 +24,7 @@ export default function ReviewModal() {
         <ReviewModalWrap>
           <ReviewModalContainer>
             <CancelDesc>
-              <DangerAccent>취소</DangerAccent>하시겠습니까?
+              <DangerCancelAccent>취소</DangerCancelAccent>&nbsp;하시겠습니까?
             </CancelDesc>
             <CancelDesc className="second">작성한 내용이 모두 사라집니다.</CancelDesc>
 
@@ -51,12 +51,14 @@ export default function ReviewModal() {
 }
 
 const ReviewModalWrap = styled(ModalWrap)`
-  position: fixed;
   width: 100vw;
   height: 100vh;
   display: flex;
-  position: fixed;
   z-index: 1000;
+  @media screen and (max-width: 767px) {
+    position: fixed;
+    left: 0%;
+  }
 `;
 const ReviewModalContainer = styled(ModalContainer)`
   display: flex;
@@ -71,11 +73,25 @@ const ReviewModalContainer = styled(ModalContainer)`
   right: 0;
   width: 500px;
   height: 200px;
+
+  @media screen and (max-width: 767px) {
+    width: 80%;
+  }
+`;
+
+const DangerCancelAccent = styled(DangerAccent)`
+  @media screen and (max-width: 767px) {
+    font-size: 20px;
+  }
 `;
 
 const CancelDesc = styled(ModalDesc)`
   &.second {
     font-size: 22px;
+
+    @media screen and (max-width: 767px) {
+    font-size: 18px;
+  }
   }
 `;
 
@@ -90,6 +106,9 @@ const CancelBtn = styled.button`
   background-color: ${props => props.theme.dangerColor};
   &:hover {
     background-color: #cc5e43;
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 16px;
   }
 `;
 const CloseBtn = styled(CancelBtn)`

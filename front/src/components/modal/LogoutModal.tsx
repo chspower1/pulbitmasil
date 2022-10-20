@@ -32,16 +32,16 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
         <LogoutModalWrap>
           <LogoutModalContainer variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <LogoutDesc>
-              <DangerAccent>로그아웃&nbsp; </DangerAccent>하시겠습니까?
+              <DangerLogoutAccent>로그아웃&nbsp; </DangerLogoutAccent>하시겠습니까?
             </LogoutDesc>
             <ModalBtnContainer>
-              <DangerBtn style={{ marginRight: "10px" }} type="button" onClick={handleClickLogout}>
+              <DangerLogoutBtn style={{ marginRight: "10px" }} type="button" onClick={handleClickLogout}>
                 로그아웃
-              </DangerBtn>
+              </DangerLogoutBtn>
 
-              <MainBtn type="button" onClick={() => setIsLogoutModal(false)}>
+              <LogoutBtn type="button" onClick={() => setIsLogoutModal(false)}>
                 취소
-              </MainBtn>
+              </LogoutBtn>
             </ModalBtnContainer>
           </LogoutModalContainer>
           <Overlay
@@ -56,14 +56,36 @@ export default function LogoutModal({ setIsUserNav }: UserNavProps) {
     </AnimatePresence>
   );
 }
+
 const LogoutModalContainer = styled(ModalContainer)`
   width: 500px;
   height: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 768px) {
+    width: 80%;
+    position: fixed;
+  }
 `;
 const LogoutDesc = styled(ModalDesc)`
   margin-top: 60px;
   margin-bottom: 40px;
+`;
+
+const LogoutBtn = styled(MainBtn)`
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+  }
+`;
+const DangerLogoutBtn = styled(DangerBtn)`
+  @media screen and (max-width: 768px) {
+    font-size: 15px;
+  }
+`;
+const DangerLogoutAccent = styled(DangerAccent)`
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
 `;

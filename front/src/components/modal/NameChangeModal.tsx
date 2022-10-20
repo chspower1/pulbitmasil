@@ -55,7 +55,7 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
   return (
     <AnimatePresence>
       {isNameChange && (
-        <PasswordWrapper>
+        <NameWrapper>
           <FormContainer
             onSubmit={handleSubmit(onvalid)}
             variants={ModalVariant}
@@ -102,13 +102,13 @@ export default function NameChangeModal({ setIsNameChange, name, isNameChange, m
             animate="animate"
             exit="exit"
           />
-        </PasswordWrapper>
+        </NameWrapper>
       )}
     </AnimatePresence>
   );
 }
 
-const PasswordWrapper = styled(ModalWrap)`
+const NameWrapper = styled(ModalWrap)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,6 +117,9 @@ const PasswordWrapper = styled(ModalWrap)`
 const FormContainer = styled(ModalContainer)`
   color: #bdbdbd;
   padding: 20px 0;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const Title = styled.h1`
@@ -124,6 +127,10 @@ const Title = styled.h1`
   font-weight: bold;
   margin: 30px 0;
   color: ${props => props.theme.mainColor};
+
+  @media screen and (max-width: 767px) {
+    font-size: 24px;
+  }
 `;
 const Description = styled.p`
   font-size: 16px;
@@ -135,6 +142,13 @@ const InputBox = styled.div`
   width: 530px;
   color: #8d8d8d;
   margin-bottom: 25px;
+
+  @media screen and (max-width: 767px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 500px) {
+    width: 80%;
+  }
 `;
 const InputTitle = styled.h3`
   font-size: 13px;
@@ -150,6 +164,12 @@ const Input = styled.input`
   color: ${props => props.theme.textColor};
   ::placeholder {
     color: ${props => props.theme.weekColor};
+  }
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    ::placeholder {
+     font-size: 16px;
+    }
   }
 `;
 const ErrorMessage = styled.div`
@@ -180,4 +200,8 @@ const Form = styled.form`
 const ButtonBox = styled(Box)`
   margin-top: 20px;
   width: 100%;
+  @media screen and (max-width: 767px) {
+    width: 80%;
+    font-size: 18px;
+  }
 `;
