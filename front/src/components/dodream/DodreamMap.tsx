@@ -1,14 +1,11 @@
 /*global kakao*/
-import LogoutModal from "@components/modal/LogoutModal";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import DodreamDetail from "@components/modal/DodreamDetail";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import { IDodream } from "@type/dodream";
 import { useRecoilState } from "recoil";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
-import { Box } from "@style/Layout";
 
 const { kakao }: any = window;
 

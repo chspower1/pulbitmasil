@@ -1,4 +1,4 @@
-import { AboutContent, Box, Container, Title, SubTitle, Desc, GreenAccent, Row } from "@style/Layout";
+import { AboutContent, Box, Container, Title, SubTitle, Desc, GreenAccent } from "@style/Layout";
 import styled from "styled-components";
 
 export default function Pulbitmasil() {
@@ -28,9 +28,7 @@ export default function Pulbitmasil() {
       </LeftContainer>
       <RightContainer>
         <TitleBox>
-          {/* <img src={'assets/icon/double_quotes_start.svg'}/> */}
           <PulbitmasilTitle>풀빛마실이란</PulbitmasilTitle>
-          {/* <img src={'assets/icon/double_quotes_end.svg'}/> */}
         </TitleBox>
         <PulbitmasilSubTitle>플로깅 이란 단어를 들어보셨나요?</PulbitmasilSubTitle>
         <PulbitmasilDesc>
@@ -51,6 +49,7 @@ export default function Pulbitmasil() {
 
 const PulbitmasilContent = styled(AboutContent)`
   display: flex;
+
   @media screen and (max-width: 1124px) {
     flex-direction: column;
     width: 100%;
@@ -61,7 +60,6 @@ const PlusImg = styled.img`
     flex-direction: column;
   }
 `;
-
 const LeftContainer = styled(Container)`
   flex-direction: column;
   width: 55%;
@@ -92,7 +90,6 @@ const DescBox = styled.div`
     margin-bottom: 10px;
   }
 `;
-
 const NameBox = styled(Box)`
   margin-bottom: 30px;
   padding: 0;
@@ -114,10 +111,8 @@ const PulbitmasilTitle = styled(Title)`
     margin: 0;
   }
 `;
-
 const PulbitmasilSubTitle = styled(SubTitle)`
   margin: 20px 0;
-  /* font-size: 24px; */
   font-family: "Sebang";
   line-height: 28px;
   display: flex;
@@ -125,7 +120,6 @@ const PulbitmasilSubTitle = styled(SubTitle)`
   letter-spacing: 0.05em;
   color: ${props => props.theme.dangerColor};
 `;
-
 const PulbitmasilDesc = styled(Desc)`
   font-size: 16px;
   line-height: 25px;
@@ -142,7 +136,6 @@ const PulbitmasilDesc = styled(Desc)`
     width: 70%;
   }
 `;
-
 const GreenCircleImg = styled(Box)`
   background-image: url("/assets/images/about/name_green.png");
   background-size: contain;

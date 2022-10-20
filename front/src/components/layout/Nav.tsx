@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useRoutes } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
-import { useForm } from "react-hook-form";
 import LoginModal from "../modal/LoginModal";
 import LogoutModal from "@components/modal/LogoutModal";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -12,19 +11,14 @@ import { logo01, logo02, logo03, logo04, logo05 } from "@style/icon/logo";
 import { userAtom } from "@atom/user";
 import UserNav from "@components/UserNav";
 import DodreamDetalModal from "@components/modal/DodreamDetail";
-import { Box, SubTitle } from "@style/Layout";
+import { Box } from "@style/Layout";
 import FindPasswordModal from "@components/modal/FindPasswordModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUser } from "@fortawesome/free-solid-svg-icons";
 import MenuNav from "@components/MenuNav";
 import RegisterModal from "@components/modal/RegisterModal";
-// import ModalPortal from "@components/modal/ModalPortal";
 
 // Interface
-interface SearchForm {
-  keyword: string;
-}
-
 export interface UserNavProps {
   setIsUserNav: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -63,12 +57,10 @@ type ViewMode = "mobile" | "tablet" | "desktop";
 export default function Nav() {
   const { pathname } = useLocation();
   const [refreshLogo, setRefreshLogo] = useState(0);
-  const [searchOpen, setSearchOpen] = useState(false);
   const isLogin = useRecoilValue(isLoginSelector);
   const [isLoginModal, setIsloginModal] = useRecoilState(isLoginModalAtom);
   const [isLogoutModal, setIsLogoutModal] = useRecoilState(isLogoutModalAtom);
-  const navigate = useNavigate();
-  const [user, setUser] = useRecoilState(userAtom);
+  const user = useRecoilValue(userAtom);
   const [curState, setCurState] = useState(pathname === "/" ? "home" : pathname.slice(1));
   const { scrollY } = useScroll();
   const navAnimation = useAnimation();
@@ -77,11 +69,6 @@ export default function Nav() {
   const [isMenuNav, setIsMenuNav] = useState(false);
   const [isUserNav, setIsUserNav] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>();
-  //user nav 설정하는 코드
-  // const handleClickMenu = () => {
-  //   // ModalPortal(LoginModal); 포탈적용 어떻게 해야할지 모르겠음
-  //   isLogin ? setIsUserNav(cur => !cur) : setIsloginModal(cur => !cur);
-  // };
   const handleClickLogin = () => {
     setIsloginModal(true);
     setIsMenuNav(false);
@@ -94,7 +81,6 @@ export default function Nav() {
 
   useEffect(() => {
     scrollY.onChange(() => {
-      // console.log(scrollY.get());
       if (scrollY.get() > 80) {
         navAnimation.start("scroll");
       } else {
@@ -317,6 +303,7 @@ const Item = styled.li`
   justify-content: center;
   color: #618872;
   transition: all 0.4s ease;
+
   @media screen and (max-width: 1100px) {
     width: 80px;
   }
@@ -339,6 +326,7 @@ const LoginContainer = styled.div`
   align-items: center;
   position: absolute;
   right: 20px;
+
   @media screen and (max-width: 860px) {
     display: none;
   }
@@ -364,7 +352,6 @@ const RegisterBox = styled.div`
   cursor: pointer;
   border-radius: 5px;
   margin: auto;
-
   &:hover {
     background-color: ${props => props.theme.accentColor};
     color: white;
@@ -417,9 +404,7 @@ const UserNameBox = styled.div`
   align-items: center;
   height: 100%;
 `;
-// const MenuImg = styled(motion.img)`
-//   cursor: pointer;
-// `;
+
 const Logout = styled.div`
   cursor: pointer;
   color: #b1b1b1;

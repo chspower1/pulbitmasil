@@ -10,9 +10,8 @@ import {
   DangerAccent,
   MainBtn,
 } from "@style/Layout";
-import React from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Unique() {
   const navigate = useNavigate();
@@ -24,9 +23,7 @@ export default function Unique() {
       </ImgContainer>
       <ContentContainer>
         <TextRow>
-          {/* <QueteImg style={{ marginRight: "8px" }} src="/assets/icon/double_quotes_start.svg" alt="" /> */}
           <Title>풀빛마실의 차별점</Title>
-          {/* <QueteImg style={{ marginLeft: "8px" }} src="/assets/icon/double_quotes_start.svg" alt="" /> */}
         </TextRow>
         <TextRow>
           <SubTitle>
@@ -64,6 +61,7 @@ const Wrap = styled(AboutContent)`
   width: 100%;
   align-items: center;
   justify-content: center;
+
   @media screen and (max-width: 1024px) {
   }
 `;
@@ -71,13 +69,10 @@ const ImgContainer = styled(Container)`
   justify-content: flex-end;
   margin-right: 70px;
   width: 47%;
+
   @media screen and (max-width: 1024px) {
     display: none;
   }
-`;
-const QueteImg = styled.img`
-  width: 20px;
-  margin-top: -30px;
 `;
 const ContentContainer = styled(Container)`
   height: 460px;
@@ -85,6 +80,7 @@ const ContentContainer = styled(Container)`
   align-items: flex-start;
   justify-content: space-between;
   width: 50%;
+
   @media screen and (max-width: 1024px) {
     align-items: center;
     justify-content: space-between;
@@ -111,6 +107,7 @@ const Img = styled.img`
 `;
 const Desc = styled(DescGuide)`
   line-height: 1.1;
+
   @media screen and (max-width: 1024px) {
     text-align: center;
   }
@@ -130,11 +127,11 @@ const Btn = styled(MainBtn)`
 const BtnBox = styled(Box)`
   width: 380px;
   justify-content: space-between;
+  
   @media screen and (max-width: 1024px) {
     width: 320px;
   }
 `;
-
 const TextRow = styled(Row)`
   @media screen and (max-width: 1024px) {
     display: flex;
