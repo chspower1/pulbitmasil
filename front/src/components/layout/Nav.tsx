@@ -178,9 +178,9 @@ export default function Nav() {
                 <UserName>{user?.name}</UserName>
               </UserNameBox>
             </Link>
-            <Link to="mypage/home">
+            {/* <Link to="mypage/home">
               <SubTitle style={{ fontFamily: "SebangBold" }}>마이페이지</SubTitle>
-            </Link>
+            </Link> */}
             <Logout onClick={handleClickLogout}>로그아웃</Logout>
             {/* <MenuImg onClick={handleClickMenu} src="/assets/icon/user/menu_button.svg" /> */}
           </UserContainer>
@@ -373,13 +373,13 @@ const RegisterBtn = styled.button`
 `;
 
 const UserContainer = styled(LoginContainer)`
-  width: 310px;
+  /* width: 310px; */
 `;
 
 const UserName = styled.span`
   color: ${props => props.theme.textColor};
   margin: 10px;
-  font-size: 16px;
+  font-size: 18px;
   font-family: "SebangBold";
 `;
 
@@ -396,4 +396,6 @@ const Logout = styled.div`
   cursor: pointer;
   color: #b1b1b1;
   font-family: "SebangBold";
+  font-size: 16px;
+  margin: 10px;
 `;
