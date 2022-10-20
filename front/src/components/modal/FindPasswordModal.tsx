@@ -55,7 +55,10 @@ export default function FindPasswordModal() {
         <FindModalWrap>
           <FindForm onSubmit={handleSubmitFind} variants={ModalVariant} initial="initial" animate="animate" exit="exit">
             <LogoutDesc>
-              가입한 <DangerAccent> &nbsp;이메일&nbsp; </DangerAccent>로 임시비밀번호가 발급됩니다.
+              가입한<DangerAccent>&nbsp;이메일&nbsp;</DangerAccent>로 
+            </LogoutDesc>
+            <LogoutDesc>  
+              임시비밀번호가 발급됩니다.
             </LogoutDesc>
             <LogoutDesc>하단에 이메일 주소를 적어주세요.</LogoutDesc>
             <InputBox>
@@ -98,17 +101,25 @@ export default function FindPasswordModal() {
 }
 const FindForm = styled(ModalContainer)`
   width: 500px;
-  height: 300px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 const LogoutDesc = styled(ModalDesc)`
   &:first-child {
     margin-top: 50px;
   }
-
   font-size: 22px;
+  @media screen and (max-width: 767px) {
+    font-size: 16px;
+  }
+  @media screen and (max-width: 400px) {
+    font-size: 14px;
+  }
 `;
 
 const ConfirmBtn = styled.button`
@@ -122,6 +133,9 @@ const ConfirmBtn = styled.button`
   background-color: ${props => props.theme.dangerColor};
   &:hover {
     background-color: #cc5e43;
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 16px;
   }
 `;
 const CloseBtn = styled(ConfirmBtn)`
@@ -137,6 +151,12 @@ const InputBox = styled(Box)`
   width: 300px;
   color: #8d8d8d;
   margin: 10px 0;
+  @media screen and (max-width: 767px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 500px) {
+    width: 80%;
+  }
 `;
 const InputTitle = styled.h3`
   font-size: 13px;
@@ -150,9 +170,16 @@ const Input = styled.input`
   font-size: 18px;
   padding: auto;
   padding-left: 10px;
+  margin-bottom: 15px;
   color: ${props => props.theme.textColor};
   ::placeholder {
     color: ${props => props.theme.weekColor};
+  }
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    ::placeholder {
+     font-size: 16px;
+    }
   }
 `;
 const ErrorMessage = styled.div`

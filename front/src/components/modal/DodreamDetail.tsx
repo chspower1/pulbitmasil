@@ -2,7 +2,7 @@ import { AnimatePresence } from "framer-motion";
 import React, { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { ModalContainer, ModalWrap as DodreamModalWrap, Overlay } from "@style/ModalStyle";
+import { ModalContainer, ModalWrap as DodreamModalWrap, ModalWrap, Overlay } from "@style/ModalStyle";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
 import ReactMarkdown from "react-markdown";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
@@ -126,6 +126,7 @@ export default function DodreamDetalModal() {
     </AnimatePresence>
   );
 }
+
 const DodreamModalContainer = styled(ModalContainer)`
   z-index: 10000;
   position: fixed;
@@ -136,9 +137,11 @@ const DodreamModalContainer = styled(ModalContainer)`
   align-items: center;
   /* padding: 0px 150px; */
   @media screen and (max-width: 575px) {
-    left: 0px;
-    width: 100vw;
+    position: fixed;
+    /* left: 0px; */
+    width: 90vw;
     height: 90vh;
+    right: 5%;
   }
 `;
 const CourseName = styled.h1`
@@ -152,7 +155,7 @@ const MapBox = styled.div`
   border-radius: 5px;
   border: solid 5px ${props => props.theme.weekColor};
   @media screen and (max-width: 575px) {
-    width: 100vw;
+    width: 85vw;
   }
 `;
 const DescContainer = styled.div`
@@ -161,13 +164,16 @@ const DescContainer = styled.div`
   flex-direction: column;
   width: 500px;
   @media screen and (max-width: 575px) {
-    width: 100vw;
+    width: 85vw;
     align-items: center;
   }
 `;
 const Row = styled.div`
   display: flex;
   /* height: 60px; */
+  @media screen and (max-width: 575px) {
+    width: 90%;
+  }
 `;
 const DetailRow = styled(Row)`
   justify-content: space-between;
@@ -195,10 +201,16 @@ const Title = styled.div`
 const BoldTitle = styled(Title)`
   font-family: "SebangBold";
   font-size: 16px;
+  @media screen and (max-width: 575px) {
+    margin-bottom: 3px;
+  }
 `;
 const Desc = styled.h1`
   font-size: 18px;
   color: ${props => props.theme.mainColor};
+  @media screen and (max-width: 575px) {
+    font-size: 16px;
+  }
 `;
 const LongDesc = styled(Title)`
   line-height: 1.5;

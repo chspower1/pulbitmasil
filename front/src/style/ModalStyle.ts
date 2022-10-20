@@ -4,11 +4,19 @@ import styled from "styled-components";
 export const ModalWrap = styled.div`
   position: fixed;
   top: 0px;
+  left: 0px;
   width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+
+  @media screen and (max-width: 767px) {
+    position: fixed;
+    left: 10%;
+    width: 80%;
+  }
 `;
 export const ModalContainer = styled(motion.form)<{ width?: string; height?: string }>`
   position: relative;
@@ -27,20 +35,37 @@ export const ModalTitle = styled.h1`
   margin-bottom: 28px;
   font-size: 28px;
   color: ${props => props.theme.mainColor};
+
+  @media screen and (max-width: 767px) {
+    font-size: 22px;
+  }
 `;
 export const ModalDesc = styled.p`
   display: flex;
   font-size: 24px;
   color: ${props => props.theme.textColor};
   margin-bottom: 18px;
+
+  @media screen and (max-width: 767px) {
+    font-size: 18px;
+  }
 `;
 export const ModalAccent = styled.h1`
   color: ${props => props.theme.mainColor};
+
+  @media screen and (max-width: 767px) {
+    font-size: 20px;
+  }
 `;
 export const ModalBtnContainer = styled.div`
   display: flex;
   width: 230px;
   justify-content: space-between;
+
+  @media screen and (max-width: 767px) {
+    width: 210px;
+    font-size: 16px;
+  }
 `;
 export const Overlay = styled(motion.div)`
   z-index: 100;

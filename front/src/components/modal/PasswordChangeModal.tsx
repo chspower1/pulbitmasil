@@ -175,6 +175,9 @@ const PasswordWrapper = styled(ModalWrap)`
 
 const PasswordContainer = styled(ModalContainer)`
   padding: 20px 0;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 const Title = styled.h1`
@@ -182,6 +185,10 @@ const Title = styled.h1`
   font-weight: bold;
   margin: 30px 0;
   color: ${props => props.theme.mainColor};
+
+  @media screen and (max-width: 767px) {
+    font-size: 24px;
+  }
 `;
 
 const InputBox = styled.div`
@@ -189,6 +196,12 @@ const InputBox = styled.div`
   width: 530px;
   color: #8d8d8d;
   margin-bottom: 25px;
+  @media screen and (max-width: 767px) {
+    width: 90%;
+  }
+  @media screen and (max-width: 500px) {
+    width: 80%;
+  }
 `;
 const InputTitle = styled.h3`
   font-size: 13px;
@@ -205,6 +218,12 @@ const Input = styled.input`
   ::placeholder {
     color: ${props => props.theme.weekColor};
   }
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    ::placeholder {
+     font-size: 16px;
+    }
+  }
 `;
 const ErrorMessage = styled.div`
   position: absolute;
@@ -218,4 +237,8 @@ const ErrorMessage = styled.div`
 const ButtonBox = styled(Box)`
   margin-top: 20px;
   width: 100%;
+  @media screen and (max-width: 767px) {
+    width: 80%;
+    font-size: 18px;
+  }
 `;
