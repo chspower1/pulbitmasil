@@ -324,6 +324,7 @@ const AreaBtn = styled(MainBtn)`
   width: 150px;
   height: 60px;
   font-size: 18px;
+
   &.active {
     background-color: ${props => props.theme.mainColor};
   }

@@ -30,22 +30,26 @@ export default function ReviewList({ reviews }: { reviews: UserReview[] | undefi
         </GrayTitle>
       </HomeContainer>
       <ReviewContainer height="80%">
-        <List>
-          {reviews?.map(review => (
-            <Item>
-              <HeaderBox>서북</HeaderBox>
-              <ContentBox>
-                <ListBox>
-                  <ItemTitle>{review?.title}</ItemTitle>
-                  {/* <ItemCourse as="span">({review?.})</ItemCourse> */}
-                </ListBox>
-                <Box>
-                  <ItemDate>{changeDayForm(review?.createAt)}</ItemDate>
-                </Box>
-              </ContentBox>
-            </Item>
-          ))}
-        </List>
+        {reviews?.length! > 0 ? (
+          <List>
+            {reviews?.map(review => (
+              <Item>
+                <HeaderBox>서북</HeaderBox>
+                <ContentBox>
+                  <ListBox>
+                    <ItemTitle>{review?.title}</ItemTitle>
+                    {/* <ItemCourse as="span">({review?.})</ItemCourse> */}
+                  </ListBox>
+                  <Box>
+                    <ItemDate>{changeDayForm(review?.createAt)}</ItemDate>
+                  </Box>
+                </ContentBox>
+              </Item>
+            ))}
+          </List>
+        ) : (
+          <SubTitle style={{ marginBottom: "20px" }}>작성된 리뷰가 없습니다.</SubTitle>
+        )}
       </ReviewContainer>
     </HomeWrap>
   );

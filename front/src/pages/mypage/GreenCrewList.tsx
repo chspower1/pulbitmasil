@@ -37,42 +37,50 @@ export default function GreenCrewList({ greenCrews }: { greenCrews: UserGreenCre
       <GrayTitle>
         <Title>완료</Title>
       </GrayTitle>
-      <List>
-        {doneGreenCrew?.map(greenCrew => (
-          <Item>
-            <HeaderBox>서북</HeaderBox>
-            <ContentBox>
-              <ListBox>
-                <ItemTitle>{greenCrew?.title}</ItemTitle>
-                <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
-              </ListBox>
-              <Box>
-                <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
-              </Box>
-            </ContentBox>
-          </Item>
-        ))}
-      </List>
+      {doneGreenCrew?.length! > 0 ? (
+        <List>
+          {doneGreenCrew?.map(greenCrew => (
+            <Item>
+              <HeaderBox>{greenCrew?.area}</HeaderBox>
+              <ContentBox>
+                <ListBox>
+                  <ItemTitle>{greenCrew?.title}</ItemTitle>
+                  <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
+                </ListBox>
+                <Box>
+                  <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
+                </Box>
+              </ContentBox>
+            </Item>
+          ))}
+        </List>
+      ) : (
+        <SubTitle style={{ marginBottom: "20px" }}>참여한 모임이 없습니다.</SubTitle>
+      )}
 
       <GrayTitle>
         <Title>진행중</Title>
       </GrayTitle>
-      <List>
-        {inProgressGreenCrew?.map(greenCrew => (
-          <Item>
-            <HeaderBox>서북</HeaderBox>
-            <ContentBox>
-              <ListBox>
-                <ItemTitle>{greenCrew?.title}</ItemTitle>
-                <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
-              </ListBox>
-              <Box>
-                <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
-              </Box>
-            </ContentBox>
-          </Item>
-        ))}
-      </List>
+      {inProgressGreenCrew?.length! > 0 ? (
+        <List>
+          {inProgressGreenCrew?.map(greenCrew => (
+            <Item>
+              <HeaderBox>서북</HeaderBox>
+              <ContentBox>
+                <ListBox>
+                  <ItemTitle>{greenCrew?.title}</ItemTitle>
+                  <ItemCourse as="span">({greenCrew?.course})</ItemCourse>
+                </ListBox>
+                <Box>
+                  <ItemDate>{changeDayForm(greenCrew?.startAt)}</ItemDate>
+                </Box>
+              </ContentBox>
+            </Item>
+          ))}
+        </List>
+      ) : (
+        <SubTitle style={{ marginBottom: "20px" }}>신청한 모임이 없습니다.</SubTitle>
+      )}
     </HomeWrap>
   );
 }
