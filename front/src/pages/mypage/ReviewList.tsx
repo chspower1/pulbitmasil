@@ -1,8 +1,5 @@
-import React from "react";
-import { Box, Container, Title as TitleGuide, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
+import { Box, Title as TitleGuide, Wrapper, SubTitle, Desc, Row } from "@style/Layout";
 import { UserReview } from "@type/user";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 import {
   ContentBox,

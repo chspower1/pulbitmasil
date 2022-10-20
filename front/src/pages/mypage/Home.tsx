@@ -1,9 +1,8 @@
-import React from "react";
-import { Box, Container, Title, Wrapper, SubTitle, Desc, Row, GreenAccent } from "@style/Layout";
+import { Box, Container, Title, SubTitle } from "@style/Layout";
 import styled from "styled-components";
 import { getSummaryGreenCrews } from "@api/greenCrew";
 import { useQuery } from "@tanstack/react-query";
-import { IGreenCrew, SummaryGreenCrew } from "@type/greenCrew";
+import { SummaryGreenCrew } from "@type/greenCrew";
 import { User } from "@type/user";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";

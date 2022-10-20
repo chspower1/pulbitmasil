@@ -1,10 +1,9 @@
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Nav from "@components/layout/Nav";
 import Home from "./Home";
 import About from "./About";
 import Register from "./Register";
-import ScrollBtn from "@components/ScrollBtn";
 import NaverAuth from "./Auth/NaverAuth";
 import KakaoAuth from "./Auth/KakaoAuth";
 import Dodream from "./Dodream";
@@ -14,7 +13,6 @@ import WelcomeModal from "@components/modal/WelcomeModal";
 import Review from "./review";
 import CreateReview from "./review/CreateReview";
 import UpdateReview from "./review/UpdateReview";
-import ReviewDetailModal from "@components/modal/ReviewDetailModal";
 import Guide from "./Guide";
 import Loading from "@components/Loading";
 

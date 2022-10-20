@@ -14,12 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { userAtom } from "@atom/user";
 import NaverLoginBtn from "../NaverLoginBtn";
 import { UserLoginForm } from "@type/user";
-import {
-  ModalWrap,
-  ModalContainer as LoginForm,
-  ModalTitle as LoginTitle,
-  Overlay,
-} from "@style/ModalStyle";
+import { ModalWrap, ModalContainer as LoginForm, ModalTitle as LoginTitle, Overlay } from "@style/ModalStyle";
 import FindPasswordModal from "./FindPasswordModal";
 import { ModalVariant, OverlayVariant } from "@style/ModalVariants";
 import { CloseBtn } from "@style/Layout";
@@ -227,7 +222,7 @@ const Input = styled.input`
   ::placeholder {
     color: ${props => props.theme.weekColor};
   }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 1024px) {
     width: 100%;
   }
 `;

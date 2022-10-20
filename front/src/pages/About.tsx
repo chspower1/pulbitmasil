@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import ReactFullpage from "@fullpage/react-fullpage";
-import SideBar from "@components/about/SideBar";
 
 import Benefit from "@components/about/Benefit";
 import Unique from "@components/about/Unique";
@@ -16,11 +15,8 @@ export default function Content() {
       navigation
       navigationTooltips={about}
       scrollingSpeed={1000}
-      onLeave={(origin, destination, direction) => {
-        // console.log("onLeave event", { origin, destination, direction });
-      }}
+      onLeave={(origin, destination, direction) => {}}
       render={({ state, fullpageApi }) => {
-        // console.log("render prop change", state, fullpageApi);
         return (
           <ReactFullpage.Wrapper>
             <Section className="section">

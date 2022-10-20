@@ -1,10 +1,8 @@
 import { getDodream } from "@api/dodream";
 import DodreamMap from "@components/dodream/DodreamMap";
 import WalkTable from "@components/dodream/WalkTable";
-import DodreamDetalModal from "@components/modal/DodreamDetail";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
 import { IDodream } from "@type/dodream";
 import { Container, Wrapper, Title, Box, Desc, GreenAccent } from "@style/Layout";
 import { faArrowPointer, faSort } from "@fortawesome/free-solid-svg-icons";

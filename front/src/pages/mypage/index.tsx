@@ -1,11 +1,10 @@
-import { changePassword, getUser } from "@api/user";
-import { userAtom } from "@atom/user";
+import { getUser } from "@api/user";
 import { Box, Container, Title, Wrapper, SubTitle, Desc, Row, MainBtn } from "@style/Layout";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import PasswordChangeModal from "@components/modal/PasswordChangeModal";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useLocation, useNavigate, useParams, useMatch } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import GreenCrewList from "./GreenCrewList";
 import ReviewList from "./ReviewList";
 import Home from "./Home";

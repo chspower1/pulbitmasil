@@ -4,7 +4,6 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { ModalContainer, ModalWrap as DodreamModalWrap, ModalWrap, Overlay } from "@style/ModalStyle";
 import { isDodreamDetalModalAtom, selectedDodreamAtom } from "@atom/dodream";
-import ReactMarkdown from "react-markdown";
 import { OverlayVariant, ModalVariant } from "@style/ModalVariants";
 import { CloseBtn } from "@style/Layout";
 
