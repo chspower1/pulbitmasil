@@ -64,37 +64,17 @@
 
 ## ⚒기술 사용 이유
 
-<div>
-    <code>
-    	<img height="18" style="vertical-align:middle"
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" 
-        style="max-width: 100%;">
-     </code>
-  </span>
-  <span style="font-size:18px; vertical-align:middle;" >React</span>
-</div>
+### React
 
 프로젝트에 조직성을 높이고 코드를 재사용하여 효율적으로 관리하고 다양한 라이브러리와 같이 사용하기 위하여 사용하였습니다.
 
-<div>
-  <span>
-<img height="20"
-style="vertical-align:middle;"
-        src="https://img.icons8.com/color/48/000000/typescript.png"/></span>
-  <span style="font-size:18px; vertical-align:middle;" >Typescript</span>
-</div>
+### Typescript
 
 타입을 직접 지정해 주어 컴파일 단계에서 오류를 포착할 수 있습니다.  
 명시적인 정적 타입을 지정하여 의도대로 명확하게 기술하여 코드의 가독성을 높이고  
 예측할 수 있게 하며 디버깅을 쉽게 하기 위하여 사용하였습니다.
 
-<div>
-  <span>
-<img height="20"
-style="vertical-align:middle;"
-        src="https://simpleicons.org/icons/reactquery.svg"/></span>
-  <span style="font-size:18px; vertical-align:middle;" >React-Query</span>
-</div>
+### React-Query
 
 데이터 Fetching, 캐싱, 동기화, 서버 쪽 데이터 업데이트 등을 쉽게 만들어 주는 React 라이브러리입니다.  
 캐싱 된 데이터로 인해서 API 콜을 줄여주며 서버에 대한 부담을 줄여줄수 있습니다.  
@@ -104,52 +84,25 @@ style="vertical-align:middle;"
 axios로 비동기 처리와 함께 사용하여, CRUD를 구현하였고  
 데이터가 업데이트 되었을 때 최신 데이터가 사용자에게 보여질 수 있도록 사용하였습니다.
 
-<div>
-  <span>
-<img height="20"
-style="vertical-align:middle;"
-        src="https://img.icons8.com/color/48/000000/recoil-js.png"/></span>
-  <span style="font-size:18px; vertical-align:middle;" >Recoil</span>
-</div>
+### Recoil
+
 모든 비동기 문제를 해결하고 전역적으로 관리하기 위하여, 유저정보와 모달의 상태관리에 사용하였습니다.
 
-<div>
-  <span>
-<img height="20"
-style="vertical-align:middle;"
-        src="https://simpleicons.org/icons/chartdotjs.svg"/></span>
-  <span style="font-size:18px; vertical-align:middle;" >Chart.js</span>
-</div>
+### Chart.js
 
 간편하게 차트를 만들 수 있는 차트 라이브러리를 이용하여 유동인구 정보를 시각화 하였습니다.
 
-<div>
-  <span>
-<img height="20"
-style="vertical-align:middle;"
-        src="https://simpleicons.org/icons/disqus.svg"/></span>
-  <span style="font-size:18px; vertical-align:middle;" >Day.js</span>
-</div>
+### Day.js
+
 JavaScript Date 내장객체의 포맷 형태를 편리하게 만들기 위하여  
 날짜 관련 라이브러리중 가장 가벼운 라이브러리를 사용하였습니다.
 
-<div>
-  <span>
-<img height="20"
-style="vertical-align:middle;"
-        src="https://simpleicons.org/icons/framer.svg"/></span>
-  <span style="font-size:18px; vertical-align:middle;" >Framer-Motion</span>
-</div>
+### Framer-Motion
+
 리액트를 위한 웹 애니메이션, 제스처 오픈소스 라이브러리로  
 navigation bar, 모달에 애니메이션을 주어 동적인 느낌을 주었습니다.
 
-<div>
-  <span>
-<img height="20"
-style="vertical-align:middle;"
-        src="https://simpleicons.org/icons/reacttable.svg"/></span>
-  <span style="font-size:18px; vertical-align:middle;" >React-Table</span>
-</div>
+### React-Table
 
 React로 테이블 UI를 간단하게 구현할 수 있도록 도와주는 라이브러리로  
 산책로 데이터를 테이블화 하여 검색, 정렬기능을 구현하였습니다.
