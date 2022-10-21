@@ -216,14 +216,14 @@ export default function GreenCrew() {
           </TimeBox>
           <ContentBox>
             <ContentTitle>
-              <img src="/assets/icon/greenCrew/content_icon.svg" alt="" />
+              <img src="/assets/icon/greencrew/content_icon.svg" alt="" />
               <GreenAccent style={{ fontSize: "18px" }}>"{greenCrews![selectedArea]?.course}"</GreenAccent>은?
             </ContentTitle>
             <ContentDescription dangerouslySetInnerHTML={{ __html: `${greenCrews![selectedArea]?.content}` }} />
           </ContentBox>
           <ContentBox>
             <ContentTitle>
-              <img src="/assets/icon/greenCrew/traffic_info_icon.svg" alt="" />
+              <img src="/assets/icon/greencrew/traffic_info_icon.svg" alt="" />
               <GreenAccent style={{ fontSize: "18px" }}>교통편</GreenAccent>
             </ContentTitle>
             <ContentDescription
