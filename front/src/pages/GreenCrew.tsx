@@ -269,6 +269,7 @@ const StatusBox = styled(Box)`
   flex-direction: column;
   width: 50%;
   height: 100%;
+  align-items: flex-start;
 `;
 const RestTime = styled(Title)`
   width: 180px;
