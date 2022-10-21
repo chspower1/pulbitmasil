@@ -9,7 +9,9 @@ import "dayjs/locale/ko";
 dayjs.locale("ko");
 
 export function changeDayForm(date: Date) {
-  const formatDate = dayjs(date).format(`YYYY.MM.DD(dddd) A HH:MM`);
+  const formatDate = dayjs(date).format(`YYYY.MM.DD(dddd) A hh:mm`);
+  console.log(new Date(date));
+  console.log(formatDate);
   return formatDate.replace("요일", "");
 }
 

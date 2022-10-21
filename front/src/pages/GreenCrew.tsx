@@ -86,7 +86,7 @@ export default function GreenCrew() {
   };
   const convertDate = (startAt: Date) => {
     const day = dayjs(new Date(startAt));
-    const startTime = day.format("A HH:mm");
+    const startTime = day.format("A hh:mm");
 
     return startTime;
   };
