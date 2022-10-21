@@ -64,81 +64,128 @@
 
 ## ⚒기술 사용 이유
 
-### React
+<div>
+    <code>
+    	<img height="18" style="vertical-align:middle"
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" 
+        style="max-width: 100%;">
+     </code>
+  </span>
+  <span style="font-size:18px; vertical-align:middle;" >React</span>
+</div>
 
-프로젝트에 조직성을 높이고 코드를 재사용하여 효율적으로 관리하고 다양한 라이브러리와 같이 사용하기 위하여 사용하였습니다.   
+프로젝트에 조직성을 높이고 코드를 재사용하여 효율적으로 관리하고 다양한 라이브러리와 같이 사용하기 위하여 사용하였습니다.
 
-### Typescript
+<div>
+  <span>
+<img height="20"
+style="vertical-align:middle;"
+        src="https://img.icons8.com/color/48/000000/typescript.png"/></span>
+  <span style="font-size:18px; vertical-align:middle;" >Typescript</span>
+</div>
 
-타입을 직접 지정해 주어 컴파일 단계에서 오류를 포착할 수 있습니다.   
-명시적인 정적 타입을 지정하여 의도대로 명확하게 기술하여 코드의 가독성을 높이고     
-예측할 수 있게 하며 디버깅을 쉽게 하기 위하여 사용하였습니다.   
+타입을 직접 지정해 주어 컴파일 단계에서 오류를 포착할 수 있습니다.  
+명시적인 정적 타입을 지정하여 의도대로 명확하게 기술하여 코드의 가독성을 높이고  
+예측할 수 있게 하며 디버깅을 쉽게 하기 위하여 사용하였습니다.
 
-### React-Query
+<div>
+  <span>
+<img height="20"
+style="vertical-align:middle;"
+        src="https://simpleicons.org/icons/reactquery.svg"/></span>
+  <span style="font-size:18px; vertical-align:middle;" >React-Query</span>
+</div>
 
-데이터 Fetching, 캐싱, 동기화, 서버 쪽 데이터 업데이트 등을 쉽게 만들어 주는 React 라이브러리입니다.   
-캐싱 된 데이터로 인해서 API 콜을 줄여주며 서버에 대한 부담을 줄여줄수 있습니다.   
-서버 데이터를 패칭해 온 데이터를 캐싱했어도, 사용자가 화면을 바라보고 있을 시점에     
+데이터 Fetching, 캐싱, 동기화, 서버 쪽 데이터 업데이트 등을 쉽게 만들어 주는 React 라이브러리입니다.  
+캐싱 된 데이터로 인해서 API 콜을 줄여주며 서버에 대한 부담을 줄여줄수 있습니다.  
+서버 데이터를 패칭해 온 데이터를 캐싱했어도, 사용자가 화면을 바라보고 있을 시점에  
 가장 최신의 데이터를 바라볼 수 있도록 옵션을 줄 수 있습니다.
 
-axios로 비동기 처리와 함께 사용하여, CRUD를 구현하였고      
-데이터가 업데이트 되었을 때 최신 데이터가 사용자에게 보여질 수 있도록 사용하였습니다.   
+axios로 비동기 처리와 함께 사용하여, CRUD를 구현하였고  
+데이터가 업데이트 되었을 때 최신 데이터가 사용자에게 보여질 수 있도록 사용하였습니다.
 
-### Recoil
-모든 비동기 문제를 해결하고 전역적으로 관리하기 위하여, 유저정보와 모달의 상태관리에 사용하였습니다.    
+<div>
+  <span>
+<img height="20"
+style="vertical-align:middle;"
+        src="https://img.icons8.com/color/48/000000/recoil-js.png"/></span>
+  <span style="font-size:18px; vertical-align:middle;" >Recoil</span>
+</div>
+모든 비동기 문제를 해결하고 전역적으로 관리하기 위하여, 유저정보와 모달의 상태관리에 사용하였습니다.
 
-### Chart.js
+<div>
+  <span>
+<img height="20"
+style="vertical-align:middle;"
+        src="https://simpleicons.org/icons/chartdotjs.svg"/></span>
+  <span style="font-size:18px; vertical-align:middle;" >Chart.js</span>
+</div>
 
-간편하게 차트를 만들 수 있는 차트 라이브러리를 이용하여 유동인구 정보를 시각화 하였습니다.   
+간편하게 차트를 만들 수 있는 차트 라이브러리를 이용하여 유동인구 정보를 시각화 하였습니다.
 
-### Day.js
+<div>
+  <span>
+<img height="20"
+style="vertical-align:middle;"
+        src="https://simpleicons.org/icons/disqus.svg"/></span>
+  <span style="font-size:18px; vertical-align:middle;" >Day.js</span>
+</div>
+JavaScript Date 내장객체의 포맷 형태를 편리하게 만들기 위하여  
+날짜 관련 라이브러리중 가장 가벼운 라이브러리를 사용하였습니다.
 
-JavaScript Date 내장객체의 포맷 형태를 편리하게 만들기 위하여   
-날짜 관련 라이브러리중 가장 가벼운 라이브러리를 사용하였습니다.   
+<div>
+  <span>
+<img height="20"
+style="vertical-align:middle;"
+        src="https://simpleicons.org/icons/framer.svg"/></span>
+  <span style="font-size:18px; vertical-align:middle;" >Framer-Motion</span>
+</div>
+리액트를 위한 웹 애니메이션, 제스처 오픈소스 라이브러리로  
+navigation bar, 모달에 애니메이션을 주어 동적인 느낌을 주었습니다.
 
-### Framer-Motion
+<div>
+  <span>
+<img height="20"
+style="vertical-align:middle;"
+        src="https://simpleicons.org/icons/reacttable.svg"/></span>
+  <span style="font-size:18px; vertical-align:middle;" >React-Table</span>
+</div>
 
-리액트를 위한 웹 애니메이션, 제스처 오픈소스 라이브러리로   
-navigation bar, 모달에 애니메이션을 주어 동적인 느낌을 주었습니다.   
-
-### React-Table
-
-React로 테이블 UI를 간단하게 구현할 수 있도록 도와주는 라이브러리로   
-산책로 데이터를 테이블화 하여 검색, 정렬기능을 구현하였습니다.   
+React로 테이블 UI를 간단하게 구현할 수 있도록 도와주는 라이브러리로  
+산책로 데이터를 테이블화 하여 검색, 정렬기능을 구현하였습니다.
 
 ### full-page
 
-소개페이지에서 스크롤 했을 경우 한 페이지가 보여지도록 구성하기위해 사용하였습니다.   
+소개페이지에서 스크롤 했을 경우 한 페이지가 보여지도록 구성하기위해 사용하였습니다.
 
 ### react-helmet
 
-웹사이트 타이틀(탭 이름)을 추가하기 위해 사용하였습니다.    
+웹사이트 타이틀(탭 이름)을 추가하기 위해 사용하였습니다.
 
 ### react-hook-form
 
-로그인, 회원가입, 후기 작성, 이름변경, 비밀번호 변경 등   
-form과 input을 사용하는 부분에서 state와 validation을    
-편리하게 관리하기 위해서 사용하였습니다.    
+로그인, 회원가입, 후기 작성, 이름변경, 비밀번호 변경 등  
+form과 input을 사용하는 부분에서 state와 validation을  
+편리하게 관리하기 위해서 사용하였습니다.
 
 ### fontawesome
 
-다양한 아이콘을 무료로 사용하고 커스터마이징 하기 위하여 사용했습니다.    
+다양한 아이콘을 무료로 사용하고 커스터마이징 하기 위하여 사용했습니다.
 
 ### styled-components
 
-컴포넌트 별로 스타일을 관리하고, props를 이용하여 조건부 스타일을 적용하여 손쉽게 유지보수 할 수 있도록 사용하였습니다.    
-
+컴포넌트 별로 스타일을 관리하고, props를 이용하여 조건부 스타일을 적용하여 손쉽게 유지보수 할 수 있도록 사용하였습니다.
 
 ### axios
 
-Node.js와 브라우저를 위한 Promise API를 활용하는 HTTP 통신 라이브러리로     
-비동기로 HTTP 통신을 할 수 있으며 return을 promise 객체로 해주기 때문에 response 데이터를 다루기 쉽습니다.   
-react-query과 함께 사용하여, 비동기 통신을 적용하기 위해 사용하였습니다.   
+Node.js와 브라우저를 위한 Promise API를 활용하는 HTTP 통신 라이브러리로  
+비동기로 HTTP 통신을 할 수 있으며 return을 promise 객체로 해주기 때문에 response 데이터를 다루기 쉽습니다.  
+react-query과 함께 사용하여, 비동기 통신을 적용하기 위해 사용하였습니다.
 
 ### Craco
 
-CRA로 만들어진 본 프로젝트에 절대 경로를 설정하기 위해서 craco를 사용하였고,     
-tsconfig.json에 작성한 옵션을 빌드 과정에서 적용하여 절대경로를 지정해주었습니다.   
+CRA로 만들어진 본 프로젝트에 절대 경로를 설정하기 위해서 craco를 사용하였고,  
+tsconfig.json에 작성한 옵션을 빌드 과정에서 적용하여 절대경로를 지정해주었습니다.
 
 <br>
 
@@ -172,8 +219,8 @@ tsconfig.json에 작성한 옵션을 빌드 과정에서 적용하여 절대경�
  ┃ ┃ ┗ 📂review -> 후기
  ┃ ┣ 📂data -> 가이드 문서, 차트관련 데이터
  ┃ ┣ 📂pages -> 라우터 이동 페이지 폴더
- ┃ ┃ ┣ 📂Auth 
- ┃ ┃ ┣ 📂mypage 
+ ┃ ┃ ┣ 📂Auth
+ ┃ ┃ ┣ 📂mypage
  ┃ ┃ ┗ 📂review
  ┃ ┣ 📂style -> 스타일 관련 폴더
  ┃ ┃ ┣ 📂fonts
