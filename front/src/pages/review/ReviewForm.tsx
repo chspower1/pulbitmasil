@@ -10,7 +10,7 @@ import { userAtom } from "@atom/user";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { isReviewCancelAtom } from "@atom/atom";
 import ReviewModal from "@components/modal/ReviewCancelModal";
-import { Title, Wrapper, Box, Container, SubTitle, DangerAccent, MainBtn, DangerBtn } from "@style/Layout";
+import { Title, Wrapper, Box, Container, SubTitle, DangerAccent, MainBtn, DangerBtn, Desc } from "@style/Layout";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { User, UserGreenCrew } from "@type/user";
@@ -65,6 +65,7 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
   const checkInProgress = (greenCrews: UserGreenCrew[]) => {
     setInProgressGreenCrew(greenCrews?.filter(greenCrew => greenCrew.inProgress! === 1));
     setDoneGreenCrew(greenCrews?.filter(greenCrew => greenCrew.inProgress! === 0));
+    console.log(Boolean(doneGreenCrews));
   };
 
   // Handle
@@ -73,22 +74,20 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
     formData.append("description", data.description);
     switch (mode) {
       case "CREATE":
-    
         formData.append("title", data.title);
         const createDay = dayjs(new Date());
         formData.append("createAt", createDay.toString());
         formData.append("file", uploadImg);
         await reviewMutation.mutate(formData);
         await userMutation.mutate();
-    
+
         navigate("/review");
         break;
 
       case "UPDATE":
-   
         if (data.title === "") formData.append("title", review?.title!);
         else formData.append("title", data.title);
-   
+
         formData.append("userId", user?.id!.toString()!);
         formData.append("reviewId", reviewId!.toString());
 
@@ -97,11 +96,10 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           formData.append("file", uploadImg);
         } else {
           // 사진파일이 그대로라면, 이미지 url 전달
-    
+
           formData.append("imageUrl", review?.reviewImg! as string);
         }
-    
-     
+
         await reviewMutation.mutate(formData);
         await userMutation.mutate();
         navigate("/review");
@@ -128,8 +126,6 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
       setImagePreview(window.URL.createObjectURL(file as File));
 
       setUploadImg(file);
-   
-  
     }
   }, [image]);
   return (
@@ -140,17 +136,15 @@ export default function ReviewForm({ formProps }: { formProps: IReviewUpdateData
           <ReviewSubTitle>
             함께한
             <DangerAccent> 생생한 경험</DangerAccent>를 공유해주세요!
+            <Desc style={{ fontSize: "14px" }}>완료한 모임만 후기를 작성할 수 있습니다!</Desc>
           </ReviewSubTitle>
         </TitleBox>
         {mode === "CREATE" && doneGreenCrews && (
-          <SelectInput as="select" height={40} {...register("title")}>
-            {doneGreenCrews?.map(doneGreenCrew =>
-              review?.title === doneGreenCrew.title ? (
-                <Option selected>{doneGreenCrew?.title}</Option>
-              ) : (
-                <Option>{doneGreenCrew?.title}</Option>
-              ),
-            )}
+          <SelectInput as="select" required height={40} {...register("title")}>
+            <Option value="">풀빛마실 모임을 선택해주세요!</Option>
+            {doneGreenCrews?.map(doneGreenCrew => (
+              <Option>{doneGreenCrew?.title}</Option>
+            ))}
           </SelectInput>
         )}
         {mode === "UPDATE" && !isLoading && (
@@ -231,6 +225,7 @@ const TitleBox = styled(Box)`
 `;
 
 const ReviewSubTitle = styled(SubTitle)`
+  text-align: center;
   margin-top: 15px;
 `;
 
