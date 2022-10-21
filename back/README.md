@@ -1,6 +1,7 @@
 # 데이터 분석 웹 서비스 프로젝트
 
-<img src="https://i.ibb.co/2vR8STP/Group-243.png" alt="drawing" width="300"/>
+<img src="https://i.ibb.co/2vR8STP/Group-243.png" alt="drawing" width="300"/>   
+
 ## BE part
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
@@ -29,8 +30,9 @@
   - **USERTOGREENCREW** : 사용자의 모임 참석 여부를 저장하는 테이블(USER와 GREENCREW의 m:n 관계를 표시)
   - **REVIEW** : 모임이 종료된 후 작성된 리뷰를 저장하는 테이블
   - **NAME** : 모임 자동 생성 시 이름을 무작위로 생성하기 위한 단어들이 담긴 테이블
-  - **ROUTE** : 모임 생성 시 세부 경로들이 들어있는 테이블
-    <br>
+  - **ROUTE** : 모임 생성 시 세부 경로들이 들어있는 테이블   
+         <br>   
+            
 - #### 테이블 간의 관계(ERD)
 
   > <br>
@@ -108,7 +110,6 @@
   1. ##### file_delete.js & file_upload.js
 
      - 리뷰 작성 시 이미지를 관리해주는 모듈로 각각 이미지 삭제, 업로드를 담당
-
        <br>
 
 - #### routers
@@ -141,7 +142,8 @@
   1. ##### dodream.js
      - 전체 산책로 데이터를 받아오기 위한 라우터
 
-<br>
+
+
 ### 3. 파일 트리
   
     📦back
