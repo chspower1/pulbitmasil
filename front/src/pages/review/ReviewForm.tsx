@@ -198,7 +198,7 @@ const Form = styled(ModalContainer)`
   z-index: 1;
   width: 600px;
   display: flex;
-  height: 800px;
+  max-height: 800px;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
@@ -212,7 +212,6 @@ const Form = styled(ModalContainer)`
   }
   @media screen and (max-height: 1000px) {
     height: 90%;
-    max-height: 650px;
   }
 `;
 const TitleBox = styled(Box)`
