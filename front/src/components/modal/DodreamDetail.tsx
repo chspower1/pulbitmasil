@@ -213,6 +213,7 @@ const Desc = styled.h1`
   }
 `;
 const LongDesc = styled(Title)`
+  font-family: "SCDream";
   line-height: 1.5;
   width: 430px;
   height: 100px;
@@ -220,7 +221,7 @@ const LongDesc = styled(Title)`
   text-overflow: ellipsis;
   border: solid 1px ${props => props.theme.weekColor};
   padding: 10px;
-  font-size: 14px;
+  font-size: 15px;
   @media screen and (max-width: 575px) {
     width: 100%;
   }

@@ -278,10 +278,6 @@ const RestTime = styled(Title)`
     font-size: 32px;
   }
 `;
-const StartDate = styled(Desc)`
-  font-family: "SebangBold";
-  margin-bottom: 10px;
-`;
 const CrewTitle = styled(Title)`
   color: ${props => props.theme.accentColor};
   @media screen and (max-width: 768px) {
@@ -433,6 +429,7 @@ const ContentTitle = styled(Box)`
 `;
 
 const ContentDescription = styled(Desc)`
+  font-family: "SCDream";
   overflow-y: auto;
   width: 100%;
   padding: 10px;

@@ -1,8 +1,12 @@
 @font-face {
-    font-family: "Sebang";
-    src: url("./SEBANG Gothic OTF.otf") format("opentype");
+  font-family: "Sebang";
+  src: url("./SEBANG Gothic OTF.otf") format("opentype");
 }
 @font-face {
-    font-family: "SebangBold";
-    src: url("./SEBANG Gothic OTF Bold.otf") format("opentype");
+  font-family: "SebangBold";
+  src: url("./SEBANG Gothic OTF Bold.otf") format("opentype");
+}
+@font-face {
+  font-family: "SCDream";
+  src: url("./SCDream.otf") format("opentype");
 }
