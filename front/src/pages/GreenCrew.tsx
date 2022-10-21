@@ -18,7 +18,7 @@ dayjs.extend(duration);
 
 export default function GreenCrew() {
   // Variable
-  const areas = ["강동", "강서", "강남", "강북"];
+  const areas = ["서북", "동북", "동남", "서남"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
   const [time, setTime] = useState<string>();
@@ -251,7 +251,7 @@ const AreaNav = styled(Box)`
   flex-direction: column;
   height: 360px;
   justify-content: space-between;
-  margin-top: 100px;
+  /* margin-top: 100px; */
 
   @media screen and (max-width: 1024px) {
     width: 100%;
