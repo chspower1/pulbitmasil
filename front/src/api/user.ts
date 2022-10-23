@@ -7,7 +7,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
   const bodyData = JSON.stringify(loginInfo);
 
   try {
-    const { data } = await axiosInstance.post(`login`, bodyData, {
+    const { data } = await axiosInstance.post(`user/login`, bodyData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,7 +23,7 @@ export async function requestLogin(loginInfo: UserLoginForm) {
 }
 export async function getUser() {
   try {
-    const { data: user }: { data: User } = await axiosInstance.get(`mypage`, {
+    const { data: user }: { data: User } = await axiosInstance.get(`user/mypage`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
@@ -63,7 +63,7 @@ export async function kakaoLogin(code: string) {
 }
 export async function naverLogin(accessToken: string, stateToken: string) {
   try {
-    const { data } = await axiosInstance.get(`naver?access_token=${accessToken}&state_token=${stateToken}`);
+    const { data } = await axiosInstance.get(`auth/naver?access_token=${accessToken}&state_token=${stateToken}`);
     sessionStorage.setItem("userToken", data.token);
 
     return data;
@@ -77,7 +77,7 @@ export async function changePassword(data: PasswordForm) {
 
   try {
     const { status } = await axiosInstance.put(
-      `/password`,
+      `/user/password`,
       { newPassword, password },
       {
         headers: {
@@ -95,7 +95,7 @@ export async function changePassword(data: PasswordForm) {
 }
 export async function resetPassword(email: string) {
   try {
-    const { status } = await axiosInstance.put(`/reset`, { email });
+    const { status } = await axiosInstance.put(`user/reset`, { email });
     return status;
   } catch (err) {
     if (axios.isAxiosError(err) && err?.response?.status === 402) {
@@ -106,7 +106,7 @@ export async function resetPassword(email: string) {
 
 export async function changeName(name: string) {
   return axiosInstance.put(
-    `name`,
+    `user/name`,
     { name },
     {
       headers: {

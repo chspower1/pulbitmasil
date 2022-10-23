@@ -48,7 +48,7 @@ reviewRouter.get("/:reviewId", async function (req, res, next) {
   }
 });
 
-reviewRouter.post("/write", login_required, uploadSingle, async function (req, res, next) {
+reviewRouter.post("/create", login_required, uploadSingle, async function (req, res, next) {
   try {
     const userId = req.currentUserId;
     const { description, createAt, title } = req.body;

@@ -18,7 +18,7 @@ dayjs.extend(duration);
 
 export default function GreenCrew() {
   // Variable
-  const areas = ["강동", "강서", "강남", "강북"];
+  const areas = ["서북", "동북", "동남", "서남"];
   const [selectedArea, setSelectedArea] = useState(0);
   const queryClient = useQueryClient();
   const [time, setTime] = useState<string>();
@@ -86,7 +86,7 @@ export default function GreenCrew() {
   };
   const convertDate = (startAt: Date) => {
     const day = dayjs(new Date(startAt));
-    const startTime = day.format("A HH:mm");
+    const startTime = day.format("A hh:mm");
 
     return startTime;
   };
@@ -251,7 +251,7 @@ const AreaNav = styled(Box)`
   flex-direction: column;
   height: 360px;
   justify-content: space-between;
-  margin-top: 100px;
+  /* margin-top: 100px; */
 
   @media screen and (max-width: 1024px) {
     width: 100%;
@@ -269,6 +269,7 @@ const StatusBox = styled(Box)`
   flex-direction: column;
   width: 50%;
   height: 100%;
+  align-items: flex-start;
 `;
 const RestTime = styled(Title)`
   width: 180px;
@@ -276,10 +277,6 @@ const RestTime = styled(Title)`
   @media screen and (max-width: 768px) {
     font-size: 32px;
   }
-`;
-const StartDate = styled(Desc)`
-  font-family: "SebangBold";
-  margin-bottom: 10px;
 `;
 const CrewTitle = styled(Title)`
   color: ${props => props.theme.accentColor};
@@ -432,6 +429,7 @@ const ContentTitle = styled(Box)`
 `;
 
 const ContentDescription = styled(Desc)`
+  font-family: "SCDream";
   overflow-y: auto;
   width: 100%;
   padding: 10px;

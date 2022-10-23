@@ -9,12 +9,15 @@ import "dayjs/locale/ko";
 dayjs.locale("ko");
 
 export function changeDayForm(date: Date) {
-  const formatDate = dayjs(date).format(`YYYY.MM.DD(dddd) A HH:MM`);
+  const formatDate = dayjs(date).format(`YYYY.MM.DD(dddd) A hh:mm`);
+  console.log(new Date(date));
+  console.log(formatDate);
   return formatDate.replace("요일", "");
 }
 
 export default function Home({ user }: { user: User }) {
   const { data: greenCrews } = useQuery<SummaryGreenCrew[] | undefined>(["summaryGreenCrew"], getSummaryGreenCrews);
+  console.log(greenCrews?.map(i => i.startAt));
   return (
     <HomeWrap>
       <HomeContainer height="30%">
@@ -30,7 +33,7 @@ export default function Home({ user }: { user: User }) {
           </HomeRow>
         </GrayTitle>
       </HomeContainer>
-      <HomeContainer className="content" height="70%">
+      <HomeContainer className="content">
         <GrayTitle>
           현재 진행 중인 &nbsp;<Title>풀빛마실</Title>
         </GrayTitle>
@@ -60,6 +63,7 @@ export const HomeWrap = styled(Box)`
   width: 100%;
   height: auto;
   padding: 30px 0px;
+  padding-bottom: 0px;
   background-color: #f5f5f5;
   border-radius: 20px;
 `;
@@ -71,6 +75,7 @@ export const HomeContainer = styled(Box)<{ height?: string }>`
   height: ${props => (props.height ? props.height : "auto")};
 
   &.content {
+    justify-content: flex-start;
     border-radius: 20px;
     background-color: #eeeeee;
   }
@@ -81,13 +86,14 @@ export const HomeContainer = styled(Box)<{ height?: string }>`
 export const List = styled(Container)`
   flex-direction: column;
   width: 100%;
+  height: 100%;
   justify-content: flex-start;
   padding: 0px 30px;
 `;
 export const GrayTitle = styled(Box)`
   font-size: 22px;
   color: ${props => props.theme.textColor};
-  padding: 40px 0;
+  padding: 40px 0px;
   font-family: "SebangBold";
 
   @media screen and (max-width: 768px) {

@@ -104,7 +104,7 @@ const MyPageWrapper = styled(Wrapper)`
   overflow-y: scroll;
   flex-direction: column;
   justify-content: flex-start;
-  height: auto;
+  /* height: auto; */
 `;
 
 const MyPageTitle = styled(Title)`

@@ -1,4 +1,5 @@
 import { PopulationChart } from "../chart/Population";
+import { PopulationMobileChart } from "../chart/PopulationMobile";
 import styled from "styled-components";
 import {
   AboutContent,
@@ -62,6 +63,9 @@ export default function Problem() {
       <ChartContainer>
         <PopulationChart />
       </ChartContainer>
+      <ChartMobileContainer>
+        <PopulationMobileChart />
+      </ChartMobileContainer>
     </Wrap>
   );
 }
@@ -107,6 +111,17 @@ const ChartContainer = styled(Box)`
   @media screen and (max-width: 1024px) {
     width: 100%;
     align-items: center;
+  }
+  @media screen and (max-width: 420px) {
+    display: none;
+  }
+`;
+const ChartMobileContainer = styled(Box)`
+  width: 100%;
+  height: 400px;
+
+  @media screen and (min-width: 420px) {
+    display: none;
   }
 `;
 const NewsBox = styled(Box)`

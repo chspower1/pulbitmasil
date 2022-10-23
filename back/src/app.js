@@ -20,8 +20,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 
-app.use(userRouter);
-app.use(authRouter);
+app.use("/user", userRouter);
+app.use("/auth", authRouter);
 app.use("/review", reviewRouter);
 app.use("/dodream", dodreamRouter);
 app.use("/greencrew", greencrewRouter);
