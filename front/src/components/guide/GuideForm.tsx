@@ -1,23 +1,20 @@
-import { Content, POS } from "@pages/Guide";
+import { Content } from "@pages/Guide";
 import {
-  Wrapper as WrapGuide,
-  AboutContent,
   Container as ContainerGuide,
   Title,
-  SubTitle as SubTitleGuide,
-  GreenAccent,
   Desc,
   Box,
-  Row,
-  DangerAccent,
+  MainBtn,
 } from "@style/Layout";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
 
 export default function GuideForm({ content }: { content: Content }) {
   const navigate = useNavigate();
   const handleClickNavigate = () => {
+    if (content.num === 6) {
+      window.open(`${"http://news.seoul.go.kr/env/files/2018/11/601365c0483251.00291148.pdf"}`, "_blank");
+    }
     navigate(content?.buttonURL!);
   };
   const isRight = content.num % 2 === 0;
@@ -29,17 +26,26 @@ export default function GuideForm({ content }: { content: Content }) {
         <Line src={`/assets/images/guide/tab_${isRight ? "right" : "left"}.png`} />
       </LineBox>
       <TextBox>
-        <Title>{content.title}</Title>
+        <GuideTitle style={{ margin: "15px 0" }}>{content.title}</GuideTitle>
         <Desc>{content.description}</Desc>
+        {content.type === "button" ? (
+          <GuideMainBtn width="auto" onClick={handleClickNavigate}>
+            {content.buttonValue!}
+          </GuideMainBtn>
+        ) : (
+          ""
+        )}
       </TextBox>
-      <Img
-        src="https://images.unsplash.com/photo-1665884304501-a65e6ff95b35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=670&q=80"
-        alt=""
-      />
+      <Img src={`assets/images/guide/guide${content.num}.png`} alt="guide photo" />
     </Container>
   );
 }
 
+const GuideTitle = styled(Title)`
+  @media screen and (max-width: 1024px) {
+    font-size: 24px;
+  };
+`;
 const Number = styled(Title)`
   position: absolute;
   font-size: 40px;
@@ -51,24 +57,77 @@ const TextBox = styled(Box)`
 `;
 const Img = styled.img`
   position: absolute;
-  width: 100px;
+  width: 230px;
 `;
 const Container = styled(ContainerGuide)<{ isRight: boolean }>`
   position: relative;
   width: 100%;
   height: 100%;
+
+  @media screen and (max-width: 1024px) {
+    justify-content: flex-start;
+  }
+
   ${Number} {
     margin-right: ${props => (props.isRight ? "-200px" : "200px")};
+
+    @media screen and (max-width: 1024px) {
+      margin-left: 18%;
+    };
+    @media screen and (max-width: 767px) {
+      margin-left: ${props => (props.isRight ? "1%" : "15%")};
+    };
+    @media screen and (max-width: 550px) {
+      margin-left: ${props => (props.isRight ? "5%" : "21%")};
+    };
   }
   ${TextBox} {
     margin-right: ${props => (props.isRight ? "500px" : "-500px")};
     align-items: ${props => (props.isRight ? "flex-end" : "flex-start")};
+    width: 250px;
+
+    @media screen and (max-width: 1024px) {
+      margin-left: 32%;
+      align-items: center;
+    };
+    @media screen and (max-width: 767px) {
+      margin-left: 25%;
+    }
+    @media screen and (max-width: 550px) {
+      margin-left: 45%;
+      align-items: flex-start;
+    };
+
     ${Desc} {
       text-align: ${props => (props.isRight ? "right" : "left")};
+      width: 230px;
+      line-height: 22px;
+      letter-spacing: 0.05em;
+      white-space: pre-line;
+
+      @media screen and (max-width: 1024px) {
+        text-align: center;
+      }
+      @media screen and (max-width: 767px) {
+        font-size: 13px;       
+      };
+      @media screen and (max-width: 550px) {
+        text-align: left;
+        width: 190px;
+      };
     }
   }
   ${Img} {
-    margin-right: ${props => (props.isRight ? "1000px" : "-1000px")};
+    margin-right: ${props => (props.isRight ? "1100px" : "-1100px")};
+    @media screen and (max-width: 1024px) {
+      margin-left: 70%;
+    };
+    @media screen and (max-width: 767px) {
+      width: 150px;
+    }
+    @media screen and (max-width: 550px) {
+      display: none;
+    };
   }
 `;
 const Line = styled.img`
@@ -80,4 +139,14 @@ const LineBox = styled(Box)<{ isRight: boolean }>`
   width: 100px;
   height: 100%;
   justify-content: ${props => (props.isRight ? "flex-end" : "flex-start")};
+
+  @media screen and (max-width: 1024px) {
+    margin-left: 3%;
+  };
+  @media screen and (max-width: 550px) {
+    margin-left: 7%;
+  };
+`;
+const GuideMainBtn = styled(MainBtn)`
+  margin: 10px 0;
 `;

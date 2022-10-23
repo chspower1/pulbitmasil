@@ -1,14 +1,16 @@
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { AnimatePresence } from "framer-motion";
-import React, { useEffect } from "react";
+import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { Overlay, OverlayVariant } from "./LoginModal";
-import { Navigate, useNavigate } from "react-router-dom";
-import { BtnContainer, Desc, ModalContainer, ModalWrap as LogoutModalWrap, ModalWrap } from "@style/ModalStyle";
+import { useNavigate } from "react-router-dom";
+import { ModalBtnContainer, ModalDesc, ModalContainer, ModalWrap, Overlay } from "@style/ModalStyle";
 import { deleteReview } from "@api/review";
 import { userAtom } from "@atom/user";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { OverlayVariant } from "@style/ModalVariants";
+import { getUser } from "@api/user";
+import { DangerAccent } from "@style/Layout";
 
 export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
@@ -17,22 +19,21 @@ export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
-  const mutation = useMutation(deleteReview, {
+  const reviewMutation = useMutation(deleteReview, {
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries(["reviews"]);
     },
   });
-
+  const userMutation = useMutation(getUser, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["user"]);
+    },
+  });
   const handleClickConfirm = async (e: React.MouseEvent) => {
     e.preventDefault();
-    mutation.mutate({ reviewId, userId: user?.id! });
-
-    //useNu
-    // await deleteReview({ reviewId, userId: user?.id! });
-    // setReviews(reviews => {
-    //   return reviews?.filter(review => review.reviewId !== reviewDelId);
-    // });
+    reviewMutation.mutate({ reviewId, userId: user?.id! });
+    userMutation.mutate();
     setReviewDelId(null);
     navigate("/review");
   };
@@ -47,16 +48,16 @@ export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
         <ReviewModalWrap>
           <ReviewModalContainer>
             <DeleteDesc>
-              <Accent>삭제</Accent> 하시겠습니까?
+              <DangerDelelteAccent>삭제</DangerDelelteAccent> &nbsp;하시겠습니까?
             </DeleteDesc>
-            <BtnContainer>
+            <ModalBtnContainer>
               <DeleteBtn type="button" onClick={handleClickConfirm}>
                 네
               </DeleteBtn>
               <CloseBtn type="button" onClick={handleClickCancel}>
                 아니요
               </CloseBtn>
-            </BtnContainer>
+            </ModalBtnContainer>
           </ReviewModalContainer>
           <Overlay
             onClick={handleClickCancel}
@@ -72,34 +73,39 @@ export default function ReviewDeleteModal({ reviewId }: { reviewId: number }) {
 }
 
 const ReviewModalWrap = styled(ModalWrap)`
-  position: fixed;
   width: 100vw;
   height: 100vh;
   display: flex;
-  position: fixed;
-  z-index: 10000;
+  z-index: 1000;
+  @media screen and (max-width: 767px) {
+    position: fixed;
+    left: 0%;
+  }
 `;
 const ReviewModalContainer = styled(ModalContainer)`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
   margin: auto;
-
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   width: 500px;
   height: 200px;
+
+  @media screen and (max-width: 767px) {
+    width: 80%;
+  }
 `;
 
-const Accent = styled.span`
-  color: ${props => props.theme.dangerColor};
-  font-weight: bold;
+const DangerDelelteAccent = styled(DangerAccent)`
+  @media screen and (max-width: 767px) {
+    font-size: 20px;
+  }
 `;
 
-const DeleteDesc = styled(Desc)`
+const DeleteDesc = styled(ModalDesc)`
   margin-top: 40px;
   margin-bottom: 40px;
 `;
@@ -115,6 +121,9 @@ const DeleteBtn = styled.button`
   background-color: ${props => props.theme.dangerColor};
   &:hover {
     background-color: #cc5e43;
+  }
+  @media screen and (max-width: 767px) {
+    font-size: 16px;
   }
 `;
 const CloseBtn = styled(DeleteBtn)`

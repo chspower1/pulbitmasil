@@ -1,18 +1,19 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
-import { userAtom } from "@atom/user";
-import { isLogoutModalAtom } from "@atom/atom";
-import { UserNavProps } from "./layout/Nav";
-import { motion, AnimatePresence, useScroll, useAnimation } from "framer-motion";
-
-export default function UserNav({ setIsUserNav }: UserNavProps) {
-  const userNavMenus = ["userInfo", "myGreenStroll", "logout"];
-  const userNavKorMenus = ["계정 정보", "나의 풀빛마실", "로그아웃"];
-  const setIsLogoutModal = useSetRecoilState(isLogoutModalAtom);
-  const { pathname } = useLocation();
-  const handleClickLogout = async () => {
-    setIsLogoutModal(true);
+import { Link } from "react-router-dom";
+import { isLoginSelector } from "@atom/user";
+import { isLoginModalAtom } from "@atom/atom";
+import { motion, AnimatePresence } from "framer-motion";
+interface UserNavProps {
+  setIsUserNav: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClickLogout: () => Promise<void>;
+  isUserNav: boolean;
+}
+export default function UserNav({ setIsUserNav, handleClickLogout, isUserNav }: UserNavProps) {
+  const setIsLoginModalAtom = useSetRecoilState(isLoginModalAtom);
+  const isLogin = useRecoilValue(isLoginSelector);
+  const handleClickLogin = async () => {
+    setIsLoginModalAtom(true);
     setIsUserNav(false);
   };
   const variants = {
@@ -26,21 +27,32 @@ export default function UserNav({ setIsUserNav }: UserNavProps) {
 
   return (
     <AnimatePresence>
-      <UserNavWrapper variants={variants} initial="hidden" animate="visible">
-        {userNavMenus.map((menu, index) => (
-          <Link key={index} to={menu === "logout" ? { pathname } : menu}>
-            {menu === "logout" ? (
-              <Button onClick={handleClickLogout}>
-                <BtnText variants={item}>{userNavKorMenus[index]}</BtnText>
+      {isUserNav &&
+        (isLogin ? (
+          <UserNavWrapper variants={variants} initial="hidden" animate="visible">
+            <Link to="/mypage/home">
+              <Button onClick={() => setIsUserNav(false)}>
+                <BtnText variants={item}>마이페이지</BtnText>
               </Button>
-            ) : (
-              <Button>
-                <BtnText variants={item}>{userNavKorMenus[index]}</BtnText>
+            </Link>
+
+            <Button onClick={handleClickLogout}>
+              <BtnText variants={item}>로그아웃</BtnText>
+            </Button>
+          </UserNavWrapper>
+        ) : (
+          <UserNavWrapper variants={variants} initial="hidden" animate="visible">
+            <Button onClick={handleClickLogin}>
+              <BtnText variants={item}>로그인</BtnText>
+            </Button>
+
+            <Link to="/register">
+              <Button onClick={() => setIsUserNav(false)}>
+                <BtnText variants={item}>회원가입</BtnText>
               </Button>
-            )}
-          </Link>
+            </Link>
+          </UserNavWrapper>
         ))}
-      </UserNavWrapper>
     </AnimatePresence>
   );
 }
@@ -54,6 +66,9 @@ const UserNavWrapper = styled(motion.div)`
   background: white;
   min-width: 180px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  @media screen and (min-width: 1024px) {
+    display: none;
+  }
 `;
 
 const Button = styled.button`

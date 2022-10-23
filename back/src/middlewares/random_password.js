@@ -30,4 +30,4 @@ function random_password(req, res, next) {
   }
 }
 
-module.exports = random_password;
+export default random_password;

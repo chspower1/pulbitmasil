@@ -13,7 +13,6 @@ export const isWelcomeModalAtom = atom({
   key: "isWelcomeModal",
   default: false,
 });
-
 //Review
 export const ReviewDeleteIdAtom = atom<number | null>({
   key: "reviewDeleteId",
@@ -22,5 +21,10 @@ export const ReviewDeleteIdAtom = atom<number | null>({
 
 export const isReviewCancelAtom = atom({
   key: "isReviewCancelModal",
+  default: false,
+});
+
+export const isRegisterModalAtom = atom({
+  key: "isRegisterModal",
   default: false,
 });

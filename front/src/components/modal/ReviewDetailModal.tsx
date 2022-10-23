@@ -1,51 +1,39 @@
 import { ReviewDeleteIdAtom } from "@atom/atom";
 import { userAtom } from "@atom/user";
-import { changeDayForm } from "@components/review/ReviewCard";
+import { DangerBtn, MainBtn } from "@style/Layout";
+import { ModalContainer, ModalWrap } from "@style/ModalStyle";
 import { IReview } from "@type/review";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState, SetStateAction, Dispatch, useEffect } from "react";
-import { useMatch, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import dayjs from "dayjs";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-// interface ReviewDetailProps {
-//   review: IReview;
-//   isReviewSelect: boolean;
-//   setIsReviewSelect: Dispatch<SetStateAction<boolean>>;
-// }
 export default function ReviewDetailModal({ review }: { review: IReview }) {
-  const { reviewId, name, createAt, description, userId, reviewImg } = review;
-  const isEdit = true;
-
+  const { reviewId, name, createAt, description, userId, reviewImg, title, area } = review;
   const navigate = useNavigate();
-  const reviewMatch = useMatch(`/review/${reviewId}`);
   const user = useRecoilValue(userAtom);
-  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const setReviewDelId = useSetRecoilState(ReviewDeleteIdAtom);
 
-  const onOverlayClick = () => {
+  const handleClickOverlay = () => {
     navigate("/review");
   };
 
   const handleClickEdit = () => {
     navigate(`/review/edit/${reviewId}`, { state: { reviewId, userId } });
   };
-  const day = changeDayForm(createAt!);
-
-  useEffect(() => {
-    console.log(reviewMatch);
-    console.log(reviewId);
-  }, []);
+  const createDay = dayjs(createAt!).format("YYYY-MM-DD");
 
   return (
-    <>
+    <ModalWrap>
       <Overlay
-        onClick={onOverlayClick}
+        onClick={handleClickOverlay}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
       />
-      <ReviewWrap layoutId={`${reviewId}wrap`}>
+      <ReviewContainer layoutId={`${reviewId}wrap`}>
         <ImgContainer>
           <ReviewImg
             src={reviewImg as string}
@@ -53,38 +41,42 @@ export default function ReviewDetailModal({ review }: { review: IReview }) {
             //
           ></ReviewImg>
         </ImgContainer>
-        <ReviewContainer>
+        <ContentsContainer layoutId={`${reviewId}review`}>
           <InfoContainer>
-            <CardImg src={`/assets/icon/profile01.png`} />
+            <CardImg src={`/assets/icon/user/profile01.png`} />
             <InfoBox>
               <p style={{ fontSize: "25px" }}>
                 <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
               </p>
-              <p style={{ fontSize: "20px", marginTop: "5px" }}>{day} </p>
+              <p style={{ fontSize: "20px", marginTop: "5px" }}>{createDay} </p>
             </InfoBox>
-            <p style={{ position: "absolute", right: "25px" }}>지역</p>
+            <Area>{area}</Area>
           </InfoContainer>
 
           <TextContainer>
-            <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
-            <Description>{description}</Description>
+            <p style={{ color: "#636E72", fontSize: "20px", fontWeight: "bold" }}>{title}</p>
+            <Description className={userId === user?.id ? "small" : "normal"}>{description}</Description>
           </TextContainer>
-        </ReviewContainer>
+        </ContentsContainer>
         <ButtonContainer layoutId={`${reviewId}btn`}>
-          {user?.id === userId ? <Btn onClick={handleClickEdit}>수정</Btn> : null}
-
-          {user?.id === userId ? (
-            <Btn
-              onClick={() => {
-                setReviewDelId(reviewId!);
-              }}
-            >
-              삭제
-            </Btn>
-          ) : null}
+          {user?.id === userId && (
+            <>
+              <MainBtn type="button" onClick={handleClickEdit}>
+                수정
+              </MainBtn>
+              <DangerBtn
+                type="button"
+                onClick={() => {
+                  setReviewDelId(reviewId!);
+                }}
+              >
+                삭제
+              </DangerBtn>
+            </>
+          )}
         </ButtonContainer>
-      </ReviewWrap>
-    </>
+      </ReviewContainer>
+    </ModalWrap>
   );
 }
 
@@ -92,27 +84,31 @@ const Overlay = styled(motion.div)`
   position: fixed;
   z-index: 1000;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
-const ReviewWrap = styled(motion.div)`
+const ReviewContainer = styled(ModalContainer)`
   z-index: 2000;
   position: absolute;
-  width: 600px;
-  height: 700px;
+  width: 500px;
+  height: 600px;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
   background-color: white;
+  @media screen and (max-width: 758px) {
+    width: 95%;
+  }
 `;
 
 const ImgContainer = styled(motion.div)`
-  width: 600px;
-  height: 390px;
+  width: 100%;
+  height: 300px;
   position: relative;
 `;
 const ReviewImg = styled(motion.img)`
@@ -121,24 +117,33 @@ const ReviewImg = styled(motion.img)`
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0px 0px;
 `;
 const TextContainer = styled(motion.div)`
   width: 100%;
   height: 100px;
-  margin-top: 30px;
-  /* overflow: scroll; */
+  margin-top: 20px;
 `;
 
-const Description = styled.p`
+const Description = styled(motion.div)`
   padding: 10px;
   width: 100%;
-  height: 100px;
   letter-spacing: 1px;
   line-height: 1.3em;
-  margin-top: 20px;
-  font-size: 20px;
-  overflow-y: scroll;
+  margin-top: 10px;
+  font-size: 16px;
+  overflow-x: hidden;
+  overflow-y: auto;
   resize: none;
+  color: ${props => props.theme.textColor};
+  border: solid 1px ${props => props.theme.borderColor};
+  &.small {
+    height: 110px;
+  }
+  &.normal {
+    height: 150px;
+  }
 `;
 const InfoBox = styled(motion.div)`
   margin-left: 20px;
@@ -146,12 +151,18 @@ const InfoBox = styled(motion.div)`
   flex-direction: column;
   justify-content: center;
 `;
-const ReviewContainer = styled(motion.div)`
+const ContentsContainer = styled(motion.div)`
   width: 100%;
   height: 250px;
   padding: 30px;
 `;
-
+const Area = styled(motion.p)`
+  position: absolute;
+  right: 15px;
+  @media screen and (max-width: 758px) {
+    bottom: 0px;
+  }
+`;
 const InfoContainer = styled(motion.div)`
   display: flex;
   position: relative;
@@ -166,16 +177,12 @@ const CardImg = styled(motion.img)`
 `;
 const ButtonContainer = styled(motion.div)`
   display: flex;
-  flex-direction: row;
+  width: 50%;
   position: absolute;
   margin: auto;
-  left: 0;
-  bottom: 0;
-`;
-const Btn = styled(motion.button)`
-  width: 300px;
-  height: 20px;
-  &:first-child {
-    border-right: 1px #388e3c solid;
+  justify-content: space-between;
+  bottom: 20px;
+  @media screen and (max-width: 758px) {
+    width: 70%;
   }
 `;

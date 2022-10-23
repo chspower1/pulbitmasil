@@ -17,7 +17,7 @@ export default function DistrictCheckbox() {
   const [trash, setTrash] = useState<TrashCount>(json);
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const labels = Object.keys(trash);
-  // console.log(labels);
+
 
   const onCheckedElement = (checked: boolean, item: string) => {
     if (checked) {
@@ -27,7 +27,6 @@ export default function DistrictCheckbox() {
     }
   };
 
-  // console.log(checkedList)
   return (
     <CheckBox>
       <DistrictCheckBox>
@@ -71,12 +70,4 @@ const CheckBox = styled(Box)`
 `;
 const DistrictCheckBox = styled(CheckBox)`
   height: 150px;
-`;
-const CheckContainer = styled(Container)`
-  flex-wrap: wrap;
-`;
-const ItemBox = styled(Box)`
-  margin: 0.2em 0.5em;
-  padding: 0.5em 0.7em;
-  background-color: rgba(25, 76, 29, 0.1);
 `;

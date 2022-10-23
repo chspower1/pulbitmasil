@@ -1,24 +1,22 @@
 import { PopulationChart } from "../chart/Population";
+import styled from "styled-components";
 import {
   AboutContent,
-  Container,
-  Title,
+  Title as TitleGuide,
   SubTitle as SubTitleGuide,
   GreenAccent,
   Desc,
   Box,
-  Row,
+  Row as RowGuide,
   DangerAccent,
 } from "@style/Layout";
-import React from "react";
-import styled from "styled-components";
 
 export default function Problem() {
   return (
     <Wrap>
       <ContentContainer>
         <Row>
-          <Title>유동인구증가와 증가</Title>
+          <Title>유동인구증가와 쓰레기</Title>
         </Row>
         <Row>
           <SubTitle>
@@ -32,7 +30,27 @@ export default function Problem() {
           </Desc>
         </Row>
         <Row>
-          <div style={{ width: "400px", height: "130px", backgroundColor: "red" }}></div>
+          <NewsBox>
+            <NewsText
+              onClick={() => window.open(`${"https://www.mk.co.kr/news/society/view/2022/04/314838/"}`, "_blank")}
+            >
+              <GreenAccent style={{ color: "#e7772c" }}>[매일경제]</GreenAccent> 홍대거리에 쓰레기 쏟아졌다…거리…
+            </NewsText>
+            <NewsText
+              onClick={() =>
+                window.open(
+                  `${"https://biz.chosun.com/topics/topics_social/2022/06/05/5ERZWHB4UJHVFFZZXSRR2GDJ54/"}`,
+                  "_blank",
+                )
+              }
+            >
+              <GreenAccent style={{ color: "#818181" }}>[조선일보]</GreenAccent> ‘환경의 날’에도 한강공원엔 쓰레기 한
+              가득…
+            </NewsText>
+            <NewsText onClick={() => window.open(`${"https://m.mbn.co.kr/news/society/4858837"}`, "_blank")}>
+              <GreenAccent style={{ color: "#2179b4" }}>[MBN뉴스]</GreenAccent> 불꽃축제 끝난 한강공원 쓰레기 몸살…
+            </NewsText>
+          </NewsBox>
         </Row>
         <Row>
           <SubTitle className="end">
@@ -41,30 +59,82 @@ export default function Problem() {
           </SubTitle>
         </Row>
       </ContentContainer>
-      <ChartContainer><PopulationChart/></ChartContainer>
+      <ChartContainer>
+        <PopulationChart />
+      </ChartContainer>
     </Wrap>
   );
 }
 const Wrap = styled(AboutContent)`
   align-items: center;
   justify-content: space-between;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
-const ContentContainer = styled(Container)`
+const ContentContainer = styled(Box)`
   height: 400px;
   flex-direction: column;
   justify-content: space-between;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    align-items: center;
+  }
+`;
+const Row = styled(RowGuide)`
+  justify-content: flex-start;
+  @media screen and (max-width: 1024px) {
+    justify-content: center;
+  }
+`;
+const Title = styled(TitleGuide)`
+  margin-bottom: 15px;
 `;
 const SubTitle = styled(SubTitleGuide)`
   font-family: "Sebang";
-  font-size: 24px;
   line-height: 1.3;
+  margin-bottom: 10px;
   color: ${props => props.theme.textColor};
   &.end {
     font-size: 22px;
   }
 `;
 
-const ChartContainer = styled(Container)`
+const ChartContainer = styled(Box)`
   width: 550px;
   height: 400px;
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    align-items: center;
+  }
+`;
+const NewsBox = styled(Box)`
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 400px;
+  height: 130px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 10px;
+  margin: 15px 0px;
+  border-radius: 10px;
+  @media screen and (max-width: 758px) {
+    max-width: 400px;
+    width: 95%;
+  }
+`;
+const NewsText = styled(SubTitle)`
+  font-size: 17px;
+  margin: 0px;
+  padding: 7px 0;
+  line-height: 21px;
+  cursor: pointer;
+  transition: color 0.4s ease;
+  &:hover {
+    color: ${props => props.theme.mainColor};
+  }
+  @media screen and (max-width: 758px) {
+    font-size: 16px;
+  }
 `;

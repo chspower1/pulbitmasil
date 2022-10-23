@@ -1,86 +1,82 @@
 import { getDodream } from "@api/dodream";
 import DodreamMap from "@components/dodream/DodreamMap";
 import WalkTable from "@components/dodream/WalkTable";
-import DodreamDetalModal from "@components/modal/DodreamDetail";
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
 import { IDodream } from "@type/dodream";
-import { Wrapper } from "@style/Layout";
+import { Container, Wrapper, Title, Box, Desc, GreenAccent } from "@style/Layout";
+import { faArrowPointer, faSort } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Dodream() {
-  const { isLoading, data: dodream } = useQuery<IDodream[] | undefined>(["dodream"], getDodream);
-  console.log(dodream);
+  const { data: dodream } = useQuery<IDodream[] | undefined>(["dodream"], getDodream);
+
   return (
-    <>
-      {isLoading ? (
-        "로딩중입니다."
-      ) : (
-        <WalkWrap>
-          <MapContainer>{/* <DodreamMap dodream={dodream!} /> */}</MapContainer>
-          <RightContainer>
-            {/* <ChartBtn>차트로 보기</ChartBtn> */}
-            <Title>서울시 산책로 현황</Title>
-            <CourseBox>
-              <WalkTable dodream={dodream!} />
-            </CourseBox>
-          </RightContainer>
-        </WalkWrap>
-      )}
-    </>
+    <WalkWrap>
+      <DodreamContainer>
+        <DodreamTitle>한 눈에 보는 서울시 산책로</DodreamTitle>
+        <MapBox>
+          <ClickDesc>
+            <FontAwesomeIcon icon={faArrowPointer} color="#008037" />
+            &nbsp; 지도의 마커를 <GreenAccent>클릭</GreenAccent>해보세요!
+          </ClickDesc>
+          <DodreamMap dodream={dodream!} />
+        </MapBox>
+        <TableBox>
+          <WalkTable dodream={dodream!} />
+          <SortDesc>
+            <FontAwesomeIcon icon={faSort} color="#008037" />
+            &nbsp; 카테고리를 <GreenAccent>클릭</GreenAccent>해서 정렬해보세요!
+          </SortDesc>
+        </TableBox>
+      </DodreamContainer>
+    </WalkWrap>
   );
 }
 const WalkWrap = styled(Wrapper)`
+  position: relative;
   background-image: url("/assets/images/walk.jpg");
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  @media screen and (max-width: 768px) {
+    height: auto;
+    overflow-y: auto;
+  }
 `;
 
-const ChartBtn = styled.button`
-  position: absolute;
-  width: 208px;
-  height: 73px;
-  left: 28px;
-  top: 117px;
-  background: #008037;
-  border-radius: 5px;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 28px;
-  text-align: center;
+const DodreamContainer = styled(Container)`
+  flex-direction: column;
+  justify-content: flex-start;
 `;
 
-const Title = styled.h1`
-  font-weight: 700;
-  font-size: 60px;
-  line-height: 70px;
-  padding-top: 100px;
+const DodreamTitle = styled(Title)`
   text-align: center;
   color: #008037;
 `;
-
-const CourseBox = styled.div`
-  margin-top: 80px;
-  width: 860px;
-  height: 400px;
-  /* background-color: #2a9c6b; */
-  border: none;
+const ClickDesc = styled(Desc)`
+  position: absolute;
+  top: -20px;
+  right: 0px;
+`;
+const SortDesc = styled(Desc)`
+  position: absolute;
+  bottom: -25px;
+  right: 0px;
+`;
+const MapBox = styled(Box)`
+  position: relative;
+  width: 750px;
+  height: 35vh;
+  margin-top: 4vh;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
-const RightContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* justify-content: center; */
-  margin-right: 60px;
-  width: 55%;
-  height: 100%;
-`;
-
-const MapContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 45%;
-  height: 100vh;
-  /* background-color: #008037; */
-  /* margin: 30px; */
-  margin-top: 70px;
+const TableBox = styled(Box)`
+  position: relative;
+  margin-top: 3vh;
+  @media screen and (max-width: 768px) {
+    width: 90%;
+  }
 `;

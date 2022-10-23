@@ -1,28 +1,23 @@
-import React, { useState } from "react";
 import styled from "styled-components";
 import ReactFullpage from "@fullpage/react-fullpage";
-import SideBar from "@components/about/SideBar";
 
 import Benefit from "@components/about/Benefit";
 import Unique from "@components/about/Unique";
 import Problem from "@components/about/Problem";
 
 import Pulbitmasil from "@components/about/Pulbitmasil";
-const anchors = ["pulbitmasil", "problem", "benefit", "unique"];
+const about = ["pulbitmasil", "problem", "benefit", "unique"];
 
 export default function Content() {
   return (
     <ReactFullpage
-      anchors={anchors}
       navigation
-      navigationTooltips={anchors}
-      // sectionsColor={["#f7f7f7", "#C7E1D6", "#d8d8d8"]}
+      navigationTooltips={about}
       scrollingSpeed={1000}
       onLeave={(origin, destination, direction) => {
-        // console.log("onLeave event", { origin, destination, direction });
       }}
       render={({ state, fullpageApi }) => {
-        // console.log("render prop change", state, fullpageApi);
+
         return (
           <ReactFullpage.Wrapper>
             <Section className="section">
@@ -53,6 +48,7 @@ export default function Content() {
 }
 const Section = styled.div`
   height: 100vh;
+  width: 100%;
 `;
 
 const Box = styled.div`
@@ -62,25 +58,28 @@ const Box = styled.div`
   flex-direction: column;
   height: 100vh;
   background-image: url("/assets/images/about/about_bg_img01.jpg");
+  background-size: cover;
   padding: 0;
-`;
-const Title = styled.h1`
-  font-size: 36px;
-  color: ${props => props.theme.mainColor};
-`;
-const Description = styled.p`
-  font-size: 22px;
-  color: ${props => props.theme.textColor};
-`;
-const MoveUpBtn = styled.div`
-  top: 20px;
+
+  @media screen and (min-width: 1124px) {
+    width: 100%;
+  }
 `;
 const BenefitBox = styled(Box)`
   background-image: url("/assets/images/about/benefit_bg.jpg");
+  @media screen and (min-width: 1124px) {
+    width: 100%;
+  }
 `;
 const UniqueBox = styled(Box)`
   background-image: url("/assets/images/about/unique_bg.jpg");
+  @media screen and (min-width: 1124px) {
+    width: 100%;
+  }
 `;
 const ProblemBox = styled(Box)`
   background-image: url("/assets/images/about/problem_bg.jpg");
+  @media screen and (min-width: 1124px) {
+    width: 100%;
+  }
 `;

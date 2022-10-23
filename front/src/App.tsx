@@ -1,7 +1,6 @@
 import Router from "./pages/index";
 import { ThemeProvider } from "styled-components";
 import { lightTheme } from "./style/theme/theme";
-import ModalPortal from "@components/modal/ModalPortal";
 import { GlobalStyled } from "@style/GlobalStyled";
 import { HelmetProvider } from "react-helmet-async";
 import Seo from "./Seo";

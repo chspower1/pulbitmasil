@@ -1,35 +1,24 @@
 import { userAtom } from "@atom/user";
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { IReview } from "@type/review";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 import { ReviewDeleteIdAtom } from "@atom/atom";
-import ReviewDeleteModal from "../modal/ReviewDeleteModal";
-import { Accent } from "@style/ModalStyle";
-
-export const changeDayForm = (createAt: Date): string => {
-  const createDay = new Date(createAt);
-  const year = createDay.getFullYear();
-  const month = createDay.getMonth() + 1;
-  const date = createDay.getDate();
-
-  return `${year}-${month >= 10 ? month : "0" + month}-${date >= 10 ? date : "0" + date}`;
-};
+import dayjs from "dayjs";
+import { MainBtn, DangerBtn } from "@style/Layout";
 
 export default function Card({ review }: { review: IReview }): React.ReactElement {
-  const { userId, reviewId, description, createAt, name, reviewImg } = review;
-  const isEdit = true;
+  const { userId, reviewId, description, createAt, name, reviewImg, title, area } = review;
   const user = useRecoilValue(userAtom);
   const navigate = useNavigate();
-  const [reviewDelId, setReviewDelId] = useRecoilState(ReviewDeleteIdAtom);
+  const setReviewDelId = useSetRecoilState(ReviewDeleteIdAtom);
 
-  const day = changeDayForm(createAt!);
+  const createDay = dayjs(createAt).format("YYYY-MM-DD");
 
   return (
     <>
-      <CardWrap whileHover={{ scale: 1.03 }} layoutId={`${reviewId}wrap`}>
+      <CardWrap whileHover={{ scale: 1.06 }} layoutId={`${reviewId}wrap`}>
         <motion.div
           onClick={() => {
             navigate(`${reviewId}`);
@@ -38,36 +27,39 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
           <ImgContainer>
             <ReviewImg src={reviewImg as string} alt="review image"></ReviewImg>
           </ImgContainer>
-          <ReviewContainer>
+          <ReviewContainer layoutId={`${reviewId}review`}>
             <InfoContainer>
               <CardImg src={`/assets/icon/user/profile01.png`} />
               <InfoBox>
                 <p style={{ fontSize: "18px" }}>
                   <span style={{ color: "green" }}>{name ? name : "***"}</span> 님
                 </p>
-                <p style={{ fontSize: "14px", marginTop: "5px" }}>{day} </p>
+                <p style={{ fontSize: "14px", marginTop: "5px" }}>{createDay} </p>
               </InfoBox>
-              <p style={{ position: "absolute", right: "10px" }}>지역</p>
+              <p style={{ position: "absolute", right: "10px" }}>{area}</p>
             </InfoContainer>
             <TextContainer>
-              <p style={{ color: "#636E72", fontSize: "18px", fontWeight: "bold" }}>광교산 산책로 1모임</p>
+              <p style={{ color: "#636E72", fontSize: "16px", fontWeight: "bold" }}>{title}</p>
               <Description>{description}</Description>
             </TextContainer>
           </ReviewContainer>
         </motion.div>
         <ButtonContainer layoutId={`${reviewId}btn`}>
           {user?.id === userId ? (
-            <Btn onClick={() => navigate(`edit/${reviewId}`, { state: { reviewId, userId } })}>수정</Btn>
+            <MainBtn onClick={() => navigate(`edit/${reviewId}`, { state: { reviewId, userId } })} width="80px">
+              수정
+            </MainBtn>
           ) : null}
 
           {user?.id === userId ? (
-            <Btn
+            <DangerBtn
+              width="80px"
               onClick={() => {
                 setReviewDelId(reviewId!);
               }}
             >
               삭제
-            </Btn>
+            </DangerBtn>
           ) : null}
         </ButtonContainer>
       </CardWrap>
@@ -75,7 +67,7 @@ export default function Card({ review }: { review: IReview }): React.ReactElemen
   );
 }
 
-const CardWrap = styled(motion(motion.div))`
+const CardWrap = styled(motion.div)`
   position: relative;
   width: 370px;
   height: 430px;
@@ -83,6 +75,7 @@ const CardWrap = styled(motion(motion.div))`
   box-shadow: 3px 3px 15px #b0bec5;
   margin: 0 23px;
   margin-bottom: 40px;
+  cursor: pointer;
 `;
 const InfoContainer = styled(motion.div)`
   display: flex;
@@ -95,6 +88,7 @@ const InfoContainer = styled(motion.div)`
 const ReviewContainer = styled(motion.div)`
   width: 100%;
   padding: 20px;
+  padding-bottom: 0px;
 `;
 
 const ImgContainer = styled(motion.div)`
@@ -104,7 +98,7 @@ const ImgContainer = styled(motion.div)`
 `;
 const TextContainer = styled(motion.div)`
   width: 100%;
-  height: 100px;
+  height: 60px;
   margin-top: 20px;
 `;
 
@@ -114,6 +108,7 @@ const ReviewImg = styled(motion.img)`
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 `;
 
 const InfoBox = styled(motion.div)`
@@ -130,28 +125,19 @@ const CardImg = styled(motion.img)`
 `;
 const ButtonContainer = styled(motion.div)`
   display: flex;
-  flex-direction: row;
   position: absolute;
-  width: 100%;
-  bottom: 0px;
-  margin: auto;
-`;
-const Btn = styled(motion.button)`
-  width: 50%;
-  height: 20px;
-  &:first-child {
-    border-right: 1px #388e3c solid;
-  }
+  justify-content: space-between;
+  width: 45%;
+  bottom: 10px;
+  right: 10px;
 `;
 const Description = styled(motion.p)`
-  text-overflow: ellipsis;
   letter-spacing: 1px;
   line-height: 1.3em;
-  margin-top: 20px;
+  margin-top: 10px;
+  width: 100%;
+  height: 30px;
   overflow: hidden;
-  word-break: break-word;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2; // 원하는 라인수
-  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

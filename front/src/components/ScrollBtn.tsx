@@ -25,7 +25,6 @@ export default function ScrollBtn() {
   const handleScroll = () => {
     const scrollTop = document.getElementById("app")?.scrollTop;
     if (window.scrollY >= 50) {
-      // console.log(isScroll);
       setIsScroll(true);
     } else {
       setIsScroll(false);

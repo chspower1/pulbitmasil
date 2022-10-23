@@ -1,4 +1,4 @@
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { createGlobalStyle } from "styled-components";
 import { reset } from "styled-reset";
 export const GlobalStyled = createGlobalStyle`
     ${reset}
@@ -13,6 +13,7 @@ export const GlobalStyled = createGlobalStyle`
         font-family: "Sebang";
         ::-webkit-scrollbar {
         display: none;
+        color:${props => props.theme.textColor};
   }
   
     }
@@ -29,6 +30,11 @@ export const GlobalStyled = createGlobalStyle`
             outline: none; 
             box-shadow: 0 0 0 2px ${props => props.theme.mainColor};
         }
+        ::placeholder{
+        @media screen and (max-width:768px){
+                font-size:14px;
+            }
+        }
     }
 
     
@@ -41,6 +47,9 @@ export const GlobalStyled = createGlobalStyle`
             font-family: "Sebang";
             font-size:18px;
             letter-spacing: 0px;
+            @media screen and (max-width:768px){
+                font-size:14px;
+            }
         }
     }
     button { 

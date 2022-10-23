@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+import { MongoClient } from "mongodb";
 require("dotenv").config();
 
 const url = process.env.MONGODB_URL;
@@ -6,7 +6,7 @@ const client = new MongoClient(url);
 
 const dbName = "test";
 
-async function dodream() {
+async function getDodream() {
   await client.connect();
 
   const db = client.db(dbName);
@@ -15,7 +15,7 @@ async function dodream() {
   return collection;
 }
 
-async function cpi(id) {
+async function getCpi(id) {
   await client.connect();
 
   const db = client.db(dbName);
@@ -24,5 +24,4 @@ async function cpi(id) {
   return collection;
 }
 
-module.exports.dodream = dodream;
-module.exports.cpi = cpi;
+export { getDodream, getCpi };

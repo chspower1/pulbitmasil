@@ -1,95 +1,66 @@
-const express = require("express");
-const router = express.Router();
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import login_required from "../middlewares/login_required";
+import maria from "../db/mariaDB/maria";
+import random_password from "../middlewares/random_password";
+import { emailForTempPassword } from "../utils/email";
+import { Router } from "express";
+const userRouter = Router();
 
-const jwt = require("jsonwebtoken");
-
-const login_required = require("../middlewares/login_required");
-
-const maria = require("../db/connect/maria");
-const random_password = require("../middlewares/random_password");
-const emailForTempPassword = require("../db/connect/email");
-
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "User" });
-});
-
-// router.get("/create", async function (req, res) {
-//   maria.query(
-//     `CREATE TABLE USER (
-//     id INT primary key AUTO_INCREMENT,
-//     name VARCHAR(10) NOT NULL,
-//     email VARCHAR(30) UNIQUE NOT NULL,
-//     hashedPassword VARCHAR(100) NOT NULL)`,
-//     function (err, rows, fields) {
-//       if (!err) {
-//         res.send(rows);
-//       } else {
-//         console.log("err : " + err);
-//         res.send(err);
-//       }
-//     },
-//   );
-// });
-
-router.get("/select", function (req, res) {
-  maria.query("SELECT * FROM USER", function (err, rows, fields) {
-    if (!err) {
-      res.send(rows);
-    } else {
-      // console.log("err : " + err);
-      res.send(err);
-    }
-  });
-});
-
-// 편의를 위한 초기화(롤백안됨)
-router.get("/init", function (req, res) {
-  maria.query("TRUNCATE TABLE USER;", function (err, rows, fields) {
-    if (!err) {
-      res.send(rows);
-    } else {
-      // console.log("err : " + err);
-      res.send(err);
-    }
-  });
-});
-
-// 회원가입
-router.post("/register", async function (req, res, next) {
+userRouter.post("/register", async function (req, res, next) {
   try {
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    maria.query(
-      `INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, 0)`,
+    const [rows] = await maria.execute(
+      `INSERT INTO USER(name, email, hashedPassword, social) VALUES(?,?,?, "origin")`,
       [name, email, hashedPassword],
-      function (err, rows, fields) {
-        if (!err) {
-          res.status(200).json({ success: true, message: "user register success", social: 0 });
-        } else {
-          // console.log("err : " + err);
-          res.send(err);
-        }
-      },
     );
+
+    res.status(201).json({ success: true, id: rows.insertId, social: "origin" });
   } catch (error) {
-    next(error);
+    res.sendStatus(400);
   }
 });
 
-// 로그인
-router.post("/login", async function (req, res, next) {
-  const { email, password } = req.body;
+userRouter.post("/login", async function (req, res, next) {
+  try {
+    const { email, password } = req.body;
 
-  maria.query(`SELECT * FROM USER WHERE email = ?`, [email], async function (err, rows, fields) {
-    if (!err & rows.length) {
+    const [rows] = await maria.execute(
+      `SELECT A.id, A.email, A.name, A.social, A.hashedPassword, B.reviewId, C.crewId
+                FROM USER AS A
+                LEFT JOIN REVIEW AS B
+                ON A.id = B.userId
+                LEFT JOIN USERTOGREENCREW AS C
+                ON A.id = C.userId
+                WHERE A.email = ?`,
+      [email],
+    );
+
+    if (rows.length) {
       const correctPasswordHash = rows[0].hashedPassword;
       const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
       if (!isPasswordCorrect) {
-        return res.status(400).json({ success: false });
+        return res.sendStatus(401);
       }
+
+      const [review] = await maria.execute(
+        `SELECT RV.reviewId, GC.title, RV.description, RV.createAt, GC.inProgress
+        FROM REVIEW AS RV
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+        WHERE RV.userId = ?`,
+        [rows[0].id],
+      );
+
+      const [greenCrew] = await maria.execute(
+        `SELECT GC.crewId, GC.title, GC.startAt, RT.course, RT.area, GC.inProgress
+        FROM USERTOGREENCREW AS UTGC
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+        LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+        WHERE UTGC.userId = ?`,
+        [rows[0].id],
+      );
 
       const secretKey = process.env.JWT_SECRET_KEY;
       const token = jwt.sign({ id: rows[0].id }, secretKey);
@@ -100,141 +71,123 @@ router.post("/login", async function (req, res, next) {
         token: token,
         name: rows[0].name,
         social: rows[0].social,
+        reviews: review,
+        greenCrews: greenCrew,
       });
     } else {
-      console.log("err : " + err);
-      res.send(err);
+      return res.sendStatus(401);
     }
-  });
+  } catch (err) {
+    next(err);
+  }
 });
 
-router.delete("/delete", login_required, async function (req, res, next) {
+userRouter.delete("/delete", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
 
-    maria.query(`DELETE FROM USER WHERE id = ?`, [user_id], async function (err, rows, fields) {
-      if (!err) {
-        res.status(200).json({ success: true });
-      } else {
-        console.log("err : " + err);
-        res.send(err);
-      }
-    });
+    await maria.execute(`DELETE FROM USER WHERE id = ?`, [user_id]);
+    res.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }
 });
 
-router.put("/name", login_required, async function (req, res, next) {
+userRouter.put("/name", login_required, async function (req, res, next) {
   try {
-    const name = req.body?.name;
+    const name = req.body?.name || null;
 
     const userId = req.currentUserId;
 
-    maria.query(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId], async function (err, rows, fields) {
-      if (!err) {
-        res.status(200).json({ success: true });
-      } else {
-        console.log("err : " + err);
-        res.status(400).send(err);
-      }
-    });
+    const [rows] = await maria.execute(`UPDATE USER SET name = ? WHERE id = ?`, [name, userId]);
+    if (!rows.affectedRows) {
+      return res.sendStatus(404);
+    }
+    res.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }
 });
 
-router.put("/password", login_required, async function (req, res, next) {
+userRouter.put("/password", login_required, async function (req, res, next) {
   try {
-    const password = req.body?.password;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { password, newPassword } = req.body;
     const userId = req.currentUserId;
 
-    maria.query(
-      `UPDATE USER SET hashedPassword = ? WHERE id = ?`,
-      [hashedPassword, userId],
-      async function (err, rows, fields) {
-        if (!err) {
-          res.status(200).json({ success: true });
-        } else {
-          console.log("err : " + err);
-          res.status(400).send(err);
-        }
-      },
-    );
+    const [rows] = await maria.execute("SELECT hashedPassword FROM USER WHERE id = ?", [userId]);
+    const isPasswordCorrect = await bcrypt.compare(password, rows[0].hashedPassword);
+    if (!isPasswordCorrect) {
+      return res.sendStatus(406);
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    const [rows2] = await maria.execute(`UPDATE USER SET hashedPassword = ? WHERE id = ?`, [hashedPassword, userId]);
+    if (!rows2.affectedRows) {
+      return res.sendStatus(404);
+    }
+    res.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }
 });
 
-// 임시비밀번호 발급
-// 메일 전송 기준은 changeRows 가 0이냐 1이냐
-router.put("/reset", random_password, async function (req, res, next) {
+userRouter.put("/reset", random_password, async function (req, res, next) {
   try {
     const email = req.body.email;
-    const password = req.randPwd;
+    const tempPassword = req.randPwd;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    maria.query(
+    const hashedPassword = await bcrypt.hash(tempPassword, 10);
+    const [rows] = await maria.execute(
       `UPDATE USER SET hashedPassword = ? WHERE email = ? AND hashedPassword NOT IN ("kakao", "naver")`,
       [hashedPassword, email],
-      async function (err, rows, fields) {
-        if (err) {
-          console.error("err : " + err);
-          return res.status(400).send(err);
-        }
-
-        if (!rows["changedRows"]) {
-          return res.status(400).send({ success: false });
-        }
-
-        await emailForTempPassword(email, password);
-        res.status(200).json({ success: true });
-      },
     );
+
+    if (!rows.affectedRows) {
+      return res.sendStatus(402);
+    }
+
+    await emailForTempPassword(email, tempPassword);
+    res.status(205).json({ success: true });
   } catch (error) {
     next(error);
   }
 });
 
-// modify 전, 비밀번호 체크
-router.post("/verify", login_required, async function (req, res, next) {
+userRouter.get("/mypage", login_required, async function (req, res, next) {
   try {
     const user_id = req.currentUserId;
-    const { password } = req.body;
 
-    maria.query(`SELECT hashedPassword FROM USER WHERE id = ?`, [user_id], async function (err, rows, fields) {
-      if (!err) {
-        const correctPasswordHash = rows[0].hashedPassword;
-        const isPasswordCorrect = await bcrypt.compare(password, correctPasswordHash);
-        if (!isPasswordCorrect) {
-          return res.json({ success: false });
-        }
-        res.json({ success: true });
-      } else {
-        console.log("err : " + err);
-        res.send(err);
-      }
+    const [rows] = await maria.execute(`SELECT id, name, email, img, social FROM USER WHERE id = ?`, [user_id]);
+
+    const [review] = await maria.execute(
+      `SELECT RV.reviewId, GC.title, RV.description, RV.createAt, GC.inProgress
+        FROM REVIEW AS RV
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = RV.crewId
+        WHERE RV.userId = ?`,
+      [user_id],
+    );
+
+    const [greenCrew] = await maria.execute(
+      `SELECT GC.crewId, GC.title, GC.startAt, RT.course, RT.area, GC.inProgress
+        FROM USERTOGREENCREW AS UTGC
+        LEFT JOIN GREENCREW AS GC ON GC.crewId = UTGC.crewid
+        LEFT JOIN ROUTE AS RT ON RT.id = GC.routeId
+        WHERE UTGC.userId = ?`,
+      [user_id],
+    );
+
+    res.status(200).json({
+      email: rows[0].email,
+      id: rows[0].id,
+      name: rows[0].name,
+      social: rows[0].social,
+      reviews: review,
+      greenCrews: greenCrew,
     });
   } catch (error) {
     next(error);
   }
 });
 
-router.get("/mypage", login_required, function (req, res) {
-  const userId = req.currentUserId;
-  maria.query(
-    `SELECT * FROM USER INNER JOIN REVIEW ON USER.id = REVIEW.userId where id = ?`,
-    [userId],
-    function (err, rows, fields) {
-      if (!err) {
-        res.send(rows);
-      } else {
-        console.log("err : " + err);
-        res.send(err);
-      }
-    },
-  );
-});
-
-module.exports = router;
+export { userRouter };

@@ -3,8 +3,23 @@ export interface User {
   email: string;
   name: string;
   token: string;
-  social?: number; // 카카오,네이버는 1,풀빛마실은 0
-  // image?:string; //프로필이미지 default
+  reviews?: UserReview[]; // 작성한 review 배열
+  greenCrews?: UserGreenCrew[]; // 참여한 greenCrew  배열
+  social: "origin" | "kakao" | "naver";
+}
+export interface UserReview {
+  reviewId?: number;
+  title: string;
+  description: string;
+  createAt: Date;
+}
+export interface UserGreenCrew {
+  crewId?: number;
+  title: string;
+  course: string;
+  startAt: Date;
+  area: string;
+  inProgress: number;
 }
 export interface UserRegisterForm extends Omit<User, "token"> {
   password: string;
@@ -14,8 +29,12 @@ export interface UserLoginForm extends Omit<User, "token"> {
   password: string;
 }
 
-export interface PasswordChangeForm {
-  currentPassword: string;
-  changePassword: string;
-  confirmPassword: string;
+export interface PasswordForm {
+  password: string;
+  newPassword: string;
+  confirmPassword?: string;
+}
+export interface NameChangeForm {
+  currentName?: string;
+  newName: string;
 }

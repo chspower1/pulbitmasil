@@ -1,16 +1,4 @@
-import React, { ReactNode } from "react";
-import {
-  Wrapper as WrapGuide,
-  AboutContent,
-  Container as ContainerGuide,
-  Title,
-  SubTitle as SubTitleGuide,
-  GreenAccent,
-  Desc,
-  Box,
-  Row,
-  DangerAccent,
-} from "@style/Layout";
+import { Wrapper as WrapGuide, Box as BoxGuide, Title, SubTitle as SubTitleGuide, DangerAccent } from "@style/Layout";
 import styled from "styled-components";
 import GuideForm from "@components/guide/GuideForm";
 import { contents1, contents2, contents3 } from "../data/guide_data";
@@ -68,13 +56,13 @@ const Wrap = styled(WrapGuide)`
   height: 300vh;
   overflow: scroll;
 `;
-const PageContainer = styled(ContainerGuide)<{ bgColor: string }>`
+const PageContainer = styled(BoxGuide)<{ bgColor: string }>`
   flex-direction: column;
   width: 100%;
   height: 100vh;
   background-color: ${props => props.bgColor};
 `;
-const SectionContainer = styled(ContainerGuide)`
+const SectionContainer = styled(BoxGuide)`
   width: 100%;
   height: 33.3%;
 `;

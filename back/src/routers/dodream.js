@@ -1,13 +1,11 @@
-const express = require("express");
-const router = express.Router();
+import { Router } from "express";
+const dodreamRouter = Router();
+import { getDodream } from "../db/mongoDB/mongodb.js";
 
-const { dodream } = require("../db/mongoDB/mongodb");
-
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  dodream()
+dodreamRouter.get("/", function (req, res, next) {
+  getDodream()
     .then(result => res.status(200).json(result))
     .catch(console.error);
 });
 
-module.exports = router;
+export { dodreamRouter };

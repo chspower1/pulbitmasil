@@ -9,41 +9,15 @@ import { IGreenCrew } from "@type/greenCrew";
 const { kakao }: any = window;
 
 export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) {
-  const courseName = [
-    "독정천",
-    "고덕산 자락길",
-    "북서울꿈의숲 산책길",
-    "우장산 공원 산책길",
-    "낙성대 산책길",
-    "성동 송정둑길",
-    "개웅산 숲 산책길",
-    "월계근린공원 산책길",
-    "홍릉수목원길",
-    "보라매공원 산책길",
-    "매봉산 자락길",
-    "반포천",
-    "오동공원 산책길",
-    "석촌호수 산책길",
-    "달마을공원 산책길",
-    "남산야외식물원 산책길",
-    "진관공원 나들길",
-    "인왕산 자락길",
-    "숭례문구간",
-  ];
   useEffect(() => {
     if (greenCrew) {
-      console.log(testPoints);
-      console.log("------------", typeof greenCrew.cpi);
-      // const points2 = greenCrew!.cpi.map(i => new kakao.maps.LatLng(i[0], i[1]));
-
       // 좌표값 생성
-      const points = testPoints.test.map(i => new kakao.maps.LatLng(i.x, i.y));
-
+      const points = greenCrew.CPI.map(i => new kakao.maps.LatLng(i.x, i.y));
       // 맵 정보
       let mapContainer = document.getElementById("greenCrewMap"), // 지도를 표시할 div
         mapOption = {
           center: points[0], // 지도의 중심좌표
-          level: 6, // 지도의 확대 레벨
+          level: 4, // 지도의 확대 레벨
         };
 
       // 지도 생성
@@ -53,10 +27,12 @@ export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) 
       let clickLine = new kakao.maps.Polyline({
         map: greenCrewMap, // 선을 표시할 지도입니다
         path: points, // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
-        strokeWeight: 3, // 선의 두께입니다
+        strokeWeight: 5, // 선의 두께입니다
         strokeColor: "#00552d", // 선의 색깔입니다
-        strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+        strokeOpacity: 0.8, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
         strokeStyle: "dash", // 선의 스타일입니다
+        endArrow: true,
+        zIndex: 10,
       });
       let distance = Math.round(clickLine.getLength());
 
@@ -78,7 +54,15 @@ export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) 
         title: "끝", // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
         image: endMarkerImage, // 마커 이미지
       });
+      // 좌표를 한눈에 보기
+      var bounds = new kakao.maps.LatLngBounds();
+      for (let i = 0; i < points.length; i++) {
+        // 배열의 좌표들이 잘 보이게 마커를 지도에 추가합니다
 
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(points[i]);
+      }
+      greenCrewMap.setBounds(bounds);
       function showDistance(content: any, targetPoint: any) {
         if (distanceOverlay) {
           // 커스텀오버레이가 생성된 상태이면
@@ -109,15 +93,19 @@ export default function GreenCrewMap({ greenCrew }: { greenCrew?: IGreenCrew }) 
   );
 }
 const MapBox = styled.div`
-  width: 50%;
-  height: 100%;
-  border: 5px solid #88caae;
+  width: 350px;
+  height: 340px;
+  border: 5px solid ${props => props.theme.weekColor};
   border-radius: 10px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const DescBox = styled.div`
   width: 150px;
   text-align: center;
   padding: 8px;
-  background-color: #2a9c6b;
+  background-color: ${props => props.theme.mainColor};
   color: white;
 `;

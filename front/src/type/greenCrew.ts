@@ -1,8 +1,10 @@
 import { Cpi } from "./dodream";
 
 export interface IGreenCrew {
+  crewId: number;
+  id: number;
   title: string;
-  startAt: string;
+  startAt: Date;
   course: string;
   distance: string | number;
   leadTime: string;
@@ -11,6 +13,13 @@ export interface IGreenCrew {
   curMember: number;
   content: string;
   trafficInfo: string;
-  cpi: coordinate[];
+  inProgress: number;
+  CPI: coordinate[];
 }
-type coordinate = [number, number];
+type coordinate = { x: number; y: number };
+export interface SummaryGreenCrew {
+  title: string;
+  course: string;
+  startAt: Date;
+  area: string;
+}

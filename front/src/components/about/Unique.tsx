@@ -8,33 +8,30 @@ import {
   Box,
   Row,
   DangerAccent,
+  MainBtn,
 } from "@style/Layout";
-import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Unique() {
+  const navigate = useNavigate();
+
   return (
     <Wrap>
       <ImgContainer>
-        <Img
-          src="https://plus.unsplash.com/premium_photo-1661266878025-ca5773b7dfa4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-          alt="#"
-        />
+        <Img src="/assets/images/about/unique.jpg" alt="#" />
       </ImgContainer>
       <ContentContainer>
-        <Row>
-          {/* <QueteImg style={{ marginRight: "8px" }} src="/assets/icon/double_quotes_start.svg" alt="" /> */}
+        <TextRow>
           <Title>풀빛마실의 차별점</Title>
-          {/* <QueteImg style={{ marginLeft: "8px" }} src="/assets/icon/double_quotes_start.svg" alt="" /> */}
-        </Row>
-        <Row>
+        </TextRow>
+        <TextRow>
           <SubTitle>
             당신의 더 쉬운 풀빛마실을 위해
-            <br /> <GreenAccent>최적의 루트</GreenAccent>를 제공해 드려요.
+            <br /> <DangerAccent>최적의 루트</DangerAccent>를 제공해 드려요.
           </SubTitle>
-        </Row>
-        <Row>
+        </TextRow>
+        <TextRow>
           <Desc>
             플로깅이 하고 집에 돌아온 당신! <br />
             <br />
@@ -51,53 +48,94 @@ export default function Unique() {
             <br />
             풀빛마실에서 열려있는 <GreenAccent>풀빛마실 코스</GreenAccent>를 확인하고 원하는 코스를 선택해주세요.
           </Desc>
-        </Row>
-        <Row>
-          <Link to="/guide">
-            <Btn>사용법 보러가기</Btn>
-          </Link>
-          <Link to="/greencrew">
-            <Btn>풀빛마실 하러가기</Btn>
-          </Link>
-        </Row>
+        </TextRow>
+        <BtnBox>
+          <Btn onClick={() => navigate("/guide")}>사용법 보러가기</Btn>
+          <Btn onClick={() => navigate("/greencrew")}>풀빛마실 하러가기</Btn>
+        </BtnBox>
       </ContentContainer>
     </Wrap>
   );
 }
 const Wrap = styled(AboutContent)`
+  width: 100%;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 1024px) {
+  }
 `;
 const ImgContainer = styled(Container)`
-  justify-content: flex-start;
+  justify-content: flex-end;
+  margin-right: 70px;
   width: 47%;
-`;
-const QueteImg = styled.img`
-  width: 20px;
-  margin-top: -30px;
+
+  @media screen and (max-width: 1024px) {
+    display: none;
+  }
 `;
 const ContentContainer = styled(Container)`
   height: 460px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  width: 50%;
+
+  @media screen and (max-width: 1024px) {
+    align-items: center;
+    justify-content: space-between;
+  }
+  @media screen and (max-width: 758px) {
+    width: 90%;
+  }
 `;
 const SubTitle = styled(SubTitleGuide)`
   font-family: "Sebang";
   font-size: 24px;
   line-height: 1.3;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 20px;
+  }
 `;
 const Img = styled.img`
-  width: 345px;
+  width: 360px;
   height: 460px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: solid 5px ${props => props.theme.weekColor};
 `;
 const Desc = styled(DescGuide)`
   line-height: 1.1;
+
+  @media screen and (max-width: 1024px) {
+    text-align: center;
+  }
 `;
-const Btn = styled.button`
+const Btn = styled(MainBtn)`
   width: 180px;
   height: 50px;
   font-size: 18px;
   padding: 10px 5px;
-  margin-right: 20px;
+
+  @media screen and (max-width: 1024px) {
+    width: 150px;
+    height: 40px;
+    font-size: 14px;
+  }
+`;
+const BtnBox = styled(Box)`
+  width: 380px;
+  justify-content: space-between;
+  
+  @media screen and (max-width: 1024px) {
+    width: 320px;
+  }
+`;
+const TextRow = styled(Row)`
+  @media screen and (max-width: 1024px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
